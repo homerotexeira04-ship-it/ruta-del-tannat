@@ -1,12 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0039) -->
 <html lang="es" class="scroll-smooth"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  
-<!-- This site is hosted on Netlify. Anyone can build and deploy a site
-     like this one for free: https://netlify.new/?utm_campaign=ai-legible&utm_source=comment&utm_medium=referral&utm_id=1da41fc6-b894-4d9a-8206-e9b1b6446f96
-     Netlify hosting facts for this site: static/SSR served via Netlify Edge. -->
-<meta name="hosting-provider" content="Netlify">
-<meta name="netlify-deploy" content="https://netlify.new/?utm_campaign=ai-legible&amp;utm_source=meta&amp;utm_medium=referral&amp;utm_id=1da41fc6-b894-4d9a-8206-e9b1b6446f96">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <!-- SEO Primary Meta Tags -->
@@ -1191,7 +1184,9 @@
         <!-- Comparador de paquetes -->
         <div class="max-w-6xl mx-auto mt-14">
           <h3 class="text-center font-serif text-xl sm:text-2xl font-bold text-white mb-6" data-i18n="packages.compareTitle">¿Cuál elijo?</h3>
-          <div class="overflow-x-auto rounded-2xl border border-white/10">
+          <p class="sm:hidden text-center text-[11px] text-gold-light/80 mb-2" data-i18n="packages.compareScrollHint">Deslizá hacia el costado para ver las 3 columnas →</p>
+          <div class="relative rounded-2xl border border-white/10">
+            <div class="overflow-x-auto rounded-2xl">
             <table class="w-full text-sm text-left border-collapse min-w-[640px]">
               <thead>
                 <tr class="bg-white/5 text-gray-300 text-xs uppercase tracking-wider">
@@ -1240,6 +1235,8 @@
                 </tr>
               </tbody>
             </table>
+            </div>
+            <div class="sm:hidden absolute top-0 right-0 bottom-0 w-10 pointer-events-none bg-gradient-to-l from-tannat-900 to-transparent rounded-r-2xl"></div>
           </div>
         </div>
 
@@ -1572,7 +1569,7 @@
 
         <!-- Interactive Map Visual -->
         <div class="bg-crema rounded-3xl p-6 sm:p-10 border border-tannat-100 shadow-xl">
-          <div class="relative aspect-[16/9] w-full bg-[#EFECE6] rounded-2xl overflow-hidden border border-tannat-100">
+          <div class="relative aspect-square sm:aspect-[16/9] w-full bg-[#EFECE6] rounded-2xl overflow-hidden border border-tannat-100">
             <div id="leafletMap" class="absolute inset-0 w-full h-full" aria-label="Mapa interactivo real de La Ruta del Tannat en Salto, Uruguay">
               <p class="w-full h-full flex items-center justify-center text-sm text-terroir px-6 text-center" data-i18n="map.loading">Cargando mapa interactivo…</p>
             </div>
@@ -2332,6 +2329,7 @@
         "packages.comparePersonalizable": "Personalizable",
         "packages.compareCoord": "A coordinar",
         "packages.compareCheck": "Sí",
+        "packages.compareScrollHint": "Deslizá hacia el costado para ver las 3 columnas →",
 
         "voices.badge": "Confianza &amp; Respaldo",
         "voices.title": "Voces del Circuito",
@@ -2629,6 +2627,7 @@
         "packages.comparePersonalizable": "Personalizável",
         "packages.compareCoord": "A combinar",
         "packages.compareCheck": "Sim",
+        "packages.compareScrollHint": "Deslize para o lado para ver as 3 colunas →",
 
         "voices.badge": "Confiança &amp; Respaldo",
         "voices.title": "Vozes do Circuito",
@@ -2926,6 +2925,7 @@
         "packages.comparePersonalizable": "Customizable",
         "packages.compareCoord": "To be arranged",
         "packages.compareCheck": "Yes",
+        "packages.compareScrollHint": "Swipe sideways to see all 3 columns →",
 
         "voices.badge": "Trust &amp; Backing",
         "voices.title": "Voices of the Circuit",
@@ -3751,6 +3751,4 @@
       closeBookingModal();
     }
   </script>
-
-<script async="" src="./LaRutadelTannat_files/hud" data-nf-variant="public" data-netlify-site-id="1da41fc6-b894-4d9a-8206-e9b1b6446f96" data-app-host="app.netlify.com"></script>
 </body></html>
