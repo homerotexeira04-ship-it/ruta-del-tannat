@@ -1050,137 +1050,153 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-8 max-w-6xl mx-auto">
 
           <!-- Package 1: Medio Día -->
-          <div class="bg-tannat-dark/80 rounded-3xl p-8 sm:p-10 border border-gold/30 flex flex-col justify-between hover:border-gold transition-colors relative shadow-2xl">
-            <div>
-              <div class="flex justify-between items-start mb-6">
-                <div>
-                  <span class="text-xs font-bold uppercase tracking-wider text-gold" data-i18n="packages.p1Tag">Medio Día · 4 Horas</span>
-                  <h3 class="font-serif text-2xl sm:text-3xl font-bold text-white mt-1" data-i18n="packages.p1Title">Vinos e Historias</h3>
-                </div>
-                <div class="text-right">
-                  <span class="text-3xl sm:text-4xl font-bold text-gold price-val" data-usd="45" data-uyu="1850">USD 45</span>
-                  <span class="block text-xs text-gray-400 font-normal" data-i18n="packages.perPerson">por persona</span>
-                </div>
-              </div>
-
-              <p class="text-gray-300 text-sm mb-6 leading-relaxed" data-i18n="packages.p1Desc">
-                Ideal para quienes desean sumergirse en la historia de Don Pascual Harriague y disfrutar de una cata guiada junto a la costa del río.
-              </p>
-
-              <ul class="space-y-3 text-sm text-gray-200 mb-8">
-                <li class="flex items-center gap-3">
-                  <svg class="w-5 h-5 text-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                  <span data-i18n="packages.p1Item1">Visita guiada a Bodega Harriague (Punto Cero)</span>
-                </li>
-                <li class="flex items-center gap-3">
-                  <svg class="w-5 h-5 text-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                  <span data-i18n="packages.p1Item2">Recorrido y cata de 3 varietales en Bodega Salto Chico</span>
-                </li>
-                <li class="flex items-center gap-3">
-                  <svg class="w-5 h-5 text-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                  <span data-i18n="packages.p1Item3">Tabla de quesos artesanales y panes de campo</span>
-                </li>
-                <li class="flex items-center gap-3">
-                  <svg class="w-5 h-5 text-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                  <span data-i18n="packages.p1Item4">Traslado en van ejecutiva desde centro o termas</span>
-                </li>
-              </ul>
+          <div class="group bg-tannat-dark/80 rounded-3xl border border-gold/30 flex flex-col hover:border-gold transition-colors relative shadow-2xl overflow-hidden">
+            <div class="relative h-48 sm:h-52 overflow-hidden">
+              <img src="./LaRutadelTannat_files/pascual-harriague-retrato.jpg" alt="Retrato histórico de Pascual Harriague, pionero del Tannat en Uruguay" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" loading="lazy">
+              <div class="absolute inset-0 bg-gradient-to-t from-tannat-dark via-tannat-dark/15 to-transparent"></div>
+              <span class="absolute top-3 left-3 bg-tannat text-gold-light text-xs font-bold px-3 py-1 rounded-full shadow-md" data-i18n="packages.p1Tag">Medio Día · 4 Horas</span>
             </div>
 
-            <button onclick="openBookingModal(&#39;Vinos e Historias (USD 45)&#39;)" class="w-full bg-white/10 hover:bg-gold hover:text-tannat-900 text-white font-bold py-4 rounded-xl transition-all border border-white/20 hover:border-transparent text-center focus:outline-none focus:ring-2 focus:ring-gold" data-i18n="btn.selectPlan1">
-              Reservar este Paquete
-            </button>
+            <div class="p-8 sm:p-10 flex flex-col justify-between flex-1">
+              <div>
+                <div class="flex justify-between items-start mb-6">
+                  <h3 class="font-serif text-2xl sm:text-3xl font-bold text-white" data-i18n="packages.p1Title">Vinos e Historias</h3>
+                  <div class="text-right flex-shrink-0 ml-3">
+                    <span class="text-3xl sm:text-4xl font-bold text-gold price-val" data-usd="45" data-uyu="1850">USD 45</span>
+                    <span class="block text-xs text-gray-400 font-normal" data-i18n="packages.perPerson">por persona</span>
+                  </div>
+                </div>
+
+                <p class="text-gray-300 text-sm mb-6 leading-relaxed" data-i18n="packages.p1Desc">
+                  Ideal para quienes desean sumergirse en la historia de Don Pascual Harriague y disfrutar de una cata guiada junto a la costa del río.
+                </p>
+
+                <ul class="space-y-3 text-sm text-gray-200 mb-8">
+                  <li class="flex items-center gap-3">
+                    <svg class="w-5 h-5 text-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    <span data-i18n="packages.p1Item1">Visita guiada a Bodega Harriague (Punto Cero)</span>
+                  </li>
+                  <li class="flex items-center gap-3">
+                    <svg class="w-5 h-5 text-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    <span data-i18n="packages.p1Item2">Recorrido y cata de 3 varietales en Bodega Salto Chico</span>
+                  </li>
+                  <li class="flex items-center gap-3">
+                    <svg class="w-5 h-5 text-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    <span data-i18n="packages.p1Item3">Tabla de quesos artesanales y panes de campo</span>
+                  </li>
+                  <li class="flex items-center gap-3">
+                    <svg class="w-5 h-5 text-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    <span data-i18n="packages.p1Item4">Traslado en van ejecutiva desde centro o termas</span>
+                  </li>
+                </ul>
+              </div>
+
+              <button onclick="openBookingModal(&#39;Vinos e Historias (USD 45)&#39;)" class="w-full bg-white/10 hover:bg-gold hover:text-tannat-900 text-white font-bold py-4 rounded-xl transition-all border border-white/20 hover:border-transparent text-center focus:outline-none focus:ring-2 focus:ring-gold" data-i18n="btn.selectPlan1">
+                Reservar este Paquete
+              </button>
+            </div>
           </div>
 
           <!-- Package 2: Día Completo VIP -->
-          <div class="bg-gradient-to-b from-tannat to-tannat-dark rounded-3xl p-8 sm:p-10 border-2 border-gold flex flex-col justify-between shadow-2xl relative">
-            <div class="absolute -top-4 right-8 bg-gold text-tannat-900 text-xs font-extrabold uppercase px-4 py-1 rounded-full shadow-lg" data-i18n="packages.vipBadge">
+          <div class="relative lg:-translate-y-3">
+            <div class="absolute -inset-2 bg-gradient-to-r from-gold via-gold-light to-gold rounded-3xl blur-xl opacity-40 group-hover:opacity-60 transition-opacity"></div>
+            <div class="absolute -top-4 right-8 z-20 bg-gold text-tannat-900 text-xs font-extrabold uppercase px-4 py-1 rounded-full shadow-lg" data-i18n="packages.vipBadge">
               Recomendado · Más Completo
             </div>
 
-            <div>
-              <div class="flex justify-between items-start mb-6">
-                <div>
-                  <span class="text-xs font-bold uppercase tracking-wider text-gold-light" data-i18n="packages.p2Tag">Día Completo · 8 Horas</span>
-                  <h3 class="font-serif text-2xl sm:text-3xl font-bold text-white mt-1" data-i18n="packages.p2Title">El Legado del Tannat</h3>
-                </div>
-                <div class="text-right">
-                  <span class="text-3xl sm:text-4xl font-bold text-gold price-val" data-usd="95" data-uyu="3900">USD 95</span>
-                  <span class="block text-xs text-gray-400 font-normal" data-i18n="packages.perPerson">por persona</span>
-                </div>
+            <div class="group relative bg-gradient-to-b from-tannat to-tannat-dark rounded-3xl border-2 border-gold flex flex-col shadow-2xl overflow-hidden">
+              <div class="relative h-48 sm:h-52 overflow-hidden">
+                <img src="./LaRutadelTannat_files/hero-vinedo-uruguay.jpg" alt="Viñedo uruguayo con luz dorada, circuito completo de la Ruta del Tannat" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" loading="lazy">
+                <div class="absolute inset-0 bg-gradient-to-t from-tannat via-tannat/10 to-transparent"></div>
+                <span class="absolute top-3 left-3 bg-gold text-tannat-900 text-xs font-bold px-3 py-1 rounded-full shadow-md" data-i18n="packages.p2Tag">Día Completo · 8 Horas</span>
               </div>
 
-              <p class="text-gray-200 text-sm mb-6 leading-relaxed" data-i18n="packages.p2Desc">
-                Circuito integral por las 4 estaciones de la Ruta, con almuerzo maridaje de 4 pasos, cata de vinos premiados y pase termal de cortesía.
-              </p>
+              <div class="p-8 sm:p-10 flex flex-col justify-between flex-1">
+                <div>
+                  <div class="flex justify-between items-start mb-6">
+                    <h3 class="font-serif text-2xl sm:text-3xl font-bold text-white" data-i18n="packages.p2Title">El Legado del Tannat</h3>
+                    <div class="text-right flex-shrink-0 ml-3">
+                      <span class="text-3xl sm:text-4xl font-bold text-gold price-val" data-usd="95" data-uyu="3900">USD 95</span>
+                      <span class="block text-xs text-gray-400 font-normal" data-i18n="packages.perPerson">por persona</span>
+                    </div>
+                  </div>
 
-              <ul class="space-y-3 text-sm text-gray-200 mb-8">
-                <li class="flex items-center gap-3">
-                  <svg class="w-5 h-5 text-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                  <span data-i18n="packages.p2Item1">Paseo completo por las 4 estaciones del circuito</span>
-                </li>
-                <li class="flex items-center gap-3">
-                  <svg class="w-5 h-5 text-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                  <span data-i18n="packages.p2Item2">Almuerzo maridaje en bodega: Cordero y Tannat</span>
-                </li>
-                <li class="flex items-center gap-3">
-                  <svg class="w-5 h-5 text-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                  <span data-i18n="packages.p2Item3">Cata técnica de 6 vinos Gran Reserva y premiados</span>
-                </li>
-                <li class="flex items-center gap-3">
-                  <svg class="w-5 h-5 text-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                  <span data-i18n="packages.p2Item4">Entrada relax a Termas del Daymán / San Nicanor</span>
-                </li>
-              </ul>
+                  <p class="text-gray-200 text-sm mb-6 leading-relaxed" data-i18n="packages.p2Desc">
+                    Circuito integral por las 4 estaciones de la Ruta, con almuerzo maridaje de 4 pasos, cata de vinos premiados y pase termal de cortesía.
+                  </p>
+
+                  <ul class="space-y-3 text-sm text-gray-200 mb-8">
+                    <li class="flex items-center gap-3">
+                      <svg class="w-5 h-5 text-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                      <span data-i18n="packages.p2Item1">Paseo completo por las 4 estaciones del circuito</span>
+                    </li>
+                    <li class="flex items-center gap-3">
+                      <svg class="w-5 h-5 text-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                      <span data-i18n="packages.p2Item2">Almuerzo maridaje en bodega: Cordero y Tannat</span>
+                    </li>
+                    <li class="flex items-center gap-3">
+                      <svg class="w-5 h-5 text-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                      <span data-i18n="packages.p2Item3">Cata técnica de 6 vinos Gran Reserva y premiados</span>
+                    </li>
+                    <li class="flex items-center gap-3">
+                      <svg class="w-5 h-5 text-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                      <span data-i18n="packages.p2Item4">Entrada relax a Termas del Daymán / San Nicanor</span>
+                    </li>
+                  </ul>
+                </div>
+
+                <button onclick="openBookingModal(&#39;El Legado del Tannat (USD 95)&#39;)" class="w-full bg-gold hover:bg-gold-light text-tannat-900 font-extrabold py-4 rounded-xl transition-all shadow-lg hover:shadow-gold/40 text-center focus:outline-none focus:ring-2 focus:ring-white" data-i18n="btn.selectPlan2">
+                  Reservar Experiencia VIP
+                </button>
+              </div>
             </div>
-
-            <button onclick="openBookingModal(&#39;El Legado del Tannat (USD 95)&#39;)" class="w-full bg-gold hover:bg-gold-light text-tannat-900 font-extrabold py-4 rounded-xl transition-all shadow-lg hover:shadow-gold/40 text-center focus:outline-none focus:ring-2 focus:ring-white" data-i18n="btn.selectPlan2">
-              Reservar Experiencia VIP
-            </button>
           </div>
 
           <!-- Package 3: Grupos & Corporativo -->
-          <div class="bg-tannat-dark/80 rounded-3xl p-8 sm:p-10 border border-gold/30 flex flex-col justify-between hover:border-gold transition-colors relative shadow-2xl">
-            <div>
-              <div class="flex justify-between items-start mb-6">
-                <div>
-                  <span class="text-xs font-bold uppercase tracking-wider text-gold" data-i18n="packages.p3Tag">Grupos &amp; Eventos · A Medida</span>
-                  <h3 class="font-serif text-2xl sm:text-3xl font-bold text-white mt-1" data-i18n="packages.p3Title">Experiencia Grupal &amp; Corporativa</h3>
-                </div>
-              </div>
-
-              <div class="mb-6">
-                <span class="text-2xl sm:text-3xl font-bold text-gold" data-i18n="packages.p3Price">Cotización a medida</span>
-                <span class="block text-xs text-gray-400 font-normal" data-i18n="packages.p3PriceSub">según cantidad de personas</span>
-              </div>
-
-              <p class="text-gray-300 text-sm mb-6 leading-relaxed" data-i18n="packages.p3Desc">
-                Pensado para grupos de 10 o más personas, eventos corporativos, despedidas y celebraciones. Armamos el itinerario, el menú y los traslados según el tamaño y el perfil del grupo.
-              </p>
-
-              <ul class="space-y-3 text-sm text-gray-200 mb-8">
-                <li class="flex items-center gap-3">
-                  <svg class="w-5 h-5 text-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                  <span data-i18n="packages.p3Item1">Itinerario flexible entre las 4 estaciones del circuito</span>
-                </li>
-                <li class="flex items-center gap-3">
-                  <svg class="w-5 h-5 text-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                  <span data-i18n="packages.p3Item2">Traslados en vehículos de mayor capacidad</span>
-                </li>
-                <li class="flex items-center gap-3">
-                  <svg class="w-5 h-5 text-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                  <span data-i18n="packages.p3Item3">Menú y maridaje adaptables al grupo</span>
-                </li>
-                <li class="flex items-center gap-3">
-                  <svg class="w-5 h-5 text-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                  <span data-i18n="packages.p3Item4">Tarifas preferenciales según cantidad de personas</span>
-                </li>
-              </ul>
+          <div class="group bg-tannat-dark/80 rounded-3xl border border-gold/30 flex flex-col hover:border-gold transition-colors relative shadow-2xl overflow-hidden">
+            <div class="relative h-48 sm:h-52 overflow-hidden">
+              <img src="./LaRutadelTannat_files/galeria-brindis-cavas.jpg" alt="Brindis con vino en las cavas históricas de Bodega Harriague" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" loading="lazy">
+              <div class="absolute inset-0 bg-gradient-to-t from-tannat-dark via-tannat-dark/15 to-transparent"></div>
+              <span class="absolute top-3 left-3 bg-tannat text-gold-light text-xs font-bold px-3 py-1 rounded-full shadow-md" data-i18n="packages.p3Tag">Grupos &amp; Eventos · A Medida</span>
             </div>
 
-            <a href="https://wa.me/59892614800?text=Hola!%20Quisiera%20cotizar%20una%20experiencia%20grupal%2Fcorporativa%20en%20La%20Ruta%20del%20Tannat." target="_blank" rel="noopener noreferrer" class="w-full bg-white/10 hover:bg-gold hover:text-tannat-900 text-white font-bold py-4 rounded-xl transition-all border border-white/20 hover:border-transparent text-center focus:outline-none focus:ring-2 focus:ring-gold block" data-i18n="btn.selectPlan3">
-              Solicitar Cotización
-            </a>
+            <div class="p-8 sm:p-10 flex flex-col justify-between flex-1">
+              <div>
+                <h3 class="font-serif text-2xl sm:text-3xl font-bold text-white mb-4" data-i18n="packages.p3Title">Experiencia Grupal &amp; Corporativa</h3>
+
+                <div class="mb-6">
+                  <span class="text-2xl sm:text-3xl font-bold text-gold" data-i18n="packages.p3Price">Cotización a medida</span>
+                  <span class="block text-xs text-gray-400 font-normal" data-i18n="packages.p3PriceSub">según cantidad de personas</span>
+                </div>
+
+                <p class="text-gray-300 text-sm mb-6 leading-relaxed" data-i18n="packages.p3Desc">
+                  Pensado para grupos de 10 o más personas, eventos corporativos, despedidas y celebraciones. Armamos el itinerario, el menú y los traslados según el tamaño y el perfil del grupo.
+                </p>
+
+                <ul class="space-y-3 text-sm text-gray-200 mb-8">
+                  <li class="flex items-center gap-3">
+                    <svg class="w-5 h-5 text-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    <span data-i18n="packages.p3Item1">Itinerario flexible entre las 4 estaciones del circuito</span>
+                  </li>
+                  <li class="flex items-center gap-3">
+                    <svg class="w-5 h-5 text-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    <span data-i18n="packages.p3Item2">Traslados en vehículos de mayor capacidad</span>
+                  </li>
+                  <li class="flex items-center gap-3">
+                    <svg class="w-5 h-5 text-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    <span data-i18n="packages.p3Item3">Menú y maridaje adaptables al grupo</span>
+                  </li>
+                  <li class="flex items-center gap-3">
+                    <svg class="w-5 h-5 text-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    <span data-i18n="packages.p3Item4">Tarifas preferenciales según cantidad de personas</span>
+                  </li>
+                </ul>
+              </div>
+
+              <a href="https://wa.me/59892614800?text=Hola!%20Quisiera%20cotizar%20una%20experiencia%20grupal%2Fcorporativa%20en%20La%20Ruta%20del%20Tannat." target="_blank" rel="noopener noreferrer" class="w-full bg-white/10 hover:bg-gold hover:text-tannat-900 text-white font-bold py-4 rounded-xl transition-all border border-white/20 hover:border-transparent text-center focus:outline-none focus:ring-2 focus:ring-gold block" data-i18n="btn.selectPlan3">
+                Solicitar Cotización
+              </a>
+            </div>
           </div>
 
         </div>
