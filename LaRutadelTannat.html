@@ -3435,13 +3435,25 @@
     }
 
     async function fetchWeather() {
+      const WEATHER_BASE = 'https://api.open-meteo.com/v1/forecast?latitude=-31.3833&longitude=-57.9667&timezone=America%2FMontevideo';
       try {
-        const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=-31.3833&longitude=-57.9667&current=temperature_2m,weather_code&timezone=America%2FMontevideo');
+        const res = await fetch(`${WEATHER_BASE}&current=temperature_2m,weather_code`);
         if (!res.ok) throw new Error('weather request failed');
         const data = await res.json();
         currentWeather = { temp: data.current.temperature_2m, code: data.current.weather_code };
         renderWeather();
+        return;
       } catch (e) {
+        // sigue abajo: reintenta con un pedido más chico antes de rendirse
+      }
+      try {
+        // Fallback: si el servicio falla justo en weather_code, mostramos igual la temperatura real (sin condición)
+        const res2 = await fetch(`${WEATHER_BASE}&current=temperature_2m`);
+        if (!res2.ok) throw new Error('weather fallback failed');
+        const data2 = await res2.json();
+        currentWeather = { temp: data2.current.temperature_2m, code: null };
+        renderWeather();
+      } catch (e2) {
         // Sin conexión o servicio caído: se oculta en vez de mostrar un dato inventado
         document.querySelectorAll('.weather-widget').forEach(el => el.classList.add('hidden'));
       }
