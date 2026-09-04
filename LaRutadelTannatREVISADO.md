@@ -305,11 +305,13 @@ Tabla 5
 | Set. 2023 | 180,2% (Salto más caro) | Desequilibrio extremo | — |
 | Set. 2024 | 47,4% | 77% | 82% |
 | Ene. 2026 | 40,2% | 52% (vino: 107%) | 74% |
+| Mar. 2026 | 15,1% (mínimo histórico) | s/d | s/d |
 | Abr. 2026 | 15,0% | 41% | Diferencia moderada |
+| Jul. 2026 | 25,0% | 43,7% (vino: 91,0%) | s/d |
 
-*Nota.* Elaboración propia a partir de Observatorio Económico, Universidad Católica del Uruguay Campus Salto (2024) y de la prensa citada en las Referencias Bibliográficas.
+*Nota.* Elaboración propia a partir de Observatorio Económico, Universidad Católica del Uruguay Campus Salto (2024, 2026a, 2026b) y de la prensa citada en las Referencias Bibliográficas. s/d: dato no disponible en la fuente consultada para ese rubro y período.
 
-Esta brecha cambiaria favorece, además, la fuga de turistas de fin de semana hacia complejos termales argentinos (Federación, Villa Elisa), lo que afecta especialmente a productores y hoteles de nivel medio. Finalmente, constituye una amenaza estructural la contracción del registro de vitivinicultores nacionales (-11,55% anual en el período 2021-2024), que compromete la disponibilidad futura de recursos y subsidios.
+Lejos de tratarse de una mejora sostenida, la brecha resultó altamente volátil a lo largo de 2026: tras tocar en marzo su mínimo histórico desde que se calcula el indicador (Observatorio Económico, Universidad Católica del Uruguay Campus Salto, 2026a), volvió a ampliarse hasta 25,0% en julio (Observatorio Económico, Universidad Católica del Uruguay Campus Salto, 2026b), confirmando que la competitividad de precios de Salto frente a Concordia depende de variables cambiarias fuera del control del proyecto y debe monitorearse de forma continua antes que darse por superada. Esta brecha cambiaria favorece, además, la fuga de turistas de fin de semana hacia complejos termales argentinos (Federación, Villa Elisa), lo que afecta especialmente a productores y hoteles de nivel medio. Finalmente, constituye una amenaza estructural la contracción del registro de vitivinicultores nacionales (-11,55% anual en el período 2021-2024), que compromete la disponibilidad futura de recursos y subsidios.
 
 ### **Conclusiones (análisis cruzado)**
 
@@ -678,6 +680,10 @@ Montevideo.com. (s.f.). La brecha de precios entre Concordia y Salto creció a u
 Observatorio Económico, Universidad Católica del Uruguay Campus Salto \[UCU\]. (2024). Indicador de Precios Fronterizos, septiembre 2024. https://www.ucu.edu.uy/Institucionales/INFORMES-uc1313/4676/SET-24-compressed.pdf
 
 Observatorio Económico, Universidad Católica del Uruguay Campus Salto \[UCU\]. (2025). Estudio del perfil del turista de la Región de Salto Grande.
+
+Observatorio Económico, Universidad Católica del Uruguay Campus Salto \[UCU\]. (2026a). Indicador de Precios Fronterizos, marzo 2026. https://www.ucu.edu.uy/Institucionales/INFORMES-uc1313/7434/Informe-IPF-MAR26.pdf
+
+Observatorio Económico, Universidad Católica del Uruguay Campus Salto \[UCU\]. (2026b). Indicador de Precios Fronterizos, julio 2026. https://www.ucu.edu.uy/Institucionales/INFORMES-uc1313/8017/Informe-IPF-JUL26.pdf
 
 Oficina de Planeamiento y Presupuesto \[OPP\]. (s.f.). Programa vial departamental: Salto. https://www.opp.gub.uy/sites/default/files/inline-files/PVD\_SALTO.pdf
 
