@@ -378,7 +378,9 @@ Tabla 6
 
 ## **5.5. Marco Legal**
 
-La formalización y operación del circuito se rige por la Ley N.° 19.253 (Ley de Regulación de la Actividad Turística en Uruguay, IMPO, 2014), y el proyecto se alinea con sus disposiciones fundamentales. En cuanto a la declaración de interés nacional (Art. 1.º), el circuito promueve el crecimiento económico y el desarrollo cultural y social de la comunidad de Salto. En relación con el cumplimiento de los principios rectores (Art. 3.º), la propuesta incorpora la sostenibilidad —preservación de recursos naturales y agrícolas litorales—, la cooperación —mesa de cogestión público-privada—, la calidad —certificaciones internacionales de servicios— y la accesibilidad —goce del turismo para personas con discapacidad en todas las estaciones—. Respecto de la regulación de prácticas especializadas (Art. 25.º), la normativa clasifica al circuito como turismo especializado, exigiendo que guías y transportistas cuenten con registros y habilitaciones vigentes ante el MINTUR. Finalmente, la normativa sectorial de INAVI establece que los procesos de cata, venta de botellas cerradas y etiquetado deben ajustarse a los controles de calidad y reglamentaciones de circulación del Instituto Nacional de Vitivinicultura.
+La formalización y operación del circuito se rige por la Ley N.° 19.253 (Ley de Regulación de la Actividad Turística en Uruguay, IMPO, 2014), y el proyecto se alinea con sus disposiciones fundamentales. En cuanto a la declaración de interés nacional (Art. 1.º), el circuito promueve el crecimiento económico y el desarrollo cultural y social de la comunidad de Salto. En relación con el cumplimiento de los principios rectores (Art. 3.º), la propuesta incorpora la sostenibilidad —preservación de recursos naturales y agrícolas litorales—, la cooperación —mesa de cogestión público-privada—, la calidad —certificaciones internacionales de servicios— y la accesibilidad —goce del turismo para personas con discapacidad en todas las estaciones—. Respecto de la regulación de prácticas especializadas (Art. 25.º), la normativa clasifica al circuito como turismo especializado, exigiendo que guías y transportistas cuenten con registros y habilitaciones vigentes ante el MINTUR.
+
+A este marco general se suma una normativa específica para el segmento enoturístico: el Decreto N.° 370/010 (Uruguay. Poder Ejecutivo, 2010) regula puntualmente el turismo enológico y de bodegas, otorgando la condición jurídica de prestador de servicios turísticos a todo establecimiento vitivinícola que ofrezca visitas, catas o gastronomía mediante cobro de tarifa —criterio directamente aplicable a Salto Chico, Bertolini & Broglio y Mori Maglio— y condicionando su operativa a la inscripción en el Registro de Operadores del MINTUR, con acreditación notarial, certificados de BPS y DGI, croquis del predio y habilitación vigente del INAVI. Finalmente, la normativa sectorial de INAVI, con base en la Ley N.° 15.903 (Uruguay, 1987) que crea y regula al organismo, establece que los procesos de cata, venta de botellas cerradas y etiquetado deben ajustarse a los controles de calidad y reglamentaciones de circulación del Instituto Nacional de Vitivinicultura.
 
 # **Capítulo 6. Plan de Acción**
 
@@ -699,7 +701,11 @@ Todo Uruguay. (s.f.). Visita a bodega boutique de Salto \[Video\]. YouTube. http
 
 Urry, J. (2002). The tourist gaze (2.ª ed.). Sage Publications. (Trabajo original publicado en 1990)
 
+Uruguay. (1987). Ley N.º 15.903: Rendición de Cuentas y Balance de Ejecución Presupuestal, Ejercicio 1986 (norma de creación y regulación del INAVI). Diario Oficial. https://www.impo.com.uy/bases/leyes/15903-1987
+
 Uruguay en Vinos. (2021). Informe vendimia — Uruguay 2021. https://uruguayenvinos.com/docs/GabiZimmer\_Informe\_Vendimia\_Uruguay2021\_SP.pdf
+
+Uruguay. Poder Ejecutivo. (2010). Decreto N.° 370/010: Regulación del Turismo Enológico. Marco Jurídico. Registro Nacional de Leyes y Decretos, Tomo 2, Semestre 2, Año 2010, p. 1420. IMPO. https://www.impo.com.uy/bases/decretos/370-2010
 
 Winesof. (s.f.). Don Pascual Harriague: el pionero del Tannat y una festividad que honra su legado. https://www.winesof.wine/uruguay/noticia/user/don-pascual-harriague-el-pionero-del-tannat-y-una-festividad-que-honra-su-legado
 
