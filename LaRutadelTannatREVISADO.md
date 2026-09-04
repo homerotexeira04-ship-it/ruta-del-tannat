@@ -47,15 +47,15 @@ Introducción
 
 Capítulo 1. Planteamiento de la Idea — 1.1 Justificación del Proyecto · 1.2 Contextualización y Antecedentes · 1.3 Objetivos (1.3.1 General, 1.3.2 Específicos)
 
-Capítulo 2. Fundamentación Teórica
+Capítulo 2. Fundamentación Teórica — 2.1 Turismo Sostenible en Destinos Vitivinícolas · 2.2 El Turismo como Experiencia Transformadora · 2.3 Enfoques Aplicados al Diseño de la Ruta · 2.4 Gobernanza Territorial y Desarrollo Endógeno
 
-Capítulo 3. Metodología de Trabajo — 3.1 Enfoque Metodológico (3.1.1 Técnicas e instrumentos) · 3.2 Etapas del proceso de investigación
+Capítulo 3. Metodología de Trabajo — 3.1 Enfoque Metodológico (3.1.1 Técnicas e instrumentos) · 3.2 Etapas del proceso de investigación · 3.3 Alcances y Limitaciones del Estudio
 
 Capítulo 4. Diagnóstico de Situación — 4.1 Análisis Territorial y Turístico · 4.2 Análisis del Entorno · 4.3 Competencia · 4.4 Investigación de Mercados · 4.5 Análisis de Mercado · 4.6 Análisis FODA · Conclusiones y Recomendaciones Estratégicas
 
 Capítulo 5. Propuesta de Valor — 5.1 Propuesta de Valor y Estaciones del Itinerario · 5.2 Público Objetivo · 5.3 Misión y Visión · 5.4 Estructura Organizativa · 5.5 Marco Legal
 
-Capítulo 6. Plan de Acción — 6.1 Estrategia de Marketing · 6.2 Estrategia de Sostenibilidad · 6.3 Estrategia de Calidad · 6.4 Estrategia de Operaciones · 6.5 Planificación Financiera · 6.6 Calendario de Implantación
+Capítulo 6. Plan de Acción — 6.1 Estrategia de Marketing · 6.2 Estrategia de Sostenibilidad · 6.3 Estrategia de Calidad · 6.4 Estrategia de Operaciones · 6.5 Planificación Financiera · 6.6 Calendario de Implantación · 6.7 Análisis de Riesgos y Contingencias · 6.8 Indicadores de Desempeño
 
 Capítulo 7. Reflexiones Finales
 
@@ -99,7 +99,7 @@ En términos de planificación, el diseño de este circuito implica una transici
 
 ## **1.1. Justificación del Proyecto**
 
-La justificación económica y social de la propuesta radica en la necesidad de corregir las debilidades del modelo turístico del departamento de Salto. El turismo en Uruguay es un motor crítico, que genera ingresos agregados por USD 2.040 millones (CAMAERO, s.f.). Sin embargo, según CERES (2026), el Litoral Termal presenta una brecha frente a otras regiones del país: recibe un volumen de visitantes elevado —453.936 personas anuales— pero su gasto acumulado se limita a USD 86 millones, lo que arroja un gasto promedio por persona de solo USD 189, muy por debajo del promedio nacional de USD 566. En contraste, Colonia del Sacramento recibe un flujo similar (469.297 visitantes) pero genera USD 113 millones, con un gasto promedio de USD 241, mientras que Maldonado capta un gasto promedio de USD 569. Esta brecha de bajo gasto es coherente con lo relevado en profundidad por el “Estudio del perfil del turista de la Región de Salto Grande” (Observatorio Económico, Universidad Católica del Uruguay Campus Salto, 2025) —presentado ante 160 asistentes en el Campus Salto con el respaldo de la Delegación uruguaya en la Comisión Técnica Mixta de Salto Grande—: el gasto promedio por grupo familiar se ubicó en apenas USD 129 diarios en Daymán y USD 107 en Federación, del lado argentino, confirmando que el modelo termal binacional del litoral compite hoy por un segmento de bajo desembolso. Esto indica que el modelo termal salteño atrae un perfil de demanda de bajo gasto y baja diversificación recreativa.
+La justificación económica y social de la propuesta radica en la necesidad de corregir las debilidades del modelo turístico del departamento de Salto. El turismo en Uruguay es un motor crítico, que genera ingresos agregados por USD 2.040 millones (CAMAERO, s.f.). Sin embargo, según CERES (2026), el Litoral Termal presenta una brecha frente a otras regiones del país: recibe un volumen de visitantes elevado —453.936 personas anuales— pero su gasto acumulado se limita a USD 86 millones, lo que arroja un gasto promedio por persona de solo USD 189, muy por debajo del promedio nacional de USD 566. En contraste, Colonia del Sacramento recibe un flujo similar (469.297 visitantes) pero genera USD 113 millones, con un gasto promedio de USD 241, mientras que Maldonado capta un gasto promedio de USD 569. Esta brecha de bajo gasto es coherente con lo relevado en profundidad por el “Estudio del perfil del turista de la Región de Salto Grande” (Observatorio Económico, Universidad Católica del Uruguay Campus Salto, 2025) —presentado ante 160 asistentes en el Campus Salto con el respaldo de la Delegación uruguaya en la Comisión Técnica Mixta de Salto Grande—: el gasto promedio por grupo familiar se ubicó en apenas USD 129 diarios en Daymán y USD 107 en Federación, del lado argentino, confirmando que el modelo termal binacional del litoral compite hoy por un segmento de bajo desembolso. Esto indica que el modelo termal salteño atrae un perfil de demanda de bajo gasto y baja diversificación recreativa. La comparación resulta especialmente elocuente frente a Colonia del Sacramento, destino que recibe un volumen de visitantes prácticamente idéntico al del Litoral Termal —469.297 personas frente a 453.936— pero que, al diversificar su propuesta más allá de un único atractivo, casi duplica el gasto promedio por persona (USD 241 frente a USD 189) y supera a Salto en gasto turístico total pese a no partir de una base de visitantes mayor. Esta comparación entre destinos de escala similar sugiere que la brecha de gasto de Salto no obedece a un límite estructural de su volumen de demanda, sino a la escasa diversificación de su oferta más allá del recurso termal, precisamente la debilidad que este proyecto busca corregir mediante la incorporación del enoturismo como producto complementario.
 
 A esta problemática se suma la pérdida de competitividad de Salto en el mercado doméstico. El Monitor de Actividad Turística de marzo de 2026 (CERES) señaló que, durante los primeros meses del año, Salto quedó fuera de la lista de los cinco destinos más visitados del país, liderada por Punta del Este, Piriápolis, Chuy, Punta del Diablo y Colonia del Sacramento. La dependencia de un producto tradicional ha acelerado la obsolescencia de la marca destino, haciendo indispensable la incorporación de ofertas complementarias.
 
@@ -112,6 +112,8 @@ El arraigo vitivinícola de Salto se remonta al siglo XIX. Pascual Harriague, in
 En años recientes se han impulsado acciones públicas y privadas para revalorizar esta herencia, entre ellas la organización anual de la “Semana de Harriague” en abril, que reúne actividades culturales, gastronómicas y de cata de vinos con la participación del Centro Vasco de Salto (Saltoko Euskaldunen Taldea) y la Asociación de Vitivinicultores de Salto. La edición reciente adquirió carácter binacional al integrar actividades compartidas con la ciudad argentina de Concordia (El Pueblo Digital, 2026).
 
 Aun así, estos esfuerzos no se han traducido en una oferta turística integrada y comercial de forma continua. Las ruinas de la antigua Bodega Harriague han sufrido intermitencia en su gestión cultural, lo que debilita su capacidad para establecerse como referencia estable. La promoción del destino Salto continúa excesivamente enfocada en el producto termal, dejando de lado la oferta vitivinícola activa de establecimientos comerciales que operan de manera fragmentada y sin una red de cooperación que unifique los servicios turísticos.
+
+Esta desconexión entre patrimonio histórico y oferta comercial activa no es, sin embargo, una condición irreversible del territorio, sino el resultado de decisiones de gestión y promoción que pueden modificarse. La propia trayectoria reciente del Espacio Cultural Bodega Harriague —de ruina intermitentemente gestionada a proyecto binacional de restauración con respaldo académico internacional (4.6)— muestra que el patrimonio vitivinícola de Salto cuenta con capacidad de movilizar voluntades institucionales cuando existe un proyecto concreto que lo organice. El desafío que este trabajo busca resolver no es, entonces, la inexistencia de recursos patrimoniales o productivos suficientes, sino la falta de un vehículo de gestión que los articule en una propuesta comercial coherente y sostenida en el tiempo, tal como se fundamenta en el marco teórico del Capítulo 2 y se desarrolla en la propuesta organizativa del Capítulo 5.
 
 ## **1.3. Objetivos**
 
@@ -143,6 +145,16 @@ En el medio rural, estos principios se concretan en itinerarios interactivos: el
 
 El diseño de la ruta se sustenta en tres enfoques complementarios. En primer lugar, el **enoturismo y desarrollo territorial**: el enoturismo contemporáneo supera la simple degustación en bodega y se define como un sistema que vincula paisaje agrícola, cultura gastronómica, patrimonio arquitectónico y hospitalidad local, cuya competitividad depende de economías de escala locales y de redes de cooperación público-privada. En segundo lugar, la **interpretación del patrimonio cultural e industrial**: el patrimonio se concibe como recurso dinámico, no como vestigio estático, de modo que diseñar narrativas y guiones interpretativos permite transformar sitios como la Bodega Harriague en espacios de aprendizaje, memoria y conexión identitaria. Por último, el **turismo sostenible y la reducción de cargas**: la diversificación de la matriz turística departamental actúa como herramienta de ordenamiento que reduce la presión sobre los enclaves termales hiper-concentrados, distribuyendo flujos y beneficios hacia las zonas rurales y los pequeños establecimientos productivos.
 
+## **2.4. Gobernanza Territorial y Desarrollo Endógeno**
+
+El modelo de negocio propuesto en este proyecto —un circuito asociativo coordinado por un Comité de Gestión, integrado por bodegas privadas, instituciones públicas y organizaciones de la sociedad civil— no es una simple estructura administrativa, sino la aplicación concreta de dos corrientes teóricas que explican por qué el territorio, y no una única empresa, debe constituirse en la unidad de análisis y de acción del proyecto.
+
+La primera es la teoría del desarrollo territorial endógeno. Boisier (2003) sostiene que el desarrollo no es un fenómeno que se importa desde fuera del territorio, sino una capacidad que una región, localidad o comunidad construye para apropiarse de las decisiones sobre su propio desarrollo, diversificar la economía territorial y generar impulsos tecnológicos e identitarios propios. Bajo esta lógica, la Ruta del Tannat no es un producto turístico diseñado por un operador externo e importado al territorio, sino una propuesta que activa recursos —el patrimonio de Harriague, el terroir del litoral, el saber hacer de las bodegas familiares— que ya existen en Salto pero que permanecían desarticulados. El desarrollo endógeno, en este sentido, no excluye la cooperación externa (fondos nacionales, universidades, cátedras internacionales), pero exige que la capacidad de decisión sobre el circuito resida en los propios actores del territorio, lo que justifica la centralidad otorgada al Comité de Gestión por sobre un modelo de concesión a un operador turístico externo.
+
+La segunda corriente es la teoría de la acción colectiva aplicada a la gestión de recursos compartidos. Ostrom (1990), en su análisis de los sistemas de gobernanza que logran administrar recursos comunes de forma sostenible sin recurrir ni a la privatización total ni al control estatal centralizado, identifica un conjunto de principios de diseño institucional que las organizaciones exitosas comparten: límites claros sobre quiénes participan del sistema, reglas de uso adaptadas a las condiciones locales, mecanismos de decisión colectiva que incluyen a quienes se ven afectados por las reglas, sistemas de monitoreo accesibles a los propios participantes y mecanismos graduales de resolución de conflictos. Aplicados al caso de estudio, estos principios permiten anticipar los requisitos institucionales mínimos que el Comité de Gestión de la Ruta del Tannat deberá satisfacer para sostenerse en el tiempo: una membresía definida (las tres bodegas asociadas, el sector hotelero, los guías habilitados), reglas de distribución de reservas y comisiones acordadas colectivamente (y no impuestas por un único actor dominante), y una instancia de resolución de conflictos entre bodegas y prestadores que evite que la fragmentación operativa diagnosticada en el Capítulo 4 se traslade, sin corregirse, a la nueva estructura asociativa.
+
+En conjunto, ambas corrientes fundamentan una premisa central del proyecto: la sostenibilidad del circuito no depende únicamente del atractivo del patrimonio histórico o de la rentabilidad financiera de cada bodega por separado, sino de la capacidad del territorio para gobernarse a sí mismo de forma colaborativa y sostenida en el tiempo.
+
 # **Capítulo 3. Metodología de Trabajo**
 
 ## **3.1. Enfoque Metodológico**
@@ -155,9 +167,33 @@ Esta elección metodológica se fundamenta en Hernández Sampieri et al. (2014),
 
 La recolección de información de campo y documental se estructuró a través de tres técnicas metodológicas principales. En primer lugar, la revisión bibliográfica y documental, que abarcó las bases de datos estadísticas de INAVI y las encuestas consolidadas de impacto del enoturismo realizadas por Opción Consultores, junto con los anuarios de flujo y gasto turístico del Observatorio de Turismo Inteligente del MINTUR y los informes de competitividad económica sectorial de CERES. En segundo lugar, las entrevistas en territorio, aplicadas de forma presencial a los directores técnicos de las bodegas activas (Salto Chico y Bertolini & Broglio) —\[COMPLETAR: cantidad de entrevistas realizadas, fechas y criterio de selección\]— para relevar infraestructura, capacidad de degustación, interés en asociarse y necesidades de capacitación; a estas se sumaron encuentros de indagación con representantes de la Comisión de Gestión del Espacio Cultural Bodega Harriague y del Centro Vasco para evaluar la viabilidad de la operación del sitio histórico. Por último, las encuestas de mercado estructuradas, administradas durante la fase de investigación territorial a una muestra de turistas de ocio en los complejos hoteleros de Daymán —\[COMPLETAR: tamaño de la muestra (n), período de aplicación y margen de error asumido\]—; este instrumento indaga comportamiento de viaje, disposición al gasto y expectativas de consumo recreativo en el destino, y tanto el cuestionario completo como la guía de entrevista se incluyen en el Anexo del Capítulo 3, mientras que sus resultados se presentan en el punto 4.4.
 
+Tabla 1
+
+*Ficha técnica de la investigación*
+
+|  |  |
+| :-: | :-: |
+| \*\*Elemento\*\* | \*\*Descripción\*\* |
+| Tipo de estudio | Mixto (cualitativo-cuantitativo), de alcance descriptivo-explicativo, con componente de investigación-acción (3.1) |
+| Universo de estudio | Turistas de ocio alojados en los complejos hoteleros del corredor termal de Daymán y Arapey |
+| Técnica de muestreo | No probabilística, por conveniencia (3.3) |
+| Tamaño de muestra (n) | \[COMPLETAR: a determinar al cierre de la fase de campo\] |
+| Instrumentos | Encuesta estructurada a turistas; entrevista semiestructurada a directores técnicos de bodegas; guía de indagación a referentes institucionales (Anexo Cap. 3) |
+| Ámbito geográfico | Departamento de Salto: corredor termal de Daymán-Arapey y zona vitivinícola de Colonia Osimani |
+| Período de relevamiento | \[COMPLETAR: fechas de aplicación de encuestas y entrevistas\] |
+| Fuentes secundarias | INAVI, Opción Consultores, Observatorio de Turismo Inteligente del MINTUR, CERES (3.1.1) |
+
+*Nota.* Elaboración propia.
+
 ## **3.2. Etapas del proceso de investigación**
 
 El proceso de investigación se organizó en cuatro etapas sucesivas. La primera es la fase de diagnóstico, correspondiente al relevamiento técnico del estado de la caminería, la señalética y los servicios básicos de los viñedos de Salto Chico, Colonia Osimani y Parada Daymán, junto con la catalogación de los activos arqueológicos de la Bodega Harriague. La segunda es la fase de investigación de mercado y segmentación, que implica el procesamiento de los datos de las encuestas estructuradas mediante estadística descriptiva, para perfilar el mercado objetivo y caracterizar la demanda real y potencial del circuito. La tercera es la fase de diseño y planificación de la gobernanza, desarrollada mediante mesas de trabajo conjuntas con la Asociación de Vitivinicultores de Salto y operadores turísticos, para el diseño del protocolo de calidad y de prestación de servicios unificado. La cuarta y última es la fase de formulación de la propuesta empresarial, centrada en la elaboración de la estructura financiera de costos, la estimación de proyecciones y el diseño del plan de marketing digital.
+
+## **3.3. Alcances y Limitaciones del Estudio**
+
+Como todo diseño de investigación aplicada, este trabajo presenta limitaciones metodológicas que resulta pertinente explicitar. En primer lugar, el carácter no probabilístico de la muestra de turistas encuestados en los complejos hoteleros de Daymán —una muestra por conveniencia, administrada durante un período acotado de la fase de campo— implica que sus resultados deben interpretarse como una aproximación exploratoria al comportamiento del turista termal y no como una inferencia estadística generalizable al universo completo de visitantes del corredor termal, cuyo tamaño (453.936 personas anuales, según CERES, 2026) excede ampliamente lo que un proyecto de fin de carrera puede relevar de forma censal. En segundo lugar, las entrevistas en profundidad se concentraron en las bodegas ya identificadas como activas y dispuestas a colaborar (Salto Chico y Bertolini & Broglio), por lo que no captan eventuales barreras de entrada percibidas por otros productores vitivinícolas del departamento que no forman parte del circuito propuesto. En tercer lugar, las proyecciones financieras del Capítulo 6 se apoyan en supuestos de demanda —el 0,8% de captación del corredor termal en el primer año— que, si bien se fundamentan en la escala de la demanda existente, no equivalen a una validación de mercado real y deberán contrastarse con los resultados efectivos del cuestionario QR de satisfacción una vez iniciada la operación piloto (6.4).
+
+Desde el punto de vista ético, la investigación en territorio respetó el consentimiento informado de los entrevistados —directores técnicos de bodegas y referentes institucionales—, quienes fueron consultados en su calidad de informantes calificados sobre información pública u operativa de sus propios establecimientos, sin relevarse datos personales sensibles ni información comercial reservada de terceros. Las limitaciones aquí reconocidas no invalidan el diagnóstico presentado en el Capítulo 4, pero sí delimitan su alcance: se trata de un estudio de factibilidad orientado a fundamentar una decisión de inversión y gestión asociativa, no de una investigación de mercado exhaustiva a escala departamental.
 
 # **Capítulo 4. Diagnóstico de Situación**
 
@@ -165,15 +201,34 @@ El proceso de investigación se organizó en cuatro etapas sucesivas. La primera
 
 El análisis territorial del departamento de Salto revela una coexistencia espacial de atractivos que carece de conectividad; las infraestructuras clave, los servicios y la accesibilidad se caracterizan por las siguientes condiciones. En materia de accesibilidad física y vialidad, el principal eje de conectividad es la Ruta 3, que une a Salto con Montevideo y con los puentes internacionales de frontera; en cambio, la caminería rural secundaria hacia zonas vitivinícolas clave —como Colonia Osimani, donde se ubica Bodega Salto Chico— es de pedregullo y presenta mantenimiento discontinuo, lo que dificulta el tránsito de buses de excursión en días de lluvia intensa. En cuanto a seguridad y servicios básicos, Salto se posiciona como un destino con buenos niveles de seguridad, ventaja valorada por el turismo familiar y de la tercera edad; las zonas termales cuentan con conectividad de telecomunicaciones adecuada, aunque persisten brechas de cobertura en las áreas vitivinícolas más alejadas de Parada Daymán. Respecto de alojamiento y alimentación, Salto cuenta con sólida capacidad hotelera concentrada en Daymán y Arapey (complejos de 3 a 5 estrellas, cabañas municipales, camping); la oferta gastronómica es abundante, aunque presenta escasa integración de vinos locales en las cartas de los restaurantes termales, si bien algunos hoteles, como Aguasol, ya ofrecen desayunos con productos y mermeladas de frutos nativos. Finalmente, en lo referido a la conectividad interna y el transporte receptivo, el traslado sin vehículo propio depende de líneas urbanas de frecuencia limitada o taxis de alto costo, y la falta de transporte turístico regular que conecte los hoteles termales con el centro histórico y las bodegas rurales constituye el principal cuello de botella operativo para diversificar las actividades de los visitantes.
 
+Junto a esta infraestructura física, el territorio cuenta con una red de actores clave cuya articulación —o desarticulación, según se diagnostica en el punto 4.6— condiciona la viabilidad del circuito. Desde el sector público, intervienen la Intendencia de Salto y el Municipio de Salto, con competencia sobre la caminería rural y la gestión patrimonial del Espacio Cultural Bodega Harriague (5.1), así como el MINTUR y el INAVI a nivel nacional, responsables de la habilitación de prestadores turísticos y de la normativa vitivinícola, respectivamente (5.5). Desde el sector privado, los actores centrales son las tres bodegas activas de la ruta —Salto Chico, Bertolini & Broglio y Mori Maglio— y el sector hotelero de Daymán y Arapey, que actúa como canal de venta indirecta del circuito (6.1.4). Desde la sociedad civil, el Euskal Etxea (Centro Vasco de Salto) y la Asociación de Vitivinicultores de Salto integran, junto al Municipio, la Comisión de Gestión del Espacio Cultural Bodega Harriague (5.1), mientras que el Centro Comercial e Industrial de Salto —a través de su Comisión de Turismo— articula hoy la agenda turística departamental en ausencia de una mesa unificada (4.6). Finalmente, desde el ámbito académico, el CENUR Litoral Norte (Udelar) y la propia UTU aportan capacidad de formación de guías y personal de atención (6.3), y la Universidad del País Vasco participa como socio internacional del proyecto de restauración U-riharri (4.6). El diagnóstico de este trabajo evidencia que ninguno de estos actores es, por sí solo, insuficiente para sostener el circuito; la debilidad estructural identificada radica, más bien, en la ausencia de una instancia que los articule de forma permanente, vacío que el Comité de Gestión propuesto en el Capítulo 5 busca cubrir.
+
 ## **4.2. Análisis del Entorno**
 
 El entorno del proyecto puede caracterizarse a partir de cinco dimensiones. En el plano político e institucional, existe un marco regulatorio favorable promovido por el INAVI y el MINTUR para descentralizar la oferta turística nacional, aunque los cambios en las administraciones departamentales generan discontinuidad en el financiamiento de comisiones de gestión patrimonial como la de la Bodega Harriague. En el plano económico y cambiario, la disparidad cambiaria con Argentina representa una vulnerabilidad para el comercio local del litoral, aunque el crecimiento del mercado brasileño en el enoturismo nacional (39% de los visitantes en el sur del país) abre un nicho de alto valor adquisitivo. En el plano sociocultural, crece la valorización del consumo consciente, la producción artesanal y las narrativas históricas de origen, y la memoria de la inmigración vasca junto con el relato fundacional de la vitivinicultura uruguaya en Salto se alinean con estas motivaciones. En el plano tecnológico, la gestión turística se digitaliza, y los pagos electrónicos permiten que bodegas familiares accedan a reservas anticipadas y ventas en línea. Por último, en el plano ecológico y climático, el sector está expuesto a sequías e inundaciones, frente a lo cual el programa “Uva Sostenible” de INAVI (38% de la superficie nacional certificada) constituye un marco de mitigación valorado por el consumidor internacional.
+
+Tabla 2
+
+*Síntesis del análisis del entorno (PESTEL)*
+
+|  |  |
+| :-: | :-: |
+| \*\*Dimensión\*\* | \*\*Factor relevante para el circuito\*\* |
+| Político-institucional | Marco regulatorio favorable de INAVI y MINTUR para descentralizar la oferta turística nacional; discontinuidad de financiamiento ante cambios de administración departamental |
+| Económico-cambiario | Vulnerabilidad por la disparidad cambiaria con Argentina; crecimiento del mercado brasileño de alto poder adquisitivo (39% de los visitantes en el sur del país) |
+| Sociocultural | Valorización creciente del consumo consciente, la producción artesanal y las narrativas de origen; memoria de la inmigración vasca y relato fundacional de la vitivinicultura salteña |
+| Tecnológico | Digitalización creciente de la gestión turística; acceso de bodegas familiares a reservas anticipadas y ventas en línea |
+| Ecológico-climático | Exposición del sector a sequías e inundaciones; programa Uva Sostenible de INAVI (38% de la superficie nacional certificada) como marco de mitigación |
+
+*Nota.* Elaboración propia a partir del análisis desarrollado en este apartado.
+
+De las cinco dimensiones analizadas, dos condicionan de forma más directa el diseño del plan de acción del Capítulo 6. La dimensión económica y cambiaria, por su volatilidad ya documentada (4.6; Tabla 8), exige que el modelo de negocio no dependa de la brecha de precios con Argentina para ser rentable, sino que la considere como una variable externa a monitorear; de allí que la estrategia de precios (6.1.3) se fije en dólares y no busque competir por tarifa con la oferta termal argentina. La dimensión político-institucional, por su parte, explica por qué el proyecto no puede depender de un único canal de financiamiento o de una única mesa de coordinación pública: la discontinuidad observada en la gestión patrimonial del Espacio Harriague ante los cambios de administración departamental es, en clave de la teoría de la acción colectiva (2.4), precisamente el tipo de inestabilidad institucional que un mecanismo de gobernanza asociativa como el Comité de Gestión busca amortiguar, al no depender exclusivamente de la voluntad política de una administración de turno.
 
 ## **4.3. Competencia**
 
 El circuito enfrenta dos niveles de competencia. La competencia directa está integrada por los principales destinos enoturísticos del país: Canelones y Montevideo (59% de la actividad enoturística nacional), Maldonado (25%) y Carmelo, en Colonia (11%). Frente a ellos, Salto presenta una participación reducida, pero cuenta con un diferenciador único: ser reconocido históricamente como la cuna del Tannat gracias al legado de Pascual Harriague.
 
-Tabla 1
+Tabla 3
 
 *Comparación de modelos enoturísticos regionales*
 
@@ -186,11 +241,15 @@ Tabla 1
 
 *Nota.* Elaboración propia.
 
+El análisis comparativo permite, siguiendo el marco de las estrategias genéricas de Porter (1980), identificar con precisión el posicionamiento competitivo que le corresponde a Salto. Carmelo compite por diferenciación de lujo, apalancada en una oferta hotelera dentro de la propia bodega que Salto no está en condiciones de igualar en el corto plazo; frente a este competidor, la estrategia de Salto no puede ser imitativa, sino de diferenciación por autenticidad histórica, un atributo que Carmelo —pese a su sofisticación— no posee, dado que ninguna otra región del país puede reclamar de forma creíble el título de cuna fundacional del Tannat. Canelones compite por volumen y proximidad al principal mercado emisor del país (el área metropolitana de Montevideo); frente a esta escala, Salto debe evitar una competencia directa por precio o por número de visitantes y, en cambio, capitalizar la hibridación único con la infraestructura termal ya consolidada, un activo que Canelones no posee. Maldonado, por su parte, compite en el segmento de más alto poder adquisitivo del país; dado que este segmento no es el núcleo de la demanda actual del corredor termal salteño (de perfil medio, según el diagnóstico de mercado del punto 4.5), no constituye una amenaza de sustitución directa sino, en todo caso, una referencia aspiracional de estándares de servicio a mediano plazo. Esta lectura estratégica confirma que la propuesta de valor del Capítulo 5 —un circuito de precio medio, apalancado en patrimonio histórico e infraestructura termal existente— no intenta competir en los mismos términos que ninguno de los tres destinos consolidados, sino ocupar un nicho de enfoque (Porter, 1980) que ninguno de ellos disputa actualmente.
+
 La competencia indirecta la representan las actividades que disputan el tiempo y el gasto del visitante sin pertenecer al sector enoturístico. A nivel local, Termas del Daymán y Arapey atraen un flujo importante de turistas de baja movilidad interna, que concentran su gasto en alojamiento y gastronomía sin participar en otras propuestas. El desafío, entonces, no es competir contra el turismo termal sino integrar al visitante termal dentro de la Ruta del Tannat. A nivel regional, la competencia indirecta proviene de Entre Ríos (Federación, Villa Elisa, Colón, Concordia), donde ya se combinan termas, gastronomía y enoturismo. La brecha cambiaria con Argentina, muy elevada entre 2023 y 2025, se redujo de forma importante durante 2026, mejorando las condiciones para retener el gasto turístico en el departamento.
 
 ## **4.4. Investigación de Mercados**
 
 Esta sección debe mostrar los hallazgos propios obtenidos con los instrumentos descritos en el Capítulo 3 (encuesta a turistas de Daymán y entrevistas a bodegas y al Centro Vasco), y no solo estadísticas secundarias. Se incluyen a continuación el instrumento a aplicar y la estructura para sistematizar los resultados.
+
+La investigación de mercados, en el sentido en que la define Kotler y Keller (2016), cumple aquí una función doble: por un lado, reduce la incertidumbre sobre el comportamiento del turista termal frente a una oferta enoturística que, hasta el momento, no existe de forma estructurada en el destino, y por otro, permite validar —o corregir— los supuestos de demanda utilizados en la planificación financiera del Capítulo 6 antes de comprometer la inversión inicial. Por esa razón, el instrumento no se limita a relevar datos demográficos genéricos, sino que indaga específicamente el conocimiento previo de las bodegas activas y la disposición a pagar por un tour de media jornada (ítems 5 y 8 del cuestionario), variables directamente utilizadas para contrastar el precio de venta fijado en el punto 6.1.3.
 
 ### ***4.4.1. Instrumento: encuesta a turistas termales***
 
@@ -220,7 +279,7 @@ Dirigida a directores técnicos de bodegas (Salto Chico, Bertolini & Broglio, Mo
 
 ### ***4.4.3. Resultados***
 
-Tabla 2
+Tabla 4
 
 *Resultados de la investigación de mercado propia*
 
@@ -246,11 +305,29 @@ La caracterización del mercado objetivo combina cuatro tipos de factores. Desde
 
 Este segmento se selecciona por su alta tasa de conversión y baja elasticidad-precio ante ofertas de calidad: al tener resuelto el alojamiento y el traslado de larga distancia por la oferta termal, el circuito actúa como un producto complementario de bajo costo de adquisición, capturando el gasto excedente del turista durante las horas de la tarde.
 
+Tabla 5
+
+*Síntesis del perfil del mercado objetivo*
+
+|  |  |
+| :-: | :-: |
+| \*\*Dimensión\*\* | \*\*Características\*\* |
+| Geográfica | Turistas nacionales de Montevideo y el sur del país; mercado regional de proximidad de Entre Ríos (Argentina) y Rio Grande do Sul (Brasil) |
+| Demográfica | Hombres y mujeres de 30 a 65 años; profesionales o empresarios de nivel socioeconómico medio-alto y alto |
+| Psicográfica | Interés en consumo cultural, historia, arqueología industrial, gastronomía autóctona y bienestar (slow travel); valoración de la autenticidad y la hospitalidad personalizada |
+| Conductual | Consumidores habituales u ocasionales de vinos finos que viajan a relajarse en las termas, pero que demandan actividades culturales complementarias |
+
+*Nota.* Elaboración propia a partir de la caracterización de mercado desarrollada en este apartado.
+
+### **Perfiles de visitante**
+
+A partir de la segmentación anterior y de la caracterización de beneficiarios directos (5.2), se sintetizan dos perfiles representativos que orientan el diseño de los paquetes del Capítulo 6. El primero es el turista termal complementario: matrimonio o grupo familiar de entre 40 y 65 años, alojado por varias noches en un complejo hotelero de Daymán o Arapey, con el traslado y el alojamiento ya resueltos por la oferta termal, que dispone de tiempo libre en horas de la tarde y busca una actividad de media jornada que rompa la rutina de aguas termales sin exigir una planificación adicional compleja; para este perfil, el factor de decisión central es la conveniencia logística (recogida en el hotel) y la relación entre precio y experiencia, por lo que el Paquete 1 (6.1.2) está diseñado específicamente a su medida. El segundo es el enoturista especializado: viajero de 30 a 55 años, con mayor disposición al gasto y motivación de viaje centrada específicamente en el origen del Tannat y la experiencia enológica, que puede desplazarse desde Montevideo, Buenos Aires o el sur de Brasil con el circuito como motivo principal del viaje y no como actividad complementaria; para este perfil, el factor de decisión central es la profundidad y autenticidad de la experiencia (acceso a los productores, catas de alta gama, narrativa histórica), por lo que el Paquete 2 de jornada completa (6.1.2) resulta más adecuado. Ambos perfiles no son excluyentes: el objetivo estratégico del circuito, en los términos del segundo objetivo específico (1.3.2), es que un porcentaje creciente de turistas termales complementarios migre hacia el segundo perfil en visitas sucesivas, ampliando su gasto y su vínculo con el territorio.
+
 ## **4.6. Análisis FODA**
 
 Los datos oficiales de INAVI (período 2021-2025) reflejan una tendencia de reconversión estructural del rubro vitivinícola en Uruguay, que el último registro disponible confirma que continúa vigente:
 
-Tabla 3
+Tabla 6
 
 *Evolución de indicadores vitivinícolas nacionales, 2021-2025*
 
@@ -276,7 +353,7 @@ Entre las debilidades se identifica, en primer lugar, la fragmentación de la go
 
 La principal oportunidad identificada es la atracción del mercado enoturístico de Brasil, de alta rentabilidad y afinidad con el sector: según los informes de Turismo Receptivo del Observatorio de Turismo Inteligente del MINTUR, el turista brasileño que visita Uruguay presenta sistemáticamente el mayor gasto diario per cápita de los tres mercados regionales de referencia:
 
-Tabla 4
+Tabla 7
 
 *Gasto diario y estadía promedio de los visitantes de Brasil, Argentina y Chile en Uruguay, por trimestre*
 
@@ -295,7 +372,7 @@ A esto se suman los fondos concursables públicos. El Fondo Concursable para Emp
 
 Entre las amenazas se encuentra, en primer lugar, el posicionamiento de marca departamental, concentrado casi exclusivamente en “Destino Termas”, que relega la propuesta histórico-enológica. A ello se suma la competencia comercial de Canelones y Maldonado, que cuentan con mayor inversión turística e infraestructura. La evolución de la brecha de precios relevada por el Observatorio Económico de la Universidad Católica del Uruguay ilustra la magnitud de esta presión regional:
 
-Tabla 5
+Tabla 8
 
 *Evolución de la brecha de precios entre Salto y Concordia*
 
@@ -323,6 +400,8 @@ Lejos de tratarse de una mejora sostenida, la brecha resultó altamente volátil
 
 **Estrategia de supervivencia (D+A).** El mayor riesgo es la inercia de una marca departamental concentrada en “Destino Termas”, sumada a las deficiencias en caminería y señalética. Sin una respuesta que presione por mejoras de infraestructura y sin cooperación entre bodegas, la oferta del litoral norte quedará absorbida por el posicionamiento de las regiones enoturísticas del sur o el lujo de Carmelo.
 
+Leídas en conjunto, las cuatro estrategias convergen en una misma conclusión: la ventaja competitiva de Salto es de naturaleza histórica y patrimonial, no de escala ni de precio, por lo que toda decisión del plan de acción (Capítulo 6) que empuje al circuito hacia una competencia por volumen o por tarifa —en lugar de por autenticidad y profundidad de la experiencia— erosiona precisamente el único activo que ningún competidor directo puede replicar. Esta conclusión, más que un hallazgo aislado del análisis FODA, funciona como criterio de coherencia interna para evaluar cualquier decisión posterior del proyecto: desde el posicionamiento de marca (6.1.1) hasta la política de precios (6.1.3), pasando por la selección de qué bodegas incorporar en futuras ampliaciones del circuito (Capítulo 7).
+
 ### **Recomendaciones estratégicas para el Plan de Acción**
 
 A partir de este análisis cruzado se desprenden cinco recomendaciones estratégicas para el Plan de Acción. En primer lugar, una gobernanza híbrida y vinculante, mediante la constitución del Comité de Gestión de la Ruta del Tannat, integrado por la Comisión de Turismo del Centro Comercial e Industrial de Salto (CCIS), la Comisión de Turismo de la Junta Departamental de Salto, la Asociación de Vitivinicultores de Salto, guías locales y representantes hoteleros —supliendo así, para este circuito específico, la mesa unificada que dejó de operar tras el cierre de la METS—. En segundo lugar, la mitigación de la brecha de infraestructura, a través de alianzas con agencias receptivas que dispongan de vehículos utilitarios y de la gestión ante el MINTUR de la homologación de señalética específica para la Ruta 3. En tercer lugar, una digitalización orientada a la conversión inmediata, mediante una plataforma web unificada o un motor de reservas compartido con pasarela de pagos internacionales. En cuarto lugar, la hibridación del producto y la certificación sostenible, iniciando el proceso de certificación Uruguay Sustainable Winegrowing en las bodegas activas de la ruta. Por último, la activación del relato binacional y cultural, explotando la épica de Pascual Harriague y la herencia vasca, potenciada por la Semana de Harriague y su carácter binacional con Concordia.
@@ -332,6 +411,8 @@ A partir de este análisis cruzado se desprenden cinco recomendaciones estratég
 ## **5.1. Propuesta de Valor: el itinerario**
 
 La propuesta de valor se denomina “La Ruta del Tannat: Cepa, origen e identidad”. El producto es una ruta recreativa, histórica e interpretativa que conecta el descanso de aguas termales con la riqueza sensorial, gastronómica y arqueológica del vino salteño, estructurada en cuatro estaciones:
+
+La secuencia de las cuatro estaciones no es arbitraria, sino que responde a una lógica narrativa e interpretativa deliberada, coherente con el concepto de patrimonio como construcción social desarrollado en el punto 2.2: el recorrido comienza en el origen histórico (Estación 1, el Espacio Harriague de 1874), avanza a través de la evolución tecnológica de la vinificación —desde el método artesanal original hasta la vinificación por gravedad de alta gama de la Estación 3— y culmina en la producción familiar contemporánea de la Estación 4, cerrando el círculo entre pasado fundacional y presente productivo. Esta estructura de “origen a actualidad” permite que el visitante no experimente las cuatro paradas como una simple sucesión de degustaciones intercambiables, sino como un relato con principio, desarrollo y cierre, en línea con la interpretación patrimonial activa fundamentada en el Capítulo 2. La secuencia también responde a una lógica geográfica: las cuatro estaciones se ubican a lo largo del corredor que conecta la ciudad de Salto con Parada Daymán, minimizando los tiempos de traslado entre paradas y permitiendo que ambos paquetes (6.1.2) se completen dentro de las ventanas horarias definidas en el itinerario operativo (6.4.1; 6.4.2).
 
 ### ***Estación 1 — El Origen Vasco: Espacio Cultural Bodega Harriague (Salto Ciudad)***
 
@@ -365,11 +446,13 @@ Como beneficiarios indirectos se identifican, por un lado, la comunidad rural y 
 
 **Visión.** Posicionarse de cara a 2030 como la ruta enoturística integrada líder del norte de Uruguay, reconocida por la excelencia de sus servicios, la preservación activa de su patrimonio industrial y su modelo de desarrollo sostenible y asociativo.
 
+**Valores.** Del marco teórico (Capítulo 2) y del diagnóstico de situación (Capítulo 4) se desprenden cuatro valores que orientan la operación cotidiana del circuito y que el Consejo Consultivo Técnico (5.4) debe velar por sostener en el tiempo. La autenticidad, entendida en los términos de Prats (1997) como fidelidad a la memoria histórica del territorio antes que a una narrativa comercialmente conveniente pero inexacta, rige el contenido de todos los guiones interpretativos (5.1). La sostenibilidad, en su triple dimensión económica, social y ambiental (Elkington, 1997; 6.2), condiciona tanto las decisiones de abastecimiento como los criterios de certificación de las bodegas asociadas. La asociatividad, fundamentada en los principios de acción colectiva de Ostrom (1990; 2.4), prioriza el beneficio conjunto del circuito por sobre el interés individual de cada bodega participante. Y la accesibilidad, exigida por el Art. 3.º de la Ley N.° 19.253 (5.5), garantiza que la experiencia patrimonial e interpretativa esté disponible para visitantes con movilidad reducida en cada una de las cuatro estaciones del itinerario.
+
 ## **5.4. Estructura Organizativa**
 
 El circuito funciona bajo la dirección del Comité de Gestión del Circuito Enoturístico de Salto, un organismo de gobernanza multinivel concebido para superar la fragmentación sectorial.
 
-Tabla 6
+Tabla 9
 
 *Niveles de gobernanza del Comité de Gestión del Circuito Enoturístico*
 
@@ -382,11 +465,29 @@ Tabla 6
 
 *Nota.* Elaboración propia.
 
+Esta estructura de tres niveles opera, en la práctica, como una respuesta directa a los principios de diseño institucional descritos por Ostrom (1990) y presentados en el punto 2.4. La membresía del Comité queda acotada a los actores directamente involucrados en la operación del circuito —las tres bodegas asociadas, el sector hotelero comisionista, los guías habilitados y, a través del enlace con la Comisión de Turismo del CCIS y la Junta Departamental, el sector público—, evitando tanto la captura del Comité por un único actor dominante como la dilución de responsabilidades en una mesa excesivamente amplia. La Dirección Ejecutiva concentra las decisiones operativas de corto plazo (reservas, comisiones, calendario), mientras que el Consejo Consultivo Técnico —de sesión semestral— ejerce una función de monitoreo entre pares sobre las prácticas agrícolas y la rigurosidad de las narrativas interpretativas, un mecanismo de supervisión gestionado por los propios participantes del sistema y no por un regulador externo, en línea con lo que Ostrom identifica como condición necesaria para la sostenibilidad de los acuerdos de acción colectiva. La ausencia, en esta primera etapa, de un mecanismo formal de resolución de conflictos entre bodegas asociadas constituye una limitación reconocida de la estructura organizativa propuesta, y se recomienda incorporarlo como cláusula explícita en los convenios anuales mencionados en el punto 6.4.3.
+
 ## **5.5. Marco Legal**
 
 La formalización y operación del circuito se rige por la Ley N.° 19.253 (Ley de Regulación de la Actividad Turística en Uruguay, IMPO, 2014), y el proyecto se alinea con sus disposiciones fundamentales. En cuanto a la declaración de interés nacional (Art. 1.º), el circuito promueve el crecimiento económico y el desarrollo cultural y social de la comunidad de Salto. En relación con el cumplimiento de los principios rectores (Art. 3.º), la propuesta incorpora la sostenibilidad —preservación de recursos naturales y agrícolas litorales—, la cooperación —mesa de cogestión público-privada—, la calidad —certificaciones internacionales de servicios— y la accesibilidad —goce del turismo para personas con discapacidad en todas las estaciones—. Respecto de la regulación de prácticas especializadas (Art. 25.º), la normativa clasifica al circuito como turismo especializado, exigiendo que guías y transportistas cuenten con registros y habilitaciones vigentes ante el MINTUR. Esta última exigencia se reglamenta en concreto mediante el Decreto N.° 278/015 (Uruguay. Poder Ejecutivo, 2015), que regula a las empresas de transporte turístico —aplicable al servicio de minibuses previsto en el itinerario operativo (6.4)— y condiciona su actividad a la inscripción anual ante el MINTUR y a la constitución de una garantía de funcionamiento.
 
 A este marco general se suma una normativa específica para el segmento enoturístico: el Decreto N.° 370/010 (Uruguay. Poder Ejecutivo, 2010) regula puntualmente el turismo enológico y de bodegas, otorgando la condición jurídica de prestador de servicios turísticos a todo establecimiento vitivinícola que ofrezca visitas, catas o gastronomía mediante cobro de tarifa —criterio directamente aplicable a Salto Chico, Bertolini & Broglio y Mori Maglio— y condicionando su operativa a la inscripción en el Registro de Operadores del MINTUR, con acreditación notarial, certificados de BPS y DGI, croquis del predio y habilitación vigente del INAVI. Finalmente, la normativa sectorial de INAVI, con base en la Ley N.° 15.903 (Uruguay, 1987) que crea y regula al organismo, establece que los procesos de cata, venta de botellas cerradas y etiquetado deben ajustarse a los controles de calidad y reglamentaciones de circulación del Instituto Nacional de Vitivinicultura.
+
+Tabla 10
+
+*Síntesis del marco normativo aplicable al circuito*
+
+|  |  |  |
+| :-: | :-: | :-: |
+| \*\*Instrumento\*\* | \*\*Ámbito de aplicación\*\* | \*\*Exigencia principal para el circuito\*\* |
+| Ley N.° 19.253 (IMPO, 2014) | Marco general de la actividad turística nacional | Principios rectores de sostenibilidad, cooperación, calidad y accesibilidad (Art. 3.º) |
+| Decreto N.° 278/015 (2015) | Empresas de transporte turístico | Inscripción anual ante el MINTUR y garantía de funcionamiento para el servicio de minibuses (6.4) |
+| Decreto N.° 370/010 (2010) | Turismo enológico y de bodegas | Registro de Operadores del MINTUR; acreditación notarial, certificados de BPS y DGI, croquis del predio y habilitación INAVI |
+| Ley N.° 15.903 (1987) | Regulación del Instituto Nacional de Vitivinicultura | Controles de calidad y circulación aplicables a la cata, venta y etiquetado del vino |
+
+*Nota.* Elaboración propia a partir de la normativa citada en este apartado.
+
+Esta síntesis normativa evidencia que la operación del circuito no requiere de un marco legal nuevo o excepcional, sino la articulación coordinada de instrumentos ya vigentes y dispersos entre distintos organismos —MINTUR, INAVI, BPS y DGI—, lo que refuerza la función del Comité de Gestión (5.4) como responsable de centralizar el cumplimiento normativo de las tres bodegas asociadas y del servicio de transporte contratado, evitando que cada prestador deba gestionar de forma individual y descoordinada su habilitación ante cada organismo.
 
 # **Capítulo 6. Plan de Acción**
 
@@ -396,13 +497,15 @@ A este marco general se suma una normativa específica para el segmento enoturí
 
 Se establece un posicionamiento premium basado en la diferenciación conceptual: el circuito no compite únicamente como destino de vinos, sino como una experiencia holística que combina el relax físico y la hidroterapia de las termas de Salto con el disfrute cultural e histórico de la cuna del vino de Uruguay.
 
+Siguiendo el concepto de posicionamiento de Ries y Trout (1981), el objetivo no es ocupar un espacio genérico dentro de la categoría “enoturismo”, sino instalar en la mente del visitante una asociación única e irrepetible: Salto como la única “Cuna del Tannat” del país, un atributo que —a diferencia del precio, la escala de producción o la infraestructura hotelera— ningún competidor directo (4.3) puede reclamar de forma creíble. Esta decisión de posicionamiento tiene una consecuencia directa sobre toda la estrategia de marketing: en lugar de competir por participación de mercado dentro de la categoría enoturística nacional, el circuito busca crear y liderar una subcategoría propia —el turismo termal-patrimonial— dentro de la cual no enfrenta competencia directa, tal como se concluyó en el análisis competitivo del punto 4.3.
+
 ### ***6.1.2. Producto***
 
 La oferta se estructura en dos paquetes. El Paquete 1, “Vinos e Historias” (media jornada, 4 horas), incluye el traslado en minibús desde el hotel del visitante en Daymán, un recorrido interpretativo por las ruinas de la Bodega Harriague con degustación de copa de Tannat joven, y una visita técnica a Bertolini & Broglio o Salto Chico con cata de tres varietales y quesos artesanales. El Paquete 2, “El Legado del Tannat” (jornada completa, 8 horas), abarca el recorrido de las cuatro estaciones, un almuerzo de maridaje de tres pasos, una cata guiada de seis vinos de reserva y la participación en el taller de elaboración artesanal de vermouth en Mori Maglio.
 
 ### ***6.1.3. Precio***
 
-Tabla 7
+Tabla 11
 
 *Estructura de costos y precios de los paquetes turísticos*
 
@@ -422,9 +525,36 @@ La comercialización combina dos canales. La venta directa digital se realiza a 
 
 La estrategia de promoción se apoya en tres líneas de acción. En primer lugar, la publicidad digital segmentada en Instagram, Facebook y YouTube, georreferenciada en Montevideo, Buenos Aires, Rosario, Concordia y ciudades de Rio Grande do Sul (Porto Alegre, Uruguaiana). En segundo lugar, una estrategia binacional en la “Semana de Harriague”, que invita a críticos de vino y periodistas de turismo de Uruguay, Argentina y Brasil. En tercer lugar, la presencia en ferias internacionales, con stand propio en el espacio INAVI “Uruguay Wine” de la Expo Turismo de Uruguay, en Festuris (Gramado, Brasil) y en la London Wine Fair. Y en cuarto lugar, la vinculación con el Salón del Vino Fino de Salto, evento anual ya consolidado —organizado por el Rotary Club Salto Noreste, con unas veinte bodegas participantes y una convocatoria regional de entre 500 y 700 personas provenientes de Uruguay, Argentina y Brasil (Radio Libertadores, s.f.)—, en el que el Comité de Gestión promocionará directamente los paquetes de la ruta ante un público ya sensibilizado hacia el enoturismo.
 
+### ***6.1.6. Presupuesto de Marketing***
+
+El componente de marketing se financia con cargo a la partida de “campaña de prelanzamiento” de la inversión inicial (6.5.4), cuyo desglose por rubro se detalla en la Tabla 12.
+
+Tabla 12
+
+*Desglose de la inversión inicial por rubro y de la campaña de prelanzamiento por canal*
+
+|  |  |
+| :-: | :-: |
+| \*\*Rubro de la inversión inicial (USD 45.000)\*\* | \*\*Monto (USD)\*\* |
+| Desarrollo de la plataforma de reservas (web, app y pasarela de pago) | 20.000 |
+| Cartelería interpretativa (guiones y paneles de las cuatro estaciones) | 10.000 |
+| Mobiliario de cata | 8.000 |
+| Campaña de prelanzamiento digital | 7.000 |
+| \*\*Canal de la campaña de prelanzamiento (USD 7.000)\*\* | \*\*Monto (USD)\*\* |
+| Publicidad digital segmentada (Instagram, Facebook, YouTube) | 3.000 |
+| Presencia binacional en la Semana de Harriague | 1.500 |
+| Participación en ferias internacionales (stand INAVI, Festuris) | 1.500 |
+| Vinculación con el Salón del Vino Fino de Salto | 1.000 |
+
+*Nota.* Elaboración propia. El desglose por canal corresponde a la apertura de la partida "Campaña de prelanzamiento digital" del cuadro superior.
+
+Esta apertura por rubro permite anticipar dos cuestiones de gestión que exceden el simple encuadre contable. En primer lugar, la mayor asignación recae sobre la plataforma de reservas (44% del total), coherente con el diagnóstico del punto 4.1, que identificó la ausencia de un motor de reservas en tiempo real como una de las principales brechas digitales del circuito. En segundo lugar, dentro de la campaña de prelanzamiento, el mayor peso corresponde a la publicidad digital segmentada, lo que resulta consistente con la estrategia de posicionamiento definida en el punto 6.1.1: alcanzar de forma eficiente a los segmentos geográficos de Montevideo, Buenos Aires y el sur de Brasil identificados en el punto 4.5, sin incurrir en los costos fijos más elevados que implicaría una campaña de medios masivos tradicionales.
+
 ## **6.2. Estrategia de Sostenibilidad**
 
 La estrategia de sostenibilidad se apoya en tres líneas de acción. En el plano agrícola, se persigue la certificación progresiva de la totalidad de los viñedos bajo el Plan de Uva Sostenible de INAVI. En el plano de la economía circular y el abastecimiento local, se prevé que el 100% de los insumos gastronómicos de maridaje sea adquirido a pequeños agricultores y cooperativas rurales de Colonia Osimani y Parada Daymán. Finalmente, se constituye un fondo de desarrollo de la caminería rural mediante un fideicomiso con el 3% del ingreso neto de la venta de pasajes, destinado a la reparación y el mantenimiento de las vías rurales de ripio.
+
+Estas tres líneas de acción no son iniciativas aisladas, sino la traducción operativa del criterio de triple resultado (Elkington, 1997), según el cual la sostenibilidad de un emprendimiento debe evaluarse simultáneamente en su desempeño económico, social y ambiental, y no únicamente en su rentabilidad financiera. La certificación bajo el Plan de Uva Sostenible de INAVI atiende la dimensión ambiental, en línea con lo ya fundamentado en el punto 2.1; el abastecimiento local de insumos gastronómicos atiende la dimensión social, al retener en el territorio el gasto generado por el circuito y fortalecer a los pequeños productores de Colonia Osimani y Parada Daymán identificados como beneficiarios indirectos (5.2); y el fideicomiso de caminería rural atiende, de forma directa, una de las principales debilidades de infraestructura diagnosticadas en el Capítulo 4, financiando su mitigación con recursos generados por el propio circuito y no exclusivamente con fondos públicos. Esta estructura tripartita permite que la sostenibilidad del proyecto no dependa de la buena voluntad de sus gestores, sino que quede incorporada en su propio modelo de ingresos y costos.
 
 ## **6.3. Estrategia de Calidad**
 
@@ -434,7 +564,7 @@ La estrategia de calidad se sostiene sobre tres pilares. El primero es la malla 
 
 ### ***6.4.1. Itinerario operativo — Paquete 1 (media jornada)***
 
-Tabla 8
+Tabla 13
 
 *Itinerario operativo del Paquete 1 (media jornada)*
 
@@ -452,7 +582,7 @@ Tabla 8
 
 ### ***6.4.2. Itinerario operativo — Paquete 2 (jornada completa)***
 
-Tabla 9
+Tabla 14
 
 *Itinerario operativo del Paquete 2 (jornada completa)*
 
@@ -479,6 +609,10 @@ El Comité de Gestión centraliza los acuerdos con las tres bodegas asociadas, l
 
 En cumplimiento del principio de accesibilidad de la Ley N.° 19.253, cada estación cuenta con un recorrido alternativo apto para personas con movilidad reducida y material interpretativo en formatos accesibles. Ante lluvias que afecten la caminería rural de Colonia Osimani o Parada Daymán, el protocolo de contingencia prevé: (a) confirmación del estado de las vías con la Intendencia de Salto antes de las 07:00 del día de salida; (b) reemplazo de las estaciones rurales por la Estación 1 (Espacio Harriague, de acceso pavimentado) y una bodega alcanzable por ruta asfaltada; (c) comunicación inmediata a los pasajeros y hoteles asociados por la app y por mensaje de texto. Los conductores y guías reciben formación en primeros auxilios básicos como parte de la malla curricular de 120 horas (6.3).
 
+### ***6.4.5. Requisitos de Habilitación y Cobertura de Riesgos***
+
+La operativa del circuito depende de un conjunto de habilitaciones y coberturas que deben estar vigentes antes de la salida operativa piloto prevista en el calendario de implantación (6.6). En materia de transporte, la empresa de minibuses contratada por el Comité de Gestión debe contar con la habilitación turística nacional exigida por el Decreto N.° 278/015 (5.5), inscripta ante el MINTUR con reinscripción anual, así como con cobertura de seguro de responsabilidad civil que alcance tanto a terceros como a los pasajeros transportados. En materia de las bodegas asociadas, la condición de prestador de servicios turísticos habilitado bajo el Decreto N.° 370/010 (5.5) exige mantener vigente el registro ante el MINTUR y la habilitación sanitaria del INAVI para la venta de botellas cerradas y la realización de catas comerciales. En materia de responsabilidad civil general, el Comité de Gestión contrata una póliza colectiva que cubre eventuales accidentes durante las visitas guiadas en cada una de las cuatro estaciones (5.1.3), incluida la manipulación de maquinaria de vinificación durante los recorridos técnicos de las Estaciones 2 y 3. Finalmente, el personal gastronómico que participa en las degustaciones y maridajes —tanto el propio de las bodegas como el de los proveedores locales de quesos y panificados (6.2)— debe contar con carné de manipulación de alimentos vigente, en cumplimiento de la normativa bromatológica departamental. La verificación de estos cuatro requisitos se incorpora como condición previa a la firma de los convenios anuales entre el Comité de Gestión y cada proveedor (6.4.3), y su seguimiento queda a cargo del Consejo Consultivo Técnico (5.4) como parte de sus funciones semestrales de auditoría.
+
 ## **6.5. Planificación Financiera**
 
 ### ***6.5.1. Análisis de Costos***
@@ -489,7 +623,7 @@ Costos variables por turista (Paquete 1): logística y transporte (USD 8); copa 
 
 ### ***6.5.2. Proyecciones***
 
-Tabla 10
+Tabla 15
 
 *Proyección financiera a cinco años*
 
@@ -519,9 +653,24 @@ Sobre una inversión inicial de USD 45.000 (desarrollo de la plataforma de reser
 
 A un horizonte de 5 años y una tasa de descuento del 12%, el Valor Actual Neto (VAN) alcanza USD 192.418, confirmando la viabilidad económica del proyecto. La Tasa Interna de Retorno (TIR) se sitúa en 84%, valor elevado derivado de la estructura ligera de activos fijos, que aprovecha infraestructura hotelera, vial y de bodegas ya existente en el departamento.
 
+Dado que la proyección de 3.630 turistas para el Año 1 constituye un supuesto de demanda no validado empíricamente (3.3), resulta pertinente estimar la sensibilidad del ROI ante desvíos de esa proyección, aplicando la misma fórmula del punto 6.5.4 bajo dos escenarios alternativos que mantienen constantes el precio (USD 45), el costo variable unitario (USD 30) y los costos fijos anuales (USD 24.000). En un escenario pesimista, con una captación 20% menor a la proyectada (2.904 turistas), los ingresos totales serían de USD 130.680, los costos variables de USD 87.120 y el flujo de caja neto de USD 19.560, lo que arroja un ROI de aproximadamente 43,5%; es relevante notar que, incluso en este escenario adverso, la captación de 2.904 turistas permanece muy por encima del punto de equilibrio de 1.600 turistas anuales (6.5.3), por lo que el proyecto conserva su viabilidad operativa. En un escenario optimista, con una captación 20% mayor (4.356 turistas), los ingresos ascenderían a USD 196.020, los costos variables a USD 130.680 y el flujo de caja neto a USD 41.340, con un ROI cercano al 91,9%. Este ejercicio de sensibilidad confirma que el modelo de negocio tolera una variación considerable en sus supuestos de demanda sin comprometer su sostenibilidad financiera básica, lo que refuerza la recomendación —ya planteada en el Capítulo 7— de iniciar la operación con el Paquete 1 a modo de piloto antes de comprometer la totalidad de la inversión en la oferta completa.
+
+Tabla 16
+
+*Análisis de sensibilidad del ROI Año 1 ante variaciones en la demanda proyectada*
+
+|  |  |  |  |  |
+| :-: | :-: | :-: | :-: | :-: |
+| \*\*Escenario\*\* | \*\*Turistas Año 1\*\* | \*\*Ingresos totales\*\* | \*\*Flujo de caja neto\*\* | \*\*ROI\*\* |
+| Pesimista (-20%) | 2.904 | USD 130.680 | USD 19.560 | 43,5% |
+| Base (proyectado, 6.5.2) | 3.630 | USD 163.350 | USD 30.450 | 67,7% |
+| Optimista (+20%) | 4.356 | USD 196.020 | USD 41.340 | 91,9% |
+
+*Nota.* Elaboración propia. En los tres escenarios la captación se mantiene por encima del punto de equilibrio de 1.600 turistas anuales (6.5.3).
+
 ### ***6.5.5. Fuentes de Inversión***
 
-Tabla 11
+Tabla 17
 
 *Fuentes de inversión inicial*
 
@@ -538,7 +687,7 @@ Tabla 11
 
 Cronograma de puesta en marcha del proyecto, desde la postulación a fondos hasta la operación regular. Los plazos son estimaciones a ajustar según los tiempos reales de resolución de cada convocatoria.
 
-Tabla 12
+Tabla 18
 
 *Calendario de implantación del proyecto*
 
@@ -555,6 +704,53 @@ Tabla 12
 
 *Nota.* Elaboración propia.
 
+## **6.7. Análisis de Riesgos y Contingencias**
+
+La formulación del plan de acción exige sistematizar los riesgos identificados a lo largo del diagnóstico (Capítulo 4) en una matriz que oriente su seguimiento durante la implementación, en lugar de dejarlos dispersos entre distintos capítulos.
+
+Tabla 19
+
+*Matriz de riesgos del proyecto y estrategias de mitigación*
+
+|  |  |  |  |
+| :-: | :-: | :-: | :-: |
+| \*\*Riesgo\*\* | \*\*Probabilidad\*\* | \*\*Impacto\*\* | \*\*Estrategia de mitigación\*\* |
+| Volatilidad cambiaria y reversión de la brecha de precios con Argentina (4.6; Tabla 8) | Alta (comportamiento ya observado en 2026) | Medio-alto: reduce el atractivo de precio relativo de Salto frente a Concordia | Diferenciación por autenticidad patrimonial en lugar de competencia por precio (5.1); monitoreo trimestral del IPF de la UCU como indicador de alerta temprana |
+| Persistencia de la fragmentación de la gobernanza turística tras el cese de la METS (4.6) | Media | Alto: sin coordinación multisectorial, el Comité de Gestión podría operar aislado del resto de la política turística departamental | Formalización temprana del enlace institucional con la Comisión de Turismo del CCIS y de la Junta Departamental (5.4) mediante convenio escrito, no solo informal |
+| Elegibilidad no inmediata a los fondos públicos concursables por desalineación temática de la convocatoria vigente (4.6) | Alta en el corto plazo | Medio: retrasa, pero no impide, el acceso a financiamiento no reembolsable | Diversificación de fuentes de inversión inicial (6.5.5) para no depender de una única convocatoria; monitoreo del calendario de llamados de ANDE y MINTUR |
+| Sobreestimación de la demanda proyectada para el Año 1 (6.5.2) | Media | Alto: compromete el punto de equilibrio si la captación real es menor al 0,8% del corredor termal proyectado | Operación piloto acotada al Paquete 1 antes de escalar al Paquete 2 completo (6.6, fase 6); ajuste de metas con base en los resultados del cuestionario QR |
+| Vulnerabilidad climática de la caminería rural secundaria (4.1; 6.4.4) | Alta en temporada de lluvias | Medio: afecta la operativa de un día puntual, no la viabilidad del negocio | Protocolo de contingencia ya definido (6.4.4): rutas alternativas pavimentadas y comunicación inmediata a pasajeros |
+| Capacidad limitada de las bodegas familiares para atender grupos grandes (4.6) | Media | Medio: puede generar una experiencia de menor calidad en picos de demanda | Cupos máximos por salida acordados en los convenios anuales (6.4.3) y escalonamiento de turnos entre las tres bodegas |
+
+*Nota.* Elaboración propia a partir de los riesgos identificados en el diagnóstico de los Capítulos 1, 4 y 6.
+
+Del análisis se desprende que ninguno de los riesgos identificados es, por sí solo, de magnitud suficiente para comprometer la viabilidad del proyecto, pero varios de ellos —en particular la volatilidad cambiaria y la fragmentación de la gobernanza— son de naturaleza estructural y exceden la capacidad de control directo del Comité de Gestión. Por ello, el seguimiento periódico de estos indicadores debe incorporarse como una función explícita del Consejo Consultivo Técnico (5.4), y no tratarse como un ejercicio de diagnóstico único realizado únicamente en la etapa de formulación del proyecto.
+
+## **6.8. Indicadores de Desempeño**
+
+Los distintos capítulos de este proyecto definen, de forma dispersa, un conjunto de métricas que permiten monitorear su desempeño una vez iniciada la operación. Sistematizarlas en un único tablero de indicadores facilita su seguimiento periódico por parte del Comité de Gestión.
+
+Tabla 20
+
+*Tablero de indicadores de desempeño del circuito*
+
+|  |  |  |  |
+| :-: | :-: | :-: | :-: |
+| \*\*Dimensión\*\* | \*\*Indicador\*\* | \*\*Meta Año 1\*\* | \*\*Fuente de verificación\*\* |
+| Comercial | Turistas captados | 3.630 (6.5.2) | Motor de reservas de la app (6.1.4) |
+| Comercial | Participación en la demanda del corredor termal | 0,8% de 453.936 visitantes (1.1; 6.5.2) | Comparación con datos de CERES (2026) |
+| Financiero | Punto de equilibrio anual | 1.600 turistas (6.5.3) | Reportes contables del Comité de Gestión |
+| Financiero | ROI Año 1 | ≈ 67,7% (6.5.4) | Reportes contables del Comité de Gestión |
+| Calidad de servicio | Satisfacción general del tour | Escala 1-5 estrellas | Cuestionario QR post-visita (Anexo Cap. 6) |
+| Calidad de servicio | Tasa de recomendación (NPS aproximado) | A definir con la primera cohorte piloto | Cuestionario QR post-visita |
+| Patrimonial e interpretativo | Recordación de la narrativa histórica | % de visitantes que identifica correctamente el origen del Tannat | Cuestionario QR post-visita (Anexo Cap. 2) |
+| Sostenibilidad | Bodegas certificadas en el Plan de Uva Sostenible de INAVI | 1 de 3 bodegas en proceso de certificación en el Año 1 | Registro de certificación INAVI-LSQA (6.2) |
+| Gobernanza | Frecuencia de sesión del Consejo Consultivo Técnico | Semestral (5.4) | Actas del Comité de Gestión |
+
+*Nota.* Elaboración propia, a partir de las metas e instrumentos ya definidos en los Capítulos 1, 5 y 6.
+
+Este tablero cumple una doble función: por un lado, opera como un mecanismo de rendición de cuentas del Comité de Gestión frente a las bodegas asociadas, el sector hotelero y las instituciones públicas que respaldan financieramente el proyecto (6.5.5); por otro, constituye el insumo empírico necesario para revisar, al cierre de cada temporada, los supuestos de demanda utilizados en las proyecciones financieras (6.5.2) y ajustar el plan de acción del año siguiente en función de resultados reales y no de estimaciones iniciales.
+
 # **Capítulo 7. Reflexiones Finales**
 
 La realización de este proyecto de fin de carrera evidencia que el departamento de Salto dispone de las condiciones básicas para llevar a cabo una reconversión y diversificación de su oferta turística tradicional. La excesiva dependencia del turismo termal ha limitado el potencial de rentabilidad del destino, consolidando un perfil de visitante de bajo gasto que restringe el desarrollo económico de las comunidades rurales y de pequeña escala de la región.
@@ -565,6 +761,8 @@ Al conectar la antigua Bodega Harriague con establecimientos boutique en funcion
 
 Finalmente, la sostenibilidad a largo plazo de este circuito no dependerá únicamente de la campaña publicitaria o de la calidad del vino Tannat. El factor crítico para el éxito radica en la consolidación del Comité de Gestión de la Ruta, una estructura de gobernanza asociativa que exige del sector público departamental, la sociedad civil y las bodegas privadas un compromiso de cooperación continua y de estandarización de servicios. Al superar la fragmentación operativa histórica, Salto no solo recuperará competitividad frente a los destinos del sur del país, sino que consolidará un modelo de desarrollo territorial donde el patrimonio, la sostenibilidad y el descanso se conjugan en beneficio de sus habitantes y visitantes.
 
+Este trabajo no agota, sin embargo, las líneas de indagación que el proyecto abre. Tal como se reconoce en el punto 3.3, el diagnóstico de mercado se apoyó en una muestra no probabilística y en un número acotado de entrevistas institucionales, por lo que una futura etapa de investigación debería ampliar el relevamiento de campo —en particular, la encuesta a turistas termales— antes de comprometer la inversión inicial descrita en el punto 6.5.5. Asimismo, quedan como líneas de trabajo futuro la evaluación de la incorporación de nuevas bodegas y productores artesanales de la región al circuito una vez consolidada la operación piloto con las tres bodegas fundadoras, y el estudio de la replicabilidad de este modelo asociativo de gobernanza en otras zonas del litoral norte uruguayo que enfrentan una desconexión similar entre su patrimonio productivo y su oferta turística consolidada. En síntesis, "La Ruta del Tannat: Cepa, origen e identidad" se presenta no como un producto turístico cerrado, sino como el punto de partida de un proceso de desarrollo territorial que deberá revisarse y ajustarse de forma continua a partir de la evidencia que la propia operación del circuito genere.
+
 # **Referencias Bibliográficas**
 
   
@@ -572,6 +770,8 @@ Finalmente, la sostenibilidad a largo plazo de este circuito no dependerá únic
 Agencia Nacional de Desarrollo \[ANDE\] & Ministerio de Turismo. (2026). Bases del Fondo Concursable para Emprendimientos Turísticos en Destinos Emergentes MINTUR-ANDE. https://www.ande.org.uy/images/2026/Emprendimientos/Bases\_Fondo\_Concursable\_para\_Emprendimientos\_Turisticos\_en\_Destinos\_Emergentes\_MINTUR\_-\_ANDE\_-\_Nautico\_revisado\_ANDE.pdf
 
 Ahlfert, C. (2012). El viaje como experiencia \[Trabajo final, Postgrado en Turismo Sostenible Internacional\]. Universidad Rafael Landívar. https://dau.url.edu/bitstream/handle/20.500.14342/4340/Ahlfert\_PTSI\_ElVi.pdf
+
+Boisier, S. (2003). El desarrollo en su lugar (el territorio en la sociedad del conocimiento). Instituto de Geografía, Pontificia Universidad Católica de Chile.
 
 Bodega Salto Chico. (s.f.-a). Bodega boutique. Recuperado el 28 de agosto de 2026, de https://www.saltochico.com.uy/
 
@@ -608,6 +808,8 @@ El Entre Ríos. (s.f.). "Salto, cuna del Tannat" se une a Concordia para homenaj
 El País. (s.f.). Argentina, y algo menos Brasil, se encarecen para los uruguayos, aunque hay rubros que están "baratos", ¿qué brechas hay? https://www.elpais.com.uy/negocios/noticias/argentina-y-algo-menos-brasil-se-encarecen-para-las-uruguayos-aunque-hay-rubros-que-estan-baratos-que-brechas-hay
 
 El Pueblo Digital. (2026). Semana de Harriague 2026: Salto celebra la cuna del Tannat. https://elpueblodigital.uy/salto-cuna-del-tannat-comienza-una-semana-para-celebrar-nuestra-identidad-y-legado/
+
+Elkington, J. (1997). Cannibals with forks: The triple bottom line of 21st century business. Capstone Publishing.
 
 Entre Ríos Hoy. (s.f.). Termas y enoturismo: la fórmula que potencia los atractivos que Entre Ríos ofrece a los visitantes. https://entrerioshoy.com/termas-y-enoturismo-la-formula-que-potencia-los-atractivos-que-entre-rios-ofrece-a-los-visitantes/
 
@@ -655,6 +857,8 @@ Intendencia de Salto. (s.f.-c). Nuevas acciones dentro del proceso de rescate de
 
 Intendencia de Salto. (s.f.-d). Termal. Turismo Salto. https://turismo.salto.gub.uy/termal
 
+Kotler, P., & Keller, K. L. (2016). Marketing management (15.ª ed.). Pearson.
+
 La Hora del Campo. (s.f.). Tres vinos del «terroir salteño» ganaron una «Medalla de Oro». https://lahoradelcampo.com.uy/site/tres-vinos-del-terroir-salteno-ganaron-una-medalla-de-oro/
 
 La Sacristía. (s.f.). Bertolini & Broglio Viognier. https://lasacristia.com.uy/catalogo/bertolini-broglio-viognier\_7730951970161\_7730951970161
@@ -691,6 +895,8 @@ Oficina de Planeamiento y Presupuesto \[OPP\]. (s.f.). Programa vial departament
 
 Organización Mundial del Turismo \[ONU Turismo\]. (s.f.). Desarrollo sostenible. https://www.untourism.int/sustainable-development
 
+Ostrom, E. (1990). Governing the commons: The evolution of institutions for collective action. Cambridge University Press.
+
 Pasaporte Uruguay. (s.f.). Enoturismo uruguayo recaudó 11 millones de dólares en 2022, informó INAVI. https://pasaporteuruguay.com/turismo/7630-enoturismo-uruguayo-recaudo-11-millones-de-dolares-en-2022-informo-inavi
 
 Pine, B. J., & Gilmore, J. H. (1998). Welcome to the experience economy. Harvard Business Review, 76(4), 97–105.
@@ -698,6 +904,8 @@ Pine, B. J., & Gilmore, J. H. (1998). Welcome to the experience economy. Harvard
 Playa Escondida. (s.f.). Enoturismo y la ruta del vino en Canelones. https://playaescondida.uy/blog/enoturismo-y-ruta-del-vino-canelones-uruguay/
 
 Por las Catas. (2018). Bodega Bertolini & Broglio. De Salto vienen los mejores vinos uruguayos. http://porlascatas.blogspot.com/2018/03/bodega-bertolini-y-broglio-de-salto.html
+
+Porter, M. E. (1980). Competitive strategy: Techniques for analyzing industries and competitors. Free Press.
 
 Prats, L. (1997). Antropología y patrimonio. Ariel.
 
@@ -710,6 +918,8 @@ Radio Libertadores. (s.f.). El Rotary Club Salto Noreste realiza una nueva edici
 Radio Tabaré. (s.f.). Concordia promedió el 60% de ocupación hotelera durante el fin de semana con alta presencia de salteños. https://www.radiotabare.com.uy/concordia-promedio-el-60-de-ocupacion-hotelera-durante-el-fin-de-semana-con-alta-presencia-de-saltenos/
 
 Redalyc. (s.f.). Historia del turismo en Salto: desde el encuentro social al esparcimiento termal. https://www.redalyc.org/pdf/276/27621284004.pdf
+
+Ries, A., & Trout, J. (1981). Positioning: The battle for your mind. McGraw-Hill.
 
 Ruta del Vino Carmelo. (s.f.). Bodegas y experiencias en Uruguay. https://enoturismocarmelo.com.uy/
 
