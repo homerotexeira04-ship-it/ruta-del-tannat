@@ -107,7 +107,7 @@ El enoturismo en Uruguay representa una oportunidad para revertir esta tendencia
 
 ## **1.2. Contextualización y Antecedentes**
 
-El arraigo vitivinícola de Salto se remonta al siglo XIX. Pascual Harriague, inmigrante vasco-francés radicado en Uruguay en 1838 y establecido en Salto en 1840, identificó en 1874 una cepa de procedencia vasca cultivada de forma experimental en la vecina localidad de Concordia (Entre Ríos). Esta variedad, denominada Tannat, encontró en los suelos y el clima de Salto un ecosistema óptimo para su maduración. En 1883, la bodega Harriague ya almacenaba una producción de 300 bordalesas de vino, y para 1887 el establecimiento poseía 137 cuadras de viñedos, consolidando a Salto como el núcleo originario y simbólico del vino uruguayo (Gran Logia de la Masonería del Uruguay, s.f.).
+El arraigo vitivinícola de Salto se remonta al siglo XIX. Pascual Harriague, inmigrante vasco-francés radicado en Uruguay en 1838 y establecido en Salto en 1840, identificó en 1874 una cepa de procedencia vasca cultivada de forma experimental en la vecina localidad de Concordia (Entre Ríos). Esta variedad, denominada Tannat, encontró en los suelos y el clima de Salto un ecosistema óptimo para su maduración. En 1883, la bodega Harriague ya almacenaba una producción de 300 bordalesas de vino, y para 1887 el establecimiento poseía 137 cuadras de viñedos, consolidando a Salto como el núcleo originario y simbólico del vino uruguayo (Gran Logia de la Masonería del Uruguay, s.f.). Esta centralidad fue refrendada a nivel nacional en 2024, cuando el INAVI, junto con la Comisión de Patrimonio Cultural de la Nación, conmemoró oficialmente los 150 años de la vitivinicultura uruguaya tomando como hito fundacional precisamente el cultivo exitoso del Tannat por Harriague en 1874 (Tierra de Valores, 2024), lo que sitúa a Salto —y no a las actuales zonas vitivinícolas del sur del país— como el punto de origen reconocido oficialmente por el organismo rector del sector.
 
 En años recientes se han impulsado acciones públicas y privadas para revalorizar esta herencia, entre ellas la organización anual de la “Semana de Harriague” en abril, que reúne actividades culturales, gastronómicas y de cata de vinos con la participación del Centro Vasco de Salto (Saltoko Euskaldunen Taldea) y la Asociación de Vitivinicultores de Salto. La edición reciente adquirió carácter binacional al integrar actividades compartidas con la ciudad argentina de Concordia (El Pueblo Digital, 2026).
 
@@ -289,7 +289,7 @@ Tabla 4
 
 *Nota.* Elaboración propia a partir de Ministerio de Turismo de Uruguay (2025a, 2025b, 2025c).
 
-A esto se suman los fondos concursables públicos: el Fondo Concursable para Emprendimientos Turísticos en Destinos Emergentes (MINTUR-ANDE) otorga hasta $U900.000 no reembolsables, mientras que el Fondo Enoturismo (MINTUR-INAVI) cofinancia hasta $U500.000. Otra oportunidad relevante es la certificación del Programa de Viticultura Sostenible de INAVI (sello Uruguay Sustainable Winegrowing, auditado por LSQA). Finalmente, se destaca la valorización del Espacio Cultural Bodega Harriague mediante el proyecto binacional de restauración U-riharri, liderado por el Centro Vasco de Salto junto con la Universidad del País Vasco y con el aval de la Cátedra UNESCO.
+A esto se suman los fondos concursables públicos. El Fondo Concursable para Emprendimientos Turísticos en Destinos Emergentes (MINTUR-ANDE) cubre hasta el 70% del plan de acción, con un tope de $U900.000 no reembolsables (Agencia Nacional de Desarrollo \[ANDE\] & Ministerio de Turismo, 2026); su convocatoria vigente al momento de este diagnóstico está orientada al turismo náutico, por lo que el circuito debería postularse a una futura edición temática afín al patrimonio y al enoturismo, o bien acceder al fondo por la vía general de destinos emergentes cuando esta se reabra. En paralelo, el Fondo Concursable para el Desarrollo de la Oferta Enoturística del Uruguay (MINTUR, con INAVI en su comité evaluador) cofinanció en su edición 2024 proyectos por hasta $U1.000.000 (Ministerio de Turismo de Uruguay, 2024), monto más ajustado a la inversión inicial estimada para este proyecto que el techo de convocatorias anteriores. Otra oportunidad relevante es la certificación del Programa de Viticultura Sostenible de INAVI (sello Uruguay Sustainable Winegrowing, auditado por LSQA). Finalmente, se destaca la valorización del Espacio Cultural Bodega Harriague mediante el proyecto binacional de restauración U-riharri, liderado por el Centro Vasco de Salto junto con la Universidad del País Vasco y con el aval de la Cátedra UNESCO.
 
 ### **Amenazas**
 
@@ -333,7 +333,7 @@ La propuesta de valor se denomina “La Ruta del Tannat: Cepa, origen e identida
 
 ### ***Estación 1 — El Origen Vasco: Espacio Cultural Bodega Harriague (Salto Ciudad)***
 
-Ubicada en Avenida Harriague y Etcheverry. Visita arqueológica e histórica que pone en valor la estructura industrial donde Pascual Harriague inició la vinificación comercial del Tannat en 1874. Incluye un guión interpretativo sobre la inmigración vasco-francesa, y cierra con degustación de gastronomía tradicional (paellas y bocados vascos) gestionada por el Centro Vasco de Salto.
+Ubicada en Avenida Harriague y Etcheverry, el sitio es conocido oficialmente como Espacio Cultural Bodega Harriague — El Punto Cero del Tannat, denominación que remite al lugar exacto donde Harriague inició en 1874 el cultivo de la cepa (Euskalkultura.eus, s.f.). Su Comisión de Gestión está integrada por el Municipio de Salto, la Asociación de Vitivinicultores de Salto y el Euskal Etxea (Centro Vasco de Salto), lo que convierte a esta estación en el punto de partida institucional, además de histórico, del circuito. La visita es de carácter arqueológico e histórico y pone en valor la estructura industrial donde Pascual Harriague inició la vinificación comercial del Tannat en 1874. Incluye un guión interpretativo sobre la inmigración vasco-francesa, y cierra con degustación de gastronomía tradicional (paellas y bocados vascos) gestionada por el Centro Vasco de Salto.
 
 ### ***Estación 2 — El Terroir del Río: Bodega Salto Chico (Colonia Osimani)***
 
@@ -418,7 +418,7 @@ La comercialización combina dos canales. La venta directa digital se realiza a 
 
 ### ***6.1.5. Promoción***
 
-La estrategia de promoción se apoya en tres líneas de acción. En primer lugar, la publicidad digital segmentada en Instagram, Facebook y YouTube, georreferenciada en Montevideo, Buenos Aires, Rosario, Concordia y ciudades de Rio Grande do Sul (Porto Alegre, Uruguaiana). En segundo lugar, una estrategia binacional en la “Semana de Harriague”, que invita a críticos de vino y periodistas de turismo de Uruguay, Argentina y Brasil. Y en tercer lugar, la presencia en ferias internacionales, con stand propio en el espacio INAVI “Uruguay Wine” de la Expo Turismo de Uruguay, en Festuris (Gramado, Brasil) y en la London Wine Fair.
+La estrategia de promoción se apoya en tres líneas de acción. En primer lugar, la publicidad digital segmentada en Instagram, Facebook y YouTube, georreferenciada en Montevideo, Buenos Aires, Rosario, Concordia y ciudades de Rio Grande do Sul (Porto Alegre, Uruguaiana). En segundo lugar, una estrategia binacional en la “Semana de Harriague”, que invita a críticos de vino y periodistas de turismo de Uruguay, Argentina y Brasil. En tercer lugar, la presencia en ferias internacionales, con stand propio en el espacio INAVI “Uruguay Wine” de la Expo Turismo de Uruguay, en Festuris (Gramado, Brasil) y en la London Wine Fair. Y en cuarto lugar, la vinculación con el Salón del Vino Fino de Salto, evento anual ya consolidado —organizado por el Rotary Club Salto Noreste, con unas veinte bodegas participantes y una convocatoria regional de entre 500 y 700 personas provenientes de Uruguay, Argentina y Brasil (Radio Libertadores, s.f.)—, en el que el Comité de Gestión promocionará directamente los paquetes de la ruta ante un público ya sensibilizado hacia el enoturismo.
 
 ## **6.2. Estrategia de Sostenibilidad**
 
@@ -544,7 +544,7 @@ Tabla 12
 | :-: | :-: | :-: | :-: |
 | \*\*Fase\*\* | \*\*Plazo estimado\*\* | \*\*Actividades principales\*\* | \*\*Responsable\*\* |
 | 0 | Trimestre 1 | Constitución formal del Comité de Gestión; convenios preliminares con las 3 bodegas, el Centro Vasco y hoteles de Daymán | Comité de Gestión / Comisión de Turismo CCIS |
-| 1 | Trimestre 1-2 | Postulación al Fondo Concursable MINTUR-ANDE y al Fondo Enoturismo MINTUR-INAVI | Dirección Ejecutiva del Comité |
+| 1 | Trimestre 1-2 | Postulación al Fondo Concursable MINTUR-ANDE y al Fondo de Oferta Enoturística MINTUR | Dirección Ejecutiva del Comité |
 | 2 | Trimestre 2-3 | Inicio de certificación Uruguay Sustainable Winegrowing en las bodegas participantes; adecuación de accesos peatonales en el Espacio Harriague | Bodegas asociadas / Intendencia de Salto |
 | 3 | Trimestre 3 | Desarrollo del portal web y la app móvil con motor de reservas y pasarela de pagos | Proveedor TI contratado |
 | 4 | Trimestre 3-4 | Capacitación de 120 horas para guías, choferes y personal de bodegas (CENUR Litoral Norte / UTU) | Consejo Consultivo Técnico |
@@ -659,6 +659,8 @@ Maslow, A. H. (1964). Religions, values, and peak-experiences. Ohio State Univer
 
 Ministerio de Ganadería, Agricultura y Pesca \[MGAP\]. (2024). Programa de Viticultura Sostenible INAVI. https://descargas.mgap.gub.uy/OPYPA/Anuarios/Anuarioopypa2024/TP/11/TP11web/TP11-ProgramadeViticulturaSostenible.pdf
 
+Ministerio de Turismo de Uruguay. (2024). Se anunciaron beneficiarios de Fondos Concursables para el Desarrollo de la Oferta Enoturística. https://www.gub.uy/ministerio-turismo/comunicacion/noticias/se-anunciaron-beneficiarios-fondos-concursables-para-desarrollo-oferta
+
 Ministerio de Turismo de Uruguay. (2025a). Turismo emisivo: Cuarto trimestre 2024. Observatorio de Turismo Inteligente. https://www.gub.uy/ministerio-turismo/sites/ministerio-turismo/files/2025-01/E4T2024.pdf
 
 Ministerio de Turismo de Uruguay. (2025b). Turismo emisivo: Primer trimestre 2025. Observatorio de Turismo Inteligente. https://www.gub.uy/ministerio-turismo/sites/ministerio-turismo/files/2025-06/E-1T2025.pdf
@@ -695,6 +697,8 @@ Presidencia de la República. (2014). Ley N.º 19.253. http://archivo.presidenci
 
 PuntoVid. (s.f.). Del 13 al 18 de abril, Uruguay celebra su cepa insignia: el Tannat, la herencia Harriague. https://puntovid.com.ar/del-13-al-18-de-abril-uruguay-celebra-su-cepa-insginia-el-tannat-la-herencia-harriague/
 
+Radio Libertadores. (s.f.). El Rotary Club Salto Noreste realiza una nueva edición del Salón del Vino Fino en La Calandria. https://radiolibertadores.com/el-rotary-club-salto-noreste-realiza-una-nueva-edicion-del-salon-del-vino-fino/
+
 Radio Tabaré. (s.f.). Concordia promedió el 60% de ocupación hotelera durante el fin de semana con alta presencia de salteños. https://www.radiotabare.com.uy/concordia-promedio-el-60-de-ocupacion-hotelera-durante-el-fin-de-semana-con-alta-presencia-de-saltenos/
 
 Redalyc. (s.f.). Historia del turismo en Salto: desde el encuentro social al esparcimiento termal. https://www.redalyc.org/pdf/276/27621284004.pdf
@@ -708,6 +712,8 @@ Servicio Nacional de Turismo de Chile \[Sernatur\]. (2025). Brasil - Chile trave
 Shop News. (s.f.). El Tannat y Harriague: raíces profundas en la tierra de Salto. https://shopnews.com.uy/el-tannat-y-harriague-raices-profundas-en-la-tierra-de-salto/
 
 Tardáguila. (s.f.). Enoturismo en Uruguay genera ingresos de US$ 11 millones anuales. https://tardaguila.uy/varios/enoturismo-en-uruguay-genera-ingresos-de-us-11-millones-anuales
+
+Tierra de Valores \[INAVI & Comisión de Patrimonio Cultural de la Nación\]. (2024). 150 años de vitivinicultura en Uruguay. https://tierradevalores.com.uy/
 
 Todo Uruguay. (s.f.). Visita a bodega boutique de Salto \[Video\]. YouTube. https://www.youtube.com/watch?v=PZz0xnOJWbE
 
@@ -788,7 +794,7 @@ Encuesta anónima — Ruta del Tannat. Duración estimada: 5 minutos. Marque con
 |  |  |  |
 | :-: | :-: | :-: |
 | \*\*Cruce\*\* | \*\*Estrategia\*\* | \*\*Acción derivada\*\* |
-| FO — Ofensiva | Legitimidad histórica + terroir + bodegas boutique, frente al crecimiento del mercado brasileño y los fondos concursables | Postular al Fondo Enoturismo MINTUR-INAVI y a ANDE; campaña dirigida a Rio Grande do Sul |
+| FO — Ofensiva | Legitimidad histórica + terroir + bodegas boutique, frente al crecimiento del mercado brasileño y los fondos concursables | Postular al Fondo de Oferta Enoturística (MINTUR) y monitorear una futura convocatoria afín del Fondo MINTUR-ANDE; campaña dirigida a Rio Grande do Sul |
 | DO — Adaptación | Brecha digital de las bodegas, resuelta con fondos no reembolsables; débil asociatividad, resuelta vía proyecto U-riharri | Desarrollo del motor de reservas compartido; activación del Espacio Harriague como “kilómetro cero” |
 | FA — Defensiva | Fuga de turistas hacia Entre Ríos por brecha cambiaria, enfrentada con diferenciación por autenticidad, no por precio | Reposicionar la oferta termal como experiencia híbrida de bienestar, historia y alta enología |
 | DA — Supervivencia | Marca departamental centrada en “Destino Termas” + deficiencias de caminería y señalética | Gestionar ante el MINTUR la señalética de Ruta 3; fondo de caminería rural (3% del ingreso neto, punto 6.2) |
