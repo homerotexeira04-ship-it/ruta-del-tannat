@@ -248,21 +248,21 @@ Este segmento se selecciona por su alta tasa de conversión y baja elasticidad-p
 
 ## **4.6. Análisis FODA**
 
-Los datos oficiales de INAVI (período 2021-2024) reflejan una tendencia de reconversión estructural del rubro vitivinícola en Uruguay:
+Los datos oficiales de INAVI (período 2021-2025) reflejan una tendencia de reconversión estructural del rubro vitivinícola en Uruguay, que el último registro disponible confirma que continúa vigente:
 
 Tabla 3
 
-*Evolución de indicadores vitivinícolas nacionales, 2021-2024*
+*Evolución de indicadores vitivinícolas nacionales, 2021-2025*
 
-|  |  |  |  |  |
-| :-: | :-: | :-: | :-: | :-: |
-| \*\*Indicador nacional\*\* | \*\*2021\*\* | \*\*2023\*\* | \*\*2024\*\* | \*\*Tendencia\*\* |
-| Viñedos vigentes inscritos | 1.183 | 1.103 | 1.077 | \\-8,96% |
-| Superficie cultivada (ha) | 5.966 | 5.905 | 5.857 | \\-1,83% |
-| Productores activos | 866 | 794 | 766 | \\-11,55% |
-| Empresas registradas | 788 | 726 | 698 | \\-11,42% |
+|  |  |  |  |  |  |
+| :-: | :-: | :-: | :-: | :-: | :-: |
+| \*\*Indicador nacional\*\* | \*\*2021\*\* | \*\*2023\*\* | \*\*2024\*\* | \*\*2025\*\* | \*\*Tendencia (2021-2024)\*\* |
+| Viñedos vigentes inscritos | 1.183 | 1.103 | 1.077 | 1.048 | \\-8,96% |
+| Superficie cultivada (ha) | 5.966 | 5.905 | 5.857 | 5.797,80 | \\-1,83% |
+| Productores activos | 866 | 794 | 766 | s/d | \\-11,55% |
+| Empresas registradas | 788 | 726 | 698 | 676 | \\-11,42% |
 
-*Nota.* Elaboración propia a partir de INAVI (2021, 2023a, 2023b, 2024b).
+*Nota.* Elaboración propia a partir de INAVI (2021, 2023a, 2023b, 2024b, 2025). La columna Tendencia refleja la variación 2021-2024, único período con dato de Productores activos disponible en las cuatro fuentes; s/d: dato no desagregado en el reporte 2025 consultado.
 
 ### **Fortalezas**
 
@@ -632,6 +632,8 @@ Instituto Nacional de Vitivinicultura \[INAVI\]. (2023b). Estadísticas de viñe
 Instituto Nacional de Vitivinicultura \[INAVI\]. (2024a). Plan Operativo Anual (POA) 2024/2025 y Registro Catastral de Variedades de Vid de Uruguay.
 
 Instituto Nacional de Vitivinicultura \[INAVI\]. (2024b). Reporte INAVI 2024. https://www.inavi.com.uy/uploads/vinedo/346bb91b94f57f26d3e293b52fc0059a83b273cf.pdf
+
+Instituto Nacional de Vitivinicultura \[INAVI\]. (2025). Reporte anual, Registro de Viñedos Uruguay 2025. https://www.inavi.com.uy/uploads/vinedo/744a55025d144bfb1b83e7f6e8c1966f451672c9.pdf
 
 Instituto Nacional de Vitivinicultura \[INAVI\]. (s.f.-a). Bertolini y Broglio. https://www.inavi.com.uy/bodega/bertolini-y-broglio/
 
