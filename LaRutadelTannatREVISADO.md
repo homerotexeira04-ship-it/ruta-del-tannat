@@ -274,20 +274,20 @@ Entre las debilidades se identifica, en primer lugar, la fragmentación de la go
 
 ### **Oportunidades**
 
-La principal oportunidad identificada es la atracción del mercado enoturístico de Brasil, de alta rentabilidad y afinidad con el sector, tal como reflejan los datos trimestrales del Observatorio de Turismo Inteligente del MINTUR:
+La principal oportunidad identificada es la atracción del mercado enoturístico de Brasil, de alta rentabilidad y afinidad con el sector: según los informes de Turismo Receptivo del Observatorio de Turismo Inteligente del MINTUR, el turista brasileño que visita Uruguay presenta sistemáticamente el mayor gasto diario per cápita de los tres mercados regionales de referencia:
 
 Tabla 4
 
-*Gasto y estadía promedio de turistas extranjeros por trimestre, según mercado de origen*
+*Gasto diario y estadía promedio de los visitantes de Brasil, Argentina y Chile en Uruguay, por trimestre*
 
 |  |  |  |  |
 | :-: | :-: | :-: | :-: |
-| \*\*Trimestre (MINTUR)\*\* | \*\*Brasil\*\* | \*\*Argentina\*\* | \*\*Chile\*\* |
-| 3er trim. 2025 | Gasto USD 81,5 / 7,3 noches | Gasto USD 79,7 / 4,6 noches | Gasto USD 87,9 / 7,2 noches |
-| 1er trim. 2025 | Gasto USD 61,1 / 8,7 noches | Gasto USD 73,5 / 5,5 noches | Gasto USD 94,5 / 6,6 noches |
-| 4to trim. 2024 | Gasto USD 74,9 / 7,2 noches | Gasto USD 77,5 / 4,7 noches | Gasto USD 78,4 / 7,3 noches |
+| \*\*Trimestre (MINTUR, Turismo Receptivo)\*\* | \*\*Brasil\*\* | \*\*Argentina\*\* | \*\*Chile\*\* |
+| 2.º trim. 2026 | Gasto USD 122,6 / 5,1 días | Gasto USD 96,0 / 4,6 días | Gasto USD 112,4 / 4,9 días |
+| 1.º trim. 2026 | Gasto USD 112,1 / 7,3 días | Gasto USD 88,2 / 7,6 días | Gasto USD 122,1 / 7,6 días |
+| 4.º trim. 2025 | Gasto USD 137,7 / 4,9 días | Gasto USD 99,1 / 5,4 días | Gasto USD 103,7 / 7,1 días |
 
-*Nota.* Elaboración propia a partir de Ministerio de Turismo de Uruguay (2025a, 2025b, 2025c).
+*Nota.* Elaboración propia a partir de Ministerio de Turismo de Uruguay (2026a, 2026b, 2026c). Gasto diario por persona (P/P DÍA) en USD corrientes; corresponde a turismo receptivo (visitantes ingresados a Uruguay), no a turismo emisivo.
 
 A esto se suman los fondos concursables públicos. El Fondo Concursable para Emprendimientos Turísticos en Destinos Emergentes (MINTUR-ANDE) cubre hasta el 70% del plan de acción, con un tope de $U900.000 no reembolsables (Agencia Nacional de Desarrollo \[ANDE\] & Ministerio de Turismo, 2026); su convocatoria vigente al momento de este diagnóstico está orientada al turismo náutico, por lo que el circuito debería postularse a una futura edición temática afín al patrimonio y al enoturismo, o bien acceder al fondo por la vía general de destinos emergentes cuando esta se reabra. En paralelo, el Fondo Concursable para el Desarrollo de la Oferta Enoturística del Uruguay (MINTUR, con INAVI en su comité evaluador) cofinanció en su edición 2024 proyectos por hasta $U1.000.000 (Ministerio de Turismo de Uruguay, 2024), monto más ajustado a la inversión inicial estimada para este proyecto que el techo de convocatorias anteriores. Otra oportunidad relevante es la certificación del Programa de Viticultura Sostenible de INAVI (sello Uruguay Sustainable Winegrowing, auditado por LSQA). Finalmente, se destaca la valorización del Espacio Cultural Bodega Harriague mediante el proyecto binacional de restauración U-riharri, liderado por el Centro Vasco de Salto junto con la Universidad del País Vasco y con el aval de la Cátedra UNESCO.
 
@@ -661,11 +661,11 @@ Ministerio de Ganadería, Agricultura y Pesca \[MGAP\]. (2024). Programa de Viti
 
 Ministerio de Turismo de Uruguay. (2024). Se anunciaron beneficiarios de Fondos Concursables para el Desarrollo de la Oferta Enoturística. https://www.gub.uy/ministerio-turismo/comunicacion/noticias/se-anunciaron-beneficiarios-fondos-concursables-para-desarrollo-oferta
 
-Ministerio de Turismo de Uruguay. (2025a). Turismo emisivo: Cuarto trimestre 2024. Observatorio de Turismo Inteligente. https://www.gub.uy/ministerio-turismo/sites/ministerio-turismo/files/2025-01/E4T2024.pdf
+Ministerio de Turismo de Uruguay. (2026a). Turismo receptivo: Cuarto trimestre 2025. Observatorio de Turismo Inteligente. https://www.gub.uy/ministerio-turismo/sites/ministerio-turismo/files/2026-04/Turismo\_Receptivo\_Cuarto\_Trimestre\_2025.pdf
 
-Ministerio de Turismo de Uruguay. (2025b). Turismo emisivo: Primer trimestre 2025. Observatorio de Turismo Inteligente. https://www.gub.uy/ministerio-turismo/sites/ministerio-turismo/files/2025-06/E-1T2025.pdf
+Ministerio de Turismo de Uruguay. (2026b). Turismo receptivo: Primer trimestre 2026. Observatorio de Turismo Inteligente. https://www.gub.uy/ministerio-turismo/sites/ministerio-turismo/files/2026-05/ReceptivoQ1\_2026%20-%20R\_1T26.pdf
 
-Ministerio de Turismo de Uruguay. (2025c). Turismo emisivo: Tercer trimestre 2025. Observatorio de Turismo Inteligente. https://www.gub.uy/ministerio-turismo/sites/ministerio-turismo/files/2025-10/E3T25.pdf
+Ministerio de Turismo de Uruguay. (2026c). Turismo receptivo: Segundo trimestre 2026. Observatorio de Turismo Inteligente. https://www.gub.uy/ministerio-turismo/sites/ministerio-turismo/files/2026-08/R-2T2026.pdf
 
 Ministerio de Turismo de Uruguay. (s.f.-a). Destino Termas. https://destinotermas.gub.uy/
 
