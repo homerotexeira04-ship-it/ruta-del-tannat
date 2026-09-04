@@ -135,6 +135,8 @@ En el enoturismo, la dimensión ambiental se expresa en el terruño o terroir �
 
 El viaje contemporáneo ha pasado del turista de masas pasivo a una demanda orientada a la inmersión activa, que impulsa rutas agroindustriales y experiencias de contacto directo con el productor. Ahlfert (2012), apoyándose en la “economía de la experiencia” de Pine y Gilmore (1998), sostiene que las empresas turísticas deben diseñar acontecimientos memorables que apelen a las emociones del visitante, a partir de dos ejes: la diferencia (salir de la rutina cotidiana) y la novedad (descubrir elementos desconocidos o mirar lo conocido desde una perspectiva nueva). Este enfoque conecta con las “experiencias cumbre” descritas por Maslow (1964) y con la “mirada turística” de Urry (2002), quien advierte que los destinos deben estructurar narrativas complejas que faciliten una inmersión interpretativa real, superando la superficialidad de la información turística tradicional.
 
+A esta dimensión experiencial se suma el concepto de patrimonio histórico, entendido no como un vestigio inerte del pasado sino como una construcción social: según Prats (1997), el patrimonio se activa a partir de una memoria intersubjetiva —compartida por una comunidad— que selecciona y resignifica determinados referentes del pasado en función de las necesidades e intereses del presente. Bajo esta lógica, la figura de Pascual Harriague y el origen del Tannat en Salto no son un dato histórico neutro, sino un relato que la comunidad local activa deliberadamente para construir identidad y, en este caso, valor turístico. La experiencia transformadora que persigue el circuito se apoya, entonces, tanto en la inmersión sensorial descrita por Ahlfert y Urry como en esta dimensión patrimonial: el visitante no solo prueba un vino, sino que participa de la memoria colectiva que le da sentido.
+
 En el medio rural, estos principios se concretan en itinerarios interactivos: el contacto directo con el productor, las degustaciones sensoriales guiadas y los recorridos interpretativos en el viñedo, que permiten comprender los ciclos biológicos de la vid y el manejo del suelo.
 
 ## **2.3. Enfoques aplicados al diseño de la ruta**
@@ -146,6 +148,8 @@ El diseño de la ruta se sustenta en tres enfoques complementarios. En primer lu
 ## **3.1. Enfoque Metodológico**
 
 Se implementa un enfoque de investigación-acción de carácter mixto (cualitativo-cuantitativo) y alcance descriptivo-explicativo. Este diseño metodológico permite realizar un análisis riguroso de la situación actual y, simultáneamente, integrar a los actores locales en el diseño de la propuesta empresarial, facilitando la apropiación social de la ruta.
+
+Esta elección metodológica se fundamenta en Hernández Sampieri et al. (2014), quienes señalan que el enfoque mixto permite compensar las limitaciones de cada método por separado: la dimensión cuantitativa aporta la evidencia estadística necesaria para dimensionar el mercado y proyectar la viabilidad financiera de la propuesta (capítulos 4 y 6), mientras que la dimensión cualitativa —entrevistas, indagación en territorio— permite captar el significado que los propios actores locales (bodegas, Centro Vasco, operadores hoteleros) atribuyen al patrimonio vitivinícola de Salto, un insumo indispensable para diseñar un guion interpretativo fidedigno. El alcance descriptivo-explicativo se justifica, a su vez, porque el proyecto no se limita a describir la situación actual del destino, sino que busca explicar las causas de su bajo desempeño enoturístico —la desconexión estructural entre el producto termal y el patrimonio vitivinícola— para, a partir de ese diagnóstico, formular una propuesta de intervención. El componente de investigación-acción, por último, responde a la necesidad de involucrar a los actores del territorio como corresponsables del diseño de la ruta y no como meros informantes, favoreciendo su apropiación futura del proyecto.
 
 ### ***3.1.1. Técnicas e instrumentos de recolección y análisis***
 
@@ -266,7 +270,7 @@ Entre las fortalezas del proyecto se destaca, en primer término, la legitimidad
 
 ### **Debilidades**
 
-Entre las debilidades se identifica, en primer lugar, la escasa coordinación operativa entre la Mesa Estratégica de Turismo de Salto (METS), los operadores hoteleros y los guías turísticos. Se suma la vulnerabilidad climática en la caminería rural secundaria de Colonia Osimani y Parada Daymán, así como una brecha digital caracterizada por la falta de motores de reserva en tiempo real y de pasarelas de pago electrónico internacional en las bodegas pequeñas. También se advierte una deficiencia crítica en la señalética indicativa homologada por el MINTUR en la Ruta 3 y sus bifurcaciones. Por último, persisten un bajo volumen de producción y una centralización de la distribución en el sur del país.
+Entre las debilidades se identifica, en primer lugar, la fragmentación de la gobernanza turística departamental: la antigua Mesa Estratégica de Turismo de Salto (METS), que en 2022 reunía en una sola instancia a la Intendencia de Salto, el Centro Comercial e Industrial de Salto (CCIS), la Liga de Turismo de Arapey y el sector hotelero (Intendencia de Salto, s.f.-b), dejó de funcionar como mesa unificada. La articulación actual se sostiene en diálogos bilaterales entre la Comisión de Turismo del CCIS y la Comisión de Turismo de la Junta Departamental de Salto (Diario Cambio, s.f.-d), sin una instancia permanente que integre también a los operadores hoteleros y a los guías turísticos. Se suma la vulnerabilidad climática en la caminería rural secundaria de Colonia Osimani y Parada Daymán, así como una brecha digital caracterizada por la falta de motores de reserva en tiempo real y de pasarelas de pago electrónico internacional en las bodegas pequeñas. También se advierte una deficiencia crítica en la señalética indicativa homologada por el MINTUR en la Ruta 3 y sus bifurcaciones. Por último, persisten un bajo volumen de producción y una centralización de la distribución en el sur del país.
 
 ### **Oportunidades**
 
@@ -319,7 +323,7 @@ Esta brecha cambiaria favorece, además, la fuga de turistas de fin de semana ha
 
 ### **Recomendaciones estratégicas para el Plan de Acción**
 
-A partir de este análisis cruzado se desprenden cinco recomendaciones estratégicas para el Plan de Acción. En primer lugar, una gobernanza híbrida y vinculante, mediante la constitución del Comité de Gestión de la Ruta del Tannat, integrado por la METS, la Asociación de Vitivinicultores de Salto, guías locales y representantes hoteleros. En segundo lugar, la mitigación de la brecha de infraestructura, a través de alianzas con agencias receptivas que dispongan de vehículos utilitarios y de la gestión ante el MINTUR de la homologación de señalética específica para la Ruta 3. En tercer lugar, una digitalización orientada a la conversión inmediata, mediante una plataforma web unificada o un motor de reservas compartido con pasarela de pagos internacionales. En cuarto lugar, la hibridación del producto y la certificación sostenible, iniciando el proceso de certificación Uruguay Sustainable Winegrowing en las bodegas activas de la ruta. Por último, la activación del relato binacional y cultural, explotando la épica de Pascual Harriague y la herencia vasca, potenciada por la Semana de Harriague y su carácter binacional con Concordia.
+A partir de este análisis cruzado se desprenden cinco recomendaciones estratégicas para el Plan de Acción. En primer lugar, una gobernanza híbrida y vinculante, mediante la constitución del Comité de Gestión de la Ruta del Tannat, integrado por la Comisión de Turismo del Centro Comercial e Industrial de Salto (CCIS), la Comisión de Turismo de la Junta Departamental de Salto, la Asociación de Vitivinicultores de Salto, guías locales y representantes hoteleros —supliendo así, para este circuito específico, la mesa unificada que dejó de operar tras el cierre de la METS—. En segundo lugar, la mitigación de la brecha de infraestructura, a través de alianzas con agencias receptivas que dispongan de vehículos utilitarios y de la gestión ante el MINTUR de la homologación de señalética específica para la Ruta 3. En tercer lugar, una digitalización orientada a la conversión inmediata, mediante una plataforma web unificada o un motor de reservas compartido con pasarela de pagos internacionales. En cuarto lugar, la hibridación del producto y la certificación sostenible, iniciando el proceso de certificación Uruguay Sustainable Winegrowing en las bodegas activas de la ruta. Por último, la activación del relato binacional y cultural, explotando la épica de Pascual Harriague y la herencia vasca, potenciada por la Semana de Harriague y su carácter binacional con Concordia.
 
 # **Capítulo 5. Propuesta de Valor**
 
@@ -372,7 +376,7 @@ Tabla 6
 | \*\*Nivel\*\* | \*\*Función principal\*\* | \*\*Frecuencia\*\* |
 | Dirección Ejecutiva del Comité | Coordina el calendario de salidas, el flujo de reservas de la app y la distribución de comisiones a hoteles y agencias | Semanal |
 | Consejo Consultivo Técnico | Audita las prácticas agrícolas de las bodegas, actualiza la formación de guías y vela por la rigurosidad histórica de las narrativas | Semestral |
-| Mesa Estratégica de Turismo de Salto (METS) — enlace | Articula al Comité con la política turística departamental | Según agenda departamental |
+| Comisión de Turismo del CCIS y de la Junta Departamental — enlace | Articula al Comité con la política turística departamental | Según agenda departamental |
 
 *Nota.* Elaboración propia.
 
@@ -539,7 +543,7 @@ Tabla 12
 |  |  |  |  |
 | :-: | :-: | :-: | :-: |
 | \*\*Fase\*\* | \*\*Plazo estimado\*\* | \*\*Actividades principales\*\* | \*\*Responsable\*\* |
-| 0 | Trimestre 1 | Constitución formal del Comité de Gestión; convenios preliminares con las 3 bodegas, el Centro Vasco y hoteles de Daymán | Comité de Gestión / METS |
+| 0 | Trimestre 1 | Constitución formal del Comité de Gestión; convenios preliminares con las 3 bodegas, el Centro Vasco y hoteles de Daymán | Comité de Gestión / Comisión de Turismo CCIS |
 | 1 | Trimestre 1-2 | Postulación al Fondo Concursable MINTUR-ANDE y al Fondo Enoturismo MINTUR-INAVI | Dirección Ejecutiva del Comité |
 | 2 | Trimestre 2-3 | Inicio de certificación Uruguay Sustainable Winegrowing en las bodegas participantes; adecuación de accesos peatonales en el Espacio Harriague | Bodegas asociadas / Intendencia de Salto |
 | 3 | Trimestre 3 | Desarrollo del portal web y la app móvil con motor de reservas y pasarela de pagos | Proveedor TI contratado |
@@ -579,6 +583,8 @@ Cámara Uruguaya de Turismo Receptivo \[CAMAERO\]. (s.f.). Turismo récord en Ur
 
 Carmelo Portal. (s.f.). Expertos abogan por una "mejor formación" en el enoturismo en Uruguay. https://www.carmeloportal.com/85121-85121
 
+Centro Comercial e Industrial de Salto \[CCIS\]. (s.f.). Comisión Turismo. https://www.ccisalto.com.uy/comision-turismo
+
 Centro de Estudios de la Realidad Económica y Social \[CERES\]. (2026). Monitor de Actividad Turística (marzo, 2026).
 
 Cipetur. (s.f.). Enoturismo en Uruguay: cultura, paisaje y sabor. https://www.cipetur.com/index.php/cipetur/destinos/item/7369-enoturismo-en-uruguay-cultura-paisaje-y-sabor
@@ -588,6 +594,8 @@ Diario Cambio. (s.f.-a). Salto fuera de la lista de las cinco ciudades más visi
 Diario Cambio. (s.f.-b). Bertolini & Broglio y Salto Chico obtuvieron medallas de oro en el concurso «Tannat al Mundo». https://diariocambio.com.uy/bertolini-broglio-y-salto-chico-obtuvieron-medallas-de-oro-en-el-concurso-tannat-al-mundo
 
 Diario Cambio. (s.f.-c). Las lluvias y el agua acumulada en pocos días complican situación de caminería rural en varias zonas. https://diariocambio.com.uy/las-lluvias-y-el-agua-acumulada-en-pocos-dias-complican-situacion-de-camineria-rural-en-varias
+
+Diario Cambio. (s.f.-d). Diálogo estratégico abordó la situación del turismo y normativas para el sector. https://www.diariocambio.com.uy/dialogo-estrategico-abordo-la-situacion-del-turismo-y-normativas-para-el-sector
 
 Diario El Debate Pregón. (s.f.). La brecha de precios entre Argentina y Uruguay volvió a ampliarse y llega al 40% en la frontera. https://www.diariodebatepregon.com/argentina-y-el-mundo/la-brecha-de-precios-entre-argentina-y-uruguay-volvio-a-ampliarse-y-llega-al-40-en-la-frontera
 
@@ -604,6 +612,8 @@ Entre Ríos Hoy. (s.f.). Termas y enoturismo: la fórmula que potencia los atrac
 Euskalkultura.eus. (s.f.). Tras la exitosa gestión del CV local, se pone en marcha el proyecto de recuperar la antigua Bodega Harriague de Salto (y II). https://www.euskalkultura.eus/espanol/noticias/tras-la-exitosa-gestion-del-cv-local-se-pone-en-marcha-el-proyecto-de-recuperar-la-antigua-bodega-harriague-de-salto-y-ii
 
 Gran Logia de la Masonería del Uruguay. (s.f.). Pascual Harriague. https://www.masoneriadeluruguay.org/es/pascual-harriague
+
+Hernández Sampieri, R., Fernández Collado, C., & Baptista Lucio, P. (2014). Metodología de la investigación (6.ª ed.). McGraw-Hill.
 
 Infobae. (2023, 16 de noviembre). Brecha cambiaria: ir de turista a las termas en Uruguay cuesta 118% más caro que a las de Argentina. https://www.infobae.com/america/america-latina/2023/11/16/brecha-cambiaria-ir-de-turista-a-las-termas-en-uruguay-cuesta-118-mas-caro-que-a-las-de-argentina/
 
@@ -678,6 +688,8 @@ Pine, B. J., & Gilmore, J. H. (1998). Welcome to the experience economy. Harvard
 Playa Escondida. (s.f.). Enoturismo y la ruta del vino en Canelones. https://playaescondida.uy/blog/enoturismo-y-ruta-del-vino-canelones-uruguay/
 
 Por las Catas. (2018). Bodega Bertolini & Broglio. De Salto vienen los mejores vinos uruguayos. http://porlascatas.blogspot.com/2018/03/bodega-bertolini-y-broglio-de-salto.html
+
+Prats, L. (1997). Antropología y patrimonio. Ariel.
 
 Presidencia de la República. (2014). Ley N.º 19.253. http://archivo.presidencia.gub.uy/sci/leyes/2014/08/mintur\_660.pdf
 
