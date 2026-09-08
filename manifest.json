@@ -1,0 +1,38 @@
+{
+  "name": "La Ruta del Tannat",
+  "short_name": "Ruta Tannat",
+  "description": "Circuito enoturístico oficial de la cuna del Tannat en Salto, Uruguay: bodegas, historia, termas y experiencias guiadas.",
+  "start_url": "./LaRutadelTannat.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "lang": "es",
+  "background_color": "#1D060D",
+  "theme_color": "#4A1525",
+  "icons": [
+    {
+      "src": "./LaRutadelTannat_files/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./LaRutadelTannat_files/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./LaRutadelTannat_files/icon-maskable-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "./LaRutadelTannat_files/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
