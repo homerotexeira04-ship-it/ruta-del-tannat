@@ -10,6 +10,11 @@
   <meta name="robots" content="index, follow">
   <meta name="theme-color" content="#4A1525">
 
+  <!-- Favicon: botella con "T" dorada sobre medallón vino tinto -->
+  <link rel="icon" type="image/svg+xml" href="./LaRutadelTannat_files/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="./LaRutadelTannat_files/favicon-32.png">
+  <link rel="apple-touch-icon" href="./LaRutadelTannat_files/favicon-180.png">
+
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://rutadeltannat.salto.gub.uy/">
@@ -823,6 +828,7 @@
               <div class="pt-4 border-t border-tannat-50 text-[11px] font-semibold text-tannat flex items-center gap-1.5">
                 <span class="w-1.5 h-1.5 rounded-full bg-gold flex-shrink-0"></span> <span data-i18n="season.s2Highlight">Día del Tannat & Festivales</span>
               </div>
+              <div id="harriagueCountdown" class="mt-2 text-[11px] font-bold text-gold-dark"></div>
             </div>
           </div>
 
@@ -2410,6 +2416,8 @@
         "season.s2Title": "Semana de Harriague",
         "season.s2Desc": "14 de Abril: Día Nacional del Tannat en homenaje al natalicio de Don Pascual Harriague. Viñedos en tonos dorados, festivales vascos y cata de varietales jóvenes.",
         "season.s2Highlight": "Día del Tannat & Festivales",
+        "season.harriagueCountdown": "Faltan {n} días para el Día Nacional del Tannat",
+        "season.harriagueToday": "¡Hoy es el Día Nacional del Tannat!",
         "season.s3Time": "Jun — Ago · Invierno",
         "season.s3Title": "Poda, Cavas & Fogones",
         "season.s3Desc": "Cata de vinos Gran Reserva y tintos de guarda junto a la chimenea en bodegas boutique, con maridajes de cordero salteño al asador y guisados criollos.",
@@ -2731,6 +2739,8 @@
         "season.s2Title": "Semana de Harriague",
         "season.s2Desc": "14 de abril: Dia Nacional do Tannat em homenagem ao nascimento de Don Pascual Harriague. Vinhedos em tons dourados, festivais bascos e degustação de varietais jovens.",
         "season.s2Highlight": "Dia do Tannat & Festivais",
+        "season.harriagueCountdown": "Faltam {n} dias para o Dia Nacional do Tannat",
+        "season.harriagueToday": "Hoje é o Dia Nacional do Tannat!",
         "season.s3Time": "Jun — Ago · Inverno",
         "season.s3Title": "Poda, Cavas & Fogões",
         "season.s3Desc": "Degustação de vinhos Gran Reserva e tintos de guarda junto à lareira em vinícolas boutique, com harmonizações de cordeiro salteño no espeto e guisados crioulos.",
@@ -3052,6 +3062,8 @@
         "season.s2Title": "Harriague Week",
         "season.s2Desc": "April 14: National Tannat Day honoring the birth of Don Pascual Harriague. Golden-hued vineyards, Basque festivals, and tastings of young varietals.",
         "season.s2Highlight": "Tannat Day & Festivals",
+        "season.harriagueCountdown": "{n} days left until National Tannat Day",
+        "season.harriagueToday": "Today is National Tannat Day!",
         "season.s3Time": "Jun — Aug · Winter",
         "season.s3Title": "Pruning, Cellars & Firesides",
         "season.s3Desc": "Gran Reserva and cellar-aged red wine tastings by the fireplace in boutique wineries, paired with spit-roasted Salteño lamb and hearty local stews.",
@@ -3479,6 +3491,25 @@
     }
     highlightCurrentSeason();
 
+    // Cuenta regresiva real hasta el 14 de abril (Día Nacional del Tannat / Semana de Harriague)
+    function updateHarriagueCountdown() {
+      const el = document.getElementById('harriagueCountdown');
+      if (!el) return;
+      const dict = translations[currentLang] || translations.es;
+      const now = new Date();
+      const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+      let target = new Date(now.getFullYear(), 3, 14); // mes 3 = abril (0-indexado)
+      if (today > target) target = new Date(now.getFullYear() + 1, 3, 14);
+      const diffDays = Math.round((target - today) / 86400000);
+      if (diffDays === 0) {
+        el.textContent = dict['season.harriagueToday'] || '¡Hoy es el Día Nacional del Tannat!';
+      } else {
+        const template = dict['season.harriagueCountdown'] || 'Faltan {n} días para el Día Nacional del Tannat';
+        el.textContent = template.replace('{n}', diffDays);
+      }
+    }
+    updateHarriagueCountdown();
+
     // Currency Switcher
     function setCurrency(cur) {
       currentCurrency = cur;
@@ -3563,6 +3594,9 @@
 
       // Refresh the weather condition label in the new language
       renderWeather();
+
+      // Refresh the Harriague countdown text in the new language
+      updateHarriagueCountdown();
 
       // Update Active Button Styles
       ['ES', 'PT', 'EN'].forEach(code => {
