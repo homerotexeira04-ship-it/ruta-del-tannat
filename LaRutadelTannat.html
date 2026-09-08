@@ -1944,16 +1944,16 @@
           <h4 class="font-serif text-white font-bold mb-4 uppercase tracking-wider text-xs" data-i18n="footer.instTitle">Marco Institucional</h4>
           <div class="grid grid-cols-2 gap-4 items-center mb-5">
             <a href="https://turismo.salto.gub.uy/" target="_blank" rel="noopener noreferrer" class="opacity-90 hover:opacity-100 transition-opacity" title="Intendencia de Salto · Dirección de Turismo">
-              <img src="./LaRutadelTannat_files/logo-turismo-salto.svg" alt="Intendencia de Salto - Dirección de Turismo" class="h-8 w-auto rounded" loading="lazy">
+              <img src="./LaRutadelTannat_files/logo-turismo-salto.svg" alt="Intendencia de Salto - Dirección de Turismo" class="h-8 w-auto rounded" width="68" height="32">
             </a>
             <a href="https://www.utu.edu.uy/" target="_blank" rel="noopener noreferrer" class="opacity-90 hover:opacity-100 transition-opacity" title="DGETP - Universidad del Trabajo del Uruguay (UTU)">
-              <img src="./LaRutadelTannat_files/logo-utu.png" alt="UTU - Universidad del Trabajo del Uruguay" class="h-9 w-auto" loading="lazy">
+              <img src="./LaRutadelTannat_files/logo-utu.png" alt="UTU - Universidad del Trabajo del Uruguay" class="h-9 w-auto" width="312" height="36">
             </a>
             <a href="https://www.inavi.com.uy/" target="_blank" rel="noopener noreferrer" class="opacity-90 hover:opacity-100 transition-opacity" title="INAVI · Instituto Nacional de Vitivinicultura">
-              <img src="./LaRutadelTannat_files/logo-inavi.svg" alt="INAVI - Instituto Nacional de Vitivinicultura" class="h-7 w-auto" loading="lazy">
+              <img src="./LaRutadelTannat_files/logo-inavi.svg" alt="INAVI - Instituto Nacional de Vitivinicultura" class="h-7 w-auto" width="112" height="28">
             </a>
             <a href="https://www.gub.uy/ministerio-turismo/" target="_blank" rel="noopener noreferrer" class="opacity-90 hover:opacity-100 transition-opacity" title="Ministerio de Turismo de Uruguay (MINTUR)">
-              <img src="./LaRutadelTannat_files/logo-mintur.png" alt="Ministerio de Turismo de Uruguay" class="h-8 w-auto" loading="lazy">
+              <img src="./LaRutadelTannat_files/logo-mintur.png" alt="Ministerio de Turismo de Uruguay" class="h-8 w-auto" width="24" height="32">
             </a>
           </div>
           <ul class="space-y-2 text-xs">
@@ -3727,6 +3727,13 @@
     if (mobileMenuBtn) {
       mobileMenuBtn.addEventListener('click', toggleMobileMenu);
     }
+    // Cierra el menú mobile automáticamente al tocar un link de sección
+    mobileMenu.querySelectorAll('a[href^="#"]').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenuBtn.setAttribute('aria-expanded', 'false');
+        mobileMenu.classList.add('hidden');
+      });
+    });
 
     // Station Details Modal with 100% Translation Support
     function renderStationModalContent(id) {
