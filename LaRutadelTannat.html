@@ -15,6 +15,13 @@
   <link rel="icon" type="image/png" sizes="32x32" href="./LaRutadelTannat_files/favicon-32.png">
   <link rel="apple-touch-icon" href="./LaRutadelTannat_files/favicon-180.png">
 
+  <!-- PWA: instalable como app desde el navegador -->
+  <link rel="manifest" href="./manifest.json">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Ruta Tannat">
+
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://rutadeltannat.salto.gub.uy/">
@@ -4036,6 +4043,13 @@
       const waUrl = `https://wa.me/${CONTACT_PHONE}?text=${msg}`;
       window.open(waUrl, '_blank');
       closeBookingModal();
+    }
+
+    // PWA: registra el service worker (app shell offline + instalación)
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch(() => {});
+      });
     }
   </script>
 </body></html>
