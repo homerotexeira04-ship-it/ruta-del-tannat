@@ -453,7 +453,7 @@
   <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 glass-nav border-b border-white/10" id="mainHeader">
 
     <!-- Utility Bar (desktop): clima real + moneda/idioma, separados de la fila principal -->
-    <div class="hidden lg:block border-b border-white/5 bg-black/20">
+    <div class="hidden xl:block border-b border-white/5 bg-black/20">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-10">
 
@@ -484,17 +484,17 @@
 
     <!-- Main Row: marca, navegación y reserva -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between h-24">
+      <div class="flex items-center justify-between gap-6 h-24 sm:h-28">
 
         <!-- Brand Identity -->
-        <a href="#hero" class="flex items-center gap-3 group focus:outline-none focus:ring-2 focus:ring-gold rounded-lg p-1" aria-label="Inicio La Ruta del Tannat">
-          <img src="./LaRutadelTannat_files/logo-ruta-del-tannat.webp" alt="La Ruta del Tannat · Salto, Uruguay" class="h-[4.5rem] sm:h-20 w-auto flex-shrink-0">
-          <div class="hidden sm:block w-px h-10 bg-white/15 flex-shrink-0"></div>
-          <img src="./LaRutadelTannat_files/logo-enoturismo-uruguay.png" alt="Enoturismo Uruguay" class="hidden sm:block sm:h-11 w-auto flex-shrink-0">
+        <a href="#hero" class="flex items-center gap-3 flex-shrink-0 group focus:outline-none focus:ring-2 focus:ring-gold rounded-lg p-1" aria-label="Inicio La Ruta del Tannat">
+          <img src="./LaRutadelTannat_files/logo-ruta-del-tannat.webp" alt="La Ruta del Tannat · Salto, Uruguay" class="h-20 sm:h-24 w-auto flex-shrink-0">
+          <div class="hidden sm:block w-px h-12 bg-white/15 flex-shrink-0"></div>
+          <img src="./LaRutadelTannat_files/logo-enoturismo-uruguay.png" alt="Enoturismo Uruguay" class="hidden sm:block sm:h-12 w-auto flex-shrink-0">
         </a>
 
         <!-- Desktop Navigation -->
-        <nav class="hidden lg:flex items-center gap-7" aria-label="Navegación principal">
+        <nav class="hidden xl:flex items-center gap-7" aria-label="Navegación principal">
           <a href="#historia" class="text-sm font-medium italic text-gray-200 hover:text-gold transition-colors" data-i18n="nav.history">Historia</a>
           <a href="#estaciones" class="text-sm font-medium italic text-gray-200 hover:text-gold transition-colors" data-i18n="nav.stations">Estaciones</a>
           <a href="#temporadas" class="text-sm font-medium italic text-gray-200 hover:text-gold transition-colors" data-i18n="nav.seasons">¿Cuándo viajar?</a>
@@ -506,13 +506,13 @@
         </nav>
 
         <!-- Primary CTA Button -->
-        <button onclick="openBookingModal(&#39;General&#39;)" class="hidden lg:inline-flex items-center gap-2 bg-gradient-to-r from-gold to-gold-dark text-tannat-900 font-semibold text-sm px-5 py-2.5 rounded-full shadow-lg hover:shadow-gold/20 hover:scale-105 active:scale-95 transition-all focus:outline-none focus:ring-2 focus:ring-gold" aria-label="Reservar circuito enoturístico">
+        <button onclick="openBookingModal(&#39;General&#39;)" class="hidden xl:inline-flex items-center gap-2 bg-gradient-to-r from-gold to-gold-dark text-tannat-900 font-semibold text-sm px-5 py-2.5 rounded-full shadow-lg hover:shadow-gold/20 hover:scale-105 active:scale-95 transition-all focus:outline-none focus:ring-2 focus:ring-gold" aria-label="Reservar circuito enoturístico">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
           <span data-i18n="btn.bookNow">Reservar Visita</span>
         </button>
 
         <!-- Mobile: clima compacto siempre visible + botón de menú -->
-        <div class="flex items-center gap-3 lg:hidden">
+        <div class="flex items-center gap-3 xl:hidden">
           <div class="weather-widget flex items-center gap-1.5 text-xs text-gray-200 bg-white/5 px-2.5 py-1.5 rounded-full border border-white/10" title="Clima actual en Salto, Uruguay">
             <svg class="w-4 h-4 text-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path stroke-linecap="round" d="M12 3v2M12 19v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M3 12h2M19 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
             <span id="weatherTempBar" class="font-bold text-gold">--°C</span>
@@ -528,7 +528,7 @@
     </div>
 
     <!-- Mobile Dropdown -->
-    <div id="mobileMenu" class="hidden lg:hidden bg-tannat-dark/95 border-b border-white/10 px-4 pt-2 pb-6 space-y-3">
+    <div id="mobileMenu" class="hidden xl:hidden bg-tannat-dark/95 border-b border-white/10 px-4 pt-2 pb-6 space-y-3">
       <!-- Weather Widget (Mobile): clima real de Salto vía Open-Meteo (sin API key) -->
       <div class="weather-widget flex items-center gap-2 bg-black/40 px-3 py-2 rounded-xl text-xs text-gray-200 mb-2">
         <svg class="w-4 h-4 text-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path stroke-linecap="round" d="M12 3v2M12 19v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M3 12h2M19 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
@@ -571,7 +571,7 @@
 
   <main>
     <!-- ==================== SECTION 1: HERO ==================== -->
-    <section id="hero" class="relative min-h-[95vh] flex items-center justify-center bg-tannat-900 text-white pt-24 lg:pt-[8.75rem] overflow-hidden">
+    <section id="hero" class="relative min-h-[95vh] flex items-center justify-center bg-tannat-900 text-white pt-28 sm:pt-32 xl:pt-40 overflow-hidden">
       <!-- Background Image with Overlay -->
       <div class="absolute inset-0 z-0">
         <img src="./LaRutadelTannat_files/hero-vinedo-uruguay.jpg" alt="Viñedo real en Canelones, Uruguay, con luz dorada de otoño entre las hileras" class="w-full h-full object-cover object-center transform scale-105 transition-transform duration-1000" loading="eager" fetchpriority="high">
@@ -2255,7 +2255,7 @@
   </a>
 
   <!-- Floating Sticky Bottom Bar for Mobile Booking -->
-  <div class="lg:hidden fixed bottom-0 left-0 right-0 z-30 bg-tannat-900/95 border-t border-gold/30 p-3 backdrop-blur-lg flex items-center justify-between">
+  <div class="xl:hidden fixed bottom-0 left-0 right-0 z-30 bg-tannat-900/95 border-t border-gold/30 p-3 backdrop-blur-lg flex items-center justify-between">
     <div>
       <span class="block text-[10px] uppercase text-gold font-bold" data-i18n="mobileBar.from">Desde Salto</span>
       <span class="text-white font-bold text-sm price-val" data-usd="45" data-uyu="1850">USD 45 / persona</span>
