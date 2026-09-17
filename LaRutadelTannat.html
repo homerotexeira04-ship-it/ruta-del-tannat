@@ -319,11 +319,21 @@
     .gallery-columns:hover .gallery-track, .gallery-columns:focus-within .gallery-track { animation-play-state: paused; }
     @keyframes galleryScrollUp { from { transform: translateY(0); } to { transform: translateY(-50%); } }
     @keyframes galleryScrollDown { from { transform: translateY(-50%); } to { transform: translateY(0); } }
-    .gallery-item { position: relative; aspect-ratio: 1 / 1; border-radius: 1rem; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); flex-shrink: 0; }
+    .gallery-item { position: relative; aspect-ratio: 1 / 1; border-radius: 1rem; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); flex-shrink: 0; cursor: pointer; }
     .gallery-item img { width: 100%; height: 100%; display: block; object-fit: cover; transition: transform 0.7s cubic-bezier(0.4,0,0.2,1); }
     .gallery-item:hover img { transform: scale(1.1); }
+    .gallery-item:focus-visible { outline: 2px solid #C5A059; outline-offset: 2px; }
     .gallery-caption { position: absolute; inset: 0; display: flex; align-items: flex-end; padding: 0.6rem 0.75rem; background: linear-gradient(to top, rgba(0,0,0,0.75), rgba(0,0,0,0) 65%); }
     .gallery-caption span { color: #fff; font-size: 0.75rem; font-weight: 600; line-height: 1.25; }
+    .gallery-item::after {
+      content: "";
+      position: absolute; top: 0.5rem; right: 0.5rem; width: 1.75rem; height: 1.75rem;
+      border-radius: 9999px; background-color: rgba(0,0,0,0.45);
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' stroke='white' stroke-width='2' viewBox='0 0 24 24'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16zM11 8v6M8 11h6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: center; background-size: 60%;
+      opacity: 0; transition: opacity 0.25s ease; pointer-events: none;
+    }
+    .gallery-item:hover::after, .gallery-item:focus-visible::after { opacity: 1; }
 
     @media (max-width: 767px) {
       .gallery-col-3 { display: none; }
@@ -1813,31 +1823,31 @@
           <!-- Columna 1 (sube) -->
           <div class="gallery-col gallery-col-1">
             <div class="gallery-track scroll-up" style="animation-duration: 46s;">
-              <div class="gallery-item">
+              <div class="gallery-item" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGalleryLightbox(this.querySelector('img'));}">
                 <img src="./LaRutadelTannat_files/hero-vinedo-uruguay.jpg" alt="Viñedo uruguayo con luz dorada" loading="lazy">
                 <div class="gallery-caption"><span data-i18n="gallery.cap1">Viñedo uruguayo al amanecer</span></div>
               </div>
-              <div class="gallery-item">
+              <div class="gallery-item" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGalleryLightbox(this.querySelector('img'));}">
                 <img src="./LaRutadelTannat_files/bertolini-broglio-inavi.jpg" alt="Fachada de Bodega Bertolini y Broglio" loading="lazy">
                 <div class="gallery-caption"><span data-i18n="gallery.cap4">Fachada de Bertolini &amp; Broglio</span></div>
               </div>
-              <div class="gallery-item">
+              <div class="gallery-item" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGalleryLightbox(this.querySelector('img'));}">
                 <img src="./LaRutadelTannat_files/semana-harriague-lanz-ppal4-jpg.webp" alt="Fotografía histórica del establecimiento La Caballada" loading="lazy">
                 <div class="gallery-caption"><span data-i18n="gallery.cap7">Archivo histórico · La Caballada</span></div>
               </div>
-              <div class="gallery-item">
+              <div class="gallery-item" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGalleryLightbox(this.querySelector('img'));}">
                 <img src="./LaRutadelTannat_files/pascual-harriague-retrato.jpg" alt="Retrato histórico de Pascual Harriague, pionero del Tannat en Uruguay" loading="lazy">
                 <div class="gallery-caption"><span data-i18n="gallery.cap10">Pascual Harriague · pionero del Tannat</span></div>
               </div>
-              <div class="gallery-item">
+              <div class="gallery-item" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGalleryLightbox(this.querySelector('img'));}">
                 <img src="./LaRutadelTannat_files/termas-arapey-piscina.jpg" alt="Piscinas termales de Termas del Arapey con visitantes" loading="lazy">
                 <div class="gallery-caption"><span data-i18n="gallery.cap11">Piscinas termales del Arapey</span></div>
               </div>
-              <div class="gallery-item">
+              <div class="gallery-item" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGalleryLightbox(this.querySelector('img'));}">
                 <img src="./LaRutadelTannat_files/cata-vinos-bodega-harriague.jpg" alt="Copa de vino Vinos del Uruguay en una cata en Bodega Harriague" loading="lazy">
                 <div class="gallery-caption"><span data-i18n="gallery.cap16">Cata de vinos en Bodega Harriague</span></div>
               </div>
-              <div class="gallery-item">
+              <div class="gallery-item" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGalleryLightbox(this.querySelector('img'));}">
                 <img src="./LaRutadelTannat_files/placa-homenaje-harriague.jpg" alt="Placa conmemorativa a Don Pascual Harriague en el Sitio Histórico Bodega de Harriague, Salto" loading="lazy">
                 <div class="gallery-caption"><span data-i18n="gallery.cap18">Placa homenaje a Pascual Harriague en su bodega</span></div>
               </div>
@@ -1876,31 +1886,31 @@
           <!-- Columna 2 (baja) -->
           <div class="gallery-col gallery-col-2">
             <div class="gallery-track scroll-down" style="animation-duration: 46s;">
-              <div class="gallery-item">
+              <div class="gallery-item" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGalleryLightbox(this.querySelector('img'));}">
                 <img src="./LaRutadelTannat_files/8254D59E-F679-48CA-94EB-EC6CFB40EC77.jpeg" alt="Cartel de entrada de Bodega de Harriague" loading="lazy">
                 <div class="gallery-caption"><span data-i18n="gallery.cap2">Bodega Harriague · Punto Cero del Tannat</span></div>
               </div>
-              <div class="gallery-item">
+              <div class="gallery-item" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGalleryLightbox(this.querySelector('img'));}">
                 <img src="./LaRutadelTannat_files/138db8c89a626f5efc0f940f343ad390bf0ec8ca.jpg" alt="Viñedo El Asombrado de Mori Maglio Wines" loading="lazy">
                 <div class="gallery-caption"><span data-i18n="gallery.cap5">Viñedo El Asombrado · Mori Maglio</span></div>
               </div>
-              <div class="gallery-item">
+              <div class="gallery-item" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGalleryLightbox(this.querySelector('img'));}">
                 <img src="./LaRutadelTannat_files/termas-dayman-aerea.webp" alt="Vista aérea de Termas del Daymán, Salto" loading="lazy">
                 <div class="gallery-caption"><span data-i18n="gallery.cap8">Vista aérea de Termas del Daymán</span></div>
               </div>
-              <div class="gallery-item">
+              <div class="gallery-item" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGalleryLightbox(this.querySelector('img'));}">
                 <img src="./LaRutadelTannat_files/salto-costanera-puerto.jpg" alt="Vista de la ciudad de Salto desde el puerto sobre el río Uruguay" loading="lazy">
                 <div class="gallery-caption"><span data-i18n="gallery.cap12">Salto vista desde el puerto</span></div>
               </div>
-              <div class="gallery-item">
+              <div class="gallery-item" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGalleryLightbox(this.querySelector('img'));}">
                 <img src="./LaRutadelTannat_files/vendimia-fiesta-1985.jpg" alt="Fiesta de la Vendimia, Uruguay, 1985" loading="lazy">
                 <div class="gallery-caption"><span data-i18n="gallery.cap14">Fiesta de la Vendimia, 1985</span></div>
               </div>
-              <div class="gallery-item">
+              <div class="gallery-item" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGalleryLightbox(this.querySelector('img'));}">
                 <img src="./LaRutadelTannat_files/visita-grupal-fogon-cavas.jpg" alt="Grupo de visitantes junto a un fogón nocturno en las cavas históricas de Bodega Harriague" loading="lazy">
                 <div class="gallery-caption"><span data-i18n="gallery.cap17">Visita grupal con fogón en las cavas históricas</span></div>
               </div>
-              <div class="gallery-item">
+              <div class="gallery-item" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGalleryLightbox(this.querySelector('img'));}">
                 <img src="./LaRutadelTannat_files/productores-bertolini-broglio.jpg" alt="Grupo de productores frente a la fachada de Bodega Bertolini &amp; Broglio" loading="lazy">
                 <div class="gallery-caption"><span data-i18n="gallery.cap19">Productores en Bodega Bertolini &amp; Broglio</span></div>
               </div>
@@ -1939,23 +1949,23 @@
           <!-- Columna 3 (sube, oculta en móvil) -->
           <div class="gallery-col gallery-col-3">
             <div class="gallery-track scroll-up" style="animation-duration: 46s;">
-              <div class="gallery-item">
+              <div class="gallery-item" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGalleryLightbox(this.querySelector('img'));}">
                 <img src="./LaRutadelTannat_files/salto-chico-cartel-inavi.jpg" alt="Cartel de entrada de Bodega Salto Chico" loading="lazy">
                 <div class="gallery-caption"><span data-i18n="gallery.cap3">Viñas y Bodega del Salto Chico</span></div>
               </div>
-              <div class="gallery-item">
+              <div class="gallery-item" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGalleryLightbox(this.querySelector('img'));}">
                 <img src="./LaRutadelTannat_files/galeria-brindis-cavas.jpg" alt="Brindis con vino en las cavas históricas de Bodega Harriague" loading="lazy">
                 <div class="gallery-caption"><span data-i18n="gallery.cap6">Brindis en las cavas históricas</span></div>
               </div>
-              <div class="gallery-item">
+              <div class="gallery-item" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGalleryLightbox(this.querySelector('img'));}">
                 <img src="./LaRutadelTannat_files/termas-dayman.jpg" alt="Piscinas termales circulares de Termas del Daymán" loading="lazy">
                 <div class="gallery-caption"><span data-i18n="gallery.cap9">Piscinas termales del Daymán</span></div>
               </div>
-              <div class="gallery-item">
+              <div class="gallery-item" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGalleryLightbox(this.querySelector('img'));}">
                 <img src="./LaRutadelTannat_files/tannat-copa-vino.jpg" alt="Copa de vino Tannat uruguayo junto a la botella" loading="lazy">
                 <div class="gallery-caption"><span data-i18n="gallery.cap13">Una copa de Tannat uruguayo</span></div>
               </div>
-              <div class="gallery-item">
+              <div class="gallery-item" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGalleryLightbox(this.querySelector('img'));}">
                 <img src="./LaRutadelTannat_files/harriague-ruinas-nocturna.jpg" alt="Instalación lumínica nocturna en las ruinas de Bodega Harriague" loading="lazy">
                 <div class="gallery-caption"><span data-i18n="gallery.cap15">Noche de luces en las ruinas de Harriague</span></div>
               </div>
@@ -2392,6 +2402,24 @@
       </button>
       <div id="planModalContent">
         <!-- Dynamically injected via JavaScript with full multi-language support -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL: GALERÍA LIGHTBOX ==================== -->
+  <div id="galleryLightbox" class="modal-overlay fixed inset-0 z-50 hidden bg-black/90 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto" role="dialog" aria-modal="true" aria-labelledby="lightboxCaption" onclick="closeGalleryLightbox()">
+    <div class="modal-card relative max-w-3xl w-full my-8" onclick="event.stopPropagation()">
+      <button onclick="closeGalleryLightbox()" class="absolute top-3 right-3 z-10 text-white bg-black/40 hover:bg-black/60 p-2 rounded-full backdrop-blur-sm transition-colors focus:outline-none" aria-label="Cerrar">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+      </button>
+      <div class="bg-crema rounded-2xl overflow-hidden shadow-2xl">
+        <div class="bg-black">
+          <img id="lightboxImg" src="" alt="" class="w-full max-h-[65vh] object-contain mx-auto">
+        </div>
+        <div class="p-5 sm:p-6">
+          <h3 id="lightboxCaption" class="font-serif text-lg sm:text-xl font-bold text-tannat-dark mb-2"></h3>
+          <p id="lightboxDesc" class="text-sm text-terroir leading-relaxed"></p>
+        </div>
       </div>
     </div>
   </div>
@@ -2877,6 +2905,25 @@
         "gallery.cap17": "Visita grupal con fogón en las cavas históricas",
         "gallery.cap18": "Placa homenaje a Pascual Harriague en su bodega",
         "gallery.cap19": "Productores en Bodega Bertolini &amp; Broglio",
+        "gallery.desc1": "Viñedo real de Canelones utilizado como imagen ilustrativa de la luz dorada del otoño uruguayo.",
+        "gallery.desc2": "Cartel de entrada del Espacio Cultural Bodega Harriague, el Punto Cero del Tannat en Salto.",
+        "gallery.desc3": "Cartel de entrada de Viñas y Bodega del Salto Chico, sobre la ribera del río Uruguay.",
+        "gallery.desc4": "Fachada real de Bodega Bertolini &amp; Broglio, sobre la Ruta 3, una de las 4 estaciones del circuito.",
+        "gallery.desc5": "Viñedo El Asombrado, de Mori Maglio Wines, la cuarta estación del circuito en Parada Daymán.",
+        "gallery.desc6": "Un brindis con Tannat en las cavas históricas de Bodega Harriague, en pleno invierno salteño.",
+        "gallery.desc7": "Fotografía histórica del antiguo establecimiento La Caballada, fundado por Pascual Harriague.",
+        "gallery.desc8": "Vista aérea del complejo termal de Termas del Daymán, a solo 10 km del circuito de bodegas.",
+        "gallery.desc9": "Las características piscinas circulares de Termas del Daymán, ideales para combinar con el circuito.",
+        "gallery.desc10": "Retrato histórico de Don Pascual Harriague, quien introdujo la cepa Tannat en Salto en 1874.",
+        "gallery.desc11": "Piscinas termales de Termas del Arapey, la zona termal de mayor escala del circuito, a 80 km de Salto.",
+        "gallery.desc12": "La ciudad de Salto vista desde su puerto, sobre el río Uruguay.",
+        "gallery.desc13": "Una copa de Tannat uruguayo junto a la botella, la cepa insignia nacida en Salto.",
+        "gallery.desc14": "Fotografía de 1985 de la Fiesta de la Vendimia, del Museo de la Uva y el Vino de Las Piedras, Canelones.",
+        "gallery.desc15": "Instalación lumínica nocturna en las ruinas de Bodega Harriague, durante un evento de Bodegas del Uruguay.",
+        "gallery.desc16": "Copa de Tannat durante una cata real en Bodega Harriague, fotografía de Homero Texeira.",
+        "gallery.desc17": "Visitantes junto a un fogón nocturno en las ruinas históricas de Bodega Harriague, fotografía de Homero Texeira.",
+        "gallery.desc18": "Placa que el pueblo de Salto colocó en 2019 en homenaje a Pascual Harriague, al cumplirse el bicentenario de su nacimiento.",
+        "gallery.desc19": "Productores y visitantes frente a la fachada histórica de Bodega Bertolini &amp; Broglio.",
         "gallery.credits": "Fotografías: archivo propio del proyecto (cata de vinos y visita grupal en las cavas, por Homero Texeira; placa homenaje y productores en Bertolini &amp; Broglio) e INAVI · Wikimedia Commons — Alejgon (Termas del Arapey, CC BY-SA 4.0), colaboradores de Wikimedia (Salto desde el puerto y Fiesta de la Vendimia 1985, CC BY-SA/GFDL; copa de Tannat uruguayo, CC BY-SA), INAVI (retrato de Pascual Harriague, dominio público; foto de la Semana de Harriague, cedida por Bodegas del Uruguay).",
 
         "map.badge": "Geolocalización",
@@ -3231,6 +3278,25 @@
         "gallery.cap17": "Visita em grupo com fogueira nas caves históricas",
         "gallery.cap18": "Placa em homenagem a Pascual Harriague em sua vinícola",
         "gallery.cap19": "Produtores na Bodega Bertolini &amp; Broglio",
+        "gallery.desc1": "Vinhedo real de Canelones, usado como imagem ilustrativa da luz dourada do outono uruguaio.",
+        "gallery.desc2": "Placa de entrada do Espaço Cultural Bodega Harriague, o Ponto Zero do Tannat em Salto.",
+        "gallery.desc3": "Placa de entrada de Viñas y Bodega del Salto Chico, às margens do rio Uruguai.",
+        "gallery.desc4": "Fachada real da Bodega Bertolini &amp; Broglio, na Rota 3, uma das 4 estações do circuito.",
+        "gallery.desc5": "Vinhedo El Asombrado, da Mori Maglio Wines, a quarta estação do circuito em Parada Daymán.",
+        "gallery.desc6": "Um brinde com Tannat nas caves históricas da Bodega Harriague, em pleno inverno salteño.",
+        "gallery.desc7": "Fotografia histórica do antigo estabelecimento La Caballada, fundado por Pascual Harriague.",
+        "gallery.desc8": "Vista aérea do complexo termal das Termas do Daymán, a apenas 10 km do circuito de vinícolas.",
+        "gallery.desc9": "As características piscinas circulares das Termas do Daymán, ideais para combinar com o circuito.",
+        "gallery.desc10": "Retrato histórico de Don Pascual Harriague, que introduziu a cepa Tannat em Salto em 1874.",
+        "gallery.desc11": "Piscinas termais das Termas do Arapey, a maior zona termal do circuito, a 80 km de Salto.",
+        "gallery.desc12": "A cidade de Salto vista a partir do seu porto, às margens do rio Uruguai.",
+        "gallery.desc13": "Uma taça de Tannat uruguaio ao lado da garrafa, a cepa símbolo nascida em Salto.",
+        "gallery.desc14": "Fotografia de 1985 da Festa da Vindima, do Museu da Uva e do Vinho de Las Piedras, Canelones.",
+        "gallery.desc15": "Instalação luminosa noturna nas ruínas da Bodega Harriague, durante um evento da Bodegas del Uruguay.",
+        "gallery.desc16": "Taça de Tannat durante uma degustação real na Bodega Harriague, fotografia de Homero Texeira.",
+        "gallery.desc17": "Visitantes ao redor de uma fogueira noturna nas ruínas históricas da Bodega Harriague, fotografia de Homero Texeira.",
+        "gallery.desc18": "Placa que o povo de Salto instalou em 2019 em homenagem a Pascual Harriague, no bicentenário de seu nascimento.",
+        "gallery.desc19": "Produtores e visitantes em frente à fachada histórica da Bodega Bertolini &amp; Broglio.",
         "gallery.credits": "Fotografias: arquivo próprio do projeto (degustação de vinhos e visita em grupo nas caves, por Homero Texeira; placa de homenagem e produtores em Bertolini &amp; Broglio) e INAVI · Wikimedia Commons — Alejgon (Termas do Arapey, CC BY-SA 4.0), colaboradores da Wikimedia (Salto visto do porto e Festa da Vindima 1985, CC BY-SA/GFDL; taça de Tannat uruguaio, CC BY-SA), INAVI (retrato de Pascual Harriague, domínio público; foto da Semana de Harriague, cedida pela Bodegas del Uruguay).",
 
         "map.badge": "Geolocalização",
@@ -3585,6 +3651,25 @@
         "gallery.cap17": "Group visit with a bonfire at the historic cellars",
         "gallery.cap18": "Plaque honoring Pascual Harriague at his winery",
         "gallery.cap19": "Producers at Bodega Bertolini &amp; Broglio",
+        "gallery.desc1": "A real vineyard in Canelones, used as an illustrative shot of Uruguay's golden autumn light.",
+        "gallery.desc2": "Entrance sign of the Bodega Harriague Cultural Space, the Ground Zero of Tannat in Salto.",
+        "gallery.desc3": "Entrance sign of Viñas y Bodega del Salto Chico, on the bank of the Uruguay River.",
+        "gallery.desc4": "The real facade of Bodega Bertolini &amp; Broglio, on Route 3, one of the circuit's 4 stations.",
+        "gallery.desc5": "El Asombrado Vineyard, by Mori Maglio Wines, the circuit's fourth station in Parada Daymán.",
+        "gallery.desc6": "A toast with Tannat in Bodega Harriague's historic cellars, in the middle of Salto's winter.",
+        "gallery.desc7": "A historical photo of the old La Caballada estate, founded by Pascual Harriague.",
+        "gallery.desc8": "Aerial view of the Termas del Daymán thermal complex, just 10 km from the winery circuit.",
+        "gallery.desc9": "The distinctive circular pools of Termas del Daymán, a natural pairing with the circuit.",
+        "gallery.desc10": "Historical portrait of Don Pascual Harriague, who introduced the Tannat grape to Salto in 1874.",
+        "gallery.desc11": "Thermal pools at Termas del Arapey, the circuit's largest thermal area, 80 km from Salto.",
+        "gallery.desc12": "The city of Salto seen from its port, on the Uruguay River.",
+        "gallery.desc13": "A glass of Uruguayan Tannat next to the bottle, the signature grape born in Salto.",
+        "gallery.desc14": "A 1985 photo of the Vendimia Festival, from the Museo de la Uva y el Vino in Las Piedras, Canelones.",
+        "gallery.desc15": "A nighttime light installation at the Bodega Harriague ruins, during a Bodegas del Uruguay event.",
+        "gallery.desc16": "A glass of Tannat during a real tasting at Bodega Harriague, photographed by Homero Texeira.",
+        "gallery.desc17": "Visitors around a night bonfire at Bodega Harriague's historic ruins, photographed by Homero Texeira.",
+        "gallery.desc18": "A plaque the town of Salto installed in 2019 honoring Pascual Harriague on the bicentennial of his birth.",
+        "gallery.desc19": "Producers and visitors in front of Bodega Bertolini &amp; Broglio's historic facade.",
         "gallery.credits": "Photos: the project's own archive (wine tasting and group cellar visit, by Homero Texeira; commemorative plaque and producers at Bertolini &amp; Broglio) and INAVI · Wikimedia Commons — Alejgon (Termas del Arapey, CC BY-SA 4.0), Wikimedia contributors (Salto seen from the port and the 1985 Vendimia Festival, CC BY-SA/GFDL; glass of Uruguayan Tannat, CC BY-SA), INAVI (portrait of Pascual Harriague, public domain; Semana de Harriague photo, provided by Bodegas del Uruguay).",
 
         "map.badge": "Geolocation",
@@ -4029,6 +4114,11 @@
       // Refresh the Harriague countdown text in the new language
       updateHarriagueCountdown();
 
+      // If the gallery lightbox is currently open, refresh its caption/description too
+      if (activeLightboxCapKey) {
+        renderGalleryLightbox(activeLightboxCapKey);
+      }
+
       // Re-medir las tarjetas 3D de "El Pionero": el texto cambia de largo entre idiomas
       if (flipCards.length) resizeFlipCards();
 
@@ -4405,6 +4495,41 @@
       hideModal('planModal');
     }
 
+    // Lightbox de la Galería: reutiliza el caption ya presente en la foto clickeada
+    // para buscar su descripción breve correspondiente (gallery.capN -> gallery.descN).
+    let activeLightboxCapKey = null;
+    function decodeHtmlEntities(str) {
+      const el = document.createElement('textarea');
+      el.innerHTML = str || '';
+      return el.value;
+    }
+    function renderGalleryLightbox(capKey, imgSrc) {
+      const descKey = capKey.replace('gallery.cap', 'gallery.desc');
+      const dict = translations[currentLang] || translations.es;
+      if (imgSrc) document.getElementById('lightboxImg').src = imgSrc;
+      document.getElementById('lightboxImg').alt = decodeHtmlEntities(dict[capKey]);
+      document.getElementById('lightboxCaption').innerHTML = dict[capKey] || '';
+      document.getElementById('lightboxDesc').innerHTML = dict[descKey] || '';
+    }
+    function openGalleryLightbox(imgEl) {
+      const item = imgEl.closest('.gallery-item');
+      const capSpan = item.querySelector('.gallery-caption [data-i18n]');
+      if (!capSpan) return;
+      activeLightboxCapKey = capSpan.getAttribute('data-i18n');
+      renderGalleryLightbox(activeLightboxCapKey, imgEl.src);
+      showModal('galleryLightbox');
+    }
+    function closeGalleryLightbox() {
+      activeLightboxCapKey = null;
+      hideModal('galleryLightbox');
+    }
+    document.querySelectorAll('.gallery-columns').forEach(col => {
+      col.addEventListener('click', (e) => {
+        const item = e.target.closest('.gallery-item');
+        if (item) openGalleryLightbox(item.querySelector('img'));
+      });
+    });
+
     // Tarjetas de Misión y Visión: se despliegan al pasar el mouse (desktop) o al tocar/enfocar (mobile/teclado).
     // Se maneja con JS directo (no con variantes condicionales de Tailwind) para que la altura se calcule
     // siempre a partir del contenido real (scrollHeight), sin depender de un valor máximo fijo adivinado.
@@ -4451,6 +4576,7 @@
         closeStationModal();
         closeLegalModal();
         closePlanModal();
+        closeGalleryLightbox();
       }
     });
 
