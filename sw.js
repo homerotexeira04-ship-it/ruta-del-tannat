@@ -1,13 +1,13 @@
 // Service Worker de La Ruta del Tannat: app shell cacheado para instalación PWA y uso sin conexión.
-const CACHE_VERSION = 'tannat-v3';
+const CACHE_VERSION = 'tannat-v5';
 const CORE_ASSETS = [
   './LaRutadelTannat.html',
   './index.html',
   './manifest.json',
-  './LaRutadelTannat_files/saved_resource',
+  './LaRutadelTannat_files/tailwind.css',
   './LaRutadelTannat_files/css2',
-  './LaRutadelTannat_files/logo-ruta-del-tannat.webp',
-  './LaRutadelTannat_files/logo-enoturismo-uruguay.png',
+  './LaRutadelTannat_files/logo-ruta-del-tannat-450.webp',
+  './LaRutadelTannat_files/logo-enoturismo-uruguay.webp',
   './LaRutadelTannat_files/favicon.svg',
   './LaRutadelTannat_files/favicon-32.png',
   './LaRutadelTannat_files/favicon-180.png',
