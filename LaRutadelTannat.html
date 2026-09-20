@@ -389,6 +389,86 @@
     @media (prefers-reduced-motion: reduce) {
       .flip-card-inner { transition: none; }
     }
+
+    /* La Copa de Tannat (ver copa-tannat-render.js / copa-tannat-ui.js) */
+    .cup-section { background: radial-gradient(90% 60% at 50% 0%, #4A1525 0%, #2E0B16 45%, #1D060D 100%); }
+    .cup-ambient { position: absolute; inset: 0; pointer-events: none; overflow: hidden;
+      background: radial-gradient(18rem 18rem at 12% 22%, rgba(197,160,89,.10), transparent 70%), radial-gradient(22rem 22rem at 88% 70%, rgba(150,30,70,.20), transparent 70%),
+                  radial-gradient(10rem 10rem at 78% 14%, rgba(223,202,157,.09), transparent 70%), radial-gradient(14rem 14rem at 20% 84%, rgba(223,202,157,.08), transparent 70%); }
+    .cup-ambient i { position: absolute; left: var(--x); top: var(--y); width: var(--s); height: var(--s); border-radius: 50%; opacity: 0;
+      background: radial-gradient(circle, rgba(255,226,160,.95), rgba(255,226,160,0) 70%); animation: cupMote var(--d) ease-in-out infinite var(--t); animation-play-state: paused; }
+    .cup-live .cup-ambient i { animation-play-state: running; }
+    @keyframes cupMote { 0% { transform: translate3d(0,0,0); opacity: 0; } 20% { opacity: .85; } 100% { transform: translate3d(var(--dx, 16px), -110px, 0); opacity: 0; } }
+    .cup-stage { position: relative; max-width: 30rem; margin-inline: auto; aspect-ratio: 560 / 760; perspective: 1100px; user-select: none; -webkit-user-select: none; }
+    .cup-tilt { position: absolute; inset: 0; transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transition: transform .35s ease-out; }
+    .cup-glow { position: absolute; inset: -14% -24% 6% -24%; pointer-events: none;
+      background: radial-gradient(52% 50% at 50% 34%, rgba(223,202,157,.36), rgba(197,160,89,.13) 46%, transparent 74%); }
+    .cup-flare .cup-glow { animation: cupFlare 1.5s ease-out; }
+    @keyframes cupFlare { 0% { filter: brightness(1); } 30% { filter: brightness(2); } 100% { filter: brightness(1); } }
+    .cup-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; touch-action: pan-y; cursor: grab; -webkit-tap-highlight-color: transparent; }
+    .is-dragging .cup-canvas { cursor: grabbing; }
+    .cup-orbs { position: absolute; inset: 0; pointer-events: none; }
+    .cup-orb { position: absolute; width: 3.5rem; height: 3.5rem; margin: -1.75rem 0 0 -1.75rem; padding: 0; border-radius: 999px; display: grid; place-items: center; color: #F3E2B3; cursor: pointer;
+      background: radial-gradient(circle at 32% 28%, rgba(255,255,255,.36), rgba(197,160,89,.16) 45%, rgba(74,21,37,.6) 100%); border: 1px solid rgba(223,202,157,.6);
+      box-shadow: 0 0 24px rgba(197,160,89,.4), inset 0 0 14px rgba(255,255,255,.14); -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px);
+      opacity: 0; transform: translate(var(--dx, 0), var(--dy, 0)) scale(.2); pointer-events: none; transition: transform 1s cubic-bezier(.16,1,.3,1), opacity .5s ease, box-shadow .3s; }
+    .cup-orb.is-on { opacity: 1; transform: none; pointer-events: auto; }
+    .cup-orb.is-on:hover, .cup-orb.is-selected { transform: scale(1.12); box-shadow: 0 0 34px rgba(223,202,157,.75), inset 0 0 16px rgba(255,255,255,.2); }
+    .cup-orb:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+    .cup-orb-i { display: grid; place-items: center; }
+    .cup-orb.is-on .cup-orb-i { animation: cupFloat 5s ease-in-out infinite; animation-play-state: paused; }
+    .cup-live .cup-orb.is-on .cup-orb-i { animation-play-state: running; }
+    .cup-orb:nth-child(2n) .cup-orb-i { animation-duration: 6.2s; animation-delay: -1.3s; } .cup-orb:nth-child(3n) .cup-orb-i { animation-duration: 4.4s; animation-delay: -2.1s; }
+    @keyframes cupFloat { 0%, 100% { transform: translateY(-3px); } 50% { transform: translateY(4px); } }
+    .cup-orb-name { position: absolute; top: 100%; left: 50%; transform: translateX(-50%); margin-top: .3rem; white-space: nowrap; font-size: .72rem; font-weight: 700; color: #F3E2B3; opacity: 0; transition: opacity .25s; text-shadow: 0 1px 8px rgba(0,0,0,.8); pointer-events: none; }
+    .cup-orb:hover .cup-orb-name, .cup-orb:focus-visible .cup-orb-name, .cup-orb.is-selected .cup-orb-name { opacity: 1; }
+    .cup-hint { position: absolute; left: 0; right: 0; top: 58%; display: flex; flex-direction: column; align-items: center; gap: .35rem; color: #F3E2B3; font-size: .82rem; font-weight: 700; letter-spacing: .05em;
+      text-shadow: 0 2px 10px rgba(0,0,0,.7); pointer-events: none; opacity: 0; transition: opacity .6s; }
+    .cup-hint.is-on { opacity: 1; } .cup-hint.is-gone { opacity: 0 !important; }
+    .cup-hint svg { animation: cupNudge 1.7s ease-in-out infinite; }
+    @keyframes cupNudge { 0%, 100% { transform: translateX(-14px); } 50% { transform: translateX(14px); } }
+    .cup-toast { position: absolute; left: 50%; top: 21%; opacity: 0; transform: translate(-50%, 0); white-space: nowrap; pointer-events: none;
+      font-family: 'Playfair Display', Georgia, serif; font-weight: 700; font-size: 2.2rem; color: #F3E2B3; text-shadow: 0 0 26px rgba(223,202,157,.85), 0 2px 10px rgba(0,0,0,.6); }
+    .cup-toast.is-on { animation: cupPop 1.4s cubic-bezier(.16,1,.3,1); }
+    @keyframes cupPop { 0% { opacity: 0; transform: translate(-50%, 12px) scale(.6); } 25% { opacity: 1; transform: translate(-50%, -6px) scale(1.1); } 75% { opacity: 1; transform: translate(-50%, -16px) scale(1); } 100% { opacity: 0; transform: translate(-50%, -34px) scale(1); } }
+    .cup-swirl-btn { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; }
+    .cup-swirl-btn:focus { width: auto; height: auto; clip: auto; left: 50%; bottom: .4rem; transform: translateX(-50%); padding: .55rem 1.1rem; border-radius: 999px; background: #C5A059; color: #1D060D; font-weight: 700; font-size: .85rem; z-index: 5; }
+    .cup-panel { padding: 1.4rem; border-radius: 1.5rem; background: linear-gradient(160deg, rgba(255,255,255,.08), rgba(255,255,255,.02)); border: 1px solid rgba(223,202,157,.24);
+      -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); box-shadow: 0 24px 60px rgba(0,0,0,.38); }
+    .cup-val { color: #DFCA9D; font-weight: 700; font-size: .85rem; text-transform: capitalize; }
+    .cup-range { -webkit-appearance: none; appearance: none; width: 100%; height: 1.7rem; background: transparent; cursor: pointer; --p: 50%; touch-action: pan-y; }
+    .cup-range::-webkit-slider-runnable-track { height: 6px; border-radius: 99px; background: linear-gradient(90deg, #C5A059 var(--p), rgba(255,255,255,.2) var(--p)); }
+    .cup-range::-moz-range-track { height: 6px; border-radius: 99px; background: rgba(255,255,255,.2); }
+    .cup-range::-moz-range-progress { height: 6px; border-radius: 99px; background: #C5A059; }
+    .cup-range::-webkit-slider-thumb { -webkit-appearance: none; width: 22px; height: 22px; margin-top: -8px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #F3E2B3, #C5A059 70%);
+      border: 2px solid #1D060D; box-shadow: 0 2px 10px rgba(0,0,0,.5), 0 0 0 4px rgba(197,160,89,.2); transition: transform .15s; }
+    .cup-range::-moz-range-thumb { width: 18px; height: 18px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #F3E2B3, #C5A059 70%); border: 2px solid #1D060D; }
+    .cup-range:active::-webkit-slider-thumb { transform: scale(1.18); }
+    .cup-range:focus-visible { outline: 2px solid #DFCA9D; outline-offset: 4px; border-radius: 8px; }
+    .cup-card { padding: 1rem 1.15rem; border-radius: 1rem; background: rgba(29,6,13,.6); border: 1px solid rgba(223,202,157,.22); min-height: 8.6rem; }
+    .cup-in { animation: cupIn .45s cubic-bezier(.16,1,.3,1); }
+    @keyframes cupIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+    .cup-dots { display: flex; gap: .45rem; margin-top: .8rem; }
+    .cup-dot { width: .6rem; height: .6rem; border-radius: 99px; background: rgba(255,255,255,.2); transition: background .4s, box-shadow .4s; }
+    .cup-dot.is-on { background: #DFCA9D; box-shadow: 0 0 10px rgba(223,202,157,.85); }
+    .cup-pairs { display: grid; gap: .5rem; margin: 0; padding: 0; list-style: none; }
+    .cup-pair { display: flex; align-items: center; gap: .65rem; padding: .55rem .9rem; border-radius: .85rem; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1); font-size: .95rem; }
+    .cup-pair.is-top { background: linear-gradient(135deg, rgba(197,160,89,.3), rgba(197,160,89,.1)); border-color: rgba(223,202,157,.55); font-weight: 700; font-size: 1.05rem; }
+    .cup-pair-dot { width: .55rem; height: .55rem; border-radius: 99px; background: #C5A059; flex: none; }
+    .cup-done .cup-cta { animation: cupPulse 2s ease-in-out infinite; }
+    @keyframes cupPulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(223,202,157,.55); } 50% { box-shadow: 0 0 0 12px rgba(223,202,157,0); } }
+    .cup-a11y { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; margin: 0; padding: 0; list-style: none; }
+    .cup-static-cta { display: none; }
+    .cup-static .cup-main { display: none; }
+    .cup-static .cup-static-cta { display: block; text-align: center; margin-top: 1.75rem; }
+    .cup-static .cup-a11y li { padding: .9rem 1rem; border-radius: .9rem; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1); color: #e5e7eb; }
+    .cup-static .cup-stage { display: none; }
+    .cup-static .cup-a11y { position: static; width: auto; height: auto; clip: auto; white-space: normal; max-width: 42rem; margin: 2rem auto 0; padding: 0 1rem; display: grid; gap: .6rem; }
+    @media (min-width: 1024px) { .cup-panel { padding: 1.9rem; } }
+    @media (prefers-reduced-motion: reduce) {
+      .cup-orb { transition: none; } .cup-orb.is-on .cup-orb-i, .cup-ambient i, .cup-hint svg, .cup-in, .cup-flare .cup-glow, .cup-done .cup-cta { animation: none; }
+      .cup-tilt { transition: none; transform: none; } .cup-toast.is-on { animation: none; opacity: 1; }
+    }
   </style>
 <style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:"Plus Jakarta Sans", sans-serif;font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.-inset-2{inset:-0.5rem}.inset-0{inset:0px}.-top-4{top:-1rem}.bottom-0{bottom:0px}.bottom-6{bottom:1.5rem}.left-0{left:0px}.left-1\/2{left:50%}.left-3{left:0.75rem}.right-0{right:0px}.right-5{right:1.25rem}.right-6{right:1.5rem}.right-8{right:2rem}.top-0{top:0px}.top-3{top:0.75rem}.top-5{top:1.25rem}.z-0{z-index:0}.z-10{z-index:10}.z-30{z-index:30}.z-40{z-index:40}.z-50{z-index:50}.z-\[100\]{z-index:100}.col-span-2{grid-column:span 2 / span 2}.mx-auto{margin-left:auto;margin-right:auto}.my-8{margin-top:2rem;margin-bottom:2rem}.mb-1{margin-bottom:0.25rem}.mb-12{margin-bottom:3rem}.mb-16{margin-bottom:4rem}.mb-2{margin-bottom:0.5rem}.mb-4{margin-bottom:1rem}.mb-6{margin-bottom:1.5rem}.mb-8{margin-bottom:2rem}.mt-1{margin-top:0.25rem}.mt-2{margin-top:0.5rem}.mt-8{margin-top:2rem}.line-clamp-3{overflow:hidden;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3}.block{display:block}.inline-block{display:inline-block}.flex{display:flex}.inline-flex{display:inline-flex}.grid{display:grid}.hidden{display:none}.aspect-\[16\/9\]{aspect-ratio:16/9}.aspect-\[4\/3\]{aspect-ratio:4/3}.aspect-\[4\/5\]{aspect-ratio:4/5}.h-1{height:0.25rem}.h-10{height:2.5rem}.h-12{height:3rem}.h-2{height:0.5rem}.h-20{height:5rem}.h-4{height:1rem}.h-44{height:11rem}.h-48{height:12rem}.h-5{height:1.25rem}.h-6{height:1.5rem}.h-7{height:1.75rem}.h-full{height:100%}.min-h-\[95vh\]{min-height:95vh}.w-1\.5{width:0.375rem}.w-10{width:2.5rem}.w-12{width:3rem}.w-2{width:0.5rem}.w-28{width:7rem}.w-36{width:9rem}.w-4{width:1rem}.w-48{width:12rem}.w-5{width:1.25rem}.w-6{width:1.5rem}.w-7{width:1.75rem}.w-full{width:100%}.max-w-2xl{max-width:42rem}.max-w-3xl{max-width:48rem}.max-w-4xl{max-width:56rem}.max-w-5xl{max-width:64rem}.max-w-7xl{max-width:80rem}.max-w-lg{max-width:32rem}.max-w-sm{max-width:24rem}.flex-1{flex:1 1 0%}.flex-shrink-0{flex-shrink:0}.origin-bottom{transform-origin:bottom}.origin-center{transform-origin:center}.-translate-x-1\/2{--tw-translate-x:-50%;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.-translate-y-full{--tw-translate-y:-100%;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.scale-105{--tw-scale-x:1.05;--tw-scale-y:1.05;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.transform{transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}@keyframes pulse{50%{opacity:.5}}.animate-pulse{animation:pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite}.cursor-pointer{cursor:pointer}.select-none{-webkit-user-select:none;user-select:none}.grid-cols-1{grid-template-columns:repeat(1, minmax(0, 1fr))}.grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-start{align-items:flex-start}.items-center{align-items:center}.items-stretch{align-items:stretch}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-1{gap:0.25rem}.gap-10{gap:2.5rem}.gap-12{gap:3rem}.gap-2{gap:0.5rem}.gap-3{gap:0.75rem}.gap-4{gap:1rem}.gap-6{gap:1.5rem}.gap-8{gap:2rem}.space-y-2 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.5rem * var(--tw-space-y-reverse))}.space-y-3 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.75rem * var(--tw-space-y-reverse))}.space-y-4 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem * var(--tw-space-y-reverse))}.space-y-6 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.5rem * var(--tw-space-y-reverse))}.overflow-hidden{overflow:hidden}.overflow-y-auto{overflow-y:auto}.overflow-x-hidden{overflow-x:hidden}.scroll-smooth{scroll-behavior:smooth}.rounded-2xl{border-radius:1rem}.rounded-3xl{border-radius:1.5rem}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:0.5rem}.rounded-xl{border-radius:0.75rem}.border{border-width:1px}.border-2{border-width:2px}.border-y{border-top-width:1px;border-bottom-width:1px}.border-b{border-bottom-width:1px}.border-t{border-top-width:1px}.border-gold{--tw-border-opacity:1;border-color:rgb(197 160 89 / var(--tw-border-opacity, 1))}.border-gold\/30{border-color:rgb(197 160 89 / 0.3)}.border-gold\/40{border-color:rgb(197 160 89 / 0.4)}.border-gray-300{--tw-border-opacity:1;border-color:rgb(209 213 219 / var(--tw-border-opacity, 1))}.border-tannat-100{--tw-border-opacity:1;border-color:rgb(244 235 237 / var(--tw-border-opacity, 1))}.border-white\/10{border-color:rgb(255 255 255 / 0.1)}.border-white\/15{border-color:rgb(255 255 255 / 0.15)}.border-white\/20{border-color:rgb(255 255 255 / 0.2)}.border-white\/30{border-color:rgb(255 255 255 / 0.3)}.bg-\[\#25D366\]{--tw-bg-opacity:1;background-color:rgb(37 211 102 / var(--tw-bg-opacity, 1))}.bg-\[\#EFECE6\]{--tw-bg-opacity:1;background-color:rgb(239 236 230 / var(--tw-bg-opacity, 1))}.bg-black\/40{background-color:rgb(0 0 0 / 0.4)}.bg-black\/80{background-color:rgb(0 0 0 / 0.8)}.bg-crema{--tw-bg-opacity:1;background-color:rgb(253 251 247 / var(--tw-bg-opacity, 1))}.bg-gold{--tw-bg-opacity:1;background-color:rgb(197 160 89 / var(--tw-bg-opacity, 1))}.bg-gold\/15{background-color:rgb(197 160 89 / 0.15)}.bg-gold\/20{background-color:rgb(197 160 89 / 0.2)}.bg-tannat{--tw-bg-opacity:1;background-color:rgb(74 21 37 / var(--tw-bg-opacity, 1))}.bg-tannat-50{--tw-bg-opacity:1;background-color:rgb(250 245 246 / var(--tw-bg-opacity, 1))}.bg-tannat-900{--tw-bg-opacity:1;background-color:rgb(29 6 13 / var(--tw-bg-opacity, 1))}.bg-tannat-900\/95{background-color:rgb(29 6 13 / 0.95)}.bg-tannat-dark\/60{background-color:rgb(46 11 22 / 0.6)}.bg-tannat-dark\/80{background-color:rgb(46 11 22 / 0.8)}.bg-tannat-dark\/95{background-color:rgb(46 11 22 / 0.95)}.bg-tannat\/10{background-color:rgb(74 21 37 / 0.1)}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.bg-white\/10{background-color:rgb(255 255 255 / 0.1)}.bg-white\/15{background-color:rgb(255 255 255 / 0.15)}.bg-white\/5{background-color:rgb(255 255 255 / 0.05)}.bg-gradient-to-b{background-image:linear-gradient(to bottom, var(--tw-gradient-stops))}.bg-gradient-to-r{background-image:linear-gradient(to right, var(--tw-gradient-stops))}.bg-gradient-to-t{background-image:linear-gradient(to top, var(--tw-gradient-stops))}.from-crema{--tw-gradient-from:#FDFBF7 var(--tw-gradient-from-position);--tw-gradient-to:rgb(253 251 247 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-gold{--tw-gradient-from:#C5A059 var(--tw-gradient-from-position);--tw-gradient-to:rgb(197 160 89 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-red-400{--tw-gradient-from:#f87171 var(--tw-gradient-from-position);--tw-gradient-to:rgb(248 113 113 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-tannat{--tw-gradient-from:#4A1525 var(--tw-gradient-from-position);--tw-gradient-to:rgb(74 21 37 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-tannat-900\/95{--tw-gradient-from:rgb(29 6 13 / 0.95) var(--tw-gradient-from-position);--tw-gradient-to:rgb(29 6 13 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.via-tannat-900\/80{--tw-gradient-to:rgb(29 6 13 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), rgb(29 6 13 / 0.8) var(--tw-gradient-via-position), var(--tw-gradient-to)}.via-tannat-light{--tw-gradient-to:rgb(114 47 55 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), #722F37 var(--tw-gradient-via-position), var(--tw-gradient-to)}.via-transparent{--tw-gradient-to:rgb(0 0 0 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), transparent var(--tw-gradient-via-position), var(--tw-gradient-to)}.to-black\/60{--tw-gradient-to:rgb(0 0 0 / 0.6) var(--tw-gradient-to-position)}.to-gold-dark{--tw-gradient-to:#9A7B38 var(--tw-gradient-to-position)}.to-gold-light{--tw-gradient-to:#DFCA9D var(--tw-gradient-to-position)}.to-tannat{--tw-gradient-to:#4A1525 var(--tw-gradient-to-position)}.to-tannat-dark{--tw-gradient-to:#2E0B16 var(--tw-gradient-to-position)}.to-transparent{--tw-gradient-to:transparent var(--tw-gradient-to-position)}.fill-current{fill:currentColor}.object-cover{object-fit:cover}.object-center{object-position:center}.p-1{padding:0.25rem}.p-2{padding:0.5rem}.p-3{padding:0.75rem}.p-4{padding:1rem}.p-6{padding:1.5rem}.p-8{padding:2rem}.px-2\.5{padding-left:0.625rem;padding-right:0.625rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.px-3\.5{padding-left:0.875rem;padding-right:0.875rem}.px-4{padding-left:1rem;padding-right:1rem}.px-5{padding-left:1.25rem;padding-right:1.25rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.px-8{padding-left:2rem;padding-right:2rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.py-1\.5{padding-top:0.375rem;padding-bottom:0.375rem}.py-16{padding-top:4rem;padding-bottom:4rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-2\.5{padding-top:0.625rem;padding-bottom:0.625rem}.py-20{padding-top:5rem;padding-bottom:5rem}.py-24{padding-top:6rem;padding-bottom:6rem}.py-3{padding-top:0.75rem;padding-bottom:0.75rem}.py-4{padding-top:1rem;padding-bottom:1rem}.py-5{padding-top:1.25rem;padding-bottom:1.25rem}.pb-6{padding-bottom:1.5rem}.pt-2{padding-top:0.5rem}.pt-20{padding-top:5rem}.pt-4{padding-top:1rem}.pt-6{padding-top:1.5rem}.pt-8{padding-top:2rem}.text-left{text-align:left}.text-center{text-align:center}.text-right{text-align:right}.font-mono{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace}.font-sans{font-family:"Plus Jakarta Sans", sans-serif}.font-serif{font-family:"Playfair Display", Georgia, serif}.text-2xl{font-size:1.5rem;line-height:2rem}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-4xl{font-size:2.25rem;line-height:2.5rem}.text-\[10px\]{font-size:10px}.text-base{font-size:1rem;line-height:1.5rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:0.75rem;line-height:1rem}.font-bold{font-weight:700}.font-extrabold{font-weight:800}.font-light{font-weight:300}.font-medium{font-weight:500}.font-normal{font-weight:400}.font-semibold{font-weight:600}.uppercase{text-transform:uppercase}.italic{font-style:italic}.leading-\[1\.1\]{line-height:1.1}.leading-relaxed{line-height:1.625}.leading-tight{line-height:1.25}.tracking-tight{letter-spacing:-0.025em}.tracking-wider{letter-spacing:0.05em}.tracking-widest{letter-spacing:0.1em}.text-basalt{--tw-text-opacity:1;color:rgb(36 36 36 / var(--tw-text-opacity, 1))}.text-gold{--tw-text-opacity:1;color:rgb(197 160 89 / var(--tw-text-opacity, 1))}.text-gold-dark{--tw-text-opacity:1;color:rgb(154 123 56 / var(--tw-text-opacity, 1))}.text-gold-light{--tw-text-opacity:1;color:rgb(223 202 157 / var(--tw-text-opacity, 1))}.text-gray-200{--tw-text-opacity:1;color:rgb(229 231 235 / var(--tw-text-opacity, 1))}.text-gray-300{--tw-text-opacity:1;color:rgb(209 213 219 / var(--tw-text-opacity, 1))}.text-gray-400{--tw-text-opacity:1;color:rgb(156 163 175 / var(--tw-text-opacity, 1))}.text-gray-500{--tw-text-opacity:1;color:rgb(107 114 128 / var(--tw-text-opacity, 1))}.text-tannat{--tw-text-opacity:1;color:rgb(74 21 37 / var(--tw-text-opacity, 1))}.text-tannat-900{--tw-text-opacity:1;color:rgb(29 6 13 / var(--tw-text-opacity, 1))}.text-tannat-dark{--tw-text-opacity:1;color:rgb(46 11 22 / var(--tw-text-opacity, 1))}.text-terroir{--tw-text-opacity:1;color:rgb(90 77 65 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.antialiased{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.opacity-25{opacity:0.25}.opacity-90{opacity:0.9}.shadow-2xl{--tw-shadow:0 25px 50px -12px rgb(0 0 0 / 0.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-lg{--tw-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-md{--tw-shadow:0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-sm{--tw-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-xl{--tw-shadow:0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.blur-lg{--tw-blur:blur(16px);filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.drop-shadow-\[0_4px_20px_rgba\(197\2c 160\2c 89\2c 0\.35\)\]{--tw-drop-shadow:drop-shadow(0 4px 20px rgba(197,160,89,0.35));filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.backdrop-blur-lg{--tw-backdrop-blur:blur(16px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.backdrop-blur-md{--tw-backdrop-blur:blur(12px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.backdrop-blur-sm{--tw-backdrop-blur:blur(4px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-colors{transition-property:color, background-color, border-color, fill, stroke, -webkit-text-decoration-color;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, -webkit-text-decoration-color;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-opacity{transition-property:opacity;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-transform{transition-property:transform;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.duration-1000{transition-duration:1000ms}.duration-300{transition-duration:300ms}.duration-700{transition-duration:700ms}.selection\:bg-gold *::selection{--tw-bg-opacity:1;background-color:rgb(197 160 89 / var(--tw-bg-opacity, 1))}.selection\:text-tannat-dark *::selection{--tw-text-opacity:1;color:rgb(46 11 22 / var(--tw-text-opacity, 1))}.selection\:bg-gold::selection{--tw-bg-opacity:1;background-color:rgb(197 160 89 / var(--tw-bg-opacity, 1))}.selection\:text-tannat-dark::selection{--tw-text-opacity:1;color:rgb(46 11 22 / var(--tw-text-opacity, 1))}.hover\:-translate-y-0\.5:hover{--tw-translate-y:-0.125rem;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.hover\:-translate-y-1\.5:hover{--tw-translate-y:-0.375rem;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.hover\:scale-105:hover{--tw-scale-x:1.05;--tw-scale-y:1.05;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.hover\:scale-110:hover{--tw-scale-x:1.1;--tw-scale-y:1.1;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.hover\:border-gold:hover{--tw-border-opacity:1;border-color:rgb(197 160 89 / var(--tw-border-opacity, 1))}.hover\:border-transparent:hover{border-color:transparent}.hover\:bg-\[\#20ba59\]:hover{--tw-bg-opacity:1;background-color:rgb(32 186 89 / var(--tw-bg-opacity, 1))}.hover\:bg-gold:hover{--tw-bg-opacity:1;background-color:rgb(197 160 89 / var(--tw-bg-opacity, 1))}.hover\:bg-gold-light:hover{--tw-bg-opacity:1;background-color:rgb(223 202 157 / var(--tw-bg-opacity, 1))}.hover\:bg-tannat-50:hover{--tw-bg-opacity:1;background-color:rgb(250 245 246 / var(--tw-bg-opacity, 1))}.hover\:bg-white\/10:hover{background-color:rgb(255 255 255 / 0.1)}.hover\:bg-white\/20:hover{background-color:rgb(255 255 255 / 0.2)}.hover\:from-gold-dark:hover{--tw-gradient-from:#9A7B38 var(--tw-gradient-from-position);--tw-gradient-to:rgb(154 123 56 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.hover\:to-gold:hover{--tw-gradient-to:#C5A059 var(--tw-gradient-to-position)}.hover\:text-gold:hover{--tw-text-opacity:1;color:rgb(197 160 89 / var(--tw-text-opacity, 1))}.hover\:text-tannat:hover{--tw-text-opacity:1;color:rgb(74 21 37 / var(--tw-text-opacity, 1))}.hover\:text-tannat-900:hover{--tw-text-opacity:1;color:rgb(29 6 13 / var(--tw-text-opacity, 1))}.hover\:text-white:hover{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.hover\:underline:hover{-webkit-text-decoration-line:underline;text-decoration-line:underline}.hover\:shadow-2xl:hover{--tw-shadow:0 25px 50px -12px rgb(0 0 0 / 0.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.hover\:shadow-gold\/20:hover{--tw-shadow-color:rgb(197 160 89 / 0.2);--tw-shadow:var(--tw-shadow-colored)}.hover\:shadow-gold\/30:hover{--tw-shadow-color:rgb(197 160 89 / 0.3);--tw-shadow:var(--tw-shadow-colored)}.hover\:shadow-gold\/40:hover{--tw-shadow-color:rgb(197 160 89 / 0.4);--tw-shadow:var(--tw-shadow-colored)}.focus\:border-gold:focus{--tw-border-opacity:1;border-color:rgb(197 160 89 / var(--tw-border-opacity, 1))}.focus\:outline-none:focus{outline:2px solid transparent;outline-offset:2px}.focus\:ring-2:focus{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)}.focus\:ring-4:focus{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(4px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)}.focus\:ring-gold:focus{--tw-ring-opacity:1;--tw-ring-color:rgb(197 160 89 / var(--tw-ring-opacity, 1))}.focus\:ring-green-400:focus{--tw-ring-opacity:1;--tw-ring-color:rgb(74 222 128 / var(--tw-ring-opacity, 1))}.focus\:ring-white:focus{--tw-ring-opacity:1;--tw-ring-color:rgb(255 255 255 / var(--tw-ring-opacity, 1))}.active\:scale-95:active{--tw-scale-x:.95;--tw-scale-y:.95;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.group:hover .group-hover\:translate-x-1{--tw-translate-x:0.25rem;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.group:hover .group-hover\:scale-105{--tw-scale-x:1.05;--tw-scale-y:1.05;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.group:hover .group-hover\:scale-110{--tw-scale-x:1.1;--tw-scale-y:1.1;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.group:hover .group-hover\:scale-125{--tw-scale-x:1.25;--tw-scale-y:1.25;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.group:hover .group-hover\:border-gold{--tw-border-opacity:1;border-color:rgb(197 160 89 / var(--tw-border-opacity, 1))}.group:hover .group-hover\:fill-tannat{fill:#4A1525}.group:hover .group-hover\:text-gold-dark{--tw-text-opacity:1;color:rgb(154 123 56 / var(--tw-text-opacity, 1))}.group:hover .group-hover\:text-gold-light{--tw-text-opacity:1;color:rgb(223 202 157 / var(--tw-text-opacity, 1))}.group:hover .group-hover\:opacity-40{opacity:0.4}@media (min-width: 640px){.sm\:col-span-1{grid-column:span 1 / span 1}.sm\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.sm\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.sm\:flex-row{flex-direction:row}.sm\:items-center{align-items:center}.sm\:p-10{padding:2.5rem}.sm\:p-8{padding:2rem}.sm\:px-6{padding-left:1.5rem;padding-right:1.5rem}.sm\:text-3xl{font-size:1.875rem;line-height:2.25rem}.sm\:text-4xl{font-size:2.25rem;line-height:2.5rem}.sm\:text-5xl{font-size:3rem;line-height:1}.sm\:text-6xl{font-size:3.75rem;line-height:1}.sm\:text-lg{font-size:1.125rem;line-height:1.75rem}.sm\:text-sm{font-size:0.875rem;line-height:1.25rem}.sm\:text-xl{font-size:1.25rem;line-height:1.75rem}}@media (min-width: 768px){.md\:flex{display:flex}.md\:hidden{display:none}.md\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.md\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}}@media (min-width: 1024px){.lg\:col-span-5{grid-column:span 5 / span 5}.lg\:col-span-7{grid-column:span 7 / span 7}.lg\:flex{display:flex}.lg\:grid-cols-12{grid-template-columns:repeat(12, minmax(0, 1fr))}.lg\:grid-cols-4{grid-template-columns:repeat(4, minmax(0, 1fr))}.lg\:gap-12{gap:3rem}.lg\:gap-16{gap:4rem}.lg\:px-8{padding-left:2rem;padding-right:2rem}.lg\:py-28{padding-top:7rem;padding-bottom:7rem}.lg\:py-32{padding-top:8rem;padding-bottom:8rem}.lg\:text-6xl{font-size:3.75rem;line-height:1}.lg\:text-7xl{font-size:4.5rem;line-height:1}}</style></head>
 <body class="bg-crema text-basalt font-sans antialiased selection:bg-gold selection:text-tannat-dark overflow-x-hidden">
@@ -537,6 +617,7 @@
       </div>
       <a href="#historia" class="block text-gray-200 hover:text-gold py-2 font-medium" data-i18n="nav.history">Historia</a>
       <a href="#pionero" class="block text-gray-200 hover:text-gold py-2 font-medium" data-i18n="nav.pioneer">El Pionero</a>
+      <a href="#copa" class="block text-gray-200 hover:text-gold py-2 font-medium" data-i18n="nav.cup">La Copa de Tannat</a>
       <a href="#estaciones" class="block text-gray-200 hover:text-gold py-2 font-medium" data-i18n="nav.stations">Estaciones</a>
       <a href="#sostenibilidad" class="block text-gray-200 hover:text-gold py-2 font-medium" data-i18n="nav.sustain">Turismo Sostenible</a>
       <a href="#temporadas" class="block text-gray-200 hover:text-gold py-2 font-medium" data-i18n="nav.seasons">¿Cuándo viajar?</a>
@@ -864,11 +945,112 @@
                 <span class="text-sm sm:text-base text-terroir" data-i18n="pioneer.chip3Label">Día Nacional del Tannat, en su honor</span>
               </div>
             </div>
+
+            <a href="#copa" class="mt-8 inline-flex items-center gap-2 px-5 py-3 rounded-full bg-tannat text-white font-semibold text-sm shadow-md hover:bg-tannat-dark transition-colors" data-i18n="pioneer.cupLink">Ahora probá el Tannat: la copa interactiva →</a>
           </div>
 
         </div>
 
       </div>
+    </section>
+
+    <!-- ==================== SECTION 2C: LA COPA DE TANNAT (INTERACTIVA) ==================== -->
+    <section id="copa" class="cup-section relative py-20 lg:py-28 text-white overflow-hidden" aria-labelledby="cupTitle">
+      <div class="cup-ambient" aria-hidden="true"><i style="--x:0.0%;--y:87.1%;--s:4.7px;--d:8.7s;--t:-7.3s;--dx:2px"></i><i style="--x:31.6%;--y:76.6%;--s:7.5px;--d:11.3s;--t:-6.8s;--dx:8px"></i><i style="--x:78.4%;--y:45.0%;--s:5.2px;--d:12.7s;--t:-7.0s;--dx:-27px"></i><i style="--x:65.7%;--y:59.0%;--s:8.5px;--d:13.5s;--t:-1.2s;--dx:1px"></i><i style="--x:88.6%;--y:72.7%;--s:6.9px;--d:11.6s;--t:-9.1s;--dx:25px"></i><i style="--x:35.7%;--y:50.8%;--s:8.0px;--d:9.7s;--t:-1.5s;--dx:-12px"></i><i style="--x:41.1%;--y:48.3%;--s:8.6px;--d:11.5s;--t:-7.3s;--dx:23px"></i><i style="--x:5.6%;--y:47.0%;--s:6.4px;--d:11.1s;--t:-4.2s;--dx:-18px"></i><i style="--x:87.3%;--y:33.4%;--s:5.2px;--d:9.8s;--t:-6.6s;--dx:25px"></i><i style="--x:49.4%;--y:40.3%;--s:5.4px;--d:9.3s;--t:-3.6s;--dx:-5px"></i><i style="--x:31.9%;--y:63.0%;--s:6.7px;--d:8.9s;--t:-9.1s;--dx:-3px"></i><i style="--x:82.8%;--y:69.4%;--s:6.8px;--d:11.1s;--t:-5.0s;--dx:11px"></i><i style="--x:90.2%;--y:54.6%;--s:7.2px;--d:9.0s;--t:-5.9s;--dx:-9px"></i><i style="--x:31.7%;--y:54.3%;--s:7.8px;--d:14.0s;--t:-1.1s;--dx:19px"></i><i style="--x:7.5%;--y:55.2%;--s:3.9px;--d:7.6s;--t:-10.0s;--dx:-17px"></i><i style="--x:60.7%;--y:38.9%;--s:5.7px;--d:11.7s;--t:-1.4s;--dx:25px"></i></div>
+      <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div class="text-center max-w-3xl mx-auto mb-10 lg:mb-14">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-gold/40 text-gold-light font-semibold text-xs uppercase tracking-wider" data-i18n="cup.pre">Experiencia interactiva</div>
+          <h2 id="cupTitle" class="mt-4 font-serif text-3xl sm:text-5xl font-bold tracking-tight text-white uppercase" data-i18n="cup.title">La Copa de Tannat</h2>
+          <p class="mt-4 text-base sm:text-lg text-gray-200 leading-relaxed" data-i18n="cup.subtitle">Girá la copa, liberá sus aromas y descubrí con qué disfrutarla en Salto.</p>
+        </div>
+
+        <div class="cup-main grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+
+          <div class="lg:col-span-5">
+            <div class="cup-stage" id="cupStage" role="group" aria-label="Copa de Tannat interactiva: arrastrá para girarla y liberar sus aromas">
+              <div class="cup-tilt">
+                <div class="cup-glow" aria-hidden="true"></div>
+                <canvas id="cupCanvas" class="cup-canvas" aria-hidden="true"></canvas>
+                <div class="cup-orbs" id="cupOrbs"></div>
+                <div class="cup-hint" id="cupHint" aria-hidden="true">
+                  <svg width="72" height="22" viewBox="0 0 72 22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 11h60M14 4l-8 7 8 7M58 4l8 7-8 7"/></svg>
+                  <span data-i18n="cup.hint">Arrastrá sobre la copa para girarla</span>
+                </div>
+                <div class="cup-toast" id="cupToast" aria-hidden="true"></div>
+              </div>
+              <button type="button" id="cupSwirlBtn" class="cup-swirl-btn" data-i18n="cup.swirlBtn">Girar la copa</button>
+            </div>
+          </div>
+
+          <div class="lg:col-span-7">
+            <div class="cup-panel">
+              <h3 class="text-xs font-bold uppercase tracking-[0.18em] text-gold" data-i18n="cup.profile">Armá tu Tannat</h3>
+              <p id="cupSummary" class="mt-2 font-serif text-xl sm:text-2xl leading-snug text-white">Un Tannat de cuerpo medio, de taninos firmes y de acidez equilibrada.</p>
+
+              <div class="mt-5 grid gap-3">
+                <div>
+              <div class="flex items-baseline justify-between gap-3">
+                <label for="cupTannin" class="text-sm font-semibold uppercase tracking-wider text-gray-200" data-i18n="cup.tannin">Tanino</label>
+                <span id="cupValT" class="cup-val"></span>
+              </div>
+              <input id="cupTannin" class="cup-range" type="range" min="0" max="100" value="70" style="--p:70%">
+            </div>
+                <div>
+              <div class="flex items-baseline justify-between gap-3">
+                <label for="cupBody" class="text-sm font-semibold uppercase tracking-wider text-gray-200" data-i18n="cup.body">Cuerpo</label>
+                <span id="cupValB" class="cup-val"></span>
+              </div>
+              <input id="cupBody" class="cup-range" type="range" min="0" max="100" value="65" style="--p:65%">
+            </div>
+                <div>
+              <div class="flex items-baseline justify-between gap-3">
+                <label for="cupAcid" class="text-sm font-semibold uppercase tracking-wider text-gray-200" data-i18n="cup.acid">Acidez</label>
+                <span id="cupValA" class="cup-val"></span>
+              </div>
+              <input id="cupAcid" class="cup-range" type="range" min="0" max="100" value="40" style="--p:40%">
+            </div>
+              </div>
+
+              <div id="cupCard" class="cup-card mt-6" aria-live="polite">
+                <div class="flex items-baseline justify-between gap-3">
+                  <span id="cupCardTitle" class="font-serif text-lg font-bold text-white">Aromas de la copa</span>
+                  <span id="cupProgress" class="text-xs font-semibold text-gold-light">Aromas liberados: 0 de 5</span>
+                </div>
+                <p id="cupCardText" class="mt-2 text-sm sm:text-base leading-relaxed text-gray-200">Girá la copa: cada vuelta libera aromas. Tocá uno para conocerlo.</p>
+                <div id="cupDots" class="cup-dots" aria-hidden="true"></div>
+              </div>
+
+              <div class="mt-6">
+                <h3 class="text-xs font-bold uppercase tracking-[0.18em] text-gold" data-i18n="cup.pair.title">Con qué maridarlo</h3>
+                <ul id="cupPairs" class="cup-pairs mt-3">
+                  <li class="cup-pair is-top"><span class="cup-pair-dot"></span><span>Cordero a las brasas</span></li>
+                  <li class="cup-pair"><span class="cup-pair-dot"></span><span>Carne a la parrilla</span></li>
+                  <li class="cup-pair"><span class="cup-pair-dot"></span><span>Chocolate amargo</span></li>
+                </ul>
+                <p id="cupWhy" class="mt-3 text-sm sm:text-base leading-relaxed text-gray-200">Los taninos firmes se suavizan con la proteína y la grasa de la carne.</p>
+              </div>
+
+              <div class="mt-6 flex flex-wrap items-center gap-3">
+                <button type="button" id="cupCheers" class="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-gold text-tannat-900 font-bold text-sm shadow-lg hover:bg-gold-light transition-colors" data-i18n="cup.cheersBtn">Brindar</button>
+                <a href="#paquetes" class="cup-cta inline-flex items-center gap-2 px-5 py-3 rounded-full border border-gold/60 text-gold-light font-bold text-sm hover:bg-white/10 transition-colors" data-i18n="cup.cta">Probalo en la Ruta →</a>
+              </div>
+              <p class="mt-3 text-xs sm:text-sm text-gray-300 leading-relaxed" data-i18n="cup.ctaNote">El paquete completo de la Ruta incluye almuerzo maridaje de 4 pasos y cata de vinos premiados.</p>
+              <p class="mt-4 pt-4 border-t border-white/10 text-[11px] sm:text-xs text-gray-400 leading-relaxed" data-i18n="cup.note">Notas típicas de la cepa Tannat; cada vino y cada bodega tiene su propio perfil. Ilustración interactiva.</p>
+              <span id="cupLive" class="sr-only" aria-live="polite"></span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <ul class="cup-a11y">
+          <li><strong data-i18n="cup.a1.name">Mora y ciruela</strong>: <span data-i18n="cup.a1.info">Son las frutas negras que más se mencionan al describir un Tannat: maduras, jugosas y de mucha intensidad.</span></li>
+          <li><strong data-i18n="cup.a2.name">Violeta</strong>: <span data-i18n="cup.a2.info">Una nota floral frecuente en vinos jóvenes: aporta un toque perfumado al carácter potente de la cepa.</span></li>
+          <li><strong data-i18n="cup.a3.name">Pimienta negra</strong>: <span data-i18n="cup.a3.info">Las especias, sobre todo la pimienta negra, suman un picor suave y refuerzan su carácter.</span></li>
+          <li><strong data-i18n="cup.a4.name">Vainilla y tostado</strong>: <span data-i18n="cup.a4.info">Aparecen cuando el vino descansa en barricas de roble: vainilla, madera tostada y, a veces, café.</span></li>
+          <li><strong data-i18n="cup.a5.name">Chocolate y tabaco</strong>: <span data-i18n="cup.a5.info">Con más tiempo de crianza y de botella, el Tannat suele ganar matices de cacao y tabaco, más profundos y complejos.</span></li>
+      </ul>
+      <p class="cup-static-cta"><a href="#paquetes" class="inline-flex items-center gap-2 px-5 py-3 rounded-full border border-gold/60 text-gold-light font-bold text-sm hover:bg-white/10 transition-colors" data-i18n="cup.cta">Probalo en la Ruta →</a></p>
     </section>
 
     <!-- ==================== SECTION 3: LAS 4 ESTACIONES ==================== -->
@@ -2746,6 +2928,71 @@
         "pioneer.chip2Label": "Nombre con el que se conoció a la cepa Tannat",
         "pioneer.chip3Num": "14 de abril",
         "pioneer.chip3Label": "Día Nacional del Tannat, en su honor",
+        "nav.cup": "La Copa de Tannat",
+        "pioneer.cupLink": "Ahora probá el Tannat: la copa interactiva →",
+        "cup.pre": "Experiencia interactiva",
+        "cup.title": "La Copa de Tannat",
+        "cup.subtitle": "Girá la copa, liberá sus aromas y descubrí con qué disfrutarla en Salto.",
+        "cup.hint": "Arrastrá sobre la copa para girarla",
+        "cup.swirlBtn": "Girar la copa",
+        "cup.cheers": "¡Salud!",
+        "cup.cheersBtn": "Brindar",
+        "cup.stageLabel": "Copa de Tannat interactiva: arrastrá para girarla y liberar sus aromas",
+        "cup.profile": "Armá tu Tannat",
+        "cup.tannin": "Tanino",
+        "cup.body": "Cuerpo",
+        "cup.acid": "Acidez",
+        "cup.w.t0": "suave",
+        "cup.w.t1": "redondo",
+        "cup.w.t2": "firme",
+        "cup.w.b0": "ligero",
+        "cup.w.b1": "medio",
+        "cup.w.b2": "pleno",
+        "cup.w.a0": "suave",
+        "cup.w.a1": "equilibrada",
+        "cup.w.a2": "viva",
+        "cup.sum": "Un Tannat {b}, {t} y {a}.",
+        "cup.sB0": "de cuerpo ligero",
+        "cup.sB1": "de cuerpo medio",
+        "cup.sB2": "de cuerpo pleno",
+        "cup.sT0": "de taninos suaves",
+        "cup.sT1": "de taninos redondos",
+        "cup.sT2": "de taninos firmes",
+        "cup.sA0": "de acidez suave",
+        "cup.sA1": "de acidez equilibrada",
+        "cup.sA2": "de acidez viva",
+        "cup.a1.name": "Mora y ciruela",
+        "cup.a1.info": "Son las frutas negras que más se mencionan al describir un Tannat: maduras, jugosas y de mucha intensidad.",
+        "cup.a2.name": "Violeta",
+        "cup.a2.info": "Una nota floral frecuente en vinos jóvenes: aporta un toque perfumado al carácter potente de la cepa.",
+        "cup.a3.name": "Pimienta negra",
+        "cup.a3.info": "Las especias, sobre todo la pimienta negra, suman un picor suave y refuerzan su carácter.",
+        "cup.a4.name": "Vainilla y tostado",
+        "cup.a4.info": "Aparecen cuando el vino descansa en barricas de roble: vainilla, madera tostada y, a veces, café.",
+        "cup.a5.name": "Chocolate y tabaco",
+        "cup.a5.info": "Con más tiempo de crianza y de botella, el Tannat suele ganar matices de cacao y tabaco, más profundos y complejos.",
+        "cup.card.idleT": "Aromas de la copa",
+        "cup.card.idle": "Girá la copa: cada vuelta libera aromas. Tocá uno para conocerlo.",
+        "cup.card.doneT": "¡Aromas liberados!",
+        "cup.card.done": "Liberaste los cinco. Ahora armá tu Tannat con los controles y mirá con qué se disfruta mejor.",
+        "cup.card.progress": "Aromas liberados: {n} de 5",
+        "cup.live.released": "Aroma liberado:",
+        "cup.pair.title": "Con qué maridarlo",
+        "cup.p.cordero": "Cordero a las brasas",
+        "cup.p.cordero.why": "Los taninos firmes se suavizan con la proteína y la grasa de la carne.",
+        "cup.p.parrilla": "Carne a la parrilla",
+        "cup.p.parrilla.why": "Un clásico: la carne roja y el humo de las brasas acompañan la potencia del Tannat.",
+        "cup.p.quesos": "Quesos curados",
+        "cup.p.quesos.why": "Su sal y su grasa equilibran los taninos y realzan la fruta.",
+        "cup.p.pasta": "Pastas con salsa de tomate",
+        "cup.p.pasta.why": "La acidez del tomate se lleva bien con un vino de acidez viva.",
+        "cup.p.choco": "Chocolate amargo",
+        "cup.p.choco.why": "El cacao y los taninos maduros se complementan en un final largo.",
+        "cup.p.citricos": "Un plato con cítricos salteños",
+        "cup.p.citricos.why": "La acidez cítrica y la del vino se responden: un guiño a los cítricos salteños.",
+        "cup.cta": "Probalo en la Ruta →",
+        "cup.ctaNote": "El paquete completo de la Ruta incluye almuerzo maridaje de 4 pasos y cata de vinos premiados.",
+        "cup.note": "Notas típicas de la cepa Tannat; cada vino y cada bodega tiene su propio perfil. Ilustración interactiva.",
         
         "stations.badge": "Itinerario Oficial",
         "stations.title": "Las 4 Estaciones de la Ruta",
@@ -3132,6 +3379,71 @@
         "pioneer.chip2Label": "Nome pelo qual a casta Tannat ficou conhecida",
         "pioneer.chip3Num": "14 de abril",
         "pioneer.chip3Label": "Dia Nacional do Tannat, em sua homenagem",
+        "nav.cup": "A Taça de Tannat",
+        "pioneer.cupLink": "Agora prove o Tannat: a taça interativa →",
+        "cup.pre": "Experiência interativa",
+        "cup.title": "A Taça de Tannat",
+        "cup.subtitle": "Gire a taça, libere seus aromas e descubra com o que apreciá-la em Salto.",
+        "cup.hint": "Arraste sobre a taça para girá-la",
+        "cup.swirlBtn": "Girar a taça",
+        "cup.cheers": "Saúde!",
+        "cup.cheersBtn": "Brindar",
+        "cup.stageLabel": "Taça de Tannat interativa: arraste para girá-la e liberar seus aromas",
+        "cup.profile": "Monte o seu Tannat",
+        "cup.tannin": "Tanino",
+        "cup.body": "Corpo",
+        "cup.acid": "Acidez",
+        "cup.w.t0": "macio",
+        "cup.w.t1": "redondo",
+        "cup.w.t2": "firme",
+        "cup.w.b0": "leve",
+        "cup.w.b1": "médio",
+        "cup.w.b2": "cheio",
+        "cup.w.a0": "suave",
+        "cup.w.a1": "equilibrada",
+        "cup.w.a2": "viva",
+        "cup.sum": "Um Tannat {b}, {t} e {a}.",
+        "cup.sB0": "de corpo leve",
+        "cup.sB1": "de corpo médio",
+        "cup.sB2": "de corpo cheio",
+        "cup.sT0": "de taninos macios",
+        "cup.sT1": "de taninos redondos",
+        "cup.sT2": "de taninos firmes",
+        "cup.sA0": "de acidez suave",
+        "cup.sA1": "de acidez equilibrada",
+        "cup.sA2": "de acidez viva",
+        "cup.a1.name": "Amora e ameixa",
+        "cup.a1.info": "São as frutas negras mais citadas ao descrever um Tannat: maduras, suculentas e muito intensas.",
+        "cup.a2.name": "Violeta",
+        "cup.a2.info": "Uma nota floral frequente em vinhos jovens: traz um toque perfumado ao caráter potente da cepa.",
+        "cup.a3.name": "Pimenta-preta",
+        "cup.a3.info": "As especiarias, sobretudo a pimenta-preta, acrescentam um leve picante e reforçam seu caráter.",
+        "cup.a4.name": "Baunilha e tostado",
+        "cup.a4.info": "Surgem quando o vinho repousa em barricas de carvalho: baunilha, madeira tostada e, às vezes, café.",
+        "cup.a5.name": "Chocolate e tabaco",
+        "cup.a5.info": "Com mais tempo de estágio e de garrafa, o Tannat costuma ganhar nuances de cacau e tabaco, mais profundas e complexas.",
+        "cup.card.idleT": "Aromas da taça",
+        "cup.card.idle": "Gire a taça: cada volta libera aromas. Toque em um para conhecê-lo.",
+        "cup.card.doneT": "Aromas liberados!",
+        "cup.card.done": "Você liberou os cinco. Agora monte o seu Tannat nos controles e veja com o que combina melhor.",
+        "cup.card.progress": "Aromas liberados: {n} de 5",
+        "cup.live.released": "Aroma liberado:",
+        "cup.pair.title": "Com o que harmonizar",
+        "cup.p.cordero": "Cordeiro na brasa",
+        "cup.p.cordero.why": "Os taninos firmes se suavizam com a proteína e a gordura da carne.",
+        "cup.p.parrilla": "Carne na parrilla",
+        "cup.p.parrilla.why": "Um clássico: a carne vermelha e a fumaça das brasas acompanham a potência do Tannat.",
+        "cup.p.quesos": "Queijos curados",
+        "cup.p.quesos.why": "Seu sal e sua gordura equilibram os taninos e realçam a fruta.",
+        "cup.p.pasta": "Massas com molho de tomate",
+        "cup.p.pasta.why": "A acidez do tomate combina bem com um vinho de acidez viva.",
+        "cup.p.choco": "Chocolate amargo",
+        "cup.p.choco.why": "O cacau e os taninos maduros se complementam num final longo.",
+        "cup.p.citricos": "Um prato com cítricos de Salto",
+        "cup.p.citricos.why": "A acidez cítrica e a do vinho se respondem: uma homenagem aos cítricos de Salto.",
+        "cup.cta": "Prove na Rota →",
+        "cup.ctaNote": "O pacote completo da Rota inclui almoço harmonizado de 4 etapas e degustação de vinhos premiados.",
+        "cup.note": "Notas típicas da cepa Tannat; cada vinho e cada vinícola tem seu próprio perfil. Ilustração interativa.",
         
         "stations.badge": "Roteiro Oficial",
         "stations.title": "As 4 Estações da Rota",
@@ -3518,6 +3830,71 @@
         "pioneer.chip2Label": "The name the Tannat grape was known by",
         "pioneer.chip3Num": "April 14",
         "pioneer.chip3Label": "National Tannat Day, in his honor",
+        "nav.cup": "The Tannat Glass",
+        "pioneer.cupLink": "Now taste the Tannat: the interactive glass →",
+        "cup.pre": "Interactive experience",
+        "cup.title": "The Tannat Glass",
+        "cup.subtitle": "Swirl the glass, release its aromas and find what to enjoy it with in Salto.",
+        "cup.hint": "Drag across the glass to swirl it",
+        "cup.swirlBtn": "Swirl the glass",
+        "cup.cheers": "Cheers!",
+        "cup.cheersBtn": "Make a toast",
+        "cup.stageLabel": "Interactive Tannat glass: drag to swirl it and release its aromas",
+        "cup.profile": "Build your Tannat",
+        "cup.tannin": "Tannin",
+        "cup.body": "Body",
+        "cup.acid": "Acidity",
+        "cup.w.t0": "soft",
+        "cup.w.t1": "round",
+        "cup.w.t2": "firm",
+        "cup.w.b0": "light",
+        "cup.w.b1": "medium",
+        "cup.w.b2": "full",
+        "cup.w.a0": "gentle",
+        "cup.w.a1": "balanced",
+        "cup.w.a2": "lively",
+        "cup.sum": "A Tannat with {b}, {t} and {a}.",
+        "cup.sB0": "light body",
+        "cup.sB1": "medium body",
+        "cup.sB2": "full body",
+        "cup.sT0": "soft tannins",
+        "cup.sT1": "round tannins",
+        "cup.sT2": "firm tannins",
+        "cup.sA0": "gentle acidity",
+        "cup.sA1": "balanced acidity",
+        "cup.sA2": "lively acidity",
+        "cup.a1.name": "Blackberry and plum",
+        "cup.a1.info": "These are the dark fruits most often mentioned when describing a Tannat: ripe, juicy and very intense.",
+        "cup.a2.name": "Violet",
+        "cup.a2.info": "A floral note common in young wines: it adds a perfumed touch to the grape's powerful character.",
+        "cup.a3.name": "Black pepper",
+        "cup.a3.info": "Spices, above all black pepper, add a gentle heat and strengthen its character.",
+        "cup.a4.name": "Vanilla and toast",
+        "cup.a4.info": "They appear when the wine rests in oak barrels: vanilla, toasted wood and sometimes coffee.",
+        "cup.a5.name": "Chocolate and tobacco",
+        "cup.a5.info": "With more time in barrel and bottle, Tannat tends to gain cocoa and tobacco nuances, deeper and more complex.",
+        "cup.card.idleT": "Aromas in the glass",
+        "cup.card.idle": "Swirl the glass: every turn releases aromas. Tap one to learn about it.",
+        "cup.card.doneT": "Aromas released!",
+        "cup.card.done": "You released all five. Now build your Tannat with the controls and see what it goes with best.",
+        "cup.card.progress": "Aromas released: {n} of 5",
+        "cup.live.released": "Aroma released:",
+        "cup.pair.title": "What to pair it with",
+        "cup.p.cordero": "Fire-grilled lamb",
+        "cup.p.cordero.why": "Firm tannins soften against the protein and fat of the meat.",
+        "cup.p.parrilla": "Grilled beef",
+        "cup.p.parrilla.why": "A classic: red meat and the smoke of the embers match the power of Tannat.",
+        "cup.p.quesos": "Aged cheeses",
+        "cup.p.quesos.why": "Their salt and fat balance the tannins and lift the fruit.",
+        "cup.p.pasta": "Pasta with tomato sauce",
+        "cup.p.pasta.why": "The acidity of tomato works well with a wine of lively acidity.",
+        "cup.p.choco": "Dark chocolate",
+        "cup.p.choco.why": "Cocoa and ripe tannins complement each other in a long finish.",
+        "cup.p.citricos": "A dish with Salto citrus",
+        "cup.p.citricos.why": "Citrus acidity and the wine's acidity answer each other: a nod to Salto's citrus.",
+        "cup.cta": "Try it on the Route →",
+        "cup.ctaNote": "The full Route package includes a 4-course pairing lunch and a tasting of award-winning wines.",
+        "cup.note": "Typical notes of the Tannat grape; every wine and every winery has its own profile. Interactive illustration.",
         
         "stations.badge": "Official Itinerary",
         "stations.title": "The 4 Route Stations",
@@ -4123,6 +4500,23 @@
       });
     }
 
+    // ===== La Copa de Tannat: los scripts (~30 KB) se descargan solo cuando la sección se acerca =====
+    (function initCopaLoader() {
+      const sec = document.getElementById('copa');
+      if (!sec) return;
+      let started = false;
+      const load = (f) => new Promise((ok, no) => { const el = document.createElement('script'); el.src = './LaRutadelTannat_files/' + f + '?v=1'; el.onload = ok; el.onerror = () => no(new Error('No se pudo cargar ' + f)); document.head.appendChild(el); });
+      function start() {
+        if (started) return;
+        started = true;
+        load('copa-tannat-render.js').then(() => load('copa-tannat-ui.js')).then(() => { if (window.copaOnLang) window.copaOnLang(); })
+          .catch((err) => { console.warn('[La Copa de Tannat]', err); sec.classList.add('cup-static'); });
+      }
+      if ('IntersectionObserver' in window) new IntersectionObserver((es) => { if (es[0].isIntersecting) start(); }, { rootMargin: '1400px 0px' }).observe(sec);
+      else start();
+      sec.addEventListener('pointerdown', start, { once: true, passive: true });
+    })();
+
     // Currency Switcher
     function setCurrency(cur) {
       currentCurrency = cur;
@@ -4220,6 +4614,9 @@
 
       // Re-medir las tarjetas 3D de "El Pionero": el texto cambia de largo entre idiomas
       if (flipCards.length) resizeFlipCards();
+
+      // La Copa de Tannat: refrescar aromas, perfil y maridajes en el idioma elegido
+      if (window.copaOnLang) window.copaOnLang();
 
       // Update Active Button Styles
       ['ES', 'PT', 'EN'].forEach(code => {
