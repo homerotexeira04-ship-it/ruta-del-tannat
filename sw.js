@@ -1,5 +1,5 @@
 // Service Worker de La Ruta del Tannat: app shell cacheado para instalación PWA y uso sin conexión.
-const CACHE_VERSION = 'tannat-v4';
+const CACHE_VERSION = 'tannat-v3';
 const CORE_ASSETS = [
   './LaRutadelTannat.html',
   './index.html',
