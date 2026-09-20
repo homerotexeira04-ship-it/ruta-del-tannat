@@ -1,0 +1,5 @@
+# La Ruta del Tannat — permite el rastreo completo (CSS, JS e imágenes incluidos)
+User-agent: *
+Allow: /
+
+Sitemap: https://homerotexeira04-ship-it.github.io/ruta-del-tannat/sitemap.xml

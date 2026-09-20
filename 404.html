@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Página no encontrada | La Ruta del Tannat</title>
+  <meta name="description" content="La página que buscás no existe o cambió de lugar. Volvé al inicio de La Ruta del Tannat, el circuito enoturístico de Salto, Uruguay.">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#4A1525">
+  <link rel="icon" type="image/svg+xml" href="https://homerotexeira04-ship-it.github.io/ruta-del-tannat/LaRutadelTannat_files/favicon.svg">
+  <style>
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0}
+    body{display:flex;align-items:center;justify-content:center;padding:1.5rem;color:#fff;font-family:system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;
+      background:radial-gradient(90% 70% at 50% 0%,#4A1525 0%,#2E0B16 48%,#1D060D 100%)}
+    main{max-width:34rem;text-align:center}
+    .glass{width:5.5rem;height:auto;margin:0 auto 1rem;display:block}
+    .code{margin:0;font:700 clamp(4rem,18vw,6.5rem)/1 Georgia,'Times New Roman',serif;color:#C5A059;letter-spacing:.02em}
+    h1{margin:.4rem 0 .6rem;font:700 clamp(1.4rem,5vw,2rem)/1.2 Georgia,'Times New Roman',serif}
+    p{margin:0 0 1.6rem;color:#e5e7eb;line-height:1.55;font-size:1.05rem}
+    .actions{display:flex;flex-wrap:wrap;gap:.75rem;justify-content:center}
+    a.btn{display:inline-flex;align-items:center;justify-content:center;min-height:2.75rem;padding:.6rem 1.4rem;border-radius:999px;font-weight:700;text-decoration:none;font-size:.95rem}
+    a.gold{background:#C5A059;color:#1D060D}a.gold:hover{background:#DFCA9D}
+    a.line{border:1px solid rgba(197,160,89,.65);color:#DFCA9D}a.line:hover{background:rgba(255,255,255,.1)}
+    a:focus-visible{outline:3px solid #fff;outline-offset:3px}
+    .brand{margin-top:2rem;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:#C5A059}
+  </style>
+</head>
+<body>
+  <main>
+    <svg class="glass" viewBox="0 0 120 170" fill="none" stroke="#DFCA9D" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M26 8h68c4 30 2 60-14 80-7 9-14 13-20 14-6-1-13-5-20-14C24 68 22 38 26 8z"/>
+      <path d="M31 46c19 6 40 6 58 0" stroke="#722F37" stroke-width="10" opacity=".85"/>
+      <path d="M60 102v52M36 158h48" />
+    </svg>
+    <p class="code" aria-hidden="true">404</p>
+    <h1 id="t">Esta página no existe</h1>
+    <p id="d">El enlace que seguiste puede estar roto o la página cambió de lugar. Volvé al inicio y seguí recorriendo la cuna del Tannat en Salto.</p>
+    <div class="actions">
+      <a id="home" class="btn gold" href="https://homerotexeira04-ship-it.github.io/ruta-del-tannat/LaRutadelTannat.html">Volver al inicio</a>
+      <a id="est" class="btn line" href="https://homerotexeira04-ship-it.github.io/ruta-del-tannat/LaRutadelTannat.html#estaciones">Ver las 4 estaciones</a>
+    </div>
+    <div class="brand">La Ruta del Tannat · Salto, Uruguay</div>
+  </main>
+  <script>
+    (function () {
+      // La 404 puede servirse desde cualquier profundidad de URL: se calculan los enlaces desde la raíz real del sitio.
+      var base = /github\.io$/.test(location.hostname) ? '/ruta-del-tannat/' : '/';
+      var page = base + 'LaRutadelTannat.html';
+      document.getElementById('home').href = page; document.getElementById('est').href = page + '#estaciones';
+      var lang = 'es'; try { lang = localStorage.getItem('tannat_lang') || (navigator.language || 'es').slice(0, 2); } catch (e) { /* sin almacenamiento */ }
+      var T = {
+        es: ['Esta página no existe', 'El enlace que seguiste puede estar roto o la página cambió de lugar. Volvé al inicio y seguí recorriendo la cuna del Tannat en Salto.', 'Volver al inicio', 'Ver las 4 estaciones', 'Página no encontrada | La Ruta del Tannat'],
+        pt: ['Esta página não existe', 'O link que você seguiu pode estar quebrado ou a página mudou de lugar. Volte ao início e continue percorrendo o berço do Tannat em Salto.', 'Voltar ao início', 'Ver as 4 estações', 'Página não encontrada | A Rota do Tannat'],
+        en: ['This page does not exist', 'The link you followed may be broken or the page has moved. Head back to the start and keep exploring the birthplace of Tannat in Salto.', 'Back to home', 'See the 4 stations', 'Page not found | The Tannat Route']
+      };
+      var t = T[lang] || T.es;
+      document.documentElement.lang = T[lang] ? lang : 'es';
+      document.getElementById('t').textContent = t[0]; document.getElementById('d').textContent = t[1];
+      document.getElementById('home').textContent = t[2]; document.getElementById('est').textContent = t[3]; document.title = t[4];
+    })();
+  </script>
+</body>
+</html>
