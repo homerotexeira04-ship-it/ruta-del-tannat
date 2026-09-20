@@ -389,6 +389,75 @@
     @media (prefers-reduced-motion: reduce) {
       .flip-card-inner { transition: none; }
     }
+
+    /* Viñedo en el Tiempo: escena 3D pineada al scroll (ver initVinedoTiempo) */
+    .vt-track { position: relative; height: calc(100vh + 6 * 64vh); }
+    @supports (height: 100svh) { .vt-track { height: calc(100svh + 6 * 64svh); } }
+    .vt-stage { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; background: #1d060d; isolation: isolate; }
+    .vt-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; opacity: 0; transition: opacity 1s ease; touch-action: pan-y; }
+    .vt-stage.is-live .vt-canvas { opacity: 1; }
+    .vt-poster { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; text-align: center; padding: 1rem;
+      background: linear-gradient(180deg, rgba(29,6,13,.45), rgba(29,6,13,.78)), url('./LaRutadelTannat_files/hero-vinedo-uruguay.jpg') center / cover; transition: opacity 1s ease; }
+    .vt-stage.is-live .vt-poster { opacity: 0; pointer-events: none; }
+    .vt-poster-msg { display: inline-flex; align-items: center; gap: .65rem; color: #DFCA9D; font-size: .95rem; font-weight: 600; }
+    .vt-spinner { width: 1.1rem; height: 1.1rem; border-radius: 999px; border: 2px solid rgba(223,202,157,.3); border-top-color: #DFCA9D; animation: vtSpin .9s linear infinite; }
+    @keyframes vtSpin { to { transform: rotate(360deg); } }
+    .vt-shade { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(180deg, rgba(29,6,13,.8) 0%, rgba(29,6,13,.4) 26%, rgba(29,6,13,0) 46%, rgba(29,6,13,.12) 62%, rgba(29,6,13,.82) 100%); }
+    .vt-head { position: absolute; left: 0; right: 0; top: 0; padding: calc(var(--vt-hdr, 6rem) + 1rem) 7rem 0 1rem; pointer-events: none; }
+    .vt-caption { position: absolute; left: 1rem; right: 3.4rem; bottom: 5.75rem; max-width: 31rem; padding: .95rem 1.1rem 1rem; border-radius: 1rem;
+      background: rgba(29,6,13,.74); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border: 1px solid rgba(197,160,89,.3); box-shadow: 0 12px 40px rgba(0,0,0,.4); }
+    .vt-caption.vt-in { animation: vtIn .55s cubic-bezier(.16,1,.3,1); }
+    @keyframes vtIn { from { opacity: .0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+    .vt-rail { position: absolute; right: .35rem; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: .1rem; margin: 0; padding: 0; list-style: none; }
+    .vt-rail button { display: flex; flex-direction: row-reverse; align-items: center; justify-content: flex-start; gap: .6rem; min-width: 2.25rem; min-height: 2.25rem; padding: 0 .55rem; background: none; border: 0; cursor: pointer;
+      color: rgba(255,255,255,.62); font: 700 .7rem/1 'Plus Jakarta Sans', sans-serif; letter-spacing: .06em; }
+    .vt-rail button::after { content: ''; flex: none; width: .6rem; height: .6rem; border-radius: 999px; background: rgba(255,255,255,.3); border: 1.5px solid rgba(255,255,255,.75); transition: transform .3s, background .3s, border-color .3s; }
+    .vt-rail button:hover { color: #fff; }
+    .vt-rail button[aria-current="true"] { color: #DFCA9D; }
+    .vt-rail button[aria-current="true"]::after { background: #C5A059; border-color: #DFCA9D; transform: scale(1.4); }
+    .vt-rail .vt-yr { display: none; }
+    .vt-controls { position: absolute; top: calc(var(--vt-hdr, 6rem) + .9rem); right: .9rem; display: flex; flex-direction: row; gap: .5rem; }
+    .vt-zoom { width: 2.75rem; height: 2.75rem; display: inline-flex; align-items: center; justify-content: center; border-radius: 999px; cursor: pointer; color: #DFCA9D;
+      background: rgba(29,6,13,.74); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); border: 1px solid rgba(197,160,89,.4); transition: background .2s, transform .2s; }
+    .vt-zoom:hover:not(:disabled) { background: rgba(74,21,37,.9); transform: scale(1.06); }
+    .vt-zoom:disabled { opacity: .35; cursor: default; }
+    .vt-hint { margin-top: .85rem; transition: opacity .5s; color: #DFCA9D; font-size: .72rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+    .vt-note { margin-top: .5rem; max-width: 30rem; color: rgba(255,255,255,.66); font-size: .68rem; line-height: 1.4; text-shadow: 0 1px 6px rgba(0,0,0,.6); }
+    .vt-hotspot { position: absolute; left: 0; top: 0; opacity: 0; pointer-events: none; transition: opacity .35s; will-change: transform; }
+    .vt-hotspot span { position: absolute; left: 0; bottom: .55rem; transform: translateX(-50%); white-space: nowrap; padding: .3rem .7rem; border-radius: 999px; font-size: .72rem; font-weight: 700; letter-spacing: .04em;
+      color: #1d060d; background: linear-gradient(135deg, #DFCA9D, #C5A059); box-shadow: 0 6px 18px rgba(0,0,0,.35); }
+    .vt-hotspot::after { content: ''; position: absolute; left: -.3rem; top: -.3rem; width: .6rem; height: .6rem; border-radius: 999px; background: #DFCA9D; box-shadow: 0 0 0 4px rgba(223,202,157,.35); }
+    .vt-fallback { display: none; }
+    @media (max-width: 639px) { .vt-hotspot { display: none; } }
+    .vt-static .vt-track { height: auto; }
+    .vt-static .vt-stage { position: relative; height: auto; min-height: 22rem; }
+    .vt-static .vt-canvas, .vt-static .vt-caption, .vt-static .vt-rail, .vt-static .vt-controls, .vt-static .vt-hint, .vt-static .vt-hotspot, .vt-static .vt-poster-msg, .vt-static #vtLoadBtn { display: none; }
+    .vt-static .vt-head { position: relative; padding-bottom: 2rem; }
+    .vt-static .vt-poster { z-index: -1; }
+    .vt-static .vt-fallback { display: block; }
+    @media (max-height: 620px) {
+      .vt-note, .vt-hint, #vtCycle { display: none; }
+      .vt-caption { padding: .65rem .85rem .75rem; }
+      #vtCText { font-size: .8rem; line-height: 1.35; margin-top: .3rem; }
+      .vt-head h2 { font-size: 1.6rem; }
+      .vt-rail button { min-height: 1.7rem; }
+    }
+    @media (min-width: 640px) {
+      .vt-rail .vt-yr { display: inline; }
+      .vt-rail button { min-width: 0; }
+    }
+    @media (min-width: 1024px) {
+      .vt-head { padding: calc(var(--vt-hdr, 7rem) + 1.25rem) 3rem 0; }
+      .vt-caption { left: 3rem; right: auto; padding: 1.15rem 1.35rem 1.2rem; }
+      .vt-rail { right: 1.5rem; }
+      .vt-controls { right: 2.5rem; top: calc(var(--vt-hdr, 7rem) + 1.25rem); }
+      .vt-note { font-size: .72rem; }
+    }
+    @media (min-width: 1280px) { .vt-caption { bottom: 3.5rem; } }
+    @media (prefers-reduced-motion: reduce) {
+      .vt-canvas, .vt-poster, .vt-hint { transition: none; }
+      .vt-spinner, .vt-caption.vt-in { animation: none; }
+    }
   </style>
 <style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:"Plus Jakarta Sans", sans-serif;font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.-inset-2{inset:-0.5rem}.inset-0{inset:0px}.-top-4{top:-1rem}.bottom-0{bottom:0px}.bottom-6{bottom:1.5rem}.left-0{left:0px}.left-1\/2{left:50%}.left-3{left:0.75rem}.right-0{right:0px}.right-5{right:1.25rem}.right-6{right:1.5rem}.right-8{right:2rem}.top-0{top:0px}.top-3{top:0.75rem}.top-5{top:1.25rem}.z-0{z-index:0}.z-10{z-index:10}.z-30{z-index:30}.z-40{z-index:40}.z-50{z-index:50}.z-\[100\]{z-index:100}.col-span-2{grid-column:span 2 / span 2}.mx-auto{margin-left:auto;margin-right:auto}.my-8{margin-top:2rem;margin-bottom:2rem}.mb-1{margin-bottom:0.25rem}.mb-12{margin-bottom:3rem}.mb-16{margin-bottom:4rem}.mb-2{margin-bottom:0.5rem}.mb-4{margin-bottom:1rem}.mb-6{margin-bottom:1.5rem}.mb-8{margin-bottom:2rem}.mt-1{margin-top:0.25rem}.mt-2{margin-top:0.5rem}.mt-8{margin-top:2rem}.line-clamp-3{overflow:hidden;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3}.block{display:block}.inline-block{display:inline-block}.flex{display:flex}.inline-flex{display:inline-flex}.grid{display:grid}.hidden{display:none}.aspect-\[16\/9\]{aspect-ratio:16/9}.aspect-\[4\/3\]{aspect-ratio:4/3}.aspect-\[4\/5\]{aspect-ratio:4/5}.h-1{height:0.25rem}.h-10{height:2.5rem}.h-12{height:3rem}.h-2{height:0.5rem}.h-20{height:5rem}.h-4{height:1rem}.h-44{height:11rem}.h-48{height:12rem}.h-5{height:1.25rem}.h-6{height:1.5rem}.h-7{height:1.75rem}.h-full{height:100%}.min-h-\[95vh\]{min-height:95vh}.w-1\.5{width:0.375rem}.w-10{width:2.5rem}.w-12{width:3rem}.w-2{width:0.5rem}.w-28{width:7rem}.w-36{width:9rem}.w-4{width:1rem}.w-48{width:12rem}.w-5{width:1.25rem}.w-6{width:1.5rem}.w-7{width:1.75rem}.w-full{width:100%}.max-w-2xl{max-width:42rem}.max-w-3xl{max-width:48rem}.max-w-4xl{max-width:56rem}.max-w-5xl{max-width:64rem}.max-w-7xl{max-width:80rem}.max-w-lg{max-width:32rem}.max-w-sm{max-width:24rem}.flex-1{flex:1 1 0%}.flex-shrink-0{flex-shrink:0}.origin-bottom{transform-origin:bottom}.origin-center{transform-origin:center}.-translate-x-1\/2{--tw-translate-x:-50%;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.-translate-y-full{--tw-translate-y:-100%;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.scale-105{--tw-scale-x:1.05;--tw-scale-y:1.05;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.transform{transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}@keyframes pulse{50%{opacity:.5}}.animate-pulse{animation:pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite}.cursor-pointer{cursor:pointer}.select-none{-webkit-user-select:none;user-select:none}.grid-cols-1{grid-template-columns:repeat(1, minmax(0, 1fr))}.grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-start{align-items:flex-start}.items-center{align-items:center}.items-stretch{align-items:stretch}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-1{gap:0.25rem}.gap-10{gap:2.5rem}.gap-12{gap:3rem}.gap-2{gap:0.5rem}.gap-3{gap:0.75rem}.gap-4{gap:1rem}.gap-6{gap:1.5rem}.gap-8{gap:2rem}.space-y-2 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.5rem * var(--tw-space-y-reverse))}.space-y-3 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.75rem * var(--tw-space-y-reverse))}.space-y-4 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem * var(--tw-space-y-reverse))}.space-y-6 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.5rem * var(--tw-space-y-reverse))}.overflow-hidden{overflow:hidden}.overflow-y-auto{overflow-y:auto}.overflow-x-hidden{overflow-x:hidden}.scroll-smooth{scroll-behavior:smooth}.rounded-2xl{border-radius:1rem}.rounded-3xl{border-radius:1.5rem}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:0.5rem}.rounded-xl{border-radius:0.75rem}.border{border-width:1px}.border-2{border-width:2px}.border-y{border-top-width:1px;border-bottom-width:1px}.border-b{border-bottom-width:1px}.border-t{border-top-width:1px}.border-gold{--tw-border-opacity:1;border-color:rgb(197 160 89 / var(--tw-border-opacity, 1))}.border-gold\/30{border-color:rgb(197 160 89 / 0.3)}.border-gold\/40{border-color:rgb(197 160 89 / 0.4)}.border-gray-300{--tw-border-opacity:1;border-color:rgb(209 213 219 / var(--tw-border-opacity, 1))}.border-tannat-100{--tw-border-opacity:1;border-color:rgb(244 235 237 / var(--tw-border-opacity, 1))}.border-white\/10{border-color:rgb(255 255 255 / 0.1)}.border-white\/15{border-color:rgb(255 255 255 / 0.15)}.border-white\/20{border-color:rgb(255 255 255 / 0.2)}.border-white\/30{border-color:rgb(255 255 255 / 0.3)}.bg-\[\#25D366\]{--tw-bg-opacity:1;background-color:rgb(37 211 102 / var(--tw-bg-opacity, 1))}.bg-\[\#EFECE6\]{--tw-bg-opacity:1;background-color:rgb(239 236 230 / var(--tw-bg-opacity, 1))}.bg-black\/40{background-color:rgb(0 0 0 / 0.4)}.bg-black\/80{background-color:rgb(0 0 0 / 0.8)}.bg-crema{--tw-bg-opacity:1;background-color:rgb(253 251 247 / var(--tw-bg-opacity, 1))}.bg-gold{--tw-bg-opacity:1;background-color:rgb(197 160 89 / var(--tw-bg-opacity, 1))}.bg-gold\/15{background-color:rgb(197 160 89 / 0.15)}.bg-gold\/20{background-color:rgb(197 160 89 / 0.2)}.bg-tannat{--tw-bg-opacity:1;background-color:rgb(74 21 37 / var(--tw-bg-opacity, 1))}.bg-tannat-50{--tw-bg-opacity:1;background-color:rgb(250 245 246 / var(--tw-bg-opacity, 1))}.bg-tannat-900{--tw-bg-opacity:1;background-color:rgb(29 6 13 / var(--tw-bg-opacity, 1))}.bg-tannat-900\/95{background-color:rgb(29 6 13 / 0.95)}.bg-tannat-dark\/60{background-color:rgb(46 11 22 / 0.6)}.bg-tannat-dark\/80{background-color:rgb(46 11 22 / 0.8)}.bg-tannat-dark\/95{background-color:rgb(46 11 22 / 0.95)}.bg-tannat\/10{background-color:rgb(74 21 37 / 0.1)}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.bg-white\/10{background-color:rgb(255 255 255 / 0.1)}.bg-white\/15{background-color:rgb(255 255 255 / 0.15)}.bg-white\/5{background-color:rgb(255 255 255 / 0.05)}.bg-gradient-to-b{background-image:linear-gradient(to bottom, var(--tw-gradient-stops))}.bg-gradient-to-r{background-image:linear-gradient(to right, var(--tw-gradient-stops))}.bg-gradient-to-t{background-image:linear-gradient(to top, var(--tw-gradient-stops))}.from-crema{--tw-gradient-from:#FDFBF7 var(--tw-gradient-from-position);--tw-gradient-to:rgb(253 251 247 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-gold{--tw-gradient-from:#C5A059 var(--tw-gradient-from-position);--tw-gradient-to:rgb(197 160 89 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-red-400{--tw-gradient-from:#f87171 var(--tw-gradient-from-position);--tw-gradient-to:rgb(248 113 113 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-tannat{--tw-gradient-from:#4A1525 var(--tw-gradient-from-position);--tw-gradient-to:rgb(74 21 37 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-tannat-900\/95{--tw-gradient-from:rgb(29 6 13 / 0.95) var(--tw-gradient-from-position);--tw-gradient-to:rgb(29 6 13 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.via-tannat-900\/80{--tw-gradient-to:rgb(29 6 13 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), rgb(29 6 13 / 0.8) var(--tw-gradient-via-position), var(--tw-gradient-to)}.via-tannat-light{--tw-gradient-to:rgb(114 47 55 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), #722F37 var(--tw-gradient-via-position), var(--tw-gradient-to)}.via-transparent{--tw-gradient-to:rgb(0 0 0 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), transparent var(--tw-gradient-via-position), var(--tw-gradient-to)}.to-black\/60{--tw-gradient-to:rgb(0 0 0 / 0.6) var(--tw-gradient-to-position)}.to-gold-dark{--tw-gradient-to:#9A7B38 var(--tw-gradient-to-position)}.to-gold-light{--tw-gradient-to:#DFCA9D var(--tw-gradient-to-position)}.to-tannat{--tw-gradient-to:#4A1525 var(--tw-gradient-to-position)}.to-tannat-dark{--tw-gradient-to:#2E0B16 var(--tw-gradient-to-position)}.to-transparent{--tw-gradient-to:transparent var(--tw-gradient-to-position)}.fill-current{fill:currentColor}.object-cover{object-fit:cover}.object-center{object-position:center}.p-1{padding:0.25rem}.p-2{padding:0.5rem}.p-3{padding:0.75rem}.p-4{padding:1rem}.p-6{padding:1.5rem}.p-8{padding:2rem}.px-2\.5{padding-left:0.625rem;padding-right:0.625rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.px-3\.5{padding-left:0.875rem;padding-right:0.875rem}.px-4{padding-left:1rem;padding-right:1rem}.px-5{padding-left:1.25rem;padding-right:1.25rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.px-8{padding-left:2rem;padding-right:2rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.py-1\.5{padding-top:0.375rem;padding-bottom:0.375rem}.py-16{padding-top:4rem;padding-bottom:4rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-2\.5{padding-top:0.625rem;padding-bottom:0.625rem}.py-20{padding-top:5rem;padding-bottom:5rem}.py-24{padding-top:6rem;padding-bottom:6rem}.py-3{padding-top:0.75rem;padding-bottom:0.75rem}.py-4{padding-top:1rem;padding-bottom:1rem}.py-5{padding-top:1.25rem;padding-bottom:1.25rem}.pb-6{padding-bottom:1.5rem}.pt-2{padding-top:0.5rem}.pt-20{padding-top:5rem}.pt-4{padding-top:1rem}.pt-6{padding-top:1.5rem}.pt-8{padding-top:2rem}.text-left{text-align:left}.text-center{text-align:center}.text-right{text-align:right}.font-mono{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace}.font-sans{font-family:"Plus Jakarta Sans", sans-serif}.font-serif{font-family:"Playfair Display", Georgia, serif}.text-2xl{font-size:1.5rem;line-height:2rem}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-4xl{font-size:2.25rem;line-height:2.5rem}.text-\[10px\]{font-size:10px}.text-base{font-size:1rem;line-height:1.5rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:0.75rem;line-height:1rem}.font-bold{font-weight:700}.font-extrabold{font-weight:800}.font-light{font-weight:300}.font-medium{font-weight:500}.font-normal{font-weight:400}.font-semibold{font-weight:600}.uppercase{text-transform:uppercase}.italic{font-style:italic}.leading-\[1\.1\]{line-height:1.1}.leading-relaxed{line-height:1.625}.leading-tight{line-height:1.25}.tracking-tight{letter-spacing:-0.025em}.tracking-wider{letter-spacing:0.05em}.tracking-widest{letter-spacing:0.1em}.text-basalt{--tw-text-opacity:1;color:rgb(36 36 36 / var(--tw-text-opacity, 1))}.text-gold{--tw-text-opacity:1;color:rgb(197 160 89 / var(--tw-text-opacity, 1))}.text-gold-dark{--tw-text-opacity:1;color:rgb(154 123 56 / var(--tw-text-opacity, 1))}.text-gold-light{--tw-text-opacity:1;color:rgb(223 202 157 / var(--tw-text-opacity, 1))}.text-gray-200{--tw-text-opacity:1;color:rgb(229 231 235 / var(--tw-text-opacity, 1))}.text-gray-300{--tw-text-opacity:1;color:rgb(209 213 219 / var(--tw-text-opacity, 1))}.text-gray-400{--tw-text-opacity:1;color:rgb(156 163 175 / var(--tw-text-opacity, 1))}.text-gray-500{--tw-text-opacity:1;color:rgb(107 114 128 / var(--tw-text-opacity, 1))}.text-tannat{--tw-text-opacity:1;color:rgb(74 21 37 / var(--tw-text-opacity, 1))}.text-tannat-900{--tw-text-opacity:1;color:rgb(29 6 13 / var(--tw-text-opacity, 1))}.text-tannat-dark{--tw-text-opacity:1;color:rgb(46 11 22 / var(--tw-text-opacity, 1))}.text-terroir{--tw-text-opacity:1;color:rgb(90 77 65 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.antialiased{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.opacity-25{opacity:0.25}.opacity-90{opacity:0.9}.shadow-2xl{--tw-shadow:0 25px 50px -12px rgb(0 0 0 / 0.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-lg{--tw-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-md{--tw-shadow:0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-sm{--tw-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-xl{--tw-shadow:0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.blur-lg{--tw-blur:blur(16px);filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.drop-shadow-\[0_4px_20px_rgba\(197\2c 160\2c 89\2c 0\.35\)\]{--tw-drop-shadow:drop-shadow(0 4px 20px rgba(197,160,89,0.35));filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.backdrop-blur-lg{--tw-backdrop-blur:blur(16px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.backdrop-blur-md{--tw-backdrop-blur:blur(12px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.backdrop-blur-sm{--tw-backdrop-blur:blur(4px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-colors{transition-property:color, background-color, border-color, fill, stroke, -webkit-text-decoration-color;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, -webkit-text-decoration-color;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-opacity{transition-property:opacity;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-transform{transition-property:transform;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.duration-1000{transition-duration:1000ms}.duration-300{transition-duration:300ms}.duration-700{transition-duration:700ms}.selection\:bg-gold *::selection{--tw-bg-opacity:1;background-color:rgb(197 160 89 / var(--tw-bg-opacity, 1))}.selection\:text-tannat-dark *::selection{--tw-text-opacity:1;color:rgb(46 11 22 / var(--tw-text-opacity, 1))}.selection\:bg-gold::selection{--tw-bg-opacity:1;background-color:rgb(197 160 89 / var(--tw-bg-opacity, 1))}.selection\:text-tannat-dark::selection{--tw-text-opacity:1;color:rgb(46 11 22 / var(--tw-text-opacity, 1))}.hover\:-translate-y-0\.5:hover{--tw-translate-y:-0.125rem;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.hover\:-translate-y-1\.5:hover{--tw-translate-y:-0.375rem;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.hover\:scale-105:hover{--tw-scale-x:1.05;--tw-scale-y:1.05;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.hover\:scale-110:hover{--tw-scale-x:1.1;--tw-scale-y:1.1;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.hover\:border-gold:hover{--tw-border-opacity:1;border-color:rgb(197 160 89 / var(--tw-border-opacity, 1))}.hover\:border-transparent:hover{border-color:transparent}.hover\:bg-\[\#20ba59\]:hover{--tw-bg-opacity:1;background-color:rgb(32 186 89 / var(--tw-bg-opacity, 1))}.hover\:bg-gold:hover{--tw-bg-opacity:1;background-color:rgb(197 160 89 / var(--tw-bg-opacity, 1))}.hover\:bg-gold-light:hover{--tw-bg-opacity:1;background-color:rgb(223 202 157 / var(--tw-bg-opacity, 1))}.hover\:bg-tannat-50:hover{--tw-bg-opacity:1;background-color:rgb(250 245 246 / var(--tw-bg-opacity, 1))}.hover\:bg-white\/10:hover{background-color:rgb(255 255 255 / 0.1)}.hover\:bg-white\/20:hover{background-color:rgb(255 255 255 / 0.2)}.hover\:from-gold-dark:hover{--tw-gradient-from:#9A7B38 var(--tw-gradient-from-position);--tw-gradient-to:rgb(154 123 56 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.hover\:to-gold:hover{--tw-gradient-to:#C5A059 var(--tw-gradient-to-position)}.hover\:text-gold:hover{--tw-text-opacity:1;color:rgb(197 160 89 / var(--tw-text-opacity, 1))}.hover\:text-tannat:hover{--tw-text-opacity:1;color:rgb(74 21 37 / var(--tw-text-opacity, 1))}.hover\:text-tannat-900:hover{--tw-text-opacity:1;color:rgb(29 6 13 / var(--tw-text-opacity, 1))}.hover\:text-white:hover{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.hover\:underline:hover{-webkit-text-decoration-line:underline;text-decoration-line:underline}.hover\:shadow-2xl:hover{--tw-shadow:0 25px 50px -12px rgb(0 0 0 / 0.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.hover\:shadow-gold\/20:hover{--tw-shadow-color:rgb(197 160 89 / 0.2);--tw-shadow:var(--tw-shadow-colored)}.hover\:shadow-gold\/30:hover{--tw-shadow-color:rgb(197 160 89 / 0.3);--tw-shadow:var(--tw-shadow-colored)}.hover\:shadow-gold\/40:hover{--tw-shadow-color:rgb(197 160 89 / 0.4);--tw-shadow:var(--tw-shadow-colored)}.focus\:border-gold:focus{--tw-border-opacity:1;border-color:rgb(197 160 89 / var(--tw-border-opacity, 1))}.focus\:outline-none:focus{outline:2px solid transparent;outline-offset:2px}.focus\:ring-2:focus{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)}.focus\:ring-4:focus{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(4px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)}.focus\:ring-gold:focus{--tw-ring-opacity:1;--tw-ring-color:rgb(197 160 89 / var(--tw-ring-opacity, 1))}.focus\:ring-green-400:focus{--tw-ring-opacity:1;--tw-ring-color:rgb(74 222 128 / var(--tw-ring-opacity, 1))}.focus\:ring-white:focus{--tw-ring-opacity:1;--tw-ring-color:rgb(255 255 255 / var(--tw-ring-opacity, 1))}.active\:scale-95:active{--tw-scale-x:.95;--tw-scale-y:.95;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.group:hover .group-hover\:translate-x-1{--tw-translate-x:0.25rem;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.group:hover .group-hover\:scale-105{--tw-scale-x:1.05;--tw-scale-y:1.05;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.group:hover .group-hover\:scale-110{--tw-scale-x:1.1;--tw-scale-y:1.1;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.group:hover .group-hover\:scale-125{--tw-scale-x:1.25;--tw-scale-y:1.25;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.group:hover .group-hover\:border-gold{--tw-border-opacity:1;border-color:rgb(197 160 89 / var(--tw-border-opacity, 1))}.group:hover .group-hover\:fill-tannat{fill:#4A1525}.group:hover .group-hover\:text-gold-dark{--tw-text-opacity:1;color:rgb(154 123 56 / var(--tw-text-opacity, 1))}.group:hover .group-hover\:text-gold-light{--tw-text-opacity:1;color:rgb(223 202 157 / var(--tw-text-opacity, 1))}.group:hover .group-hover\:opacity-40{opacity:0.4}@media (min-width: 640px){.sm\:col-span-1{grid-column:span 1 / span 1}.sm\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.sm\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.sm\:flex-row{flex-direction:row}.sm\:items-center{align-items:center}.sm\:p-10{padding:2.5rem}.sm\:p-8{padding:2rem}.sm\:px-6{padding-left:1.5rem;padding-right:1.5rem}.sm\:text-3xl{font-size:1.875rem;line-height:2.25rem}.sm\:text-4xl{font-size:2.25rem;line-height:2.5rem}.sm\:text-5xl{font-size:3rem;line-height:1}.sm\:text-6xl{font-size:3.75rem;line-height:1}.sm\:text-lg{font-size:1.125rem;line-height:1.75rem}.sm\:text-sm{font-size:0.875rem;line-height:1.25rem}.sm\:text-xl{font-size:1.25rem;line-height:1.75rem}}@media (min-width: 768px){.md\:flex{display:flex}.md\:hidden{display:none}.md\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.md\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}}@media (min-width: 1024px){.lg\:col-span-5{grid-column:span 5 / span 5}.lg\:col-span-7{grid-column:span 7 / span 7}.lg\:flex{display:flex}.lg\:grid-cols-12{grid-template-columns:repeat(12, minmax(0, 1fr))}.lg\:grid-cols-4{grid-template-columns:repeat(4, minmax(0, 1fr))}.lg\:gap-12{gap:3rem}.lg\:gap-16{gap:4rem}.lg\:px-8{padding-left:2rem;padding-right:2rem}.lg\:py-28{padding-top:7rem;padding-bottom:7rem}.lg\:py-32{padding-top:8rem;padding-bottom:8rem}.lg\:text-6xl{font-size:3.75rem;line-height:1}.lg\:text-7xl{font-size:4.5rem;line-height:1}}</style></head>
 <body class="bg-crema text-basalt font-sans antialiased selection:bg-gold selection:text-tannat-dark overflow-x-hidden">
@@ -537,6 +606,7 @@
       </div>
       <a href="#historia" class="block text-gray-200 hover:text-gold py-2 font-medium" data-i18n="nav.history">Historia</a>
       <a href="#pionero" class="block text-gray-200 hover:text-gold py-2 font-medium" data-i18n="nav.pioneer">El Pionero</a>
+      <a href="#vinedo-tiempo" class="block text-gray-200 hover:text-gold py-2 font-medium" data-i18n="nav.vinedoTiempo">Viñedo en el Tiempo</a>
       <a href="#estaciones" class="block text-gray-200 hover:text-gold py-2 font-medium" data-i18n="nav.stations">Estaciones</a>
       <a href="#sostenibilidad" class="block text-gray-200 hover:text-gold py-2 font-medium" data-i18n="nav.sustain">Turismo Sostenible</a>
       <a href="#temporadas" class="block text-gray-200 hover:text-gold py-2 font-medium" data-i18n="nav.seasons">¿Cuándo viajar?</a>
@@ -864,10 +934,103 @@
                 <span class="text-sm sm:text-base text-terroir" data-i18n="pioneer.chip3Label">Día Nacional del Tannat, en su honor</span>
               </div>
             </div>
+
+            <a href="#vinedo-tiempo" class="mt-8 inline-flex items-center gap-2 px-5 py-3 rounded-full bg-tannat text-white font-semibold text-sm shadow-md hover:bg-tannat-dark transition-colors" data-i18n="pioneer.vtLink">Viví esta historia en 3D: Viñedo en el Tiempo →</a>
           </div>
 
         </div>
 
+      </div>
+    </section>
+
+    <!-- ==================== SECTION 2C: VIÑEDO EN EL TIEMPO (ESCENA 3D) ==================== -->
+    <section id="vinedo-tiempo" class="vt-section relative bg-tannat-900 text-white" data-no-reveal aria-labelledby="vtTitle">
+      <div class="vt-track" id="vtTrack">
+        <div class="vt-stage" id="vtStage">
+          <div class="vt-poster" id="vtPoster">
+            <div class="vt-poster-msg" id="vtPosterMsg"><span class="vt-spinner" aria-hidden="true"></span><span data-i18n="vt.loading">Cargando escena 3D…</span></div>
+            <button type="button" id="vtLoadBtn" hidden class="px-6 py-3 rounded-full bg-gold text-tannat-900 font-bold text-sm shadow-lg hover:bg-gold-light transition-colors" data-i18n="vt.load">Ver la experiencia en 3D</button>
+          </div>
+          <canvas id="vtCanvas" class="vt-canvas" aria-hidden="true"></canvas>
+          <div class="vt-shade"></div>
+
+          <div class="vt-head">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-tannat-900/70 backdrop-blur-sm border border-gold/40 text-gold-light font-semibold text-xs uppercase tracking-wider" data-i18n="vt.pre">Experiencia 3D · 1819 → hoy</div>
+            <h2 id="vtTitle" class="mt-3 font-serif text-3xl sm:text-5xl font-bold tracking-tight text-white uppercase text-shadow" data-i18n="vt.title">Viñedo en el Tiempo</h2>
+            <p class="vt-hint" id="vtHint" data-i18n="vt.hint">Seguí bajando para viajar en el tiempo</p>
+            <p class="vt-note" data-i18n="vt.note">Ilustración 3D simbólica: las fechas y los hechos provienen de fuentes históricas; el paisaje, las estaciones y la figura de bronce son una recreación artística.</p>
+          </div>
+
+          <div class="vt-hotspot" id="vtHotspot" aria-hidden="true"><span>Don Pascual Harriague · 1874</span></div>
+
+          <div class="vt-caption vt-in" id="vtCaption" aria-live="polite">
+            <div class="flex items-baseline gap-3">
+              <span id="vtYear" class="font-serif text-3xl sm:text-4xl font-bold text-gold">1819</span>
+              <span id="vtCTitle" class="font-serif text-lg sm:text-xl font-bold text-white"></span>
+            </div>
+            <p id="vtCText" class="mt-2 text-sm sm:text-base leading-relaxed text-gray-100"></p>
+            <span id="vtCycle" class="mt-3 inline-block px-2.5 py-1 rounded-full bg-white/10 border border-white/15 text-[11px] font-semibold uppercase tracking-wider text-gold-light"></span>
+          </div>
+
+          <ol class="vt-rail" id="vtRail" aria-label="Línea de tiempo">
+          <li><button type="button" data-i="0" aria-label="1819"><span class="vt-yr">1819</span></button></li>
+          <li><button type="button" data-i="1" aria-label="1838"><span class="vt-yr">1838</span></button></li>
+          <li><button type="button" data-i="2" aria-label="1860"><span class="vt-yr">1860</span></button></li>
+          <li><button type="button" data-i="3" aria-label="1874"><span class="vt-yr">1874</span></button></li>
+          <li><button type="button" data-i="4" aria-label="1894"><span class="vt-yr">1894</span></button></li>
+          <li><button type="button" data-i="5" aria-label="2016"><span class="vt-yr">2016</span></button></li>
+          <li><button type="button" data-i="6" aria-label="Hoy"><span class="vt-yr">Hoy</span></button></li>
+          </ol>
+
+          <div class="vt-controls">
+            <button type="button" class="vt-zoom" id="vtZoomIn" aria-label="Acercar"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M10 4v12M4 10h12"/></svg></button>
+            <button type="button" class="vt-zoom" id="vtZoomOut" aria-label="Alejar"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 10h12"/></svg></button>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="vt-fallback">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 pb-16">
+          <p class="mb-6 text-gray-200" data-i18n="vt.fallback">Tu dispositivo no puede mostrar la escena 3D. Este es el recorrido en texto:</p>
+          <ol class="space-y-3">
+          <li class="p-4 rounded-2xl bg-white/5 border border-white/10">
+            <span class="font-serif text-2xl font-bold text-gold">1819</span>
+            <span class="ml-2 font-serif text-lg font-bold text-white" data-i18n="vt.stage.0">Antes del viñedo</span>
+            <p class="mt-1 text-gray-200 leading-relaxed" data-i18n="vt.cap.0">Nace Pascual Harriague en Hasparren, en el País Vasco francés. En Salto, el suelo basáltico y el río Uruguay todavía esperan.</p>
+          </li>
+          <li class="p-4 rounded-2xl bg-white/5 border border-white/10">
+            <span class="font-serif text-2xl font-bold text-gold">1838</span>
+            <span class="ml-2 font-serif text-lg font-bold text-white" data-i18n="vt.stage.1">Cruzar el Atlántico</span>
+            <p class="mt-1 text-gray-200 leading-relaxed" data-i18n="vt.cap.1">Llega a Montevideo desde Francia y empieza a trabajar en un saladero de la zona del Cerro, como tantos vascos que cruzaron el Atlántico hacia el Río de la Plata.</p>
+          </li>
+          <li class="p-4 rounded-2xl bg-white/5 border border-white/10">
+            <span class="font-serif text-2xl font-bold text-gold">1860</span>
+            <span class="ml-2 font-serif text-lg font-bold text-white" data-i18n="vt.stage.2">La Caballada</span>
+            <p class="mt-1 text-gray-200 leading-relaxed" data-i18n="vt.cap.2">Se instala en Salto y funda el saladero La Caballada, a orillas del río Uruguay. Antes del vino, ya era un empresario del rubro cárnico-ganadero.</p>
+          </li>
+          <li class="p-4 rounded-2xl bg-white/5 border border-white/10">
+            <span class="font-serif text-2xl font-bold text-gold">1874</span>
+            <span class="ml-2 font-serif text-lg font-bold text-white" data-i18n="vt.stage.3">Las primeras cepas</span>
+            <p class="mt-1 text-gray-200 leading-relaxed" data-i18n="vt.cap.3">Planta las primeras cepas de Tannat, traídas desde Concordia (Argentina). Nace un viñedo que llegaría a cubrir cerca de 200 hectáreas.</p>
+          </li>
+          <li class="p-4 rounded-2xl bg-white/5 border border-white/10">
+            <span class="font-serif text-2xl font-bold text-gold">1894</span>
+            <span class="ml-2 font-serif text-lg font-bold text-white" data-i18n="vt.stage.4">El legado</span>
+            <p class="mt-1 text-gray-200 leading-relaxed" data-i18n="vt.cap.4">Fallece en París el 12 de enero. Su nombre queda para siempre unido a la cepa que aclimató en Salto: el Tannat se conoció con su apellido, «Harriague».</p>
+          </li>
+          <li class="p-4 rounded-2xl bg-white/5 border border-white/10">
+            <span class="font-serif text-2xl font-bold text-gold">2016</span>
+            <span class="ml-2 font-serif text-lg font-bold text-white" data-i18n="vt.stage.5">Día Nacional del Tannat</span>
+            <p class="mt-1 text-gray-200 leading-relaxed" data-i18n="vt.cap.5">El INAVI declara el 14 de abril —su fecha de nacimiento— Día Nacional del Tannat, en su homenaje.</p>
+          </li>
+          <li class="p-4 rounded-2xl bg-white/5 border border-white/10">
+            <span class="font-serif text-2xl font-bold text-gold">Hoy</span>
+            <span class="ml-2 font-serif text-lg font-bold text-white" data-i18n="vt.stage.6">La Ruta hoy</span>
+            <p class="mt-1 text-gray-200 leading-relaxed" data-i18n="vt.cap.6">Hoy la Ruta del Tannat entrelaza esta historia, cuatro estaciones, viñedos sobre suelos basálticos y las aguas termales de Salto.</p>
+          </li>
+          </ol>
+        </div>
       </div>
     </section>
 
@@ -2746,6 +2909,40 @@
         "pioneer.chip2Label": "Nombre con el que se conoció a la cepa Tannat",
         "pioneer.chip3Num": "14 de abril",
         "pioneer.chip3Label": "Día Nacional del Tannat, en su honor",
+        "nav.vinedoTiempo": "Viñedo en el Tiempo",
+        "pioneer.vtLink": "Viví esta historia en 3D: Viñedo en el Tiempo →",
+        "vt.pre": "Experiencia 3D · 1819 → hoy",
+        "vt.title": "Viñedo en el Tiempo",
+        "vt.hint": "Seguí bajando para viajar en el tiempo",
+        "vt.zoomIn": "Acercar",
+        "vt.zoomOut": "Alejar",
+        "vt.today": "Hoy",
+        "vt.hotspot": "Don Pascual Harriague · 1874",
+        "vt.loading": "Cargando escena 3D…",
+        "vt.load": "Ver la experiencia en 3D",
+        "vt.fallback": "Tu dispositivo no puede mostrar la escena 3D. Este es el recorrido en texto:",
+        "vt.note": "Ilustración 3D simbólica: las fechas y los hechos provienen de fuentes históricas; el paisaje, las estaciones y la figura de bronce son una recreación artística.",
+        "vt.stage.0": "Antes del viñedo",
+        "vt.stage.1": "Cruzar el Atlántico",
+        "vt.stage.2": "La Caballada",
+        "vt.stage.3": "Las primeras cepas",
+        "vt.stage.4": "El legado",
+        "vt.stage.5": "Día Nacional del Tannat",
+        "vt.stage.6": "La Ruta hoy",
+        "vt.cap.0": "Nace Pascual Harriague en Hasparren, en el País Vasco francés. En Salto, el suelo basáltico y el río Uruguay todavía esperan.",
+        "vt.cap.1": "Llega a Montevideo desde Francia y empieza a trabajar en un saladero de la zona del Cerro, como tantos vascos que cruzaron el Atlántico hacia el Río de la Plata.",
+        "vt.cap.2": "Se instala en Salto y funda el saladero La Caballada, a orillas del río Uruguay. Antes del vino, ya era un empresario del rubro cárnico-ganadero.",
+        "vt.cap.3": "Planta las primeras cepas de Tannat, traídas desde Concordia (Argentina). Nace un viñedo que llegaría a cubrir cerca de 200 hectáreas.",
+        "vt.cap.4": "Fallece en París el 12 de enero. Su nombre queda para siempre unido a la cepa que aclimató en Salto: el Tannat se conoció con su apellido, «Harriague».",
+        "vt.cap.5": "El INAVI declara el 14 de abril —su fecha de nacimiento— Día Nacional del Tannat, en su homenaje.",
+        "vt.cap.6": "Hoy la Ruta del Tannat entrelaza esta historia, cuatro estaciones, viñedos sobre suelos basálticos y las aguas termales de Salto.",
+        "vt.cyc.0": "Sin vides todavía",
+        "vt.cyc.1": "Sin vides todavía",
+        "vt.cyc.2": "Sin vides todavía",
+        "vt.cyc.3": "Ciclo de la vid · Brotación",
+        "vt.cyc.4": "Ciclo de la vid · Maduración",
+        "vt.cyc.5": "Ciclo de la vid · Vendimia",
+        "vt.cyc.6": "Ciclo de la vid · Poda invernal",
         
         "stations.badge": "Itinerario Oficial",
         "stations.title": "Las 4 Estaciones de la Ruta",
@@ -3132,6 +3329,40 @@
         "pioneer.chip2Label": "Nome pelo qual a casta Tannat ficou conhecida",
         "pioneer.chip3Num": "14 de abril",
         "pioneer.chip3Label": "Dia Nacional do Tannat, em sua homenagem",
+        "nav.vinedoTiempo": "Vinhedo no Tempo",
+        "pioneer.vtLink": "Viva esta história em 3D: Vinhedo no Tempo →",
+        "vt.pre": "Experiência 3D · 1819 → hoje",
+        "vt.title": "Vinhedo no Tempo",
+        "vt.hint": "Continue rolando para viajar no tempo",
+        "vt.zoomIn": "Aproximar",
+        "vt.zoomOut": "Afastar",
+        "vt.today": "Hoje",
+        "vt.hotspot": "Don Pascual Harriague · 1874",
+        "vt.loading": "Carregando cena 3D…",
+        "vt.load": "Ver a experiência em 3D",
+        "vt.fallback": "Seu dispositivo não consegue mostrar a cena 3D. Este é o percurso em texto:",
+        "vt.note": "Ilustração 3D simbólica: as datas e os fatos vêm de fontes históricas; a paisagem, as estações e a figura de bronze são uma recriação artística.",
+        "vt.stage.0": "Antes do vinhedo",
+        "vt.stage.1": "Cruzar o Atlântico",
+        "vt.stage.2": "La Caballada",
+        "vt.stage.3": "As primeiras cepas",
+        "vt.stage.4": "O legado",
+        "vt.stage.5": "Dia Nacional do Tannat",
+        "vt.stage.6": "A Rota hoje",
+        "vt.cap.0": "Nasce Pascual Harriague em Hasparren, no País Basco francês. Em Salto, o solo basáltico e o rio Uruguai ainda esperam.",
+        "vt.cap.1": "Chega a Montevidéu vindo da França e começa a trabalhar num saladeiro da região do Cerro, como tantos bascos que cruzaram o Atlântico rumo ao Rio da Prata.",
+        "vt.cap.2": "Instala-se em Salto e funda o saladeiro La Caballada, às margens do rio Uruguai. Antes do vinho, já era um empresário do ramo pecuário e de carnes.",
+        "vt.cap.3": "Planta as primeiras cepas de Tannat, trazidas de Concordia (Argentina). Nasce um vinhedo que chegaria a cobrir cerca de 200 hectares.",
+        "vt.cap.4": "Falece em Paris em 12 de janeiro. Seu nome fica para sempre ligado à cepa que aclimatou em Salto: o Tannat ficou conhecido pelo seu sobrenome, «Harriague».",
+        "vt.cap.5": "O INAVI declara 14 de abril — sua data de nascimento — Dia Nacional do Tannat, em sua homenagem.",
+        "vt.cap.6": "Hoje a Rota do Tannat entrelaça esta história, quatro estações, vinhedos sobre solos basálticos e as águas termais de Salto.",
+        "vt.cyc.0": "Ainda sem videiras",
+        "vt.cyc.1": "Ainda sem videiras",
+        "vt.cyc.2": "Ainda sem videiras",
+        "vt.cyc.3": "Ciclo da videira · Brotação",
+        "vt.cyc.4": "Ciclo da videira · Maturação",
+        "vt.cyc.5": "Ciclo da videira · Vindima",
+        "vt.cyc.6": "Ciclo da videira · Poda de inverno",
         
         "stations.badge": "Roteiro Oficial",
         "stations.title": "As 4 Estações da Rota",
@@ -3518,6 +3749,40 @@
         "pioneer.chip2Label": "The name the Tannat grape was known by",
         "pioneer.chip3Num": "April 14",
         "pioneer.chip3Label": "National Tannat Day, in his honor",
+        "nav.vinedoTiempo": "Vineyard Through Time",
+        "pioneer.vtLink": "Live this story in 3D: Vineyard Through Time →",
+        "vt.pre": "3D experience · 1819 → today",
+        "vt.title": "Vineyard Through Time",
+        "vt.hint": "Keep scrolling to travel through time",
+        "vt.zoomIn": "Zoom in",
+        "vt.zoomOut": "Zoom out",
+        "vt.today": "Today",
+        "vt.hotspot": "Don Pascual Harriague · 1874",
+        "vt.loading": "Loading 3D scene…",
+        "vt.load": "View the 3D experience",
+        "vt.fallback": "Your device cannot display the 3D scene. Here is the journey in text:",
+        "vt.note": "Symbolic 3D illustration: dates and facts come from historical sources; the landscape, the seasons and the bronze figure are an artistic recreation.",
+        "vt.stage.0": "Before the vineyard",
+        "vt.stage.1": "Crossing the Atlantic",
+        "vt.stage.2": "La Caballada",
+        "vt.stage.3": "The first vines",
+        "vt.stage.4": "The legacy",
+        "vt.stage.5": "National Tannat Day",
+        "vt.stage.6": "The Route today",
+        "vt.cap.0": "Pascual Harriague is born in Hasparren, in the French Basque Country. In Salto, the basaltic soil and the Uruguay River are still waiting.",
+        "vt.cap.1": "He arrives in Montevideo from France and starts working at a saladero in the Cerro area, like so many Basques who crossed the Atlantic to the Río de la Plata.",
+        "vt.cap.2": "He settles in Salto and founds the La Caballada saladero on the banks of the Uruguay River. Before wine, he was already a meat and cattle entrepreneur.",
+        "vt.cap.3": "He plants the first Tannat vines, brought from Concordia (Argentina). A vineyard is born that would grow to cover nearly 200 hectares.",
+        "vt.cap.4": "He dies in Paris on 12 January. His name stays forever tied to the grape he acclimatized in Salto: Tannat became known by his surname, \"Harriague\".",
+        "vt.cap.5": "INAVI declares 14 April — his birthday — National Tannat Day, in his honor.",
+        "vt.cap.6": "Today the Tannat Route weaves together this history, four stations, vineyards on basaltic soils and the thermal waters of Salto.",
+        "vt.cyc.0": "No vines yet",
+        "vt.cyc.1": "No vines yet",
+        "vt.cyc.2": "No vines yet",
+        "vt.cyc.3": "Vine cycle · Budbreak",
+        "vt.cyc.4": "Vine cycle · Ripening",
+        "vt.cyc.5": "Vine cycle · Harvest",
+        "vt.cyc.6": "Vine cycle · Winter pruning",
         
         "stations.badge": "Official Itinerary",
         "stations.title": "The 4 Route Stations",
@@ -4069,7 +4334,7 @@
         io.observe(el);
       }
 
-      document.querySelectorAll('main > section').forEach(section => {
+      document.querySelectorAll('main > section:not([data-no-reveal])').forEach(section => {
         const wrap = section.querySelector(':scope > div.max-w-7xl, :scope > div.max-w-6xl, :scope > div.max-w-5xl');
         const topLevelKids = wrap ? [...wrap.children] : [...section.children];
         topLevelKids.forEach((kid, i) => {
@@ -4122,6 +4387,142 @@
         });
       });
     }
+
+    // ===== Viñedo en el Tiempo: escena 3D pineada al scroll =====
+    // La librería 3D (~0.7 MB) y los módulos de la escena se descargan recién cuando la sección
+    // se acerca al viewport; si no hay WebGL o falla la carga, queda la versión en texto (vt-static).
+    (function initVinedoTiempo() {
+      const section = document.getElementById('vinedo-tiempo');
+      if (!section) return;
+      const track = document.getElementById('vtTrack'), stage = document.getElementById('vtStage'), canvas = document.getElementById('vtCanvas');
+      const rail = document.getElementById('vtRail'), hint = document.getElementById('vtHint'), caption = document.getElementById('vtCaption');
+      const yearEl = document.getElementById('vtYear'), titleEl = document.getElementById('vtCTitle'), textEl = document.getElementById('vtCText'), cycleEl = document.getElementById('vtCycle');
+      const hotspot = document.getElementById('vtHotspot'), posterMsg = document.getElementById('vtPosterMsg'), loadBtn = document.getElementById('vtLoadBtn');
+      const zoomIn = document.getElementById('vtZoomIn'), zoomOut = document.getElementById('vtZoomOut');
+      const railBtns = [...rail.querySelectorAll('button')];
+      const siteHeader = document.getElementById('mainHeader');
+      if (siteHeader) { // el encabezado fijo tapa el borde superior de la escena: se reserva su alto
+        const setHdr = () => section.style.setProperty('--vt-hdr', siteHeader.offsetHeight + 'px');
+        setHdr(); window.addEventListener('resize', setHdr);
+        if ('ResizeObserver' in window) new ResizeObserver(setHdr).observe(siteHeader);
+      }
+      const N = 7, YEARS = ['1819', '1838', '1860', '1874', '1894', '2016', null]; // null => "Hoy" (se traduce)
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const coarse = window.matchMedia('(pointer: coarse)').matches || window.innerWidth < 768;
+      const conn = navigator.connection;
+      const saveData = !!(conn && (conn.saveData || /(^|-)2g$/.test(conn.effectiveType || '')));
+      const BASE = './LaRutadelTannat_files/', VER = '?v=1';
+      const LIBS = ['three.min.js', 'vinedo-3d-core.js', 'vinedo-3d-plants.js', 'vinedo-3d-actors.js', 'vinedo-3d-fx.js', 'vinedo-3d-main.js'];
+      let scene = null, loading = false, failed = false, curStage = -1, inView = false, ticking = false, zoom = 0, curU = 0;
+
+      const dict = () => translations[currentLang] || translations.es;
+      const tr = (k) => dict()[k] || translations.es[k] || '';
+      const yearOf = (i) => YEARS[i] || tr('vt.today');
+
+      function setStageUI(i) {
+        if (i === curStage) return;
+        curStage = i;
+        yearEl.textContent = yearOf(i);
+        titleEl.textContent = tr('vt.stage.' + i);
+        textEl.textContent = tr('vt.cap.' + i);
+        cycleEl.textContent = tr('vt.cyc.' + i);
+        railBtns.forEach((b, k) => (k === i ? b.setAttribute('aria-current', 'true') : b.removeAttribute('aria-current')));
+        if (!reduced) { caption.classList.remove('vt-in'); void caption.offsetWidth; caption.classList.add('vt-in'); }
+      }
+
+      function progress() {
+        const total = track.offsetHeight - stage.offsetHeight;
+        return total > 0 ? Math.min(1, Math.max(0, -track.getBoundingClientRect().top / total)) : 0;
+      }
+      function update() {
+        curU = progress() * (N - 1);
+        setStageUI(Math.min(N - 1, Math.floor(curU + 0.5)));
+        hint.style.opacity = curU < 0.12 ? '1' : '0';
+        if (scene) scene.setProgress(curU);
+      }
+      function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(() => { ticking = false; update(); }); } }
+
+      function goTo(i) {
+        const total = track.offsetHeight - stage.offsetHeight;
+        const top = track.getBoundingClientRect().top + window.scrollY + total * (i / (N - 1));
+        window.scrollTo({ top, behavior: reduced ? 'auto' : 'smooth' });
+      }
+      railBtns.forEach((b) => b.addEventListener('click', () => goTo(+b.dataset.i)));
+
+      // ---- zoom: botones, Ctrl+rueda / pellizco del trackpad, pellizco táctil y teclas +/- ----
+      function setZoom(z) {
+        zoom = Math.min(1, Math.max(-1, z));
+        if (scene) scene.setZoom(zoom);
+        zoomIn.disabled = zoom >= 1; zoomOut.disabled = zoom <= -1;
+      }
+      zoomIn.addEventListener('click', () => setZoom(zoom + 0.34));
+      zoomOut.addEventListener('click', () => setZoom(zoom - 0.34));
+      stage.addEventListener('wheel', (e) => { if (e.ctrlKey) { e.preventDefault(); setZoom(zoom - e.deltaY * 0.01); } }, { passive: false });
+      window.addEventListener('keydown', (e) => {
+        if (!inView || e.ctrlKey || e.metaKey || e.altKey || /^(INPUT|TEXTAREA|SELECT)$/.test((e.target || {}).tagName || '')) return;
+        if (e.key === '+' || e.key === '=') setZoom(zoom + 0.34);
+        else if (e.key === '-' || e.key === '_') setZoom(zoom - 0.34);
+      });
+      const ptrs = new Map(); let pinch0 = 0, zoom0 = 0;
+      canvas.addEventListener('pointerdown', (e) => { ptrs.set(e.pointerId, e); if (ptrs.size === 2) { const [a, b] = [...ptrs.values()]; pinch0 = Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY); zoom0 = zoom; } });
+      canvas.addEventListener('pointermove', (e) => {
+        if (ptrs.has(e.pointerId)) ptrs.set(e.pointerId, e);
+        if (ptrs.size === 2 && pinch0 > 0) { const [a, b] = [...ptrs.values()]; setZoom(zoom0 + Math.log(Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY) / pinch0) * 1.3); }
+        else if (e.pointerType === 'mouse' && scene) { const r = canvas.getBoundingClientRect(); scene.setPointer(((e.clientX - r.left) / r.width - 0.5) * 2, -((e.clientY - r.top) / r.height - 0.5) * 2); }
+      });
+      const endPtr = (e) => { ptrs.delete(e.pointerId); if (ptrs.size < 2) pinch0 = 0; };
+      canvas.addEventListener('pointerup', endPtr); canvas.addEventListener('pointercancel', endPtr);
+      canvas.addEventListener('pointerleave', (e) => { endPtr(e); if (scene) scene.setPointer(0, 0); });
+
+      // ---- marcador sobre la figura de bronce (aparece en 1874 y al acercarse) ----
+      function onFrame(ue) {
+        const near = Math.abs(ue - 3) < 0.28;
+        const p = near && scene ? scene.project(0, 2.3, 1.4) : null;
+        if (p && p.d < 18) { hotspot.style.transform = 'translate(' + p.x.toFixed(1) + 'px,' + p.y.toFixed(1) + 'px)'; hotspot.style.opacity = '1'; }
+        else hotspot.style.opacity = '0';
+      }
+
+      // ---- carga diferida de la escena ----
+      const loadScript = (src) => new Promise((ok, no) => { const s = document.createElement('script'); s.src = src; s.onload = ok; s.onerror = () => no(new Error('No se pudo cargar ' + src)); document.head.appendChild(s); });
+      function webglOk() { try { const c = document.createElement('canvas'); return !!(c.getContext('webgl2') || c.getContext('webgl')); } catch (e) { return false; } }
+      function fail(err) { failed = true; loading = false; if (err) console.warn('[Viñedo en el Tiempo]', err); section.classList.add('vt-static'); }
+      async function start() {
+        if (scene || loading || failed) return;
+        loading = true; loadBtn.hidden = true; posterMsg.hidden = false;
+        if (!webglOk()) return fail();
+        try {
+          for (const f of LIBS) await loadScript(BASE + f + VER);
+          await new Promise((r) => setTimeout(r, 60)); // deja pintar el aviso antes de compilar los shaders
+          scene = window.TV.create(canvas, { mobile: coarse, reducedMotion: reduced, onFrame });
+        } catch (err) { return fail(err); }
+        loading = false;
+        scene.resize(stage.clientWidth, stage.clientHeight); scene.setZoom(zoom); scene.setProgress(curU);
+        scene.setActive(inView && !document.hidden);
+        stage.classList.add('is-live'); posterMsg.hidden = true;
+        if ('ResizeObserver' in window) new ResizeObserver(() => scene.resize(stage.clientWidth, stage.clientHeight)).observe(stage);
+        else window.addEventListener('resize', () => scene.resize(stage.clientWidth, stage.clientHeight));
+      }
+      loadBtn.addEventListener('click', start);
+      if (saveData) { posterMsg.hidden = true; loadBtn.hidden = false; }
+
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver((es) => { if (es[0].isIntersecting && !saveData) start(); }, { rootMargin: '900px 0px' }).observe(section);
+        new IntersectionObserver((es) => { inView = es[0].isIntersecting; if (scene) scene.setActive(inView && !document.hidden); }, { rootMargin: '0px' }).observe(track);
+      } else if (!saveData) { inView = true; start(); }
+      document.addEventListener('visibilitychange', () => { if (scene) scene.setActive(inView && !document.hidden); });
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll);
+
+      // idioma: refresca rótulos accesibles y el texto de la etapa actual
+      window.vtOnLang = function () {
+        railBtns.forEach((b, i) => { b.setAttribute('aria-label', yearOf(i) + ' — ' + tr('vt.stage.' + i)); const y = b.querySelector('.vt-yr'); if (y) y.textContent = yearOf(i); });
+        zoomIn.setAttribute('aria-label', tr('vt.zoomIn')); zoomOut.setAttribute('aria-label', tr('vt.zoomOut'));
+        hotspot.querySelector('span').textContent = tr('vt.hotspot');
+        const keep = curStage; curStage = -1; setStageUI(keep < 0 ? 0 : keep);
+      };
+      window.vtOnLang();
+      update();
+    })();
 
     // Currency Switcher
     function setCurrency(cur) {
@@ -4220,6 +4621,9 @@
 
       // Re-medir las tarjetas 3D de "El Pionero": el texto cambia de largo entre idiomas
       if (flipCards.length) resizeFlipCards();
+
+      // Viñedo en el Tiempo: refrescar rótulos accesibles y el texto de la etapa actual
+      if (window.vtOnLang) window.vtOnLang();
 
       // Update Active Button Styles
       ['ES', 'PT', 'EN'].forEach(code => {
