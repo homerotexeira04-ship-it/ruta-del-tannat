@@ -29,6 +29,11 @@
   const orbsEl = $('cupOrbs'), card = $('cupCard'), cardT = $('cupCardTitle'), cardP = $('cupCardText'), prog = $('cupProgress'), live = $('cupLive'), dots = $('cupDots');
   let released = 0, selected = -1, done = false, touched = false;
 
+  // pestañas (solo se ven en celular/tablet: en escritorio todo el panel está a la vista)
+  const panel = $('cupPanel'), tabBtns = [...panel.querySelectorAll('.cup-tab')];
+  function setTab(t) { panel.dataset.tab = t; tabBtns.forEach((b) => { const on = b.dataset.tab === t; b.setAttribute('aria-selected', on ? 'true' : 'false'); if (on) b.classList.remove('is-new'); }); }
+  tabBtns.forEach((b) => b.addEventListener('click', () => setTab(b.dataset.tab)));
+
   AROMAS.forEach((a, i) => {
     const b = document.createElement('button');
     b.type = 'button'; b.className = 'cup-orb'; b.style.left = a.x + '%'; b.style.top = a.y + '%'; b.dataset.i = i; b.tabIndex = -1; b.setAttribute('aria-hidden', 'true');
@@ -51,17 +56,19 @@
     const a = AROMAS[i], sw = stage.clientWidth, sh = stage.clientHeight;
     a.el.style.setProperty('--dx', ((50 - a.x) / 100) * sw + 'px'); a.el.style.setProperty('--dy', ((26.3 - a.y) / 100) * sh + 'px');
     a.el.classList.add('is-on'); a.el.tabIndex = 0; a.el.removeAttribute('aria-hidden');
+    if (panel.dataset.tab !== 'aromas') tabBtns[0].classList.add('is-new'); // punto de aviso en la pestaña
     glass.wisps(9);
     if (navigator.vibrate) try { navigator.vibrate(12); } catch (e) { /* sin vibración */ }
     live.textContent = tr('cup.live.released') + ' ' + aromaName(i);
     if (released === AROMAS.length) {
       done = true; section.classList.add('cup-done'); glass.wisps(16); stage.classList.add('cup-flare');
+      if (panel.dataset.tab !== 'pair') tabBtns[2].classList.add('is-new');
       setTimeout(() => stage.classList.remove('cup-flare'), 1600);
     }
     if (selected < 0) renderCard(); else { prog.textContent = tr('cup.card.progress').replace('{n}', released); a.dot.classList.add('is-on'); }
   }
   function select(i) {
-    selected = selected === i ? -1 : i; renderCard();
+    selected = selected === i ? -1 : i; setTab('aromas'); renderCard();
     if (selected >= 0) glass.wisps(4);
   }
   function onCharge(c) {
@@ -144,7 +151,12 @@
     }, { threshold: [0, 0.25, 0.5] }).observe(stage);
   } else { inView = true; poured = true; glass.pour(true); $('cupHint').classList.add('is-on'); setActive(); }
   document.addEventListener('visibilitychange', setActive);
-  let rz = 0; window.addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(() => glass.resize(), 150); });
+  // el tamaño de la copa depende del alto de la pantalla: se re-ajusta cada vez que cambia el escenario
+  let rz = 0;
+  const fit = () => { stage.style.setProperty('--cup-w', stage.clientWidth + 'px'); glass.resize(); };
+  if ('ResizeObserver' in window) new ResizeObserver(() => { clearTimeout(rz); rz = setTimeout(fit, 60); }).observe(stage);
+  else window.addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(fit, 150); });
+  fit();
 
   window.copaOnLang = function () { renderCard(); renderProfile(false); };
   section.classList.add('cup-ready');
