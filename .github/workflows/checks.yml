@@ -1,0 +1,72 @@
+name: Chequeos
+
+# Se corre solo en cada cambio a master y en cada pull request, y los lunes revisa además los enlaces externos.
+# También se puede lanzar a mano: pestaña Actions → Chequeos → Run workflow.
+on:
+  push:
+    branches: [master]
+  pull_request:
+  schedule:
+    - cron: '0 12 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: chequeos-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  estaticos:
+    name: Archivos, idiomas y backend
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Archivos citados, anclas, ids, JSON-LD, idiomas ES/PT/EN y FAQ
+        run: npm run check
+      - name: Backend de opiniones y contador (planilla simulada)
+        run: npm test
+      - name: El CSS de Tailwind está compilado y al día
+        run: |
+          npm run build:css
+          git diff --exit-code -- LaRutadelTannat_files/tailwind.css || { echo "::error::Falta recompilar el CSS: corré 'npm run build:css' y subí LaRutadelTannat_files/tailwind.css"; exit 1; }
+
+  navegador:
+    name: Pruebas en Chrome y Lighthouse
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Pruebas de humo (errores, desbordes, WhatsApp, La Copa, itinerario)
+        run: npm run smoke
+        env:
+          CHROME_PATH: /usr/bin/google-chrome
+      - name: Lighthouse (celular) con mínimos
+        run: |
+          python3 -m http.server 8125 >/dev/null 2>&1 &
+          sleep 2
+          npx --yes lighthouse@13.5.0 http://127.0.0.1:8125/LaRutadelTannat.html \
+            --chrome-path=/usr/bin/google-chrome --chrome-flags="--headless=new --no-sandbox" \
+            --only-categories=performance,accessibility,best-practices,seo --output=json --output-path=lh.json --quiet
+          node scripts/lh-assert.js lh.json
+
+  enlaces:
+    name: Enlaces externos (semanal o a pedido)
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: npm run check:links
