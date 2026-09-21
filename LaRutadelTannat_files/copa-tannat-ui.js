@@ -124,20 +124,24 @@
   let rq = 0; Object.values(sl).forEach((s) => s.addEventListener('input', () => { firstTouch(); cancelAnimationFrame(rq); rq = requestAnimationFrame(() => renderProfile(true)); }));
 
   // ---------- brindis ----------
-  // Sonido sintetizado (sin archivo de audio): un golpe seco y dos copas con modos de vidrio (1 : 2,83 : 5,43)
-  // que se apagan del agudo al grave, apenas desafinadas entre sí para que "brillen" como dos copas reales.
+  // Sonido sintetizado (sin archivo de audio): dos choques de copas. Cada uno es un golpe seco más dos copas con modos de
+  // vidrio (1 : 2,83 : 5,43) que se apagan del agudo al grave, apenas desafinadas entre sí para que "brillen".
+  // El segundo choque llega un poco después, algo más suave y una nota más agudo.
   let ac = null, tap = null;
   function clink() {
     try {
       const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return; ac = ac || new AC(); if (ac.state === 'suspended') ac.resume();
-      const t = ac.currentTime, out = ac.createGain(); out.gain.value = 0.45; out.connect(ac.destination);
+      const t = ac.currentTime, out = ac.createGain(); out.gain.value = 0.85; out.connect(ac.destination);
       if (!tap) { tap = ac.createBuffer(1, Math.round(ac.sampleRate * 0.03), ac.sampleRate); const d = tap.getChannelData(0); for (let i = 0; i < d.length; i++) d[i] = (Math.random() * 2 - 1) * 0.3 * (1 - i / d.length); }
-      const hit = ac.createBufferSource(), hp = ac.createBiquadFilter(); hit.buffer = tap; hp.type = 'highpass'; hp.frequency.value = 4000; hit.connect(hp); hp.connect(out); hit.start(t);
-      [[1650, 1], [1695, 0.8]].forEach(([f0, v]) => [[1, 0.22, 1.5], [2.83, 0.15, 0.7], [5.43, 0.08, 0.3], [8.9, 0.03, 0.15]].forEach(([r, a, d]) => {
-        const o = ac.createOscillator(), g = ac.createGain(); o.frequency.value = f0 * r;
-        g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(a * v, t + 0.002); g.gain.exponentialRampToValueAtTime(0.0001, t + d);
-        o.connect(g); g.connect(out); o.start(t); o.stop(t + d + 0.05);
-      }));
+      const strike = (t0, k, v) => { // t0: instante, k: afinación relativa, v: volumen relativo
+        const hit = ac.createBufferSource(), hp = ac.createBiquadFilter(), hg = ac.createGain(); hit.buffer = tap; hp.type = 'highpass'; hp.frequency.value = 4000; hg.gain.value = v; hit.connect(hp); hp.connect(hg); hg.connect(out); hit.start(t0);
+        [[1650, 1], [1695, 0.8]].forEach(([f0, w]) => [[1, 0.22, 1.5], [2.83, 0.15, 0.7], [5.43, 0.08, 0.3], [8.9, 0.03, 0.15]].forEach(([r, a, d]) => {
+          const o = ac.createOscillator(), g = ac.createGain(); o.frequency.value = f0 * k * r;
+          g.gain.setValueAtTime(0.0001, t0); g.gain.exponentialRampToValueAtTime(a * w * v, t0 + 0.002); g.gain.exponentialRampToValueAtTime(0.0001, t0 + d);
+          o.connect(g); g.connect(out); o.start(t0); o.stop(t0 + d + 0.05);
+        }));
+      };
+      strike(t, 1, 1); strike(t + 0.18, 1.06, 0.85);
     } catch (e) { /* audio no disponible */ }
   }
   const toastEl = $('cupToast');
