@@ -452,7 +452,7 @@
     @media print {
       body > *:not(#printItinerary) { display: none !important; }
       html, body { background: #fff !important; }
-      #printItinerary { display: block; color: #241a1c; font: 400 9.2pt/1.4 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif; }
+      #printItinerary { display: block; color: #241a1c; font: 400 8.6pt/1.36 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif; }
       #printItinerary h1, #printItinerary h2 { margin: 0; font-family: 'Playfair Display', Georgia, serif; font-weight: 700; color: #4A1525; }
       #printItinerary p { margin: 0; }
       #printItinerary a { color: #4A1525; text-decoration: underline; }
@@ -462,7 +462,7 @@
       #printItinerary h1 { font-size: 27pt; line-height: 1.05; }
       #printItinerary .pi-sub { margin-top: 1.5mm; font-size: 11pt; color: #5A4D41; }
       #printItinerary ol { display: grid; grid-template-columns: 1fr 1fr; column-gap: 9mm; margin: 0; padding: 0; list-style: none; }
-      #printItinerary .pi-st { display: grid; grid-template-columns: 9mm 1fr; column-gap: 3mm; padding: 4.5mm 0; border-bottom: .5pt solid #dccfb8; break-inside: avoid; page-break-inside: avoid; }
+      #printItinerary .pi-st { display: grid; grid-template-columns: 9mm 1fr; column-gap: 3mm; padding: 4mm 0; border-bottom: .5pt solid #dccfb8; break-inside: avoid; page-break-inside: avoid; }
       #printItinerary .pi-num { font: 700 15pt/1 'Playfair Display', Georgia, serif; color: #83692F; }
       #printItinerary .pi-st h2 { font-size: 12pt; line-height: 1.2; }
       #printItinerary .pi-tag { margin-top: .6mm; font-size: 8pt; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #83692F; }
@@ -478,7 +478,7 @@
     /* Pantallas de poco alto (celular apaisado, teléfonos chicos): encabezado y barra de reservas más bajos para dejar lugar al contenido. */
     @media (max-height: 600px) and (max-width: 639px) { #mainHeader .hdr-row { height: 4.5rem; } #mainHeader .hdr-logo { height: 3.75rem; } }
     @media (max-height: 420px) { #mainHeader .hdr-row { height: 3.75rem; } #mainHeader .hdr-logo { height: 3.25rem; } }
-    @media (max-width: 359px) { div.mbar { padding: .5rem 5.5rem .5rem .75rem; } div.mbar .price-val { font-size: .8rem; white-space: nowrap; } div.mbar button { padding-inline: .75rem; } }
+    @media (max-width: 359px) { div.mbar { padding: .5rem 5.5rem .5rem .75rem; } div.mbar .price-val { font-size: .7rem; white-space: nowrap; } div.mbar button { padding-inline: .5rem; } }
 
     /* La Copa de Tannat (ver copa-tannat-render.js / copa-tannat-ui.js).
        Tamaños: la sección ocupa justo la pantalla bajo el encabezado fijo (--cup-hdr lo fija el JS), así que
