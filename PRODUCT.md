@@ -37,7 +37,8 @@ El circuito que cuenta el origen del Tannat en Uruguay desde el lugar donde empe
 - GitHub Pages no permite cabeceras de seguridad, y `robots.txt` y `sitemap.xml` solo cuentan en la raíz de un dominio.
 - Que todo texto nuevo deba escribirse en los tres idiomas no fue confirmado como regla obligatoria; hoy el sitio los tiene.
 - Historial del usuario: rechazó una escena 3D fijada al scroll porque "se tranca e interfiere". Lo interactivo tiene que ser liviano, iniciado por el visitante y no tomar el control del scroll.
-- **Decisión abierta, contradice el estado confirmado:** la palabra "oficial" aparece en el `<title>`, en la descripción del manifest y en el panel "4 Bodegas Oficiales" del inicio. Falta decidir cómo se reformula o cómo se documenta el respaldo que la sostendría.
+- **Redacción (resuelto):** el sitio no llama "oficial" al circuito ni a sus bodegas. Se corrigieron el `<title>`, el dato estructurado, la descripción del manifest, el panel del inicio ("4 Bodegas del Circuito") y la insignia de las estaciones ("Itinerario del Circuito"). "Fuentes oficiales" en los créditos de fotos se mantiene porque describe a INAVI. En lo nuevo, no usar "oficial" salvo que exista un aval documentado.
+- **Decisión abierta:** el dato estructurado (JSON-LD) lista como `funder` a la Intendencia de Salto, UTU, INAVI y MINTUR. Falta confirmar que cada una financia el proyecto; si no, cambiar a un rol que sí esté documentado o quitarlo.
 - Terminología: "Tannat", "estaciones" (las 4 estaciones de la ruta), "circuito", "Espacio Cultural Bodega Harriague (Punto Cero)". Español rioplatense con voseo.
 
 ## Brand Commitments
