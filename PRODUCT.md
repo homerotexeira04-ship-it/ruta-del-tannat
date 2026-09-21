@@ -38,7 +38,8 @@ El circuito que cuenta el origen del Tannat en Uruguay desde el lugar donde empe
 - Que todo texto nuevo deba escribirse en los tres idiomas no fue confirmado como regla obligatoria; hoy el sitio los tiene.
 - Historial del usuario: rechazó una escena 3D fijada al scroll porque "se tranca e interfiere". Lo interactivo tiene que ser liviano, iniciado por el visitante y no tomar el control del scroll.
 - **Redacción (resuelto):** el sitio no llama "oficial" al circuito ni a sus bodegas. Se corrigieron el `<title>`, el dato estructurado, la descripción del manifest, el panel del inicio ("4 Bodegas del Circuito") y la insignia de las estaciones ("Itinerario del Circuito"). "Fuentes oficiales" en los créditos de fotos se mantiene porque describe a INAVI. En lo nuevo, no usar "oficial" salvo que exista un aval documentado.
-- **Decisión abierta:** el dato estructurado (JSON-LD) lista como `funder` a la Intendencia de Salto, UTU, INAVI y MINTUR. Falta confirmar que cada una financia el proyecto; si no, cambiar a un rol que sí esté documentado o quitarlo.
+- **Financiamiento (confirmado por el autor):** el único financiador real es INAVI. La Intendencia de Salto, UTU y MINTUR son potenciales, no confirmados. El dato estructurado (JSON-LD) lista solo a INAVI como `funder`; no volver a listar a otros como financiadores sin confirmación.
+- **Decisión abierta:** en el pie de página, "Marco Institucional" enumera con enlaces a la Intendencia, UTU, INAVI, MINTUR y la Asociación Vasca de Salto / U-riharri. Falta decidir si esa lista se mantiene como está, se aclara qué relación tiene cada una (financia, forma, respalda, potencial) o se recorta a las confirmadas.
 - Terminología: "Tannat", "estaciones" (las 4 estaciones de la ruta), "circuito", "Espacio Cultural Bodega Harriague (Punto Cero)". Español rioplatense con voseo.
 
 ## Brand Commitments
