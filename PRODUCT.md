@@ -33,7 +33,7 @@ El circuito que cuenta el origen del Tannat en Uruguay desde el lugar donde empe
 ## Capabilities and Constraints
 
 - Una sola página estática (HTML y JavaScript sin framework), en español, portugués e inglés (`translations` + `data-i18n`). Tailwind se compila (`npm run build:css`). Instalable como PWA. Mapa (Leaflet), "La Copa de Tannat" interactiva y opiniones con formulario.
-- Sin servidor propio y sin analítica ni cookies de seguimiento (estado actual). Sumar analítica queda sin decidir.
+- Sin servidor propio y sin cookies. **Analítica (decidida y activa):** contador anónimo propio sobre el mismo Apps Script y la misma planilla de las opiniones; cuenta visitas, toques a WhatsApp, reservas, itinerario y brindis, sin cookies, IP ni identificadores, y respeta "No rastrear". Se lee en la hoja "Resumen". Las cifras son orientativas y no existen datos anteriores a su activación (2026-09-21). No sumar herramientas de seguimiento de terceros sin decidirlo.
 - GitHub Pages no permite cabeceras de seguridad, y `robots.txt` y `sitemap.xml` solo cuentan en la raíz de un dominio.
 - Que todo texto nuevo deba escribirse en los tres idiomas no fue confirmado como regla obligatoria; hoy el sitio los tiene.
 - Historial del usuario: rechazó una escena 3D fijada al scroll porque "se tranca e interfiere". Lo interactivo tiene que ser liviano, iniciado por el visitante y no tomar el control del scroll.
@@ -53,7 +53,7 @@ El circuito que cuenta el origen del Tannat en Uruguay desde el lugar donde empe
 - Fotografías reales de Salto con crédito: INAVI (cosecha), Bodegas del Uruguay (ruinas nocturnas, festival), Wikimedia Commons (retrato de Harriague, termas del Arapey, Salto desde el puerto, la fiesta de la vendimia de 1985, entre otras). Las imágenes de paquetes son ilustrativas, de otros lugares, y así se rotulan en el sitio.
 - Enlaces oficiales verificados de INAVI, UTU, Intendencia de Salto y el Ministerio de Turismo.
 - Contenido y datos del trabajo escrito: `La Ruta del Tannat - Proyecto Final.docx` y `LaRutadelTannatREVISADO.md` en la raíz del repositorio.
-- **No hay** (y no se deben inventar): testimonios de turistas fuera de las opiniones que lleguen por el formulario, reseñas de prensa, cifras de visitantes, tarifas cerradas de grupos ni un aval institucional formal registrado.
+- **No hay** (y no se deben inventar): testimonios de turistas fuera de las opiniones que lleguen por el formulario, reseñas de prensa, cifras de visitantes anteriores al contador anónimo, tarifas cerradas de grupos ni un aval institucional formal registrado.
 
 ## Product Principles
 

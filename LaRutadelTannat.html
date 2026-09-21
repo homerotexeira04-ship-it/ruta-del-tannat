@@ -202,6 +202,14 @@
               "@type": "Answer",
               "text": "Sí, en la sección «Voces del Circuito». Publicamos las opiniones reales de visitantes, sean elogios o críticas; solo descartamos spam, insultos y datos personales. Cada opinión se revisa a mano antes de publicarse."
             }
+          },
+          {
+            "@type": "Question",
+            "name": "¿Usan cookies o me rastrean?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No usamos cookies. Solo contamos de forma anónima cuántas veces se abre la página y cuántos toques reciben algunos botones (WhatsApp, reservas, itinerario y La Copa), sin guardar tu dirección IP ni ningún identificador. Si tu navegador tiene activado «No rastrear», no contamos nada. El detalle está en la Política de Privacidad, al pie de la página."
+            }
           }
         ]
       }
@@ -2763,6 +2771,19 @@
               </p>
             </div>
           </div>
+
+          <!-- Accordion Item 13 -->
+          <div class="bg-white rounded-2xl border border-tannat-100 overflow-hidden shadow-sm">
+            <button onclick="toggleFaq(13)" class="w-full px-6 py-5 text-left font-serif font-bold text-lg text-tannat-dark flex items-center justify-between focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-tannat" aria-expanded="false" aria-controls="faqAns13" id="faqBtn13">
+              <span data-i18n="faq.q13">¿Usan cookies o me rastrean?</span>
+              <svg id="faqIcon13" class="w-5 h-5 text-gold transform transition-transform shrink-0 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+            </button>
+            <div id="faqAns13" class="hidden px-6 pb-6 text-base text-terroir leading-relaxed">
+              <p data-i18n="faq.a13">
+                No usamos cookies. Solo contamos de forma anónima cuántas veces se abre la página y cuántos toques reciben algunos botones (WhatsApp, reservas, itinerario y La Copa), sin guardar tu dirección IP ni ningún identificador. Si tu navegador tiene activado «No rastrear», no contamos nada. El detalle está en la Política de Privacidad, al pie de la página.
+              </p>
+            </div>
+          </div>
         </div>
 
       </div>
@@ -3727,6 +3748,8 @@
         "faq.a11": "Somos estudiantes, no una agencia consolidada: este es el proyecto final de Federico Camara, Homero Texeira y Anthony Moreira, del Polo Educativo Tecnológico Salto (DGETP-UTU). Es un proyecto estudiantil en marcha; las visitas se coordinan directamente con las bodegas por WhatsApp.",
         "faq.q12": "¿Puedo dejar mi opinión sobre el circuito?",
         "faq.a12": "Sí, en la sección «Voces del Circuito». Publicamos las opiniones reales de visitantes, sean elogios o críticas; solo descartamos spam, insultos y datos personales. Cada opinión se revisa a mano antes de publicarse.",
+        "faq.q13": "¿Usan cookies o me rastrean?",
+        "faq.a13": "No usamos cookies. Solo contamos de forma anónima cuántas veces se abre la página y cuántos toques reciben algunos botones (WhatsApp, reservas, itinerario y La Copa), sin guardar tu dirección IP ni ningún identificador. Si tu navegador tiene activado «No rastrear», no contamos nada. El detalle está en la Política de Privacidad, al pie de la página.",
         
         "footer.brandSub": "Salto · Uruguay",
         "footer.desc": "Proyecto de puesta en valor enoturística e identitaria desarrollado en el Polo Educativo Tecnológico Salto (DGETP-UTU).",
@@ -4236,6 +4259,8 @@
         "faq.a11": "Somos estudantes, não uma agência consolidada: este é o projeto final de Federico Camara, Homero Texeira e Anthony Moreira, do Polo Educativo Tecnológico Salto (DGETP-UTU). É um projeto estudantil em andamento; as visitas são combinadas diretamente com as vinícolas por WhatsApp.",
         "faq.q12": "Posso deixar minha opinião sobre o circuito?",
         "faq.a12": "Sim, na seção «Vozes do Circuito». Publicamos as opiniões reais de visitantes, sejam elogios ou críticas; só descartamos spam, insultos e dados pessoais. Cada opinião é revisada manualmente antes de ser publicada.",
+        "faq.q13": "Vocês usam cookies ou me rastreiam?",
+        "faq.a13": "Não usamos cookies. Apenas contamos de forma anônima quantas vezes a página é aberta e quantos toques recebem alguns botões (WhatsApp, reservas, roteiro e La Copa), sem guardar seu endereço IP nem nenhum identificador. Se o seu navegador tem «Não rastrear» ativado, não contamos nada. Os detalhes estão na Política de Privacidade, no rodapé da página.",
         
         "footer.brandSub": "Salto · Uruguai",
         "footer.desc": "Projeto de valorização enoturística e identitária desenvolvido no Polo Educativo Tecnológico Salto (DGETP-UTU).",
@@ -4745,6 +4770,8 @@
         "faq.a11": "We are students, not an established agency: this is the final project of Federico Camara, Homero Texeira and Anthony Moreira from the Polo Educativo Tecnológico Salto (DGETP-UTU). It is a student project in progress; visits are coordinated directly with the wineries over WhatsApp.",
         "faq.q12": "Can I share my opinion about the circuit?",
         "faq.a12": "Yes, in the “Voices of the Circuit” section. We publish real visitor opinions, whether praise or criticism; we only discard spam, insults and personal data. Each opinion is reviewed by hand before it goes live.",
+        "faq.q13": "Do you use cookies or track me?",
+        "faq.a13": "We use no cookies. We only count, anonymously, how many times the page is opened and how many taps some buttons get (WhatsApp, bookings, itinerary and La Copa), without storing your IP address or any identifier. If your browser has “Do Not Track” turned on, we count nothing. The details are in the Privacy Policy at the bottom of the page.",
         
         "footer.brandSub": "Salto · Uruguay",
         "footer.desc": "Wine tourism and heritage development project created at Polo Educativo Tecnológico Salto (DGETP-UTU).",
@@ -5126,7 +5153,7 @@
         const setPanel = () => { sec.style.setProperty('--cup-panel', cupPanel.offsetHeight + 'px'); sec.style.setProperty('--cup-head', (cupHead ? cupHead.offsetHeight : 0) + 'px'); };
         setPanel(); const ro = new ResizeObserver(setPanel); ro.observe(cupPanel); if (cupHead) ro.observe(cupHead);
       }
-      const load = (f) => new Promise((ok, no) => { const el = document.createElement('script'); el.src = './LaRutadelTannat_files/' + f + '?v=3'; el.onload = ok; el.onerror = () => no(new Error('No se pudo cargar ' + f)); document.head.appendChild(el); });
+      const load = (f) => new Promise((ok, no) => { const el = document.createElement('script'); el.src = './LaRutadelTannat_files/' + f + '?v=4'; el.onload = ok; el.onerror = () => no(new Error('No se pudo cargar ' + f)); document.head.appendChild(el); });
       function start() {
         if (started) return;
         started = true;
@@ -5511,6 +5538,34 @@
     // Pegar acá la URL de la aplicación web (termina en /exec). Vacía = la sección muestra solo el botón de WhatsApp.
     // Guía de instalación: apps-script/README.md
     const OPINIONS_API = 'https://script.google.com/macros/s/AKfycbwJLINEFkXeDVS-r-4o-X1prhNUodq1-fJjL85ftexwAJpZa_qd4dBmboCW-3nXHzfs/exec';
+    // ==== Contador anónimo de uso ====
+    // Suma 1 a un contador diario en la planilla del proyecto (el mismo Apps Script de las opiniones): sin cookies, sin guardar IP ni identificadores.
+    // No cuenta con "No rastrear" activado, robots ni pruebas locales. Qué se cuenta y cómo leerlo: apps-script/README.md
+    const track = (function () {
+      const off = !OPINIONS_API || /^(1|yes)$/.test(navigator.doNotTrack || window.doNotTrack || '') || navigator.globalPrivacyControl === true || navigator.webdriver ||
+        /bot|crawl|spider|lighthouse|headless|preview/i.test(navigator.userAgent) || !/^https?:$/.test(location.protocol) || /^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname);
+      const slug = (v) => String(v || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 20);
+      return (e, a, b, c) => {
+        if (off) return;
+        try { fetch(OPINIONS_API, { method: 'POST', mode: 'no-cors', keepalive: true, body: JSON.stringify({ tipo: 'evento', e: e, a: slug(a), b: slug(b), c: slug(c) }) }).catch(() => {}); } catch (x) { /* el contador nunca debe romper el sitio */ }
+      };
+    })();
+    window.track = track;
+    // visita: página abierta que se queda 3 segundos (deja afuera rebotes y robots que no esperan). Detalles: idioma, dispositivo (m/t/d) y origen (?src= de un QR, o el tipo de sitio que la enlazó).
+    window.addEventListener('load', () => setTimeout(() => {
+      let host = ''; try { host = document.referrer ? new URL(document.referrer).hostname : ''; } catch (x) { /* referrer inválido */ }
+      const src = new URLSearchParams(location.search).get('src');
+      const origen = src || (!host || host === location.hostname ? 'directo' : /(^|\.)google\./.test(host) ? 'google' : /(^|\.)(bing|duckduckgo|yahoo|ecosia|yandex)\./.test(host) ? 'buscador'
+        : /(^|\.)(facebook|instagram|twitter|linkedin|tiktok|youtube|whatsapp)\.com$|^(t\.co|x\.com|wa\.me)$/.test(host) ? 'social' : 'otro');
+      track('visita', currentLang, matchMedia('(pointer: coarse)').matches ? (innerWidth < 768 ? 'm' : 't') : 'd', origen);
+    }, 3000));
+    // toques a un enlace de WhatsApp, con el lugar donde estaba (las reservas armadas por el formulario se cuentan aparte y llevan data-no-track)
+    document.addEventListener('click', (ev) => {
+      const a = ev.target.closest && ev.target.closest('a[href*="wa.me/"]');
+      if (!a || a.dataset.noTrack) return;
+      const s = a.closest('section[id]');
+      track('wa', a.closest('.mbar') ? 'barra' : getComputedStyle(a).position === 'fixed' ? 'fab' : s ? s.id : a.closest('footer') ? 'pie' : a.closest('#mainHeader') ? 'menu' : 'otro');
+    }, true);
     (function initOpinions() {
       if (!OPINIONS_API) return;
       const $ = (id) => document.getElementById(id);
@@ -5602,14 +5657,15 @@
 
       // La política de privacidad dice la verdad sobre lo que hace el sitio ahora que guarda opiniones
       const P = {
-        es: { s1: 'Este sitio es estático y no tiene servidor propio, salvo el formulario de opiniones (ver sección 6). Los datos personales que se generan son los que vos mismo escribís de forma voluntaria. En el formulario de reserva (nombre, fecha, cantidad de pasajeros, paquete elegido, hotel de referencia y comentarios) se usan exclusivamente para armar un mensaje de WhatsApp prellenado dirigido a los organizadores del circuito: ese mensaje se envía directamente desde tu propio teléfono y nosotros no almacenamos esa información en ningún servidor.',
+        es: { s1: 'Este sitio es estático y no tiene servidor propio, salvo el formulario de opiniones (ver sección 6) y el contador anónimo de uso (ver sección 7). Los datos personales que se generan son los que vos mismo escribís de forma voluntaria. En el formulario de reserva (nombre, fecha, cantidad de pasajeros, paquete elegido, hotel de referencia y comentarios) se usan exclusivamente para armar un mensaje de WhatsApp prellenado dirigido a los organizadores del circuito: ese mensaje se envía directamente desde tu propio teléfono y nosotros no almacenamos esa información en ningún servidor.',
               h6: '6. Opiniones de visitantes', b6: 'Si dejás una opinión, se guarda en una planilla de Google (Google Sheets y Apps Script) que administra el equipo del proyecto: puntaje, texto, nombre o iniciales, ciudad o país y mes de visita (los dos últimos, opcionales), idioma del sitio y fecha de envío. No pedimos correo electrónico ni teléfono. La opinión solo se publica si marcaste la casilla de consentimiento y después de que el equipo la revise; se muestra con el nombre que escribiste. Publicamos opiniones positivas y críticas; solo descartamos spam, insultos y datos personales de terceros. Podés pedir que borremos tu opinión escribiendo por WhatsApp al +598 92 614 800. Google procesa esos datos como proveedor del servicio, según su propia política de privacidad.' },
-        pt: { s1: 'Este site é estático e não tem servidor próprio, exceto o formulário de opiniões (ver seção 6). Os dados pessoais gerados são os que você mesmo digita voluntariamente. No formulário de reserva (nome, data, quantidade de passageiros, pacote escolhido, hotel de referência e comentários) são usados exclusivamente para montar uma mensagem de WhatsApp pré-preenchida direcionada aos organizadores do circuito: essa mensagem é enviada diretamente do seu próprio telefone e nós não armazenamos essa informação em nenhum servidor.',
+        pt: { s1: 'Este site é estático e não tem servidor próprio, exceto o formulário de opiniões (ver seção 6) e o contador anônimo de uso (ver seção 7). Os dados pessoais gerados são os que você mesmo digita voluntariamente. No formulário de reserva (nome, data, quantidade de passageiros, pacote escolhido, hotel de referência e comentários) são usados exclusivamente para montar uma mensagem de WhatsApp pré-preenchida direcionada aos organizadores do circuito: essa mensagem é enviada diretamente do seu próprio telefone e nós não armazenamos essa informação em nenhum servidor.',
               h6: '6. Opiniões de visitantes', b6: 'Se você deixar uma opinião, ela é guardada em uma planilha do Google (Google Sheets e Apps Script) administrada pela equipe do projeto: nota, texto, nome ou iniciais, cidade ou país e mês da visita (os dois últimos, opcionais), idioma do site e data de envio. Não pedimos e-mail nem telefone. A opinião só é publicada se você marcou a caixa de consentimento e depois de a equipe revisá-la; ela aparece com o nome que você escreveu. Publicamos opiniões positivas e críticas; só descartamos spam, ofensas e dados pessoais de terceiros. Você pode pedir que apaguemos sua opinião escrevendo pelo WhatsApp no +598 92 614 800. O Google processa esses dados como provedor do serviço, de acordo com a sua própria política de privacidade.' },
-        en: { s1: "This site is static and has no backend server of its own, except for the opinions form (see section 6). The personal data generated is what you voluntarily type. In the booking form (name, date, number of guests, chosen package, reference hotel, and comments) it is used solely to build a pre-filled WhatsApp message addressed to the circuit's organizers: that message is sent directly from your own phone and we do not store that information on any server.",
+        en: { s1: "This site is static and has no backend server of its own, except for the opinions form (see section 6) and the anonymous usage counter (see section 7). The personal data generated is what you voluntarily type. In the booking form (name, date, number of guests, chosen package, reference hotel, and comments) it is used solely to build a pre-filled WhatsApp message addressed to the circuit's organizers: that message is sent directly from your own phone and we do not store that information on any server.",
               h6: '6. Visitor opinions', b6: "If you leave an opinion, it is saved in a Google spreadsheet (Google Sheets and Apps Script) managed by the project team: rating, text, name or initials, city or country and month of visit (the last two are optional), site language and submission date. We do not ask for an email address or phone number. The opinion is only published if you ticked the consent box and after the team has reviewed it; it appears under the name you entered. We publish both positive and critical opinions; we only discard spam, insults and third parties' personal data. You can ask us to delete your opinion by writing on WhatsApp at +598 92 614 800. Google processes this data as a service provider, under its own privacy policy." }
       };
-      ['es', 'pt', 'en'].forEach((l) => { const sec = legalContent.privacy[l].sections; sec[0].b = P[l].s1; sec.push({ h: P[l].h6, b: P[l].b6 }); });
+      const U = {"es":{"h":"7. Contador de uso","b":"Para saber si el sitio sirve, contamos de forma anónima cuántas veces se abre la página y cuántos toques reciben los botones de WhatsApp, de reserva, del itinerario y de La Copa, junto con el idioma, el tipo de dispositivo (celular, tablet o computadora) y de dónde llegó la visita (por ejemplo, un buscador o un cartel con QR). Cada conteo se suma a un total diario en la misma planilla de Google del proyecto: no usamos cookies, no guardamos tu dirección IP ni ningún identificador, y no podemos saber quién sos. Al enviarse un conteo, tu navegador se conecta a servidores de Google, que pueden registrar datos técnicos según su propia política; nosotros no los recibimos. Si tenés activado «No rastrear» en el navegador, no contamos nada."},"pt":{"h":"7. Contador de uso","b":"Para saber se o site é útil, contamos de forma anônima quantas vezes a página é aberta e quantos toques recebem os botões de WhatsApp, de reserva, do roteiro e de La Copa, junto com o idioma, o tipo de dispositivo (celular, tablet ou computador) e de onde veio a visita (por exemplo, um buscador ou um cartaz com QR). Cada contagem é somada a um total diário na mesma planilha do Google do projeto: não usamos cookies, não guardamos seu endereço IP nem nenhum identificador, e não temos como saber quem você é. Quando uma contagem é enviada, seu navegador se conecta aos servidores do Google, que podem registrar dados técnicos conforme a própria política; nós não os recebemos. Se você ativou «Não rastrear» no navegador, não contamos nada."},"en":{"h":"7. Usage counter","b":"To find out whether the site is useful, we anonymously count how many times the page is opened and how many taps the WhatsApp, booking, itinerary and La Copa buttons get, along with the site language, the type of device (phone, tablet or computer) and where the visit came from (for example, a search engine or a QR code poster). Each count is added to a daily total in the project's own Google spreadsheet: we use no cookies, we do not store your IP address or any identifier, and we cannot tell who you are. When a count is sent, your browser connects to Google servers, which may log technical data under their own policy; we do not receive it. If you have “Do Not Track” turned on in your browser, we count nothing."}};
+      ['es', 'pt', 'en'].forEach((l) => { const sec = legalContent.privacy[l].sections; sec[0].b = P[l].s1; sec.push({ h: P[l].h6, b: P[l].b6 }); sec.push({ h: U[l].h, b: U[l].b }); });
     })();
 
     // "Cómo Llegar y Cuánto Quedarte": info real e investigada (Ruta 3, aeropuerto, Represa Salto Grande)
@@ -5790,6 +5846,7 @@
 
     // Booking Modal
     function openBookingModal(pkgName) {
+      track('reserva', 'abrir');
       // no se puede reservar una fecha pasada (hora local del visitante)
       const now = new Date(), pad = (n) => String(n).padStart(2, '0');
       document.getElementById('bookDate').min = now.getFullYear() + '-' + pad(now.getMonth() + 1) + '-' + pad(now.getDate());
@@ -5835,6 +5892,8 @@
       const date = document.getElementById('bookDate').value;
       const guests = document.getElementById('bookGuests').value;
       const pkg = document.querySelector('input[name="bookPackage"]:checked').value;
+      const pkgOn = document.querySelector('input[name="bookPackage"]:checked').dataset.match;
+      track('reserva', 'enviar', pkgOn === '95' ? 'dia-completo' : pkgOn === '45' ? 'medio-dia' : 'personalizada');
       const hotel = document.getElementById('bookHotel').value || dict['whatsapp.defaultHotel'];
       const notes = document.getElementById('bookNotes').value || dict['whatsapp.defaultNotes'];
       // URL real donde vive el sitio (se omite en pruebas locales)
@@ -5852,7 +5911,7 @@
       const waUrl = `https://wa.me/${CONTACT_PHONE}?text=${msg}`;
       // enlace real con noopener: no deja la ventana abierta enlazada a WhatsApp y no lo bloquea el bloqueador de ventanas
       const link = document.createElement('a');
-      link.href = waUrl; link.target = '_blank'; link.rel = 'noopener noreferrer';
+      link.href = waUrl; link.target = '_blank'; link.rel = 'noopener noreferrer'; link.dataset.noTrack = '1';
       document.body.appendChild(link); link.click(); link.remove();
       const sendBtn = e.submitter || document.querySelector('#bookingForm [type="submit"]');
       if (sendBtn) { sendBtn.disabled = true; setTimeout(() => { sendBtn.disabled = false; }, 2500); } // evita doble envío
@@ -5883,6 +5942,6 @@
       }
     })();
     renderPrintItinerary(); // hoja imprimible lista desde el inicio (setLanguage solo corre si hay idioma guardado)
-    window.addEventListener('beforeprint', renderPrintItinerary); // y actualizada justo antes de imprimir (Ctrl+P)
+    window.addEventListener('beforeprint', () => { renderPrintItinerary(); track('itinerario', 'imprimir'); }); // actualizada justo antes de imprimir (botón o Ctrl+P)
   </script>
 </body></html>
