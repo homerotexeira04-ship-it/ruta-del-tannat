@@ -78,14 +78,15 @@ function servidor() {
     check('La Copa entra en pantalla sin scrollear', malos.length === 0, malos.join(' ')); await page.close(); }
 
   // 7. itinerario impreso: una sola hoja A4 en cada idioma, y al imprimir solo se ve la hoja
-  { const page = await abrir(1280, 800, false); const res = [];
+  { const page = await abrir(688, 1024, false); const res = [], ocupa = []; // 688 px = ancho útil de una hoja A4 (182 mm)
     for (const l of ['es', 'pt', 'en']) {
       await page.evaluate((l) => { setLanguage(l); renderPrintItinerary(); }, l); await page.emulateMediaType('print');
       const pdf = await page.pdf({ format: 'A4', preferCSSPageSize: true }); const hojas = (Buffer.from(pdf).toString('latin1').match(/\/Type\s*\/Page[^s]/g) || []).length;
+      const alto = await page.evaluate(() => Math.round(document.getElementById('printItinerary').getBoundingClientRect().height)); ocupa.push(l + ' ' + Math.round(alto / 1024 * 100) + '%');
       const visibles = await page.evaluate(() => [...document.body.children].filter((e) => getComputedStyle(e).display !== 'none' && !/^(SCRIPT|STYLE|LINK)$/.test(e.tagName)).map((e) => e.id || e.tagName));
       await page.emulateMediaType('screen'); if (hojas !== 1 || visibles.join() !== 'printItinerary') res.push(l + ': ' + hojas + ' hoja(s), visibles=' + visibles.join());
     }
-    check('el itinerario imprime en 1 hoja A4 (es/pt/en) y oculta el resto', res.length === 0, res.join(' | ')); await page.close(); }
+    check('el itinerario imprime en 1 hoja A4 (es/pt/en) y oculta el resto [ocupa ' + ocupa.join(', ') + ' del alto útil]', res.length === 0, res.join(' | ')); await page.close(); }
 
   await browser.close(); srv.cerrar();
   if (failures.length) { console.log('\n' + failures.length + ' prueba(s) fallaron:\n - ' + failures.join('\n - ')); process.exit(1); }
