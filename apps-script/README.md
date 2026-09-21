@@ -65,6 +65,7 @@ El sitio manda un aviso mínimo a este mismo Apps Script y este suma 1 a un tota
 - No ordenes ni filtres la hoja **Estadisticas** (las filas de hoy tienen que quedar al final). Para armar tus propios cuadros, usá una tabla dinámica en otra hoja.
 - Topes: 600 avisos por hora y 300 combinaciones distintas por día. Si se pasan, el contador ignora lo que sobra (no afecta al sitio ni a las opiniones).
 - Para borrar filas de prueba, ejecutá `borrarPruebas` (quita las que tienen "prueba" en Detalle 1).
+- Las fórmulas de la hoja **Resumen** se adaptan solas a la configuración regional de la planilla (coma o punto y coma entre argumentos, según el país): `setup` lo detecta. La planilla de este proyecto está en es_ES (usa punto y coma) y en hora de Uruguay.
 - Al abrir el sitio, el navegador se conecta a servidores de Google (donde vive el Apps Script). Nosotros no vemos esos datos técnicos; la política de privacidad del sitio lo explica.
 
 ## Límites

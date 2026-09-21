@@ -5,10 +5,10 @@ const vm = require('node:vm');
 const fs = require('node:fs');
 const path = require('node:path');
 
-function entorno() {
+function entorno(coma = true) { // coma: la planilla acepta "," entre argumentos (en_US); false = ";" (es_ES)
   let ahora = Date.UTC(2026, 8, 21, 15, 0, 0); // 2026-09-21 15:00 UTC = 12:00 en Montevideo
   class Fecha extends Date { constructor(...a) { super(...(a.length ? a : [ahora])); } static now() { return ahora; } }
-  const cache = new Map(), hojas = {}, log = { zona: null };
+  const cache = new Map(), hojas = {}, log = { zona: null }, prueba = { f: '' };
   const rango = (filas, r, c, nr, nc) => {
     const api = {
       getDisplayValues: () => Array.from({ length: nr }, (_, i) => Array.from({ length: nc }, (_, j) => String((filas[r - 1 + i] || [])[c - 1 + j] ?? ''))),
@@ -26,7 +26,7 @@ function entorno() {
     const filas = []; const h = {
       nombre, filas,
       getLastRow: () => filas.length, appendRow: (f) => { filas.push(f); }, deleteRow: (i) => { filas.splice(i - 1, 1); }, clear: () => { filas.length = 0; },
-      getRange: (a, b, c, d) => (typeof a === 'string' ? rango([], 1, 1, 1, 1) : rango(filas, a, b, c || 1, d || 1)),
+      getRange: (a, b, c, d) => (typeof a === 'string' ? Object.assign(rango([], 1, 1, 1, 1), { setFormula(f) { prueba.f = f; return this; }, getValue: () => (prueba.f === '=SUM(1,2)' ? (coma ? 3 : 1.2) : ''), clear() { return this; } }) : rango(filas, a, b, c || 1, d || 1)),
       getDataRange: () => ({ getValues: () => filas.map((f) => f.slice()) }),
       setFrozenRows() {}, setColumnWidth() {}, setColumnWidths() {},
     };
@@ -36,7 +36,7 @@ function entorno() {
   const ss = { getUrl: () => 'https://planilla', getSheetByName: (n) => hojas[n] || null, insertSheet: (n) => crearHoja(n), setSpreadsheetTimeZone: (z) => { log.zona = z; } };
   const ctx = {
     console, Number, String, JSON, Object, Math, Date: Fecha,
-    SpreadsheetApp: { getActiveSpreadsheet: () => ss, newDataValidation: () => ({ requireValueInList() { return this; }, build() { return {}; } }) },
+    SpreadsheetApp: { flush() {}, getActiveSpreadsheet: () => ss, newDataValidation: () => ({ requireValueInList() { return this; }, build() { return {}; } }) },
     LockService: { getScriptLock: () => ({ tryLock: () => true, releaseLock() {} }) },
     CacheService: { getScriptCache: () => ({ get: (k) => cache.get(k) || null, put: (k, v) => cache.set(k, v), remove: (k) => cache.delete(k) }) },
     ContentService: { MimeType: { JSON: 'json' }, createTextOutput: (t) => ({ t, setMimeType() { return this; } }) },
@@ -139,4 +139,23 @@ test('setup crea Estadisticas y Resumen (con fórmulas sobre Estadisticas) y fij
   assert.ok(formulas.every((f) => f.includes('Estadisticas!')));
   assert.ok(formulas.every((f) => (f.match(/\(/g) || []).length === (f.match(/\)/g) || []).length), 'paréntesis balanceados');
   assert.ok(formulas.every((f) => (f.match(/"/g) || []).length % 2 === 0), 'comillas balanceadas');
+});
+
+test('las fórmulas del Resumen usan el separador de la planilla: coma en en_US, punto y coma en es_ES', () => {
+  for (const coma of [true, false]) {
+    const e = entorno(coma); e.api.setup();
+    const formulas = e.hojas.Resumen.filas.flat().filter((c) => typeof c === 'string' && c.startsWith('='));
+    assert.ok(formulas.length >= 24);
+    assert.ok(formulas.every((f) => !f.slice(1).replace(/"[^"]*"/g, '').includes(coma ? ';' : ',')), 'separador equivocado: ' + formulas.find((f) => f.includes(coma ? ';' : ',')));
+    // cada SUMIFS: primero el rango que se suma (columna F) y después pares rango;criterio (rango de Estadisticas, criterio entre comillas)
+    for (const f of formulas) {
+      const inner = f.replace(/-SUM\([A-Z0-9:]+\)$/, '').match(/^=SUMIFS\((.*)\)$/);
+      assert.ok(inner, 'no es un SUMIFS: ' + f);
+      const args = inner[1].split(coma ? ',' : ';');
+      assert.strictEqual(args[0], 'Estadisticas!$F:$F', 'falta el rango que se suma: ' + f);
+      assert.ok(args.length >= 3 && args.length % 2 === 1, 'cantidad de argumentos: ' + args.length + ' en ' + f);
+      args.slice(1).forEach((x, i) => assert.ok(i % 2 === 0 ? /^Estadisticas!\$[A-F]:\$[A-F]$/.test(x) : /^"/.test(x), 'argumento ' + (i + 2) + ' fuera de lugar en ' + f));
+    }
+    assert.ok(formulas.some((f) => f.includes('$A:$A' + (coma ? ',' : ';') + '">="&TODAY()-29')), 'criterio de fecha con el separador correcto');
+  }
 });
