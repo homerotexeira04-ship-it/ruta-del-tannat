@@ -54,6 +54,14 @@ let T;
   const ph = (s) => (String(s).match(/\{[A-Za-z0-9_]+\}/g) || []).sort().join(',');
   for (const key of Object.keys(T.es)) for (const l of langs) if (T[l][key] !== undefined && ph(T[l][key]) !== ph(T.es[key])) fail('marcadores {…} distintos en ' + key + ' (' + l + ')');
   for (const m of html.matchAll(/data-i18n(?:-ph|-aria)?="([^"]+)"/g)) if (!(m[1] in T.es)) fail('data-i18n sin texto: ' + m[1]);
+  // título y descripción por idioma: existen, tienen largo razonable y el español coincide con el HTML estático
+  for (const l of langs) {
+    const t = T[l]['meta.title'], d = T[l]['meta.description'];
+    if (!t || t.length > 70) fail('meta.title (' + l + ') vacío o de más de 70 caracteres');
+    if (!d || d.length < 100 || d.length > 170) fail('meta.description (' + l + ') fuera de 100–170 caracteres');
+  }
+  if (T.es['meta.title'] !== (/<title>([^<]*)<\/title>/.exec(html) || [])[1]) fail('el <title> estático no coincide con meta.title (es)');
+  if (T.es['meta.description'] !== (/<meta name="description" content="([^"]*)"/.exec(html) || [])[1]) fail('la meta description estática no coincide con meta.description (es)');
   console.log('idiomas:', langs.join('/'), '| claves por idioma:', langs.map((l) => Object.keys(T[l]).length).join('/'));
 }
 
