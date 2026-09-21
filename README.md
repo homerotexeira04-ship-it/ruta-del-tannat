@@ -14,6 +14,8 @@ Publicado con GitHub Pages: https://homerotexeira04-ship-it.github.io/ruta-del-t
 | `sw.js`, `manifest.json` | Instalación como app y uso sin conexión |
 | `index.html` | Solo redirige a la página principal |
 | `apps-script/` | Opiniones reales de visitantes (planilla de Google + Apps Script). Guía de instalación y moderación en su README; sin instalar, el sitio no muestra el formulario |
+| `scripts/` | Chequeos del sitio: `check.js` (estático), `smoke.js` (en Chrome real) y `lh-assert.js` (mínimos de Lighthouse) |
+| `.github/workflows/checks.yml` | Los mismos chequeos, automáticos en GitHub Actions |
 | `404.html`, `robots.txt`, `sitemap.xml`, `favicon.ico`, `apple-touch-icon.png` | Archivos públicos de SEO y navegación |
 
 ## Cambiar el diseño (Tailwind)
@@ -29,7 +31,21 @@ Después de cambiar cualquier archivo que use el service worker (`sw.js`), subir
 
 ## Imágenes
 
-Las fotos van en WebP (con el original JPG/PNG como respaldo en la carpeta). Toda `<img>` lleva `width` y `height` para evitar saltos de diseño y `loading="lazy"`, salvo la imagen principal del inicio.
+Las fotos van en WebP. Los originales pesados (JPG/PNG, incluido el logo maestro) no se suben al repositorio: viven en la carpeta local `originales/`, que git ignora. Toda `<img>` lleva `width` y `height` para evitar saltos de diseño y `loading="lazy"`, salvo la imagen principal del inicio.
+
+## Chequeos automáticos
+
+En GitHub Actions (`.github/workflows/checks.yml`) corren solos en cada cambio a `master` y en cada pull request, y los lunes revisan además los enlaces externos. Se pueden correr también en la computadora:
+
+```bash
+npm install           # solo la primera vez
+npm run check         # archivos citados, anclas, ids, JSON-LD, idiomas ES/PT/EN y FAQ al día
+npm test              # backend de opiniones y contador de uso, con una planilla simulada
+npm run smoke         # en Chrome real: errores, desbordes, WhatsApp, La Copa e itinerario (CHROME_PATH si no lo encuentra)
+npm run check:links   # enlaces externos (más lento)
+```
+
+`npm run smoke` mide en un navegador, así que sirve para no romper cosas que no se ven en el código: que La Copa siga entrando en la pantalla de un celular, que el botón de WhatsApp no tape "Reservar" o que el itinerario siga saliendo en una sola hoja.
 
 ## Si el sitio pasa a un dominio propio
 
