@@ -146,7 +146,7 @@
   }
   const toastEl = $('cupToast');
   $('cupCheers').addEventListener('click', () => {
-    firstTouch(); glass.toast(); clink(); if (navigator.vibrate) try { navigator.vibrate([18, 40, 12]); } catch (e) { /* sin vibración */ }
+    firstTouch(); glass.toast(); clink(); if (window.track) window.track('copa', 'brindis'); if (navigator.vibrate) try { navigator.vibrate([18, 40, 12]); } catch (e) { /* sin vibración */ }
     toastEl.textContent = tr('cup.cheers'); toastEl.classList.remove('is-on'); void toastEl.offsetWidth; toastEl.classList.add('is-on');
   });
 
