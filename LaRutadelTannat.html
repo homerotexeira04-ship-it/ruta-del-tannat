@@ -4816,7 +4816,7 @@
         setHdr(); window.addEventListener('resize', setHdr);
         if ('ResizeObserver' in window) new ResizeObserver(setHdr).observe(siteHdr);
       }
-      const load = (f) => new Promise((ok, no) => { const el = document.createElement('script'); el.src = './LaRutadelTannat_files/' + f + '?v=2'; el.onload = ok; el.onerror = () => no(new Error('No se pudo cargar ' + f)); document.head.appendChild(el); });
+      const load = (f) => new Promise((ok, no) => { const el = document.createElement('script'); el.src = './LaRutadelTannat_files/' + f + '?v=3'; el.onload = ok; el.onerror = () => no(new Error('No se pudo cargar ' + f)); document.head.appendChild(el); });
       function start() {
         if (started) return;
         started = true;
