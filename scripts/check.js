@@ -65,6 +65,20 @@ let T;
   console.log('idiomas:', langs.join('/'), '| claves por idioma:', langs.map((l) => Object.keys(T[l]).length).join('/'));
 }
 
+// ---------- 4b. FAQ: lo visible y el dato estructurado (JSON-LD FAQPage) dicen lo mismo ----------
+{
+  const botones = (markup.match(/id="faqBtn\d+"/g) || []).length;
+  const ld = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map((m) => JSON.parse(m[1])).flatMap((j) => j['@graph'] || [j]).find((x) => x['@type'] === 'FAQPage');
+  const claves = Object.keys(T.es).filter((k) => /^faq\.q\d+$/.test(k)).length;
+  if (!ld) fail('falta el FAQPage en el JSON-LD');
+  else {
+    if (ld.mainEntity.length !== botones || claves !== botones) fail('preguntas del FAQ: ' + botones + ' visibles, ' + claves + ' en el diccionario, ' + ld.mainEntity.length + ' en el JSON-LD');
+    const igual = (x, y) => String(x).replace(/\s+/g, ' ').trim() === String(y).replace(/\s+/g, ' ').trim();
+    ld.mainEntity.forEach((q, i) => { if (!igual(q.name, T.es['faq.q' + (i + 1)]) || !igual(q.acceptedAnswer.text, T.es['faq.a' + (i + 1)])) fail('el JSON-LD de la pregunta ' + (i + 1) + ' no coincide con el texto en español'); });
+    console.log('preguntas del FAQ:', botones, '(visibles = diccionario = JSON-LD)');
+  }
+}
+
 // ---------- 5. enlaces externos (solo con --links) ----------
 (async () => {
   if (process.argv.includes('--links')) {
