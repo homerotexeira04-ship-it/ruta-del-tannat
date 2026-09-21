@@ -438,6 +438,35 @@
     }
     [data-i18n="mobileBar.btn"] { position: relative; }
     [data-i18n="mobileBar.btn"]::before { content: ''; position: absolute; inset: -4px 0; }
+    /* Itinerario imprimible: en pantalla no se ve; al imprimir (botón o Ctrl+P) sale solo esta hoja A4, en el idioma elegido. */
+    #printItinerary { display: none; }
+    @page { size: A4; margin: 13mm 14mm; }
+    @media print {
+      body > *:not(#printItinerary) { display: none !important; }
+      html, body { background: #fff !important; }
+      #printItinerary { display: block; color: #241a1c; font: 400 9.2pt/1.4 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif; }
+      #printItinerary h1, #printItinerary h2 { margin: 0; font-family: 'Playfair Display', Georgia, serif; font-weight: 700; color: #4A1525; }
+      #printItinerary p { margin: 0; }
+      #printItinerary a { color: #4A1525; text-decoration: underline; }
+      #printItinerary a[href]::after { content: none !important; }
+      #printItinerary .pi-head { padding-bottom: 4mm; border-bottom: 1.2pt solid #C5A059; }
+      #printItinerary .pi-eyebrow { margin-bottom: 1.5mm; font-size: 8pt; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: #83692F; }
+      #printItinerary h1 { font-size: 27pt; line-height: 1.05; }
+      #printItinerary .pi-sub { margin-top: 1.5mm; font-size: 11pt; color: #5A4D41; }
+      #printItinerary ol { display: grid; grid-template-columns: 1fr 1fr; column-gap: 9mm; margin: 0; padding: 0; list-style: none; }
+      #printItinerary .pi-st { display: grid; grid-template-columns: 9mm 1fr; column-gap: 3mm; padding: 4.5mm 0; border-bottom: .5pt solid #dccfb8; break-inside: avoid; page-break-inside: avoid; }
+      #printItinerary .pi-num { font: 700 15pt/1 'Playfair Display', Georgia, serif; color: #83692F; }
+      #printItinerary .pi-st h2 { font-size: 12pt; line-height: 1.2; }
+      #printItinerary .pi-tag { margin-top: .6mm; font-size: 8pt; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #83692F; }
+      #printItinerary .pi-loc { margin: 1mm 0 1.5mm; font-size: 9pt; color: #5A4D41; }
+      #printItinerary .pi-hl { margin: 1.6mm 0 0; padding-left: 4mm; list-style: disc; } #printItinerary .pi-hl li::marker { color: #83692F; }
+      #printItinerary .pi-info { display: grid; grid-template-columns: 1fr 1fr; gap: 6mm; padding: 4mm 0 0; break-inside: avoid; }
+      #printItinerary .pi-info h2, #printItinerary .pi-book h2 { margin-bottom: 1mm; font-size: 10.5pt; }
+      #printItinerary .pi-book { margin-top: 4mm; padding: 3.2mm 4mm; border: .8pt solid #C5A059; border-radius: 2mm; break-inside: avoid; }
+      #printItinerary .pi-book p + p { margin-top: 1mm; }
+      #printItinerary .pi-foot { margin-top: 6mm; font-size: 8pt; color: #6b5f55; }
+    }
+
     /* Pantallas de poco alto (celular apaisado, teléfonos chicos): encabezado y barra de reservas más bajos para dejar lugar al contenido. */
     @media (max-height: 600px) and (max-width: 639px) { #mainHeader .hdr-row { height: 4.5rem; } #mainHeader .hdr-logo { height: 3.75rem; } }
     @media (max-height: 420px) { #mainHeader .hdr-row { height: 3.75rem; } #mainHeader .hdr-logo { height: 3.25rem; } }
@@ -636,6 +665,9 @@
   </style>
 </head>
 <body class="bg-crema text-basalt font-sans antialiased selection:bg-gold selection:text-tannat-dark overflow-x-hidden">
+
+  <!-- Itinerario para imprimir o guardar como PDF: se arma en JS (renderPrintItinerary) y solo se ve al imprimir -->
+  <div id="printItinerary" aria-hidden="true"></div>
 
   <!-- ==================== PRELOADER / LOADING SCREEN (2.5 SECONDS) ==================== -->
   <div id="preloader" onclick="dismissPreloader()" class="fixed inset-0 z-[100] bg-tannat-900 flex flex-col items-center justify-center transition-all duration-700 select-none cursor-pointer" aria-label="Cargando experiencia enoturística" style="opacity: 0; pointer-events: none; visibility: hidden; display: none;">
@@ -1338,6 +1370,15 @@
             </div>
           </div>
 
+        </div>
+
+        <!-- Itinerario imprimible (ver #printItinerary) -->
+        <div class="mt-12 text-center">
+          <button type="button" onclick="printItinerary()" class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full border-2 border-tannat text-tannat font-bold text-sm hover:bg-tannat hover:text-white transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-tannat">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+            <span data-i18n="print.btn">Imprimir o guardar itinerario (PDF)</span>
+          </button>
+          <p class="mt-3 text-sm text-terroir" data-i18n="print.hint">Se abre el cuadro de impresión: elegí «Guardar como PDF» para llevarlo en el celular.</p>
         </div>
 
       </div>
@@ -3231,6 +3272,15 @@
       es: {
         "meta.title": "La Ruta del Tannat | Circuito Enoturístico en Salto, Uruguay",
         "meta.description": "Descubre la cuna del Tannat en Salto, Uruguay: circuito enoturístico sostenible con bodegas boutique, historia viva, aguas termales y gastronomía.",
+        "print.btn": "Imprimir o guardar itinerario (PDF)",
+        "print.hint": "Se abre el cuadro de impresión: elegí «Guardar como PDF» para llevarlo en el celular.",
+        "print.map": "Mapa",
+        "print.howTitle": "Cómo llegar",
+        "print.how": "Por la Ruta 3: Salto está a unos 490 km de Montevideo (alrededor de 6 horas en auto). Desde Argentina, el puente internacional de la represa de Salto Grande conecta Concordia con Salto.",
+        "print.duration": "Desde una escapada de medio día (unas 4 horas) hasta el circuito completo, de jornada entera, por las 4 estaciones.",
+        "print.book": "Reservas y consultas",
+        "print.bookText": "Los horarios, cupos y precios se confirman por WhatsApp con las bodegas; los precios del sitio son de referencia.",
+        "print.credit": "La Ruta del Tannat · Proyecto final de Federico Camara, Homero Texeira y Anthony Moreira · Polo Educativo Tecnológico Salto (DGETP-UTU)",
         "loader.title": "La Ruta del Tannat",
         "loader.subtitle": "Sirviendo la experiencia · Cuna del Vino Uruguayo",
         "nav.brand": "La Ruta del Tannat",
@@ -3731,6 +3781,15 @@
       pt: {
         "meta.title": "La Ruta del Tannat | Circuito Enoturístico em Salto, Uruguai",
         "meta.description": "Descubra o berço do Tannat em Salto, Uruguai: circuito enoturístico sustentável com vinícolas boutique, história viva, águas termais e gastronomia.",
+        "print.btn": "Imprimir ou salvar roteiro (PDF)",
+        "print.hint": "Abre-se a janela de impressão: escolha «Salvar como PDF» para levar no celular.",
+        "print.map": "Mapa",
+        "print.howTitle": "Como chegar",
+        "print.how": "Pela Rota 3: Salto fica a cerca de 490 km de Montevidéu (aproximadamente 6 horas de carro). Vindo da Argentina, a ponte internacional da represa de Salto Grande liga Concordia a Salto.",
+        "print.duration": "De uma escapada de meio dia (cerca de 4 horas) até o circuito completo, de dia inteiro, pelas 4 estações.",
+        "print.book": "Reservas e consultas",
+        "print.bookText": "Horários, vagas e preços são confirmados por WhatsApp com as vinícolas; os preços do site são de referência.",
+        "print.credit": "La Ruta del Tannat · Projeto final de Federico Camara, Homero Texeira e Anthony Moreira · Polo Educativo Tecnológico Salto (DGETP-UTU)",
         "loader.title": "A Rota do Tannat",
         "loader.subtitle": "Servindo a experiência · Berço do Vinho Uruguaio",
         "nav.brand": "A Rota do Tannat",
@@ -4231,6 +4290,15 @@
       en: {
         "meta.title": "La Ruta del Tannat | Wine Tourism Circuit in Salto, Uruguay",
         "meta.description": "Discover the birthplace of Tannat in Salto, Uruguay: a sustainable wine tourism circuit with boutique wineries, living history, hot springs and gastronomy.",
+        "print.btn": "Print or save itinerary (PDF)",
+        "print.hint": "The print dialog opens: choose “Save as PDF” to keep it on your phone.",
+        "print.map": "Map",
+        "print.howTitle": "Getting there",
+        "print.how": "By Route 3: Salto is about 490 km from Montevideo (roughly 6 hours by car). From Argentina, the international bridge on the Salto Grande dam links Concordia with Salto.",
+        "print.duration": "From a half-day getaway (about 4 hours) to the full-day circuit through all 4 stations.",
+        "print.book": "Bookings and questions",
+        "print.bookText": "Times, availability and prices are confirmed over WhatsApp with the wineries; prices on the site are for reference.",
+        "print.credit": "La Ruta del Tannat · Final project by Federico Camara, Homero Texeira and Anthony Moreira · Polo Educativo Tecnológico Salto (DGETP-UTU)",
         "loader.title": "The Tannat Route",
         "loader.subtitle": "Pouring the experience · Cradle of Uruguayan Wine",
         "nav.brand": "The Tannat Route",
@@ -5112,12 +5180,27 @@
     }
 
     // Language Switcher (Complete Dynamic Update)
+    // Itinerario imprimible: se arma con los mismos datos de las estaciones y en el idioma elegido; @media print oculta el resto del sitio.
+    function renderPrintItinerary() {
+      const box = document.getElementById('printItinerary'); if (!box) return;
+      const dict = translations[currentLang] || translations.es, t = (k) => dict[k] || translations.es[k] || '';
+      const stations = [1, 2, 3, 4].map((id) => {
+        const st = stationsInfo[id], d = st[currentLang] || st.es, parts = d.title.split(' | ');
+        return `<li class="pi-st"><span class="pi-num">${(parts[0].match(/\d+/) || [id])[0]}</span><div><h2>${parts[1] || d.title}</h2><p class="pi-tag">${d.tag}</p><p class="pi-loc">${d.location} · <a href="${st.mapsUrl}">${t('print.map')}</a></p><p>${d.history}</p><ul class="pi-hl">${d.highlights.map((h) => '<li>' + h + '</li>').join('')}</ul></div></li>`;
+      }).join('');
+      box.innerHTML = `<header class="pi-head"><p class="pi-eyebrow">${t('stations.badge')}</p><h1>La Ruta del Tannat</h1><p class="pi-sub">${t('stations.title')} · Salto, Uruguay</p></header><ol>${stations}</ol>` +
+        `<div class="pi-info"><section><h2>${t('print.howTitle')}</h2><p>${t('print.how')}</p></section><section><h2>${t('plan.durationTitle')}</h2><p>${t('print.duration')}</p></section></div>` +
+        `<section class="pi-book"><h2>${t('print.book')}</h2><p>${t('print.bookText')}</p><p><strong>WhatsApp: +598 92 614 800</strong> · <a href="${location.origin + location.pathname}">${location.host + location.pathname}</a></p></section><footer class="pi-foot">${t('print.credit')}</footer>`;
+    }
+    function printItinerary() { renderPrintItinerary(); window.print(); }
+
     function setLanguage(lang) {
       currentLang = lang;
       try { localStorage.setItem('tannat_lang', lang); } catch (e) {}
       const dict = translations[lang] || translations.es;
       document.documentElement.lang = lang; // accesibilidad: que los lectores de pantalla usen el idioma correcto
       if (dict['meta.title']) document.title = dict['meta.title']; // pestaña e historial en el idioma elegido
+      renderPrintItinerary(); // hoja para imprimir en el idioma elegido
       const metaDesc = document.querySelector('meta[name="description"]'); if (metaDesc && dict['meta.description']) metaDesc.setAttribute('content', dict['meta.description']);
       
       // Translate all text nodes with data-i18n
@@ -5799,5 +5882,7 @@
         setCurrency(savedCurrency);
       }
     })();
+    renderPrintItinerary(); // hoja imprimible lista desde el inicio (setLanguage solo corre si hay idioma guardado)
+    window.addEventListener('beforeprint', renderPrintItinerary); // y actualizada justo antes de imprimir (Ctrl+P)
   </script>
 </body></html>
