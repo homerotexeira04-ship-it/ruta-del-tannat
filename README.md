@@ -13,6 +13,7 @@ Publicado con GitHub Pages: https://homerotexeira04-ship-it.github.io/ruta-del-t
 | `LaRutadelTannat_files/copa-tannat-*.js` | La Copa de Tannat (render en canvas + interfaz), se carga al acercarse a la sección |
 | `sw.js`, `manifest.json` | Instalación como app y uso sin conexión |
 | `index.html` | Solo redirige a la página principal |
+| `apps-script/` | Opiniones reales de visitantes (planilla de Google + Apps Script). Guía de instalación y moderación en su README; sin instalar, el sitio no muestra el formulario |
 | `404.html`, `robots.txt`, `sitemap.xml`, `favicon.ico`, `apple-touch-icon.png` | Archivos públicos de SEO y navegación |
 
 ## Cambiar el diseño (Tailwind)
