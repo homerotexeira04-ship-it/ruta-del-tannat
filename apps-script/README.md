@@ -31,7 +31,7 @@ Si después cambiás `opiniones.gs`, hay que volver a **Implementar → Administ
 - Leela. Si es una opinión real, cambiá Estado a **`publicada`** (hay un menú desplegable). Si es spam, insultos o trae datos personales de otra persona, ponele **`rechazada`**.
 - La lista pública se actualiza en el momento y muestra las 30 más nuevas.
 - **Regla de oro:** las críticas también se publican. Si solo se muestran los elogios, la sección pierde credibilidad (y el sitio dice públicamente que publica ambas). Rechazá solo spam, insultos y datos personales.
-- Para borrar una opinión a pedido de su autor (se puede pedir por WhatsApp), borrá la fila.
+- Para sacar una opinión ya publicada, lo más rápido es cambiar su Estado a **rechazada** (se nota en el momento). Si el autor pide que se borre (se puede pedir por WhatsApp), eliminá la fila: en el sitio puede tardar hasta 5 minutos en desaparecer.
 - No se puede verificar que la persona hizo el circuito. Si quieren, agreguen una columna propia "Reserva verificada" y publiquen solo las que puedan confirmar con sus reservas.
 
 ## Qué protege el sistema
