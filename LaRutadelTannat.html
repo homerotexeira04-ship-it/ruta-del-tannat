@@ -2035,15 +2035,79 @@
 
         </div>
 
+        <!-- Opiniones reales de visitantes: se muestran solo cuando OPINIONS_API tiene la URL del script (ver apps-script/README.md) -->
+        <div id="opinions" class="hidden max-w-5xl mx-auto mb-10">
+          <h3 class="font-serif text-2xl font-bold text-tannat-dark text-center mb-2" data-i18n="voices.op.title">Lo que cuentan quienes ya hicieron el circuito</h3>
+          <p class="text-center text-sm text-terroir mb-6 max-w-2xl mx-auto" data-i18n="voices.op.policy">Publicamos las opiniones reales de visitantes, sean elogios o críticas. Solo descartamos spam, insultos y datos personales.</p>
+          <div id="opinionsList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+          <p id="opinionsEmpty" class="hidden text-center text-terroir" data-i18n="voices.op.empty">Todavía no hay opiniones publicadas. Las primeras que lleguen y pasen la revisión van a aparecer acá.</p>
+        </div>
+
         <!-- CTA para reseñas reales de visitantes -->
-        <div class="max-w-3xl mx-auto bg-tannat-900 rounded-3xl p-8 sm:p-10 text-center shadow-xl">
+        <div class="relative max-w-3xl mx-auto bg-tannat-900 rounded-3xl p-8 sm:p-10 text-center shadow-xl">
           <h3 class="font-serif text-xl sm:text-2xl font-bold text-white mb-3" data-i18n="voices.ctaTitle">¿Ya hiciste el circuito?</h3>
           <p class="text-gray-300 text-base mb-6 max-w-xl mx-auto" data-i18n="voices.ctaDesc">
             Este proyecto está dando sus primeros pasos. Contanos cómo fue tu experiencia y ayudanos a construir, con casos reales, esta sección.
           </p>
-          <a href="https://wa.me/59892614800?text=Hola!%20Quiero%20compartir%20mi%20experiencia%20en%20La%20Ruta%20del%20Tannat." target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-gold hover:bg-gold-light text-tannat-900 font-extrabold px-6 py-3.5 rounded-xl transition-all shadow-lg hover:shadow-gold/40 focus:outline-none focus:ring-2 focus:ring-white" data-i18n="voices.ctaBtn">
+          <a id="voicesWa" href="https://wa.me/59892614800?text=Hola!%20Quiero%20compartir%20mi%20experiencia%20en%20La%20Ruta%20del%20Tannat." target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-gold hover:bg-gold-light text-tannat-900 font-extrabold px-6 py-3.5 rounded-xl transition-all shadow-lg hover:shadow-gold/40 focus:outline-none focus:ring-2 focus:ring-white" data-i18n="voices.ctaBtn">
             Compartir mi Experiencia
           </a>
+
+          <details id="opinionForm" class="hidden">
+            <summary class="list-none [&::-webkit-details-marker]:hidden cursor-pointer inline-flex items-center gap-2 bg-gold hover:bg-gold-light text-tannat-900 font-extrabold px-6 py-3.5 rounded-xl transition-all shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-white" data-i18n="voices.op.open">Dejar mi opinión</summary>
+            <form id="opForm" class="mt-6 grid gap-4 text-left" autocomplete="off">
+              <div id="opFields" class="grid gap-4">
+                <fieldset>
+                  <legend class="block text-sm font-semibold text-gray-200 mb-1" data-i18n="voices.op.scoreLegend">Tu puntaje</legend>
+                  <div id="opStars" class="flex gap-1"><label class="cursor-pointer text-3xl leading-none text-white/40 rounded px-0.5 focus-within:ring-2 focus-within:ring-gold"><input type="radio" name="score" value="1" required class="sr-only"><span aria-hidden="true">★</span><span class="sr-only">1 / 5</span></label><label class="cursor-pointer text-3xl leading-none text-white/40 rounded px-0.5 focus-within:ring-2 focus-within:ring-gold"><input type="radio" name="score" value="2" required class="sr-only"><span aria-hidden="true">★</span><span class="sr-only">2 / 5</span></label><label class="cursor-pointer text-3xl leading-none text-white/40 rounded px-0.5 focus-within:ring-2 focus-within:ring-gold"><input type="radio" name="score" value="3" required class="sr-only"><span aria-hidden="true">★</span><span class="sr-only">3 / 5</span></label><label class="cursor-pointer text-3xl leading-none text-white/40 rounded px-0.5 focus-within:ring-2 focus-within:ring-gold"><input type="radio" name="score" value="4" required class="sr-only"><span aria-hidden="true">★</span><span class="sr-only">4 / 5</span></label><label class="cursor-pointer text-3xl leading-none text-white/40 rounded px-0.5 focus-within:ring-2 focus-within:ring-gold"><input type="radio" name="score" value="5" required class="sr-only"><span aria-hidden="true">★</span><span class="sr-only">5 / 5</span></label></div>
+                </fieldset>
+                <div>
+                  <label for="opExp" class="block text-sm font-semibold text-gray-200 mb-1" data-i18n="voices.op.expLabel">¿Qué visitaste?</label>
+                  <select id="opExp" name="experiencia" required class="w-full px-4 py-3 rounded-xl bg-white text-basalt border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gold">
+                    <option value="" disabled selected data-i18n="voices.op.expPick">Elegí una opción</option>
+                    <option value="circuito" data-i18n="voices.op.expAll">Todo el circuito</option>
+                    <option value="harriague" data-i18n="st1.title">Espacio Cultural Bodega Harriague</option>
+                    <option value="saltochico" data-i18n="st2.title">Bodega Salto Chico</option>
+                    <option value="bertolini" data-i18n="st3.title">Bodega Bertolini &amp; Broglio</option>
+                    <option value="morimaglio" data-i18n="st4.title">Mori Maglio Wines</option>
+                    <option value="termas" data-i18n="voices.op.expTermas">Termas</option>
+                    <option value="otra" data-i18n="voices.op.expOther">Otra experiencia</option>
+                  </select>
+                </div>
+                <div>
+                  <label for="opText" class="block text-sm font-semibold text-gray-200 mb-1" data-i18n="voices.op.textLabel">Tu opinión</label>
+                  <textarea id="opText" name="opinion" rows="4" required minlength="20" maxlength="500" placeholder="Contanos qué te gustó y qué mejorarías (mínimo 20 caracteres)" data-i18n-ph="voices.op.textPh" class="w-full px-4 py-3 rounded-xl bg-white text-basalt border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gold"></textarea>
+                  <p class="text-xs text-gray-300 mt-1 text-right"><span id="opCount">0</span>/500</p>
+                </div>
+                <div class="grid gap-4 sm:grid-cols-3">
+                  <div>
+                    <label for="opName" class="block text-sm font-semibold text-gray-200 mb-1" data-i18n="voices.op.nameLabel">Nombre o iniciales (se publica)</label>
+                    <input type="text" id="opName" name="nombre" maxlength="40" required autocomplete="nickname" placeholder="Ej. Ana M." data-i18n-ph="voices.op.namePh" class="w-full px-4 py-3 rounded-xl bg-white text-basalt border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gold">
+                  </div>
+                  <div>
+                    <label for="opFrom" class="block text-sm font-semibold text-gray-200 mb-1" data-i18n="voices.op.fromLabel">Ciudad o país (opcional)</label>
+                    <input type="text" id="opFrom" name="origen" maxlength="40" class="w-full px-4 py-3 rounded-xl bg-white text-basalt border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gold">
+                  </div>
+                  <div>
+                    <label for="opVisit" class="block text-sm font-semibold text-gray-200 mb-1" data-i18n="voices.op.visitLabel">Mes de la visita (opcional)</label>
+                    <input type="month" id="opVisit" name="visita" class="w-full px-4 py-3 rounded-xl bg-white text-basalt border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gold">
+                  </div>
+                </div>
+                <div class="absolute -left-[9999px] w-px h-px overflow-hidden" aria-hidden="true"><label>Web <input type="text" id="opWeb" name="web" tabindex="-1" autocomplete="off"></label></div>
+                <div class="flex items-start gap-3 text-sm text-gray-200">
+                  <input type="checkbox" id="opConsent" required class="mt-0.5 w-6 h-6 flex-shrink-0 accent-[#C5A059]">
+                  <div>
+                    <label for="opConsent" data-i18n="voices.op.consent">Acepto que mi opinión se publique en este sitio, con el nombre que escribí, después de ser revisada por el equipo.</label>
+                    <button type="button" onclick="openLegalModal(&#39;privacy&#39;)" class="ml-1 underline text-gold-light hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white rounded" data-i18n="voices.op.privacy">Política de privacidad</button>
+                  </div>
+                </div>
+                <button type="submit" id="opSend" class="w-fit bg-gold hover:bg-gold-light text-tannat-900 font-extrabold px-6 py-3.5 rounded-xl transition-all shadow-lg disabled:opacity-60 disabled:cursor-not-allowed focus:outline-none focus-visible:ring-2 focus-visible:ring-white" data-i18n="voices.op.send">Enviar mi opinión</button>
+              </div>
+              <p id="opStatus" role="status" aria-live="polite" class="text-sm text-gray-100 min-h-[1.25rem]"></p>
+            </form>
+          </details>
+
+          <a id="voicesWaAlt" href="https://wa.me/59892614800?text=Hola!%20Quiero%20compartir%20mi%20experiencia%20en%20La%20Ruta%20del%20Tannat." target="_blank" rel="noopener noreferrer" class="hidden mt-5 text-sm text-gray-300 underline hover:text-white" data-i18n="voices.op.wa">O contanos por WhatsApp</a>
         </div>
 
       </div>
@@ -3268,6 +3332,31 @@
         "voices.ctaTitle": "¿Ya hiciste el circuito?",
         "voices.ctaDesc": "Este proyecto está dando sus primeros pasos. Contanos cómo fue tu experiencia y ayudanos a construir, con casos reales, esta sección.",
         "voices.ctaBtn": "Compartir mi Experiencia",
+        "voices.op.title": "Lo que cuentan quienes ya hicieron el circuito",
+        "voices.op.policy": "Publicamos las opiniones reales de visitantes, sean elogios o críticas. Solo descartamos spam, insultos y datos personales.",
+        "voices.op.empty": "Todavía no hay opiniones publicadas. Las primeras que lleguen y pasen la revisión van a aparecer acá.",
+        "voices.op.stars": "Puntaje: {n} de 5",
+        "voices.op.visited": "Visitó en {m}",
+        "voices.op.expAll": "Todo el circuito",
+        "voices.op.expTermas": "Termas",
+        "voices.op.expOther": "Otra experiencia",
+        "voices.op.open": "Dejar mi opinión",
+        "voices.op.wa": "O contanos por WhatsApp",
+        "voices.op.scoreLegend": "Tu puntaje",
+        "voices.op.expLabel": "¿Qué visitaste?",
+        "voices.op.expPick": "Elegí una opción",
+        "voices.op.textLabel": "Tu opinión",
+        "voices.op.textPh": "Contanos qué te gustó y qué mejorarías (mínimo 20 caracteres)",
+        "voices.op.nameLabel": "Nombre o iniciales (se publica)",
+        "voices.op.namePh": "Ej. Ana M.",
+        "voices.op.fromLabel": "Ciudad o país (opcional)",
+        "voices.op.visitLabel": "Mes de la visita (opcional)",
+        "voices.op.consent": "Acepto que mi opinión se publique en este sitio, con el nombre que escribí, después de ser revisada por el equipo.",
+        "voices.op.privacy": "Política de privacidad",
+        "voices.op.send": "Enviar mi opinión",
+        "voices.op.sending": "Enviando…",
+        "voices.op.sent": "¡Gracias! Tu opinión quedó pendiente de revisión y se publicará cuando el equipo la revise.",
+        "voices.op.err": "No pudimos enviarla. Probá de nuevo en un rato o escribinos por WhatsApp.",
 
         "sust.badge": "Misión & Visión",
         "sust.title": "Nuestra Misión y Visión",
@@ -3722,6 +3811,31 @@
         "voices.ctaTitle": "Você já fez o circuito?",
         "voices.ctaDesc": "Este projeto está dando os primeiros passos. Conte-nos como foi sua experiência e nos ajude a construir esta seção com casos reais.",
         "voices.ctaBtn": "Compartilhar Minha Experiência",
+        "voices.op.title": "O que contam os visitantes que já fizeram o circuito",
+        "voices.op.policy": "Publicamos as opiniões reais dos visitantes, sejam elogios ou críticas. Só descartamos spam, ofensas e dados pessoais.",
+        "voices.op.empty": "Ainda não há opiniões publicadas. As primeiras que chegarem e passarem pela revisão aparecerão aqui.",
+        "voices.op.stars": "Nota: {n} de 5",
+        "voices.op.visited": "Visitou em {m}",
+        "voices.op.expAll": "Todo o circuito",
+        "voices.op.expTermas": "Termas",
+        "voices.op.expOther": "Outra experiência",
+        "voices.op.open": "Deixar minha opinião",
+        "voices.op.wa": "Ou nos conte pelo WhatsApp",
+        "voices.op.scoreLegend": "Sua nota",
+        "voices.op.expLabel": "O que você visitou?",
+        "voices.op.expPick": "Escolha uma opção",
+        "voices.op.textLabel": "Sua opinião",
+        "voices.op.textPh": "Conte o que você gostou e o que melhoraria (mínimo 20 caracteres)",
+        "voices.op.nameLabel": "Nome ou iniciais (será publicado)",
+        "voices.op.namePh": "Ex. Ana M.",
+        "voices.op.fromLabel": "Cidade ou país (opcional)",
+        "voices.op.visitLabel": "Mês da visita (opcional)",
+        "voices.op.consent": "Aceito que minha opinião seja publicada neste site, com o nome que escrevi, depois de ser revisada pela equipe.",
+        "voices.op.privacy": "Política de privacidade",
+        "voices.op.send": "Enviar minha opinião",
+        "voices.op.sending": "Enviando…",
+        "voices.op.sent": "Obrigado! Sua opinião está pendente de revisão e será publicada quando a equipe a revisar.",
+        "voices.op.err": "Não conseguimos enviar. Tente novamente daqui a pouco ou fale conosco pelo WhatsApp.",
 
         "sust.badge": "Missão & Visão",
         "sust.title": "Nossa Missão e Visão",
@@ -4176,6 +4290,31 @@
         "voices.ctaTitle": "Already done the circuit?",
         "voices.ctaDesc": "This project is taking its first steps. Tell us about your experience and help us build this section with real stories.",
         "voices.ctaBtn": "Share My Experience",
+        "voices.op.title": "What visitors who have done the circuit say",
+        "voices.op.policy": "We publish real visitor opinions, whether praise or criticism. We only discard spam, insults and personal data.",
+        "voices.op.empty": "No opinions published yet. The first ones that arrive and pass review will appear here.",
+        "voices.op.stars": "Rating: {n} out of 5",
+        "voices.op.visited": "Visited in {m}",
+        "voices.op.expAll": "The whole circuit",
+        "voices.op.expTermas": "Thermal springs",
+        "voices.op.expOther": "Other experience",
+        "voices.op.open": "Share my opinion",
+        "voices.op.wa": "Or tell us on WhatsApp",
+        "voices.op.scoreLegend": "Your rating",
+        "voices.op.expLabel": "What did you visit?",
+        "voices.op.expPick": "Choose an option",
+        "voices.op.textLabel": "Your opinion",
+        "voices.op.textPh": "Tell us what you liked and what we could improve (at least 20 characters)",
+        "voices.op.nameLabel": "Name or initials (published)",
+        "voices.op.namePh": "E.g. Ana M.",
+        "voices.op.fromLabel": "City or country (optional)",
+        "voices.op.visitLabel": "Month of your visit (optional)",
+        "voices.op.consent": "I agree to have my opinion published on this site under the name I entered, after the team reviews it.",
+        "voices.op.privacy": "Privacy policy",
+        "voices.op.send": "Send my opinion",
+        "voices.op.sending": "Sending…",
+        "voices.op.sent": "Thank you! Your opinion is pending review and will be published once the team has checked it.",
+        "voices.op.err": "We couldn't send it. Please try again in a while or write to us on WhatsApp.",
 
         "sust.badge": "Mission & Vision",
         "sust.title": "Our Mission and Vision",
@@ -4748,6 +4887,9 @@
       // La Copa de Tannat: refrescar aromas, perfil y maridajes en el idioma elegido
       if (window.copaOnLang) window.copaOnLang();
 
+      // Opiniones de visitantes: etiquetas de las tarjetas en el idioma elegido
+      if (window.opinionsOnLang) window.opinionsOnLang();
+
       // Update Active Button Styles
       ['ES', 'PT', 'EN'].forEach(code => {
         const btn = document.getElementById(`btnLang${code}`);
@@ -4993,6 +5135,86 @@
       activeLegalType = null;
       hideModal('legalModal');
     }
+
+    // ==== Opiniones de visitantes ====
+    // Se guardan en una planilla de Google (Apps Script) y solo se muestran después de que el equipo las revisa.
+    // Pegar acá la URL de la aplicación web (termina en /exec). Vacía = la sección muestra solo el botón de WhatsApp.
+    // Guía de instalación: apps-script/README.md
+    const OPINIONS_API = '';
+    (function initOpinions() {
+      if (!OPINIONS_API) return;
+      const $ = (id) => document.getElementById(id);
+      const form = $('opForm'), details = $('opinionForm'), status = $('opStatus'), send = $('opSend');
+      const t = (k) => (translations[currentLang] || translations.es)[k] || translations.es[k] || '';
+      const EXP = { circuito: 'voices.op.expAll', harriague: 'st1.title', saltochico: 'st2.title', bertolini: 'st3.title', morimaglio: 'st4.title', termas: 'voices.op.expTermas', otra: 'voices.op.expOther' };
+      let data = [], openedAt = Date.now(), done = false;
+
+      // text/plain evita la consulta previa (preflight) de CORS que Apps Script no responde
+      function call(opts) {
+        const ctl = new AbortController(), timer = setTimeout(() => ctl.abort(), 20000);
+        return fetch(OPINIONS_API, Object.assign({ redirect: 'follow', signal: ctl.signal }, opts))
+          .then((r) => r.text()).then((x) => { clearTimeout(timer); return JSON.parse(x); });
+      }
+      const mk = (tag, cls, text) => { const n = document.createElement(tag); n.className = cls; if (text) n.textContent = text; return n; };
+
+      // Las opiniones se dibujan con textContent: lo que escriba un visitante nunca se interpreta como HTML
+      function render() {
+        $('opinions').classList.remove('hidden');
+        $('opinionsEmpty').classList.toggle('hidden', data.length > 0);
+        $('opinionsList').replaceChildren.apply($('opinionsList'), data.map((o) => {
+          const fig = mk('figure', 'p-5 bg-crema rounded-2xl border border-tannat-100 flex flex-col gap-3');
+          const stars = mk('div', 'text-gold-dark text-lg tracking-widest', '★'.repeat(o.puntaje) + '☆'.repeat(5 - o.puntaje));
+          stars.setAttribute('role', 'img'); stars.setAttribute('aria-label', t('voices.op.stars').replace('{n}', o.puntaje));
+          const m = /^(\d{4})-(\d{2})$/.exec(o.visita);
+          const visited = m ? t('voices.op.visited').replace('{m}', new Date(+m[1], +m[2] - 1, 1).toLocaleDateString(currentLang, { month: 'long', year: 'numeric' })) : '';
+          fig.append(stars, mk('blockquote', 'text-base text-basalt flex-1', o.opinion),
+            mk('figcaption', 'text-sm font-semibold text-tannat-dark', [o.nombre, o.origen].filter(Boolean).join(' · ')),
+            mk('p', 'text-xs text-terroir', [t(EXP[o.experiencia] || EXP.otra), visited].filter(Boolean).join(' · ')));
+          return fig;
+        }));
+      }
+      window.opinionsOnLang = () => { if (!$('opinions').classList.contains('hidden')) render(); };
+
+      // el formulario aparece; el WhatsApp pasa a ser la alternativa
+      details.classList.remove('hidden'); $('voicesWa').classList.add('hidden'); $('voicesWaAlt').classList.remove('hidden');
+      details.addEventListener('toggle', () => { if (details.open) openedAt = Date.now(); });
+      $('opVisit').max = new Date().toISOString().slice(0, 7);
+      $('opText').addEventListener('input', (e) => { $('opCount').textContent = e.target.value.length; });
+      form.querySelectorAll('input[name=score]').forEach((r) => r.addEventListener('change', () => {
+        form.querySelectorAll('#opStars label').forEach((l, i) => { const on = i < +r.value; l.classList.toggle('text-gold', on); l.classList.toggle('text-white/40', !on); });
+      }));
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        if (done) return;
+        const f = form.elements;
+        send.disabled = true; status.textContent = t('voices.op.sending');
+        call({ method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({
+          puntaje: +f.score.value, experiencia: f.experiencia.value, opinion: f.opinion.value, nombre: f.nombre.value, origen: f.origen.value,
+          visita: f.visita.value, idioma: currentLang, acepto: $('opConsent').checked, web: f.web.value, t: Date.now() - openedAt
+        }) }).then((j) => {
+          if (!j.ok) throw new Error(j.error);
+          done = true; $('opFields').classList.add('hidden'); status.textContent = t('voices.op.sent'); form.reset();
+        }).catch(() => { status.textContent = t('voices.op.err'); send.disabled = false; }); // no se reintenta solo, para no duplicar
+      });
+
+      // la lista se pide recién cuando la sección se acerca a la pantalla; sin conexión, la sección sigue funcionando sin ella
+      const load = () => call({}).then((j) => { if (j.ok) { data = j.opiniones; render(); } }).catch(() => {});
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver((es, io) => { if (es[0].isIntersecting) { io.disconnect(); load(); } }, { rootMargin: '600px 0px' }).observe($('testimonios'));
+      } else load();
+
+      // La política de privacidad dice la verdad sobre lo que hace el sitio ahora que guarda opiniones
+      const P = {
+        es: { s1: 'Este sitio es estático y no tiene servidor propio, salvo el formulario de opiniones (ver sección 6). Los datos personales que se generan son los que vos mismo escribís de forma voluntaria. En el formulario de reserva (nombre, fecha, cantidad de pasajeros, paquete elegido, hotel de referencia y comentarios) se usan exclusivamente para armar un mensaje de WhatsApp prellenado dirigido a los organizadores del circuito: ese mensaje se envía directamente desde tu propio teléfono y nosotros no almacenamos esa información en ningún servidor.',
+              h6: '6. Opiniones de visitantes', b6: 'Si dejás una opinión, se guarda en una planilla de Google (Google Sheets y Apps Script) que administra el equipo del proyecto: puntaje, texto, nombre o iniciales, ciudad o país y mes de visita (los dos últimos, opcionales), idioma del sitio y fecha de envío. No pedimos correo electrónico ni teléfono. La opinión solo se publica si marcaste la casilla de consentimiento y después de que el equipo la revise; se muestra con el nombre que escribiste. Publicamos opiniones positivas y críticas; solo descartamos spam, insultos y datos personales de terceros. Podés pedir que borremos tu opinión escribiendo por WhatsApp al +598 92 614 800. Google procesa esos datos como proveedor del servicio, según su propia política de privacidad.' },
+        pt: { s1: 'Este site é estático e não tem servidor próprio, exceto o formulário de opiniões (ver seção 6). Os dados pessoais gerados são os que você mesmo digita voluntariamente. No formulário de reserva (nome, data, quantidade de passageiros, pacote escolhido, hotel de referência e comentários) são usados exclusivamente para montar uma mensagem de WhatsApp pré-preenchida direcionada aos organizadores do circuito: essa mensagem é enviada diretamente do seu próprio telefone e nós não armazenamos essa informação em nenhum servidor.',
+              h6: '6. Opiniões de visitantes', b6: 'Se você deixar uma opinião, ela é guardada em uma planilha do Google (Google Sheets e Apps Script) administrada pela equipe do projeto: nota, texto, nome ou iniciais, cidade ou país e mês da visita (os dois últimos, opcionais), idioma do site e data de envio. Não pedimos e-mail nem telefone. A opinião só é publicada se você marcou a caixa de consentimento e depois de a equipe revisá-la; ela aparece com o nome que você escreveu. Publicamos opiniões positivas e críticas; só descartamos spam, ofensas e dados pessoais de terceiros. Você pode pedir que apaguemos sua opinião escrevendo pelo WhatsApp no +598 92 614 800. O Google processa esses dados como provedor do serviço, de acordo com a sua própria política de privacidade.' },
+        en: { s1: "This site is static and has no backend server of its own, except for the opinions form (see section 6). The personal data generated is what you voluntarily type. In the booking form (name, date, number of guests, chosen package, reference hotel, and comments) it is used solely to build a pre-filled WhatsApp message addressed to the circuit's organizers: that message is sent directly from your own phone and we do not store that information on any server.",
+              h6: '6. Visitor opinions', b6: "If you leave an opinion, it is saved in a Google spreadsheet (Google Sheets and Apps Script) managed by the project team: rating, text, name or initials, city or country and month of visit (the last two are optional), site language and submission date. We do not ask for an email address or phone number. The opinion is only published if you ticked the consent box and after the team has reviewed it; it appears under the name you entered. We publish both positive and critical opinions; we only discard spam, insults and third parties' personal data. You can ask us to delete your opinion by writing on WhatsApp at +598 92 614 800. Google processes this data as a service provider, under its own privacy policy." }
+      };
+      ['es', 'pt', 'en'].forEach((l) => { const sec = legalContent.privacy[l].sections; sec[0].b = P[l].s1; sec.push({ h: P[l].h6, b: P[l].b6 }); });
+    })();
 
     // "Cómo Llegar y Cuánto Quedarte": info real e investigada (Ruta 3, aeropuerto, Represa Salto Grande)
     const planContent = {
