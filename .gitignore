@@ -2,3 +2,5 @@
 .agents/
 skills-lock.json
 node_modules/
+# Fotos y logos originales pesados (copia local; el sitio usa las versiones WebP optimizadas)
+originales/
