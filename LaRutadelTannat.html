@@ -374,10 +374,15 @@
     }
     [data-i18n="mobileBar.btn"] { position: relative; }
     [data-i18n="mobileBar.btn"]::before { content: ''; position: absolute; inset: -4px 0; }
+    /* Pantallas de poco alto (celular apaisado, teléfonos chicos): encabezado y barra de reservas más bajos para dejar lugar al contenido. */
+    @media (max-height: 600px) and (max-width: 639px) { #mainHeader .hdr-row { height: 4.5rem; } #mainHeader .hdr-logo { height: 3.75rem; } }
+    @media (max-height: 420px) { #mainHeader .hdr-row { height: 3.75rem; } #mainHeader .hdr-logo { height: 3.25rem; } }
+    @media (max-width: 359px) { div.mbar { padding: .5rem 5.5rem .5rem .75rem; } div.mbar .price-val { font-size: .8rem; white-space: nowrap; } div.mbar button { padding-inline: .75rem; } }
+
     /* La Copa de Tannat (ver copa-tannat-render.js / copa-tannat-ui.js).
        Tamaños: la sección ocupa justo la pantalla bajo el encabezado fijo (--cup-hdr lo fija el JS), así que
        la copa y todas las descripciones se ven sin scrollear. En celular: copa arriba y pestañas compactas. */
-    .cup-section { --cup-hdr: 7rem; --cup-bot: 5.75rem; --cup-pad: .75rem;
+    .cup-section { --cup-hdr: 7rem; --cup-bot: 4.5rem; --cup-pad: .75rem;
       --cup-h: calc(100vh - var(--cup-hdr) - var(--cup-bot) - var(--cup-pad) * 2);
       display: flex; flex-direction: column; justify-content: center; min-height: calc(100vh - var(--cup-hdr));
       padding: var(--cup-pad) 0 var(--cup-bot); scroll-margin-top: var(--cup-hdr);
@@ -399,7 +404,7 @@
     .cup-h2 { font-size: 1.3rem; line-height: 1.15; }
     .cup-sub { display: none; margin-top: .35rem; }
     .cup-stagewrap { grid-area: stage; display: flex; justify-content: center; width: 100%; }
-    .cup-stage { position: relative; height: clamp(12rem, calc(var(--cup-h) * .48), 30rem); max-width: 100%; aspect-ratio: 560 / 760; user-select: none; -webkit-user-select: none; container-type: normal; }
+    .cup-stage { position: relative; height: clamp(8.5rem, calc(var(--cup-h) - var(--cup-panel, 16rem) - var(--cup-head, 0px) - 1rem), 30rem); max-width: 100%; aspect-ratio: 560 / 760; user-select: none; -webkit-user-select: none; container-type: normal; }
     .cup-tilt { position: absolute; inset: 0; transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transition: transform .35s ease-out; }
     .cup-glow { position: absolute; inset: -14% -24% 6% -24%; pointer-events: none;
       background: radial-gradient(52% 50% at 50% 34%, rgba(223,202,157,.36), rgba(197,160,89,.13) 46%, transparent 74%); }
@@ -497,7 +502,11 @@
     @media (max-height: 780px) and (max-width: 999px) {
       .cup-h2 { font-size: 1.1rem; } .cup-panel { padding: .55rem .7rem .65rem; } .cup-summary { font-size: .9rem; } .cup-card-text { font-size: .8rem; } .cup-why { font-size: .88rem; } .cup-ctanote, .cup-note { display: none; } .cup-hint { font-size: .7rem; }
     }
-    @media (max-height: 680px) and (max-width: 999px) { .cup-head { display: none; } .cup-stage { height: clamp(10rem, calc(var(--cup-h) * .44), 30rem); } .cup-tab { padding: .3rem .3rem; } .cup-actions { margin-top: .4rem; } .cup-pair { padding: .22rem .65rem; } .cup-pairs { gap: .22rem; } .cup-panel { padding: .5rem .65rem .6rem; } }
+    @media (max-height: 680px) and (max-width: 999px) { .cup-head { display: none; } .cup-tab { padding: .3rem .3rem; } .cup-actions { margin-top: .4rem; } .cup-pair { padding: .22rem .65rem; } .cup-pairs { gap: .22rem; } .cup-panel { padding: .5rem .65rem .6rem; } }
+    @media (max-height: 580px) and (max-width: 639px) {
+      .cup-stage { height: clamp(8rem, calc(var(--cup-h) - var(--cup-panel, 16rem) - var(--cup-head, 0px) - 1rem), 30rem); }
+      .cup-tab { padding: .22rem .3rem; } .cup-pair { padding: .12rem .6rem; } .cup-pairs { gap: .15rem; } .cup-panel { padding: .4rem .6rem .5rem; } .cup-why { margin-top: .25rem; }
+    }
     @media (min-width: 640px) and (max-width: 999px) and (min-height: 781px) {
       .cup-main { gap: .75rem; } .cup-h2 { font-size: 1.6rem; } .cup-panel { max-width: 42rem; padding: .9rem 1rem 1rem; }
     }
@@ -534,10 +543,12 @@
       .cup-btn { flex: 0 0 auto; padding: clamp(.5rem, 1.4svh, .8rem) 1.4rem; font-size: clamp(.8rem, 1.8svh, .92rem); }
     }
     @media (min-width: 1000px) and (max-width: 1179px) and (min-height: 700px) { .cup-sub, .cup-ctanote { display: none; } .cup-card { min-height: 0; } }
-    @media (min-width: 1180px) and (max-width: 1279px) and (min-height: 701px) and (max-height: 860px) { .cup-sub, .cup-ctanote { display: none; } }
+    @media (min-width: 1180px) and (max-width: 1279px) and (min-height: 701px) and (max-height: 900px) { .cup-sub, .cup-ctanote { display: none; } }
     @media (min-width: 1180px) and (min-height: 600px) and (max-height: 700px), (min-width: 1000px) and (min-height: 700px) and (max-height: 700px) { .cup-chip, .cup-sub, .cup-ctanote { display: none; } }
     @media (min-width: 1180px) and (min-height: 600px) and (max-height: 800px), (min-width: 1000px) and (min-height: 700px) and (max-height: 800px) { .cup-h3 { margin-bottom: .2rem; } }
-    @media (min-width: 640px) and (max-height: 699px) and (max-width: 1179px), (min-width: 640px) and (max-height: 599px) {
+    @media (min-width: 1000px) and (max-width: 1179px) and (min-height: 700px) and (max-height: 750px) { .cup-pair { padding-block: .2rem; } .cup-actions { margin-top: .4rem; } .cup-panel { padding-block: .6rem; } }
+    @media (min-width: 1180px) and (max-height: 620px) { .cup-section { --cup-pad: .8rem; } }
+    @media (min-width: 640px) and (max-height: 699px) and (max-width: 1179px), (min-width: 640px) and (max-height: 599px), (min-width: 480px) and (max-width: 639px) and (max-height: 420px) and (orientation: landscape) {
       .cup-section { --cup-bot: 4.5rem; --cup-pad: .5rem; }
       .cup-main { grid-template-columns: auto minmax(0, 1fr); grid-template-areas: "stage panel"; column-gap: 1rem; align-items: center; justify-items: stretch; }
       .cup-head { display: none; } .cup-stagewrap { width: auto; }
@@ -548,7 +559,11 @@
       .cup-card { padding: .4rem .6rem; } .cup-card-title { font-size: .9rem; } .cup-dots { margin-top: .3rem; } .cup-pair { padding: .18rem .6rem; font-size: .76rem; } .cup-range { height: 1.25rem; } .cup-tab { font-size: .72rem; }
       .cup-panel { padding: .35rem .5rem .45rem; } .cup-tabs { margin-bottom: .25rem; } .cup-actions { margin-top: .3rem; } .cup-btn { padding: .3rem .5rem; } .cup-range { height: 1.1rem; }
     }
-    @media (max-height: 420px) and (min-width: 640px) { .cup-summary { display: none; } .cup-card-title { font-size: .85rem; } .cup-tab { padding: .2rem .3rem; } }
+    @media (max-height: 340px) and (min-width: 480px) { .cup-panel { padding: .3rem .5rem .35rem; } }
+    @media (min-width: 480px) and (max-width: 639px) and (max-height: 420px) and (orientation: landscape) {
+      .cup-stage { height: max(calc(var(--cup-h) * .85), 8rem); } .cup-main { column-gap: .6rem; } .cup-why { font-size: .76rem; } .cup-pair { font-size: .72rem; } .cup-card-text { font-size: .72rem; }
+    }
+    @media (max-height: 420px) and (min-width: 480px) { .cup-summary { display: none; } .cup-card-title { font-size: .85rem; } .cup-tab { padding: .2rem .3rem; } }
     @media (min-width: 1280px) and (min-height: 600px) { .cup-section { --cup-bot: 1.25rem; --cup-pad: 1.25rem; } }
     @media (prefers-reduced-motion: reduce) {
       .cup-orb { transition: none; } .cup-orb.is-on .cup-orb-i, .cup-ambient i, .cup-hint svg, .cup-in, .cup-flare .cup-glow, .cup-done .cup-cta { animation: none; }
@@ -649,11 +664,11 @@
 
     <!-- Main Row: marca, navegación y reserva -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between gap-6 h-24 sm:h-28">
+      <div class="flex items-center justify-between gap-6 h-24 sm:h-28 hdr-row">
 
         <!-- Brand Identity -->
         <a href="#hero" class="flex items-center gap-3 flex-shrink-0 group focus:outline-none focus:ring-2 focus:ring-gold rounded-lg p-1" aria-label="Inicio La Ruta del Tannat">
-          <img src="./LaRutadelTannat_files/logo-ruta-del-tannat-450.webp" width="450" height="300" alt="La Ruta del Tannat · Salto, Uruguay" class="h-20 sm:h-24 w-auto flex-shrink-0">
+          <img src="./LaRutadelTannat_files/logo-ruta-del-tannat-450.webp" width="450" height="300" alt="La Ruta del Tannat · Salto, Uruguay" class="h-20 sm:h-24 w-auto flex-shrink-0 hdr-logo">
           <div class="hidden sm:block w-px h-10 bg-white/15 flex-shrink-0"></div>
           <img src="./LaRutadelTannat_files/logo-enoturismo-uruguay.webp" width="684" height="219" alt="Enoturismo Uruguay" class="hidden sm:block sm:h-9 w-auto flex-shrink-0">
         </a>
@@ -2676,7 +2691,7 @@
   </a>
 
   <!-- Floating Sticky Bottom Bar for Mobile Booking -->
-  <div class="xl:hidden fixed bottom-0 left-0 right-0 z-30 bg-tannat-900/95 border-t border-gold/30 p-3 pr-[5.5rem] backdrop-blur-lg flex items-center justify-between gap-2">
+  <div class="xl:hidden fixed bottom-0 left-0 right-0 z-30 bg-tannat-900/95 border-t border-gold/30 p-3 pr-[5.5rem] backdrop-blur-lg flex items-center justify-between gap-2 mbar">
     <div>
       <span class="block text-[10px] uppercase text-gold font-bold" data-i18n="mobileBar.from">Desde Salto</span>
       <span class="text-white font-bold text-sm price-val" data-usd="45" data-uyu="1850">USD 45 / persona</span>
@@ -4821,6 +4836,11 @@
         const setHdr = () => sec.style.setProperty('--cup-hdr', siteHdr.offsetHeight + 'px');
         setHdr(); window.addEventListener('resize', setHdr);
         if ('ResizeObserver' in window) new ResizeObserver(setHdr).observe(siteHdr);
+      }
+      const cupPanel = document.getElementById('cupPanel'), cupHead = sec.querySelector('.cup-head'); // en vertical la copa ocupa lo que le sobra al panel
+      if (cupPanel && 'ResizeObserver' in window) {
+        const setPanel = () => { sec.style.setProperty('--cup-panel', cupPanel.offsetHeight + 'px'); sec.style.setProperty('--cup-head', (cupHead ? cupHead.offsetHeight : 0) + 'px'); };
+        setPanel(); const ro = new ResizeObserver(setPanel); ro.observe(cupPanel); if (cupHead) ro.observe(cupHead);
       }
       const load = (f) => new Promise((ok, no) => { const el = document.createElement('script'); el.src = './LaRutadelTannat_files/' + f + '?v=3'; el.onload = ok; el.onerror = () => no(new Error('No se pudo cargar ' + f)); document.head.appendChild(el); });
       function start() {
