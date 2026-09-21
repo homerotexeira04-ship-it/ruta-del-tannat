@@ -188,9 +188,13 @@ function hojaEstadisticas() {
 function armarResumen(ss) {
   const r = ss.getSheetByName('Resumen') || ss.insertSheet('Resumen');
   r.clear();
+  const sep = separador(r);
   const E = 'Estadisticas!';
-  const desde = function (dias) { return dias == null ? '' : ',' + E + '$A:$A,">="&TODAY()-' + dias; };
-  const suma = function (evento, d1, dias) { return '=SUMIFS(' + E + '$F:$F,' + E + '$B:$B,"' + evento + '"' + (d1 ? ',' + E + '$C:$C,"' + d1 + '"' : '') + desde(dias) + ')'; };
+  // SUMIFS(suma; criterio_rango; criterio; …): cada par [rango, criterio] se agrega con el separador de la planilla
+  const sumifs = function (pares) { const a = [E + '$F:$F']; pares.forEach(function (p) { a.push(p[0], p[1]); }); return 'SUMIFS(' + a.join(sep) + ')'; };
+  const par = function (col, valor) { return [E + '$' + col + ':$' + col, '"' + valor + '"']; };
+  const fecha = function (dias) { return dias == null ? [] : [[E + '$A:$A', '">="&TODAY()-' + dias]]; };
+  const suma = function (evento, d1, dias) { return '=' + sumifs([par('B', evento)].concat(d1 ? [par('C', d1)] : [], fecha(dias))); };
   const metricas = [
     ['Visitas (≥ 3 s)', 'visita', ''], ['Toques a WhatsApp', 'wa', ''], ['Reservas iniciadas', 'reserva', 'abrir'],
     ['Reservas enviadas a WhatsApp', 'reserva', 'enviar'], ['Itinerario impreso o PDF', 'itinerario', ''], ['Brindis en La Copa', 'copa', '']
@@ -208,7 +212,7 @@ function armarResumen(ss) {
     r.getRange(fila, col).setValue(titulo).setFontWeight('bold');
     items.forEach(function (it, i) {
       r.getRange(fila + 1 + i, col).setValue(it[1]);
-      r.getRange(fila + 1 + i, col + 1).setFormula('=SUMIFS(' + E + '$F:$F,' + E + '$B:$B,"' + ev + '",' + E + '$' + columna + ':$' + columna + ',"' + it[0] + '"' + desde(29) + ')');
+      r.getRange(fila + 1 + i, col + 1).setFormula('=' + sumifs([par('B', ev), par(columna, it[0])].concat(fecha(29))));
     });
   };
   tabla(11, 1, 'Visitas por idioma (30 días)', 'visita', 'C', [['es', 'Español'], ['pt', 'Português'], ['en', 'English']]);
@@ -216,12 +220,21 @@ function armarResumen(ss) {
   tabla(17, 1, 'Visitas por origen (30 días)', 'visita', 'E', [['directo', 'Directo (o WhatsApp)'], ['google', 'Google'], ['buscador', 'Otros buscadores'], ['social', 'Redes sociales'], ['otro', 'Otro sitio']]);
   tabla(17, 4, 'Toques a WhatsApp por lugar (30 días)', 'wa', 'C', [['paquetes', 'Paquetes (cotización)'], ['testimonios', 'Opiniones'], ['fab', 'Botón flotante']]);
   // lo que no cae en las categorías de arriba (otros lugares, o orígenes con ?src=) sale por diferencia con el total
-  const total30 = function (ev) { return 'SUMIFS(' + E + '$F:$F,' + E + '$B:$B,"' + ev + '"' + desde(29) + ')'; };
+  const total30 = function (ev) { return sumifs([par('B', ev)].concat(fecha(29))); };
   r.getRange(23, 1).setValue('Con ?src= (carteles, QR, etc.)'); r.getRange(23, 2).setFormula('=' + total30('visita') + '-SUM(B18:B22)');
   r.getRange(21, 4).setValue('Otros lugares'); r.getRange(21, 5).setFormula('=' + total30('wa') + '-SUM(E18:E20)');
   r.getRange('A25').setValue('El detalle día por día está en la hoja "Estadisticas". Para medir un cartel con QR, agregá "?src=nombre" al enlace: aparece en la columna "Detalle 3" de las visitas.');
   r.setColumnWidth(1, 250); r.setColumnWidth(4, 250);
   r.setColumnWidths(2, 1, 150); r.setColumnWidths(3, 1, 150); r.setColumnWidths(5, 3, 170);
+}
+
+/** setFormula() lee las fórmulas con el separador de argumentos de la configuración regional de la planilla ("," en inglés, ";" en es_ES): se detecta probando. */
+function separador(hoja) {
+  const c = hoja.getRange('Z1');
+  c.setFormula('=SUM(1,2)'); SpreadsheetApp.flush();
+  const coma = c.getValue() === 3; // con separador ";" la coma es decimal y da 1,2
+  c.clear();
+  return coma ? ',' : ';';
 }
 
 /** Opcional: borra de "Estadisticas" las filas de prueba (Detalle 1 = "prueba"). */
