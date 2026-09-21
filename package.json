@@ -3,7 +3,10 @@
   "private": true,
   "description": "La Ruta del Tannat: sitio estático. Solo se usa npm para recompilar el CSS de Tailwind.",
   "scripts": {
-    "build:css": "tailwindcss -c tailwind.config.js -i tailwind.input.css -o LaRutadelTannat_files/tailwind.css --minify"
+    "build:css": "tailwindcss -c tailwind.config.js -i tailwind.input.css -o LaRutadelTannat_files/tailwind.css --minify",
+    "check": "node scripts/check.js",
+    "check:links": "node scripts/check.js --links",
+    "test": "node --test \"apps-script/*.test.js\""
   },
   "devDependencies": {
     "tailwindcss": "3.4.17"
