@@ -124,15 +124,20 @@
   let rq = 0; Object.values(sl).forEach((s) => s.addEventListener('input', () => { firstTouch(); cancelAnimationFrame(rq); rq = requestAnimationFrame(() => renderProfile(true)); }));
 
   // ---------- brindis ----------
-  let ac = null;
+  // Sonido sintetizado (sin archivo de audio): un golpe seco y dos copas con modos de vidrio (1 : 2,83 : 5,43)
+  // que se apagan del agudo al grave, apenas desafinadas entre sí para que "brillen" como dos copas reales.
+  let ac = null, tap = null;
   function clink() {
     try {
       const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return; ac = ac || new AC(); if (ac.state === 'suspended') ac.resume();
-      const t = ac.currentTime;
-      [[2637, 0.06], [3951, 0.035], [5274, 0.018]].forEach(([f, v]) => {
-        const o = ac.createOscillator(), g = ac.createGain(); o.type = 'sine'; o.frequency.setValueAtTime(f, t);
-        g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(v, t + 0.004); g.gain.exponentialRampToValueAtTime(0.0001, t + 1); o.connect(g); g.connect(ac.destination); o.start(t); o.stop(t + 1.05);
-      });
+      const t = ac.currentTime, out = ac.createGain(); out.gain.value = 0.45; out.connect(ac.destination);
+      if (!tap) { tap = ac.createBuffer(1, Math.round(ac.sampleRate * 0.03), ac.sampleRate); const d = tap.getChannelData(0); for (let i = 0; i < d.length; i++) d[i] = (Math.random() * 2 - 1) * 0.3 * (1 - i / d.length); }
+      const hit = ac.createBufferSource(), hp = ac.createBiquadFilter(); hit.buffer = tap; hp.type = 'highpass'; hp.frequency.value = 4000; hit.connect(hp); hp.connect(out); hit.start(t);
+      [[1650, 1], [1695, 0.8]].forEach(([f0, v]) => [[1, 0.22, 1.5], [2.83, 0.15, 0.7], [5.43, 0.08, 0.3], [8.9, 0.03, 0.15]].forEach(([r, a, d]) => {
+        const o = ac.createOscillator(), g = ac.createGain(); o.frequency.value = f0 * r;
+        g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(a * v, t + 0.002); g.gain.exponentialRampToValueAtTime(0.0001, t + d);
+        o.connect(g); g.connect(out); o.start(t); o.stop(t + d + 0.05);
+      }));
     } catch (e) { /* audio no disponible */ }
   }
   const toastEl = $('cupToast');
