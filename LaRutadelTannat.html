@@ -229,6 +229,10 @@
 
 
   <style>
+    /* Desplazamiento suave al saltar a una sección (clic en el menú, "Ver más", etc.) */
+    @media (prefers-reduced-motion: no-preference) {
+      html { scroll-behavior: smooth; }
+    }
     .glass-nav {
       background: rgba(29, 6, 13, 0.88);
       backdrop-filter: blur(12px);
@@ -383,8 +387,8 @@
 
     /* Aparición suave de secciones/tarjetas al hacer scroll (aplicada vía JS, ver initScrollReveal) */
     .reveal-init {
-      opacity: 0;
-      transform: translateY(22px);
+      opacity: 0.4;
+      transform: translateY(11px);
       transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
       will-change: opacity, transform;
     }
@@ -395,7 +399,7 @@
     /* Variante sin transform: para elementos que ya usan transform propio (ej. tarjetas con
        elevación -translate-y), así la animación no les pisa su transform permanente. */
     .reveal-fade-only {
-      opacity: 0;
+      opacity: 0.4;
       transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .reveal-fade-only.reveal-in {
