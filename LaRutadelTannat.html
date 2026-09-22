@@ -1778,9 +1778,9 @@
 
             <div class="p-8 sm:p-10 flex flex-col justify-between flex-1">
               <div>
-                <div class="flex justify-between items-start mb-6">
+                <div class="flex flex-wrap items-start gap-y-1 mb-6">
                   <h3 class="font-serif text-2xl sm:text-3xl font-bold text-white" data-i18n="packages.p1Title">Vinos e Historias</h3>
-                  <div class="text-right flex-shrink-0 ml-3">
+                  <div class="text-right flex-shrink-0 ml-auto">
                     <span class="text-3xl sm:text-4xl font-bold text-gold price-val" data-usd="45" data-uyu="1850">USD 45</span>
                     <span class="block text-xs text-gray-400 font-normal" data-i18n="packages.perPerson">por persona</span>
                   </div>
@@ -1832,9 +1832,9 @@
 
               <div class="p-8 sm:p-10 flex flex-col justify-between flex-1">
                 <div>
-                  <div class="flex justify-between items-start mb-6">
+                  <div class="flex flex-wrap items-start gap-y-1 mb-6">
                     <h3 class="font-serif text-2xl sm:text-3xl font-bold text-white" data-i18n="packages.p2Title">El Legado del Tannat</h3>
-                    <div class="text-right flex-shrink-0 ml-3">
+                    <div class="text-right flex-shrink-0 ml-auto">
                       <span class="text-3xl sm:text-4xl font-bold text-gold price-val" data-usd="95" data-uyu="3900">USD 95</span>
                       <span class="block text-xs text-gray-400 font-normal" data-i18n="packages.perPerson">por persona</span>
                     </div>
@@ -2819,14 +2819,9 @@
             <p class="text-terroir leading-relaxed mb-4" data-i18n="team.p1">
               La Ruta del Tannat nace como proyecto de egreso de tres estudiantes de la Tecnicatura en Diseño de Itinerarios Turísticos Sostenibles del Polo Educativo Tecnológico Salto (DGETP-UTU): Federico Camara, Homero Texeira y Anthony Moreira.
             </p>
-            <p class="text-terroir leading-relaxed mb-6" data-i18n="team.p2">
+            <p class="text-terroir leading-relaxed" data-i18n="team.p2">
               Durante su formación relevaron de primera mano la historia de Pascual Harriague, el estado de las bodegas boutique de Salto y el potencial del circuito enoturístico junto a las termas del litoral norte — y decidieron convertir ese trabajo académico en una herramienta real para dar a conocer el departamento.
             </p>
-            <div class="flex flex-wrap gap-2">
-              <span class="px-3 py-1.5 rounded-full bg-tannat-50 border border-tannat-100 text-tannat text-xs font-semibold">Federico Camara</span>
-              <span class="px-3 py-1.5 rounded-full bg-tannat-50 border border-tannat-100 text-tannat text-xs font-semibold">Homero Texeira</span>
-              <span class="px-3 py-1.5 rounded-full bg-tannat-50 border border-tannat-100 text-tannat text-xs font-semibold">Anthony Moreira</span>
-            </div>
           </div>
 
         </div>
@@ -2924,7 +2919,7 @@
   <div class="xl:hidden fixed bottom-0 left-0 right-0 z-30 bg-tannat-900/95 border-t border-gold/30 p-3 pr-[5.5rem] backdrop-blur-lg flex items-center justify-between gap-2 mbar">
     <div>
       <span class="block text-[10px] uppercase text-gold font-bold" data-i18n="mobileBar.from">Desde Salto</span>
-      <span class="text-white font-bold text-sm price-val" data-usd="45" data-uyu="1850">USD 45 / persona</span>
+      <span id="mbarPrice" class="text-white font-bold text-sm price-val" data-usd="45" data-uyu="1850">USD 45 / persona</span>
     </div>
     <button onclick="openBookingModal(&#39;General&#39;)" class="bg-gold text-tannat-900 font-extrabold text-xs px-4 py-2.5 rounded-full shadow-md shrink-0 whitespace-nowrap" data-i18n="mobileBar.btn">
       Reservar Ahora
@@ -5169,13 +5164,15 @@
     function setCurrency(cur) {
       currentCurrency = cur;
       try { localStorage.setItem('tannat_currency', cur); } catch (e) {}
+      const perPerson = (translations[currentLang] || translations.es)['packages.perPerson'] || '';
       document.querySelectorAll('.price-val').forEach(el => {
         const usd = el.getAttribute('data-usd');
         const uyu = el.getAttribute('data-uyu');
+        const suffix = el.id === 'mbarPrice' ? ` / ${perPerson}` : '';
         if (cur === 'UYU' && uyu) {
-          el.innerText = `$U ${uyu}`;
+          el.innerText = `$U ${uyu}${suffix}`;
         } else if (usd) {
-          el.innerText = `USD ${usd}`;
+          el.innerText = `USD ${usd}${suffix}`;
         }
       });
 
@@ -5285,6 +5282,9 @@
 
       // Opiniones de visitantes: etiquetas de las tarjetas en el idioma elegido
       if (window.opinionsOnLang) window.opinionsOnLang();
+
+      // La barra fija inferior dice "USD 45 / persona": refrescarla para que "persona" también cambie de idioma
+      setCurrency(currentCurrency);
 
       // Update Active Button Styles
       ['ES', 'PT', 'EN'].forEach(code => {
