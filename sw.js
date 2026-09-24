@@ -1,5 +1,5 @@
 // Service Worker de La Ruta del Tannat: app shell cacheado para instalación PWA y uso sin conexión.
-const CACHE_VERSION = 'tannat-v5';
+const CACHE_VERSION = 'tannat-v6';
 const CORE_ASSETS = [
   './LaRutadelTannat.html',
   './index.html',
@@ -42,7 +42,10 @@ self.addEventListener('fetch', (event) => {
     event.respondWith(
       fetch(req)
         .then((res) => {
-          caches.open(CACHE_VERSION).then((cache) => cache.put('./LaRutadelTannat.html', res.clone()));
+          if (res.ok && new URL(req.url).pathname.endsWith('/LaRutadelTannat.html')) {
+            const copy = res.clone(); // clonar ANTES de devolver res: después el cuerpo ya se consumió y clone() falla
+            event.waitUntil(caches.open(CACHE_VERSION).then((cache) => cache.put('./LaRutadelTannat.html', copy)));
+          }
           return res;
         })
         .catch(() => caches.match('./LaRutadelTannat.html'))
@@ -56,7 +59,7 @@ self.addEventListener('fetch', (event) => {
       caches.match(req).then((cached) => {
         const fetchPromise = fetch(req)
           .then((res) => {
-            if (res.ok) caches.open(CACHE_VERSION).then((cache) => cache.put(req, res.clone()));
+            if (res.ok) { const copy = res.clone(); caches.open(CACHE_VERSION).then((cache) => cache.put(req, copy)); }
             return res;
           })
           .catch(() => cached);

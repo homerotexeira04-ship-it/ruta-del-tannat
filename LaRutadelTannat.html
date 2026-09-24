@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" class="scroll-smooth"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <!-- SEO Primary Meta Tags -->
@@ -233,6 +233,8 @@
     @media (prefers-reduced-motion: no-preference) {
       html { scroll-behavior: smooth; }
     }
+    /* Encabezado fijo: las anclas y el foco por teclado dejan libre su alto (--hdr-h lo escribe initCopaLoader) */
+    html { scroll-padding-top: var(--hdr-h, 6rem); }
     .glass-nav {
       background: rgba(29, 6, 13, 0.88);
       backdrop-filter: blur(12px);
@@ -347,6 +349,7 @@
     .modal-overlay.modal-open { opacity: 1; }
     .modal-card { transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1), transform 0.28s cubic-bezier(0.16, 1, 0.3, 1); opacity: 0; transform: scale(0.94) translateY(14px); }
     .modal-overlay.modal-open .modal-card { opacity: 1; transform: scale(1) translateY(0); }
+    .modal-card:focus { outline: none; } /* el foco entra a la tarjeta al abrir (showModal); no es un control */
 
     /* Galería — muro fotográfico con desplazamiento vertical automático */
     .gallery-columns { display: flex; gap: 1rem; }
@@ -383,6 +386,7 @@
 
     @media (prefers-reduced-motion: reduce) {
       .gallery-track { animation: none !important; transform: none !important; }
+      .animate-pulse { animation: none; }
     }
 
     /* Aparición suave de secciones/tarjetas al hacer scroll (aplicada vía JS, ver initScrollReveal) */
@@ -482,6 +486,8 @@
     /* Pantallas de poco alto (celular apaisado, teléfonos chicos): encabezado y barra de reservas más bajos para dejar lugar al contenido. */
     @media (max-height: 600px) and (max-width: 639px) { #mainHeader .hdr-row { height: 4.5rem; } #mainHeader .hdr-logo { height: 3.75rem; } }
     @media (max-height: 420px) { #mainHeader .hdr-row { height: 3.75rem; } #mainHeader .hdr-logo { height: 3.25rem; } }
+    /* Menú móvil abierto: es más alto que la pantalla (el encabezado es fixed y no scrollea), así que scrollea el propio menú */
+    #mobileMenu { max-height: calc(100vh - 7rem); max-height: calc(100dvh - 7rem); overflow-y: auto; overscroll-behavior: contain; }
     @media (max-width: 359px) { div.mbar { padding: .5rem 5.5rem .5rem .75rem; } div.mbar .price-val { font-size: .7rem; white-space: nowrap; } div.mbar button { padding-inline: .5rem; } }
 
     /* La Copa de Tannat (ver copa-tannat-render.js / copa-tannat-ui.js).
@@ -490,7 +496,7 @@
     .cup-section { --cup-hdr: 7rem; --cup-bot: 4.5rem; --cup-pad: .75rem;
       --cup-h: calc(100vh - var(--cup-hdr) - var(--cup-bot) - var(--cup-pad) * 2);
       display: flex; flex-direction: column; justify-content: center; min-height: calc(100vh - var(--cup-hdr));
-      padding: var(--cup-pad) 0 var(--cup-bot); scroll-margin-top: var(--cup-hdr);
+      padding: var(--cup-pad) 0 var(--cup-bot);
       background: radial-gradient(90% 60% at 50% 0%, #4A1525 0%, #2E0B16 45%, #1D060D 100%); }
     @supports (height: 100svh) { .cup-section { --cup-h: calc(100svh - var(--cup-hdr) - var(--cup-bot) - var(--cup-pad) * 2); min-height: calc(100svh - var(--cup-hdr)); } }
     .cup-wrap { width: 100%; max-width: 80rem; margin-inline: auto; padding-inline: 1rem; }
@@ -748,7 +754,7 @@
         <div class="flex items-center justify-between h-10">
 
           <!-- Weather Widget: clima real de Salto vía Open-Meteo (sin API key) -->
-          <div class="weather-widget flex items-center gap-2 text-xs text-gray-300" title="Clima actual en Salto, Uruguay">
+          <div class="weather-widget flex items-center gap-2 text-xs text-gray-300" title="Clima actual en Salto, Uruguay" data-i18n-title="a11y.weather">
             <svg class="w-4 h-4 text-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path stroke-linecap="round" d="M12 3v2M12 19v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M3 12h2M19 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
             <span id="weatherTemp" class="font-bold text-gold">--°C</span>
             <span id="weatherCond" class="font-light">Salto</span>
@@ -757,14 +763,14 @@
           <!-- Currency + Language -->
           <div class="flex items-center gap-3">
             <div class="flex items-center bg-black/40 rounded-full p-1 border border-white/10 text-xs">
-              <button onclick="setCurrency(&#39;USD&#39;)" id="btnCurUSD" class="px-2.5 py-1 rounded-full font-semibold transition-all bg-gold text-tannat-900 shadow-sm" aria-label="Ver precios en Dólares">USD</button>
-              <button onclick="setCurrency(&#39;UYU&#39;)" id="btnCurUYU" class="px-2.5 py-1 rounded-full font-semibold text-gray-300 hover:text-white transition-all" aria-label="Ver precios en Pesos Uruguayos">UYU</button>
+              <button onclick="setCurrency(&#39;USD&#39;)" id="btnCurUSD" class="px-2.5 py-1 rounded-full font-semibold transition-all bg-gold text-tannat-900 shadow-sm" aria-pressed="true" aria-label="Ver precios en Dólares" data-i18n-aria="a11y.curUSD">USD</button>
+              <button onclick="setCurrency(&#39;UYU&#39;)" id="btnCurUYU" class="px-2.5 py-1 rounded-full font-semibold text-gray-300 hover:text-white transition-all" aria-pressed="false" aria-label="Ver precios en Pesos Uruguayos" data-i18n-aria="a11y.curUYU">UYU</button>
             </div>
             <div class="w-px h-4 bg-white/10"></div>
             <div class="flex items-center bg-black/40 rounded-full p-1 border border-white/10 text-xs">
-              <button onclick="setLanguage(&#39;es&#39;)" id="btnLangES" class="px-2.5 py-1 rounded-full font-semibold transition-all bg-gold text-tannat-900 shadow-sm" aria-label="Idioma Español">ES</button>
-              <button onclick="setLanguage(&#39;pt&#39;)" id="btnLangPT" class="px-2.5 py-1 rounded-full font-semibold text-gray-300 hover:text-white transition-all" aria-label="Idioma Português">PT</button>
-              <button onclick="setLanguage(&#39;en&#39;)" id="btnLangEN" class="px-2.5 py-1 rounded-full font-semibold text-gray-300 hover:text-white transition-all" aria-label="English Language">EN</button>
+              <button onclick="setLanguage(&#39;es&#39;)" id="btnLangES" class="px-2.5 py-1 rounded-full font-semibold transition-all bg-gold text-tannat-900 shadow-sm" aria-pressed="true" aria-label="Idioma Español">ES</button>
+              <button onclick="setLanguage(&#39;pt&#39;)" id="btnLangPT" class="px-2.5 py-1 rounded-full font-semibold text-gray-300 hover:text-white transition-all" aria-pressed="false" aria-label="Idioma Português">PT</button>
+              <button onclick="setLanguage(&#39;en&#39;)" id="btnLangEN" class="px-2.5 py-1 rounded-full font-semibold text-gray-300 hover:text-white transition-all" aria-pressed="false" aria-label="English Language">EN</button>
             </div>
           </div>
 
@@ -777,14 +783,14 @@
       <div class="flex items-center justify-between gap-6 h-24 sm:h-28 hdr-row">
 
         <!-- Brand Identity -->
-        <a href="#hero" class="flex items-center gap-3 flex-shrink-0 group focus:outline-none focus:ring-2 focus:ring-gold rounded-lg p-1" aria-label="Inicio La Ruta del Tannat">
+        <a href="#hero" class="flex items-center gap-3 flex-shrink-0 group focus:outline-none focus:ring-2 focus:ring-gold rounded-lg p-1" aria-label="Inicio La Ruta del Tannat" data-i18n-aria="a11y.home">
           <img src="./LaRutadelTannat_files/logo-ruta-del-tannat-450.webp" width="450" height="300" alt="La Ruta del Tannat · Salto, Uruguay" class="h-20 sm:h-24 w-auto flex-shrink-0 hdr-logo">
           <div class="hidden sm:block w-px h-10 bg-white/15 flex-shrink-0"></div>
           <img src="./LaRutadelTannat_files/logo-enoturismo-uruguay.webp" width="684" height="219" alt="Enoturismo Uruguay" class="hidden sm:block sm:h-9 w-auto flex-shrink-0">
         </a>
 
         <!-- Desktop Navigation -->
-        <nav class="hidden xl:flex items-center gap-7" aria-label="Navegación principal">
+        <nav class="hidden xl:flex items-center gap-7" aria-label="Navegación principal" data-i18n-aria="a11y.nav">
           <a href="#historia" class="text-sm font-medium italic text-gray-200 hover:text-gold transition-colors" data-i18n="nav.history">Historia</a>
           <a href="#estaciones" class="text-sm font-medium italic text-gray-200 hover:text-gold transition-colors" data-i18n="nav.stations">Estaciones</a>
           <a href="#temporadas" class="text-sm font-medium italic text-gray-200 hover:text-gold transition-colors" data-i18n="nav.seasons">¿Cuándo viajar?</a>
@@ -796,20 +802,20 @@
         </nav>
 
         <!-- Primary CTA Button -->
-        <button onclick="openBookingModal(&#39;General&#39;)" class="hidden xl:inline-flex items-center gap-2 bg-gradient-to-r from-gold to-gold-dark text-tannat-900 font-semibold text-sm px-5 py-2.5 rounded-full shadow-lg hover:shadow-gold/20 hover:scale-105 active:scale-95 transition-all focus:outline-none focus:ring-2 focus:ring-gold" aria-label="Reservar circuito enoturístico">
+        <button onclick="openBookingModal(&#39;General&#39;)" class="hidden xl:inline-flex items-center gap-2 bg-gradient-to-r from-gold to-gold-dark text-tannat-900 font-semibold text-sm px-5 py-2.5 rounded-full shadow-lg hover:shadow-gold/20 hover:scale-105 active:scale-95 transition-all focus:outline-none focus:ring-2 focus:ring-gold">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
           <span data-i18n="btn.bookNow">Reservar Visita</span>
         </button>
 
         <!-- Mobile: clima compacto siempre visible + botón de menú -->
         <div class="flex items-center gap-3 xl:hidden">
-          <div class="weather-widget flex items-center gap-1.5 text-xs text-gray-200 bg-white/5 px-2.5 py-1.5 rounded-full border border-white/10" title="Clima actual en Salto, Uruguay">
+          <div class="weather-widget flex items-center gap-1.5 text-xs text-gray-200 bg-white/5 px-2.5 py-1.5 rounded-full border border-white/10" title="Clima actual en Salto, Uruguay" data-i18n-title="a11y.weather">
             <svg class="w-4 h-4 text-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path stroke-linecap="round" d="M12 3v2M12 19v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M3 12h2M19 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
             <span id="weatherTempBar" class="font-bold text-gold">--°C</span>
           </div>
 
           <!-- Mobile Menu Trigger -->
-          <button id="mobileMenuBtn" class="text-white p-2.5 rounded-lg hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-gold" aria-label="Abrir menú de navegación" aria-expanded="false">
+          <button id="mobileMenuBtn" class="text-white p-2.5 rounded-lg hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-gold" aria-label="Abrir menú de navegación" data-i18n-aria="a11y.menu" aria-expanded="false">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
           </button>
         </div>
@@ -845,14 +851,14 @@
       <div class="pt-4 flex flex-wrap items-center justify-between gap-3 border-t border-white/10">
         <!-- Currency (Mobile) -->
         <div class="flex items-center bg-black/40 rounded-full p-1 border border-white/10 text-xs">
-          <button onclick="setCurrency(&#39;USD&#39;)" class="px-3 py-1 rounded-full font-semibold transition-all" id="btnCurUSDMob">USD</button>
-          <button onclick="setCurrency(&#39;UYU&#39;)" class="px-3 py-1 rounded-full font-semibold transition-all" id="btnCurUYUMob">UYU</button>
+          <button onclick="setCurrency(&#39;USD&#39;)" class="px-3 py-1 rounded-full font-semibold transition-all bg-gold text-tannat-900" aria-pressed="true" id="btnCurUSDMob">USD</button>
+          <button onclick="setCurrency(&#39;UYU&#39;)" class="px-3 py-1 rounded-full font-semibold transition-all text-gray-300" aria-pressed="false" id="btnCurUYUMob">UYU</button>
         </div>
         <!-- Lang (Mobile) -->
         <div class="flex items-center bg-black/40 rounded-full p-1 border border-white/10 text-xs">
-          <button onclick="setLanguage(&#39;es&#39;)" class="px-2.5 py-1 rounded-full font-semibold" id="btnLangESMob">ES</button>
-          <button onclick="setLanguage(&#39;pt&#39;)" class="px-2.5 py-1 rounded-full font-semibold text-gray-300" id="btnLangPTMob">PT</button>
-          <button onclick="setLanguage(&#39;en&#39;)" class="px-2.5 py-1 rounded-full font-semibold text-gray-300" id="btnLangENMob">EN</button>
+          <button onclick="setLanguage(&#39;es&#39;)" class="px-2.5 py-1 rounded-full font-semibold transition-all bg-gold text-tannat-900" aria-pressed="true" id="btnLangESMob">ES</button>
+          <button onclick="setLanguage(&#39;pt&#39;)" class="px-2.5 py-1 rounded-full font-semibold text-gray-300" aria-pressed="false" id="btnLangPTMob">PT</button>
+          <button onclick="setLanguage(&#39;en&#39;)" class="px-2.5 py-1 rounded-full font-semibold text-gray-300" aria-pressed="false" id="btnLangENMob">EN</button>
         </div>
       </div>
       
@@ -870,7 +876,7 @@
         <img src="./LaRutadelTannat_files/hero-vinedo-uruguay.webp" width="1920" height="1440" srcset="./LaRutadelTannat_files/hero-vinedo-uruguay-960.webp 960w, ./LaRutadelTannat_files/hero-vinedo-uruguay.webp 1920w" sizes="100vw" alt="Viñedo real en Canelones, Uruguay, con luz dorada de otoño entre las hileras" class="w-full h-full object-cover object-center transform scale-105 transition-transform duration-1000" loading="eager" fetchpriority="high">
         <div class="absolute inset-0 bg-gradient-to-r from-tannat-900/95 via-tannat-900/80 to-transparent"></div>
         <div class="absolute inset-0 bg-gradient-to-t from-crema via-transparent to-black/60"></div>
-        <a href="https://commons.wikimedia.org/wiki/File:Vi%C3%B1a_en_Oto%C3%B1o.jpg" target="_blank" rel="noopener noreferrer" class="absolute bottom-2 right-3 z-10 text-[11px] text-white/70 hover:text-white transition-colors after:content-[''] after:absolute after:-inset-x-2 after:-inset-y-3.5">Foto: Viña Varela Zarranz (CC BY-SA)</a>
+        <a href="https://commons.wikimedia.org/wiki/File:Vi%C3%B1a_en_Oto%C3%B1o.jpg" target="_blank" rel="noopener noreferrer" class="absolute bottom-2 right-3 z-10 text-[11px] text-white/70 hover:text-white transition-colors after:content-[''] after:absolute after:-inset-x-2 after:-inset-y-3.5" data-i18n="hero.photoCredit">Foto: Viña Varela Zarranz (CC BY-SA)</a>
       </div>
 
       <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-14">
@@ -1178,7 +1184,7 @@
           </header>
 
           <div class="cup-stagewrap">
-            <div class="cup-stage" id="cupStage" role="group" aria-label="Copa de Tannat interactiva: arrastrá para girarla y liberar sus aromas">
+            <div class="cup-stage" id="cupStage" role="group" aria-label="Copa de Tannat interactiva: arrastrá para girarla y liberar sus aromas" data-i18n-aria="cup.stageLabel">
               <div class="cup-tilt">
                 <div class="cup-glow" aria-hidden="true"></div>
                 <canvas id="cupCanvas" class="cup-canvas" aria-hidden="true"></canvas>
@@ -1194,7 +1200,7 @@
           </div>
 
           <div class="cup-panel" id="cupPanel" data-tab="aromas">
-            <div class="cup-tabs" role="tablist" aria-label="Secciones de la copa">
+            <div class="cup-tabs" role="tablist" aria-label="Secciones de la copa" data-i18n-aria="a11y.copaTabs">
               <button type="button" role="tab" class="cup-tab" data-tab="aromas" aria-selected="true" data-i18n="cup.tab.aromas">Aromas</button>
               <button type="button" role="tab" class="cup-tab" data-tab="profile" aria-selected="false" data-i18n="cup.tab.profile">Tu Tannat</button>
               <button type="button" role="tab" class="cup-tab" data-tab="pair" aria-selected="false" data-i18n="cup.tab.pair">Maridaje</button>
@@ -1286,17 +1292,17 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           
           <!-- Station 1: Bodega Harriague -->
-          <div role="button" tabindex="0" onclick="openStationModal(1)" onkeydown="if(event.key===&#39;Enter&#39;||event.key===&#39; &#39;){event.preventDefault();openStationModal(1);}" class="group bg-crema rounded-2xl overflow-hidden border border-tannat-100 shadow-md hover:shadow-2xl hover:-translate-y-1.5 transition-all flex flex-col focus:outline-none focus:ring-2 focus:ring-gold" aria-label="Ver detalles de Estación 01: Espacio Cultural Bodega Harriague">
+          <div role="button" tabindex="0" onclick="openStationModal(1)" onkeydown="if(event.key===&#39;Enter&#39;||event.key===&#39; &#39;){event.preventDefault();openStationModal(1);}" class="group bg-crema rounded-2xl overflow-hidden border border-tannat-100 shadow-md hover:shadow-2xl hover:-translate-y-1.5 transition-all flex flex-col focus:outline-none focus:ring-2 focus:ring-gold" aria-labelledby="stc1-b stc1-t">
             <div class="aspect-[4/3] relative overflow-hidden bg-tannat-900">
               <img src="./LaRutadelTannat_files/8254D59E-F679-48CA-94EB-EC6CFB40EC77.webp" width="700" height="525" alt="Espacio Cultural Bodega Harriague" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" loading="lazy">
-              <div class="absolute top-3 left-3 bg-tannat text-gold-light text-xs font-bold px-3 py-1 rounded-full shadow-md" data-i18n="st1.badge">
+              <div id="stc1-b" class="absolute top-3 left-3 bg-tannat text-gold-light text-xs font-bold px-3 py-1 rounded-full shadow-md" data-i18n="st1.badge">
                 Estación 01
               </div>
             </div>
             <div class="p-6 flex-1 flex flex-col justify-between">
               <div>
                 <span class="text-xs font-bold text-gold-dark tracking-wider uppercase block mb-1" data-i18n="st1.tag">Punto Cero del Tannat</span>
-                <h3 class="font-serif text-xl font-bold text-tannat-dark mb-2 group-hover:text-gold-dark transition-colors" data-i18n="st1.title">Espacio Cultural Bodega Harriague</h3>
+                <h3 id="stc1-t" class="font-serif text-xl font-bold text-tannat-dark mb-2 group-hover:text-gold-dark transition-colors" data-i18n="st1.title">Espacio Cultural Bodega Harriague</h3>
                 <p class="text-base text-terroir line-clamp-3 mb-4" data-i18n="st1.desc">
                   Recinto arqueológico e industrial. Cuna donde se implantaron los primeros cuadros de Tannat en 1874. Proyecto patrimonial U-riharri.
                 </p>
@@ -1311,17 +1317,17 @@
           </div>
 
           <!-- Station 2: Salto Chico -->
-          <div role="button" tabindex="0" onclick="openStationModal(2)" onkeydown="if(event.key===&#39;Enter&#39;||event.key===&#39; &#39;){event.preventDefault();openStationModal(2);}" class="group bg-crema rounded-2xl overflow-hidden border border-tannat-100 shadow-md hover:shadow-2xl hover:-translate-y-1.5 transition-all flex flex-col focus:outline-none focus:ring-2 focus:ring-gold" aria-label="Ver detalles de Estación 02: Bodega Salto Chico">
+          <div role="button" tabindex="0" onclick="openStationModal(2)" onkeydown="if(event.key===&#39;Enter&#39;||event.key===&#39; &#39;){event.preventDefault();openStationModal(2);}" class="group bg-crema rounded-2xl overflow-hidden border border-tannat-100 shadow-md hover:shadow-2xl hover:-translate-y-1.5 transition-all flex flex-col focus:outline-none focus:ring-2 focus:ring-gold" aria-labelledby="stc2-b stc2-t">
             <div class="aspect-[4/3] relative overflow-hidden bg-tannat-900">
               <img src="./LaRutadelTannat_files/salto-chico-cartel-inavi.webp" width="498" height="280" alt="Cartel de entrada de Viñas y Bodega del Salto Chico" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" loading="lazy">
-              <div class="absolute top-3 left-3 bg-tannat text-gold-light text-xs font-bold px-3 py-1 rounded-full shadow-md" data-i18n="st2.badge">
+              <div id="stc2-b" class="absolute top-3 left-3 bg-tannat text-gold-light text-xs font-bold px-3 py-1 rounded-full shadow-md" data-i18n="st2.badge">
                 Estación 02
               </div>
             </div>
             <div class="p-6 flex-1 flex flex-col justify-between">
               <div>
                 <span class="text-xs font-bold text-gold-dark tracking-wider uppercase block mb-1" data-i18n="st2.tag">Ribera del Río Uruguay</span>
-                <h3 class="font-serif text-xl font-bold text-tannat-dark mb-2 group-hover:text-gold-dark transition-colors" data-i18n="st2.title">Bodega Salto Chico</h3>
+                <h3 id="stc2-t" class="font-serif text-xl font-bold text-tannat-dark mb-2 group-hover:text-gold-dark transition-colors" data-i18n="st2.title">Bodega Salto Chico</h3>
                 <p class="text-base text-terroir line-clamp-3 mb-4" data-i18n="st2.desc">
                   Viñedos sobre cascadas basálticas. 6 hectáreas de cepas europeas y moderna tecnología de vinificación artesanal.
                 </p>
@@ -1336,17 +1342,17 @@
           </div>
 
           <!-- Station 3: Bertolini & Broglio -->
-          <div role="button" tabindex="0" onclick="openStationModal(3)" onkeydown="if(event.key===&#39;Enter&#39;||event.key===&#39; &#39;){event.preventDefault();openStationModal(3);}" class="group bg-crema rounded-2xl overflow-hidden border border-tannat-100 shadow-md hover:shadow-2xl hover:-translate-y-1.5 transition-all flex flex-col focus:outline-none focus:ring-2 focus:ring-gold" aria-label="Ver detalles de Estación 03: Bodega Bertolini &amp; Broglio">
+          <div role="button" tabindex="0" onclick="openStationModal(3)" onkeydown="if(event.key===&#39;Enter&#39;||event.key===&#39; &#39;){event.preventDefault();openStationModal(3);}" class="group bg-crema rounded-2xl overflow-hidden border border-tannat-100 shadow-md hover:shadow-2xl hover:-translate-y-1.5 transition-all flex flex-col focus:outline-none focus:ring-2 focus:ring-gold" aria-labelledby="stc3-b stc3-t">
             <div class="aspect-[4/3] relative overflow-hidden bg-tannat-900">
               <img src="./LaRutadelTannat_files/bertolini-broglio-inavi.jpg" width="960" height="720" alt="Fachada real de Bodega Bertolini &amp; Broglio, Ruta 3, Salto" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" loading="lazy">
-              <div class="absolute top-3 left-3 bg-tannat text-gold-light text-xs font-bold px-3 py-1 rounded-full shadow-md" data-i18n="st3.badge">
+              <div id="stc3-b" class="absolute top-3 left-3 bg-tannat text-gold-light text-xs font-bold px-3 py-1 rounded-full shadow-md" data-i18n="st3.badge">
                 Estación 03
               </div>
             </div>
             <div class="p-6 flex-1 flex flex-col justify-between">
               <div>
                 <span class="text-xs font-bold text-gold-dark tracking-wider uppercase block mb-1" data-i18n="st3.tag">Bodega Boutique &amp; Terroir</span>
-                <h3 class="font-serif text-xl font-bold text-tannat-dark mb-2 group-hover:text-gold-dark transition-colors" data-i18n="st3.title">Bodega Bertolini &amp; Broglio</h3>
+                <h3 id="stc3-t" class="font-serif text-xl font-bold text-tannat-dark mb-2 group-hover:text-gold-dark transition-colors" data-i18n="st3.title">Bodega Bertolini &amp; Broglio</h3>
                 <p class="text-base text-terroir line-clamp-3 mb-4" data-i18n="st3.desc">
                   19 hectáreas de viñedos conducidos en parrales. Pioneros en vinificación por gravedad y creadores del premiado Tannat Exotic.
                 </p>
@@ -1361,17 +1367,17 @@
           </div>
 
           <!-- Station 4: Mori Maglio Wines -->
-          <div role="button" tabindex="0" onclick="openStationModal(4)" onkeydown="if(event.key===&#39;Enter&#39;||event.key===&#39; &#39;){event.preventDefault();openStationModal(4);}" class="group bg-crema rounded-2xl overflow-hidden border border-tannat-100 shadow-md hover:shadow-2xl hover:-translate-y-1.5 transition-all flex flex-col focus:outline-none focus:ring-2 focus:ring-gold" aria-label="Ver detalles de Estación 04: Mori Maglio Wines">
+          <div role="button" tabindex="0" onclick="openStationModal(4)" onkeydown="if(event.key===&#39;Enter&#39;||event.key===&#39; &#39;){event.preventDefault();openStationModal(4);}" class="group bg-crema rounded-2xl overflow-hidden border border-tannat-100 shadow-md hover:shadow-2xl hover:-translate-y-1.5 transition-all flex flex-col focus:outline-none focus:ring-2 focus:ring-gold" aria-labelledby="stc4-b stc4-t">
             <div class="aspect-[4/3] relative overflow-hidden bg-tannat-900">
               <img src="./LaRutadelTannat_files/138db8c89a626f5efc0f940f343ad390bf0ec8ca.jpg" width="1024" height="768" alt="Mori Maglio Wines" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" loading="lazy">
-              <div class="absolute top-3 left-3 bg-tannat text-gold-light text-xs font-bold px-3 py-1 rounded-full shadow-md" data-i18n="st4.badge">
+              <div id="stc4-b" class="absolute top-3 left-3 bg-tannat text-gold-light text-xs font-bold px-3 py-1 rounded-full shadow-md" data-i18n="st4.badge">
                 Estación 04
               </div>
             </div>
             <div class="p-6 flex-1 flex flex-col justify-between">
               <div>
                 <span class="text-xs font-bold text-gold-dark tracking-wider uppercase block mb-1" data-i18n="st4.tag">Viñedo El Asombrado</span>
-                <h3 class="font-serif text-xl font-bold text-tannat-dark mb-2 group-hover:text-gold-dark transition-colors" data-i18n="st4.title">Mori Maglio Wines</h3>
+                <h3 id="stc4-t" class="font-serif text-xl font-bold text-tannat-dark mb-2 group-hover:text-gold-dark transition-colors" data-i18n="st4.title">Mori Maglio Wines</h3>
                 <p class="text-base text-terroir line-clamp-3 mb-4" data-i18n="st4.desc">
                   Tradición vitivinícola viva en Parada Daymán. Vinos de autor con identidad territorial y maridajes gourmet de cordero y cítricos salteños.
                 </p>
@@ -2299,7 +2305,7 @@
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
 
-          <div class="relative p-6 bg-white rounded-2xl border border-tannat-100 text-center cursor-pointer transition-shadow hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-gold" tabindex="0" onmouseenter="toggleInfoCard(this,true)" onmouseleave="toggleInfoCard(this,false)" onclick="toggleInfoCard(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleInfoCard(this);}">
+          <div class="relative p-6 bg-white rounded-2xl border border-tannat-100 text-center cursor-pointer transition-shadow hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-gold" tabindex="0" role="button" aria-expanded="false" onmouseenter="toggleInfoCard(this,true,true)" onmouseleave="toggleInfoCard(this,false,true)" onclick="toggleInfoCard(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleInfoCard(this);}">
             <div class="w-12 h-12 rounded-full bg-tannat/10 text-tannat flex items-center justify-center mx-auto mb-4">
               <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064"></path></svg>
             </div>
@@ -2318,7 +2324,7 @@
             </span>
           </div>
 
-          <div class="relative p-6 bg-white rounded-2xl border border-tannat-100 text-center cursor-pointer transition-shadow hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-gold" tabindex="0" onmouseenter="toggleInfoCard(this,true)" onmouseleave="toggleInfoCard(this,false)" onclick="toggleInfoCard(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleInfoCard(this);}">
+          <div class="relative p-6 bg-white rounded-2xl border border-tannat-100 text-center cursor-pointer transition-shadow hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-gold" tabindex="0" role="button" aria-expanded="false" onmouseenter="toggleInfoCard(this,true,true)" onmouseleave="toggleInfoCard(this,false,true)" onclick="toggleInfoCard(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleInfoCard(this);}">
             <div class="w-12 h-12 rounded-full bg-tannat/10 text-tannat flex items-center justify-center mx-auto mb-4">
               <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
             </div>
@@ -2337,7 +2343,7 @@
             </span>
           </div>
 
-          <div class="relative p-6 bg-white rounded-2xl border border-tannat-100 text-center cursor-pointer transition-shadow hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-gold" tabindex="0" onmouseenter="toggleInfoCard(this,true)" onmouseleave="toggleInfoCard(this,false)" onclick="toggleInfoCard(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleInfoCard(this);}">
+          <div class="relative p-6 bg-white rounded-2xl border border-tannat-100 text-center cursor-pointer transition-shadow hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-gold" tabindex="0" role="button" aria-expanded="false" onmouseenter="toggleInfoCard(this,true,true)" onmouseleave="toggleInfoCard(this,false,true)" onclick="toggleInfoCard(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleInfoCard(this);}">
             <div class="w-12 h-12 rounded-full bg-tannat/10 text-tannat flex items-center justify-center mx-auto mb-4">
               <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
             </div>
@@ -2442,37 +2448,37 @@
           </p>
         </div>
 
-        <div class="gallery-columns" role="group" aria-label="Galería de fotografías del circuito, con desplazamiento automático">
+        <div class="gallery-columns" role="group" aria-label="Galería de fotografías del circuito, con desplazamiento automático" data-i18n-aria="a11y.gallery">
 
           <!-- Columna 1 (sube) -->
           <div class="gallery-col gallery-col-1">
             <div class="gallery-track scroll-up" style="animation-duration: 46s;">
               <div class="gallery-item" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGalleryLightbox(this.querySelector('img'));}">
-                <img src="./LaRutadelTannat_files/hero-vinedo-uruguay.webp" width="1920" height="1440" alt="Viñedo uruguayo con luz dorada" loading="lazy">
+                <img src="./LaRutadelTannat_files/hero-vinedo-uruguay.webp" width="1920" height="1440" alt="" loading="lazy">
                 <div class="gallery-caption"><span data-i18n="gallery.cap1">Viñedo uruguayo al amanecer</span></div>
               </div>
               <div class="gallery-item" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGalleryLightbox(this.querySelector('img'));}">
-                <img src="./LaRutadelTannat_files/bertolini-broglio-inavi.jpg" width="960" height="720" alt="Fachada de Bodega Bertolini y Broglio" loading="lazy">
+                <img src="./LaRutadelTannat_files/bertolini-broglio-inavi.jpg" width="960" height="720" alt="" loading="lazy">
                 <div class="gallery-caption"><span data-i18n="gallery.cap4">Fachada de Bertolini &amp; Broglio</span></div>
               </div>
               <div class="gallery-item" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGalleryLightbox(this.querySelector('img'));}">
-                <img src="./LaRutadelTannat_files/semana-harriague-lanz-ppal4-jpg.webp" width="645" height="350" alt="Fotografía histórica del establecimiento La Caballada" loading="lazy">
+                <img src="./LaRutadelTannat_files/semana-harriague-lanz-ppal4-jpg.webp" width="645" height="350" alt="" loading="lazy">
                 <div class="gallery-caption"><span data-i18n="gallery.cap7">Archivo histórico · La Caballada</span></div>
               </div>
               <div class="gallery-item" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGalleryLightbox(this.querySelector('img'));}">
-                <img src="./LaRutadelTannat_files/pascual-harriague-retrato.webp" width="700" height="700" alt="Retrato histórico de Pascual Harriague, pionero del Tannat en Uruguay" loading="lazy">
+                <img src="./LaRutadelTannat_files/pascual-harriague-retrato.webp" width="700" height="700" alt="" loading="lazy">
                 <div class="gallery-caption"><span data-i18n="gallery.cap10">Pascual Harriague · pionero del Tannat</span></div>
               </div>
               <div class="gallery-item" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGalleryLightbox(this.querySelector('img'));}">
-                <img src="./LaRutadelTannat_files/termas-arapey-piscina.webp" width="1000" height="1000" alt="Piscinas termales de Termas del Arapey con visitantes" loading="lazy">
+                <img src="./LaRutadelTannat_files/termas-arapey-piscina.webp" width="1000" height="1000" alt="" loading="lazy">
                 <div class="gallery-caption"><span data-i18n="gallery.cap11">Piscinas termales del Arapey</span></div>
               </div>
               <div class="gallery-item" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGalleryLightbox(this.querySelector('img'));}">
-                <img src="./LaRutadelTannat_files/cata-vinos-bodega-harriague.webp" width="1200" height="1600" alt="Copa de vino Vinos del Uruguay en una cata en Bodega Harriague" loading="lazy">
+                <img src="./LaRutadelTannat_files/cata-vinos-bodega-harriague.webp" width="1200" height="1600" alt="" loading="lazy">
                 <div class="gallery-caption"><span data-i18n="gallery.cap16">Cata de vinos en Bodega Harriague</span></div>
               </div>
               <div class="gallery-item" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGalleryLightbox(this.querySelector('img'));}">
-                <img src="./LaRutadelTannat_files/placa-homenaje-harriague.webp" width="1600" height="1223" alt="Placa conmemorativa a Don Pascual Harriague en el Sitio Histórico Bodega de Harriague, Salto" loading="lazy">
+                <img src="./LaRutadelTannat_files/placa-homenaje-harriague.webp" width="1600" height="1223" alt="" loading="lazy">
                 <div class="gallery-caption"><span data-i18n="gallery.cap18">Placa homenaje a Pascual Harriague en su bodega</span></div>
               </div>
               <!-- Duplicado para loop continuo -->
@@ -2511,31 +2517,31 @@
           <div class="gallery-col gallery-col-2">
             <div class="gallery-track scroll-down" style="animation-duration: 46s;">
               <div class="gallery-item" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGalleryLightbox(this.querySelector('img'));}">
-                <img src="./LaRutadelTannat_files/8254D59E-F679-48CA-94EB-EC6CFB40EC77.webp" width="700" height="525" alt="Cartel de entrada de Bodega de Harriague" loading="lazy">
+                <img src="./LaRutadelTannat_files/8254D59E-F679-48CA-94EB-EC6CFB40EC77.webp" width="700" height="525" alt="" loading="lazy">
                 <div class="gallery-caption"><span data-i18n="gallery.cap2">Bodega Harriague · Punto Cero del Tannat</span></div>
               </div>
               <div class="gallery-item" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGalleryLightbox(this.querySelector('img'));}">
-                <img src="./LaRutadelTannat_files/138db8c89a626f5efc0f940f343ad390bf0ec8ca.jpg" width="1024" height="768" alt="Viñedo El Asombrado de Mori Maglio Wines" loading="lazy">
+                <img src="./LaRutadelTannat_files/138db8c89a626f5efc0f940f343ad390bf0ec8ca.jpg" width="1024" height="768" alt="" loading="lazy">
                 <div class="gallery-caption"><span data-i18n="gallery.cap5">Viñedo El Asombrado · Mori Maglio</span></div>
               </div>
               <div class="gallery-item" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGalleryLightbox(this.querySelector('img'));}">
-                <img src="./LaRutadelTannat_files/termas-dayman-aerea.webp" width="1024" height="576" alt="Vista aérea de Termas del Daymán, Salto" loading="lazy">
+                <img src="./LaRutadelTannat_files/termas-dayman-aerea.webp" width="1024" height="576" alt="" loading="lazy">
                 <div class="gallery-caption"><span data-i18n="gallery.cap8">Vista aérea de Termas del Daymán</span></div>
               </div>
               <div class="gallery-item" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGalleryLightbox(this.querySelector('img'));}">
-                <img src="./LaRutadelTannat_files/salto-costanera-puerto.webp" width="1000" height="1000" alt="Vista de la ciudad de Salto desde el puerto sobre el río Uruguay" loading="lazy">
+                <img src="./LaRutadelTannat_files/salto-costanera-puerto.webp" width="1000" height="1000" alt="" loading="lazy">
                 <div class="gallery-caption"><span data-i18n="gallery.cap12">Salto vista desde el puerto</span></div>
               </div>
               <div class="gallery-item" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGalleryLightbox(this.querySelector('img'));}">
-                <img src="./LaRutadelTannat_files/vendimia-fiesta-1985.webp" width="1000" height="1000" alt="Fiesta de la Vendimia, Uruguay, 1985" loading="lazy">
+                <img src="./LaRutadelTannat_files/vendimia-fiesta-1985.webp" width="1000" height="1000" alt="" loading="lazy">
                 <div class="gallery-caption"><span data-i18n="gallery.cap14">Fiesta de la Vendimia, 1985</span></div>
               </div>
               <div class="gallery-item" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGalleryLightbox(this.querySelector('img'));}">
-                <img src="./LaRutadelTannat_files/visita-grupal-fogon-cavas.webp" width="1600" height="1200" alt="Grupo de visitantes junto a un fogón nocturno en las cavas históricas de Bodega Harriague" loading="lazy">
+                <img src="./LaRutadelTannat_files/visita-grupal-fogon-cavas.webp" width="1600" height="1200" alt="" loading="lazy">
                 <div class="gallery-caption"><span data-i18n="gallery.cap17">Visita grupal con fogón en las cavas históricas</span></div>
               </div>
               <div class="gallery-item" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGalleryLightbox(this.querySelector('img'));}">
-                <img src="./LaRutadelTannat_files/productores-bertolini-broglio.webp" width="850" height="577" alt="Grupo de productores frente a la fachada de Bodega Bertolini &amp; Broglio" loading="lazy">
+                <img src="./LaRutadelTannat_files/productores-bertolini-broglio.webp" width="850" height="577" alt="" loading="lazy">
                 <div class="gallery-caption"><span data-i18n="gallery.cap19">Productores en Bodega Bertolini &amp; Broglio</span></div>
               </div>
               <!-- Duplicado para loop continuo -->
@@ -2574,23 +2580,23 @@
           <div class="gallery-col gallery-col-3">
             <div class="gallery-track scroll-up" style="animation-duration: 46s;">
               <div class="gallery-item" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGalleryLightbox(this.querySelector('img'));}">
-                <img src="./LaRutadelTannat_files/salto-chico-cartel-inavi.webp" width="498" height="280" alt="Cartel de entrada de Bodega Salto Chico" loading="lazy">
+                <img src="./LaRutadelTannat_files/salto-chico-cartel-inavi.webp" width="498" height="280" alt="" loading="lazy">
                 <div class="gallery-caption"><span data-i18n="gallery.cap3">Viñas y Bodega del Salto Chico</span></div>
               </div>
               <div class="gallery-item" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGalleryLightbox(this.querySelector('img'));}">
-                <img src="./LaRutadelTannat_files/galeria-brindis-cavas.webp" width="850" height="555" alt="Brindis con vino en las cavas históricas de Bodega Harriague" loading="lazy">
+                <img src="./LaRutadelTannat_files/galeria-brindis-cavas.webp" width="850" height="555" alt="" loading="lazy">
                 <div class="gallery-caption"><span data-i18n="gallery.cap6">Brindis en las cavas históricas</span></div>
               </div>
               <div class="gallery-item" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGalleryLightbox(this.querySelector('img'));}">
-                <img src="./LaRutadelTannat_files/termas-dayman.webp" width="720" height="563" alt="Piscinas termales circulares de Termas del Daymán" loading="lazy">
+                <img src="./LaRutadelTannat_files/termas-dayman.webp" width="720" height="563" alt="" loading="lazy">
                 <div class="gallery-caption"><span data-i18n="gallery.cap9">Piscinas termales del Daymán</span></div>
               </div>
               <div class="gallery-item" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGalleryLightbox(this.querySelector('img'));}">
-                <img src="./LaRutadelTannat_files/tannat-copa-vino.webp" width="1000" height="1000" alt="Copa de vino Tannat uruguayo junto a la botella" loading="lazy">
+                <img src="./LaRutadelTannat_files/tannat-copa-vino.webp" width="1000" height="1000" alt="" loading="lazy">
                 <div class="gallery-caption"><span data-i18n="gallery.cap13">Una copa de Tannat uruguayo</span></div>
               </div>
               <div class="gallery-item" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGalleryLightbox(this.querySelector('img'));}">
-                <img src="./LaRutadelTannat_files/harriague-ruinas-nocturna.webp" width="500" height="500" alt="Instalación lumínica nocturna en las ruinas de Bodega Harriague" loading="lazy">
+                <img src="./LaRutadelTannat_files/harriague-ruinas-nocturna.webp" width="500" height="500" alt="" loading="lazy">
                 <div class="gallery-caption"><span data-i18n="gallery.cap15">Noche de luces en las ruinas de Harriague</span></div>
               </div>
               <!-- Duplicado para loop continuo -->
@@ -2642,7 +2648,7 @@
         <!-- Interactive Map Visual -->
         <div class="bg-crema rounded-3xl p-6 sm:p-10 border border-tannat-100 shadow-xl">
           <div class="relative aspect-square sm:aspect-[16/9] w-full bg-[#EFECE6] rounded-2xl overflow-hidden border border-tannat-100">
-            <div id="leafletMap" class="absolute inset-0 w-full h-full" aria-label="Mapa interactivo real de La Ruta del Tannat en Salto, Uruguay">
+            <div id="leafletMap" class="absolute inset-0 w-full h-full" aria-label="Mapa interactivo real de La Ruta del Tannat en Salto, Uruguay" data-i18n-aria="a11y.map">
               <p class="w-full h-full flex items-center justify-center text-sm text-terroir px-6 text-center" data-i18n="map.loading">Cargando mapa interactivo…</p>
             </div>
           </div>
@@ -2982,7 +2988,7 @@
   <!-- ==================== FLOATING QUICK WIDGETS ==================== -->
   
   <!-- WhatsApp Floating Action Button -->
-  <a href="https://wa.me/59892614800?text=Hola!%20Deseo%20informaci%C3%B3n%20para%20realizar%20el%20circuito%20de%20La%20Ruta%20del%20Tannat%20en%20Salto." target="_blank" rel="noopener noreferrer" class="fixed bottom-6 right-6 z-40 bg-[#25D366] hover:bg-[#20ba59] text-white p-4 rounded-full shadow-2xl hover:scale-110 active:scale-95 transition-all flex items-center justify-center focus:outline-none focus:ring-4 focus:ring-green-400" aria-label="Contactar por WhatsApp al +598 92 614 800" id="btnFloatingWhatsApp">
+  <a href="https://wa.me/59892614800?text=Hola!%20Deseo%20informaci%C3%B3n%20para%20realizar%20el%20circuito%20de%20La%20Ruta%20del%20Tannat%20en%20Salto." target="_blank" rel="noopener noreferrer" class="fixed bottom-6 right-6 z-40 bg-[#25D366] hover:bg-[#20ba59] text-white p-4 rounded-full shadow-2xl hover:scale-110 active:scale-95 transition-all flex items-center justify-center focus:outline-none focus:ring-4 focus:ring-green-400" aria-label="Contactar por WhatsApp al +598 92 614 800" data-i18n-aria="a11y.whatsapp" id="btnFloatingWhatsApp">
     <svg class="w-7 h-7 fill-current" viewBox="0 0 24 24">
       <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"></path>
     </svg>
@@ -3004,7 +3010,7 @@
     <div class="modal-card bg-crema rounded-3xl max-w-2xl w-full border border-tannat-100 shadow-2xl relative my-8 overflow-hidden max-h-[92vh] overflow-y-auto" onclick="event.stopPropagation()">
 
       <!-- Close button -->
-      <button onclick="closeBookingModal()" class="absolute top-4 right-4 z-10 text-white bg-black/30 hover:bg-black/50 p-2 rounded-full backdrop-blur-sm transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white" aria-label="Cerrar modal de reserva">
+      <button onclick="closeBookingModal()" class="absolute top-4 right-4 z-10 text-white bg-black/30 hover:bg-black/50 p-2 rounded-full backdrop-blur-sm transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white" aria-label="Cerrar" data-i18n-aria="modal.close">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
       </button>
 
@@ -3105,9 +3111,9 @@
   </div>
 
   <!-- ==================== MODAL: DETALLES DE ESTACIÓN ==================== -->
-  <div id="stationModal" class="modal-overlay fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto" role="dialog" aria-modal="true">
+  <div id="stationModal" class="modal-overlay fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto" role="dialog" aria-modal="true" aria-labelledby="stationModalTitle">
     <div class="modal-card bg-crema rounded-3xl max-w-3xl w-full p-6 sm:p-8 border border-tannat-100 shadow-2xl relative my-8 max-h-[95vh] overflow-y-auto" onclick="event.stopPropagation()">
-      <button onclick="closeStationModal()" class="absolute top-5 right-5 z-10 text-gray-400 hover:text-tannat p-2 rounded-full bg-crema/80 hover:bg-tannat-50 transition-colors">
+      <button onclick="closeStationModal()" class="absolute top-5 right-5 z-10 text-gray-400 hover:text-tannat p-2 rounded-full bg-crema/80 hover:bg-tannat-50 transition-colors" aria-label="Cerrar" data-i18n-aria="modal.close">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
       </button>
 
@@ -3118,9 +3124,9 @@
   </div>
 
   <!-- ==================== MODAL: TÉRMINOS / PRIVACIDAD / ACCESIBILIDAD ==================== -->
-  <div id="legalModal" class="modal-overlay fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto" role="dialog" aria-modal="true" onclick="closeLegalModal()">
+  <div id="legalModal" class="modal-overlay fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto" role="dialog" aria-modal="true" aria-labelledby="legalModalTitle" onclick="closeLegalModal()">
     <div class="modal-card bg-crema rounded-3xl max-w-2xl w-full p-6 sm:p-8 border border-tannat-100 shadow-2xl relative my-8 max-h-[85vh] overflow-y-auto" onclick="event.stopPropagation()">
-      <button onclick="closeLegalModal()" class="absolute top-5 right-5 z-10 text-gray-400 hover:text-tannat p-2 rounded-full bg-crema/80 hover:bg-tannat-50 transition-colors">
+      <button onclick="closeLegalModal()" class="absolute top-5 right-5 z-10 text-gray-400 hover:text-tannat p-2 rounded-full bg-crema/80 hover:bg-tannat-50 transition-colors" aria-label="Cerrar" data-i18n-aria="modal.close">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
       </button>
 
@@ -3131,9 +3137,9 @@
   </div>
 
   <!-- ==================== MODAL: CÓMO LLEGAR / DURACIÓN (info real) ==================== -->
-  <div id="planModal" class="modal-overlay fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto" role="dialog" aria-modal="true" onclick="closePlanModal()">
+  <div id="planModal" class="modal-overlay fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto" role="dialog" aria-modal="true" aria-labelledby="planModalTitle" onclick="closePlanModal()">
     <div class="modal-card bg-crema rounded-3xl max-w-lg w-full border border-tannat-100 shadow-2xl relative my-8 overflow-hidden max-h-[90vh] overflow-y-auto" onclick="event.stopPropagation()">
-      <button onclick="closePlanModal()" class="absolute top-4 right-4 z-10 text-white bg-black/30 hover:bg-black/50 p-2 rounded-full backdrop-blur-sm transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white" aria-label="Cerrar">
+      <button onclick="closePlanModal()" class="absolute top-4 right-4 z-10 text-white bg-black/30 hover:bg-black/50 p-2 rounded-full backdrop-blur-sm transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white" aria-label="Cerrar" data-i18n-aria="modal.close">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
       </button>
       <div id="planModalContent">
@@ -3145,7 +3151,7 @@
   <!-- ==================== MODAL: GALERÍA LIGHTBOX ==================== -->
   <div id="galleryLightbox" class="modal-overlay fixed inset-0 z-50 hidden bg-black/90 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto" role="dialog" aria-modal="true" aria-labelledby="lightboxCaption" onclick="closeGalleryLightbox()">
     <div class="modal-card relative max-w-3xl w-full my-8" onclick="event.stopPropagation()">
-      <button onclick="closeGalleryLightbox()" class="absolute top-3 right-3 z-10 text-white bg-black/40 hover:bg-black/60 p-2 rounded-full backdrop-blur-sm transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white" aria-label="Cerrar">
+      <button onclick="closeGalleryLightbox()" class="absolute top-3 right-3 z-10 text-white bg-black/40 hover:bg-black/60 p-2 rounded-full backdrop-blur-sm transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white" aria-label="Cerrar" data-i18n-aria="modal.close">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
       </button>
       <div class="bg-crema rounded-2xl overflow-hidden shadow-2xl">
@@ -3169,19 +3175,30 @@
     let activeStationId = null;
     let activeLegalType = null;
 
-    // Modal open/close helper: fade + scale suave (evita el "pop" instantáneo)
+    // Modal open/close helper: fade + scale suave (evita el "pop" instantáneo).
+    // Teclado y lectores de pantalla: el foco entra a la tarjeta, Tab queda adentro (ver el keydown más abajo)
+    // y al cerrar vuelve al botón que lo abrió.
+    let lastFocusedTrigger = null, openModalId = null;
     function showModal(id) {
       const overlay = document.getElementById(id);
+      lastFocusedTrigger = document.activeElement;
       overlay.classList.remove('hidden');
       void overlay.offsetWidth; // fuerza reflow para que la transición se dispare
       setTimeout(() => overlay.classList.add('modal-open'), 10);
       document.body.classList.add('overflow-hidden');
+      const card = overlay.querySelector('.modal-card');
+      if (card) { card.setAttribute('tabindex', '-1'); card.focus({ preventScroll: true }); }
+      openModalId = id;
     }
     function hideModal(id) {
       const overlay = document.getElementById(id);
       overlay.classList.remove('modal-open');
       document.body.classList.remove('overflow-hidden');
       setTimeout(() => overlay.classList.add('hidden'), 280);
+      if (openModalId !== id) return; // Escape llama a todos los cierres: solo el modal abierto devuelve el foco
+      openModalId = null;
+      const t = lastFocusedTrigger; lastFocusedTrigger = null;
+      if (t && t.isConnected && t.getClientRects().length) t.focus({ preventScroll: true });
     }
 
     // Loading Screen (Preloader) 2.5-second robust dismissal
@@ -3383,6 +3400,18 @@
         "nav.payments": "Pagos Internacionales",
         "nav.stay": "Dónde Alojarse",
         "nav.voices": "Voces del Circuito",
+        "modal.close": "Cerrar",
+        "a11y.weather": "Clima actual en Salto, Uruguay",
+        "a11y.curUSD": "Ver precios en Dólares",
+        "a11y.curUYU": "Ver precios en Pesos Uruguayos",
+        "a11y.home": "Inicio La Ruta del Tannat",
+        "a11y.nav": "Navegación principal",
+        "a11y.menu": "Abrir menú de navegación",
+        "a11y.copaTabs": "Secciones de la copa",
+        "a11y.gallery": "Galería de fotografías del circuito, con desplazamiento automático",
+        "a11y.map": "Mapa interactivo real de La Ruta del Tannat en Salto, Uruguay",
+        "a11y.whatsapp": "Contactar por WhatsApp al +598 92 614 800",
+        "hero.photoCredit": "Foto: Viña Varela Zarranz (CC BY-SA)",
         "nav.inavi": "INAVI",
         "nav.gallery": "Galería",
         "nav.map": "Mapa Interactivo",
@@ -3912,6 +3941,18 @@
         "nav.payments": "Pagamentos Internacionais",
         "nav.stay": "Onde se Hospedar",
         "nav.voices": "Vozes do Circuito",
+        "modal.close": "Fechar",
+        "a11y.weather": "Clima atual em Salto, Uruguai",
+        "a11y.curUSD": "Ver preços em Dólares",
+        "a11y.curUYU": "Ver preços em Pesos Uruguaios",
+        "a11y.home": "Início A Rota do Tannat",
+        "a11y.nav": "Navegação principal",
+        "a11y.menu": "Abrir menu de navegação",
+        "a11y.copaTabs": "Seções da taça",
+        "a11y.gallery": "Galeria de fotografias do circuito, com rolagem automática",
+        "a11y.map": "Mapa interativo real da Rota do Tannat em Salto, Uruguai",
+        "a11y.whatsapp": "Falar pelo WhatsApp: +598 92 614 800",
+        "hero.photoCredit": "Foto: Viña Varela Zarranz (CC BY-SA)",
         "nav.inavi": "INAVI",
         "nav.gallery": "Galeria",
         "nav.map": "Mapa Interativo",
@@ -4441,6 +4482,18 @@
         "nav.payments": "International Payments",
         "nav.stay": "Where to Stay",
         "nav.voices": "Voices of the Circuit",
+        "modal.close": "Close",
+        "a11y.weather": "Current weather in Salto, Uruguay",
+        "a11y.curUSD": "Show prices in US dollars",
+        "a11y.curUYU": "Show prices in Uruguayan pesos",
+        "a11y.home": "The Tannat Route home",
+        "a11y.nav": "Main navigation",
+        "a11y.menu": "Open navigation menu",
+        "a11y.copaTabs": "Glass sections",
+        "a11y.gallery": "Photo gallery of the circuit, with automatic scrolling",
+        "a11y.map": "Interactive map of The Tannat Route in Salto, Uruguay",
+        "a11y.whatsapp": "Contact us on WhatsApp: +598 92 614 800",
+        "hero.photoCredit": "Photo: Viña Varela Zarranz (CC BY-SA)",
         "nav.inavi": "INAVI",
         "nav.gallery": "Gallery",
         "nav.map": "Interactive Map",
@@ -5266,7 +5319,8 @@
       let started = false;
       const siteHdr = document.getElementById('mainHeader');
       if (siteHdr) { // la sección ocupa justo la pantalla bajo el encabezado fijo
-        const setHdr = () => sec.style.setProperty('--cup-hdr', siteHdr.offsetHeight + 'px');
+        const drawer = document.getElementById('mobileMenu'); // el menú móvil abierto no cuenta como alto del encabezado
+        const setHdr = () => { const h = (siteHdr.offsetHeight - (drawer ? drawer.offsetHeight : 0)) + 'px'; sec.style.setProperty('--cup-hdr', h); document.documentElement.style.setProperty('--hdr-h', h); };
         setHdr(); window.addEventListener('resize', setHdr);
         if ('ResizeObserver' in window) new ResizeObserver(setHdr).observe(siteHdr);
       }
@@ -5316,6 +5370,8 @@
         }
       }
 
+      if (btnUSD && btnUYU) { btnUSD.setAttribute('aria-pressed', String(cur === 'USD')); btnUYU.setAttribute('aria-pressed', String(cur !== 'USD')); }
+
       // Update button styles (Mobile)
       const btnUSDMob = document.getElementById('btnCurUSDMob');
       const btnUYUMob = document.getElementById('btnCurUYUMob');
@@ -5327,6 +5383,7 @@
           btnUYUMob.className = "px-3 py-1 rounded-full font-semibold transition-all bg-gold text-tannat-900";
           btnUSDMob.className = "px-3 py-1 rounded-full font-semibold text-gray-300";
         }
+        btnUSDMob.setAttribute('aria-pressed', String(cur === 'USD')); btnUYUMob.setAttribute('aria-pressed', String(cur !== 'USD'));
       }
     }
 
@@ -5370,6 +5427,14 @@
         }
       });
 
+      // Atributos que lee un lector de pantalla: data-i18n-aria (aria-label), data-i18n-title (title), data-i18n-alt (alt)
+      [['data-i18n-aria', 'aria-label'], ['data-i18n-title', 'title'], ['data-i18n-alt', 'alt']].forEach(([ds, attr]) => {
+        document.querySelectorAll('[' + ds + ']').forEach(el => {
+          const v = dict[el.getAttribute(ds)];
+          if (v) el.setAttribute(attr, decodeHtmlEntities(v));
+        });
+      });
+
       // If station modal is currently open, refresh its content in current language
       if (activeStationId) {
         renderStationModalContent(activeStationId);
@@ -5387,7 +5452,7 @@
 
       // Refresh any currently-open map popup so it doesn't stay in the old language
       if (leafletMap) {
-        Object.values(stationMarkers).forEach(m => m.isPopupOpen() && m.getPopup().update());
+        leafletMap.eachLayer(l => l.isPopupOpen() && l.getPopup().update()); // estaciones y marcador termal
       }
 
       // Refresh the weather condition label in the new language
@@ -5420,11 +5485,13 @@
         const isActive = (code.toLowerCase() === lang);
         
         if (btn) {
+          btn.setAttribute('aria-pressed', String(isActive));
           btn.className = isActive 
             ? "px-2.5 py-1 rounded-full font-semibold transition-all bg-gold text-tannat-900 shadow-sm"
             : "px-2.5 py-1 rounded-full font-semibold text-gray-300 hover:text-white transition-all";
         }
         if (btnMob) {
+          btnMob.setAttribute('aria-pressed', String(isActive));
           btnMob.className = isActive 
             ? "px-2.5 py-1 rounded-full font-semibold transition-all bg-gold text-tannat-900"
             : "px-2.5 py-1 rounded-full font-semibold text-gray-300";
@@ -5490,7 +5557,7 @@
           </div>
           <div class="sm:col-span-3 min-w-0 sm:pr-14">
             <span class="text-xs font-bold uppercase tracking-wider text-gold-dark block">${langData.tag}</span>
-            <h3 class="font-serif text-xl sm:text-2xl font-bold text-tannat-dark leading-tight mt-0.5">${langData.title}</h3>
+            <h3 id="stationModalTitle" class="font-serif text-xl sm:text-2xl font-bold text-tannat-dark leading-tight mt-0.5">${langData.title}</h3>
             <p class="text-xs text-terroir flex items-center gap-1 mt-1.5 mb-2">
               <svg class="w-4 h-4 text-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/></svg>
               <span>${langData.location}</span>
@@ -5637,7 +5704,7 @@
       const langData = doc[currentLang] || doc.es;
       const content = document.getElementById('legalModalContent');
       content.innerHTML = `
-        <h3 class="font-serif text-2xl font-bold text-tannat-dark mb-5 pr-8">${langData.title}</h3>
+        <h3 id="legalModalTitle" class="font-serif text-2xl font-bold text-tannat-dark mb-5 pr-8">${langData.title}</h3>
         <div class="space-y-4">
           ${langData.sections.map(s => `
             <div>
@@ -5748,7 +5815,8 @@
         toggle.setAttribute('aria-expanded', String(open));
         if (open) openedAt = Date.now();
       });
-      $('opVisit').max = new Date().toISOString().slice(0, 7);
+      const hoy = new Date(); // mes en hora local del visitante (toISOString daría el mes UTC)
+      $('opVisit').max = hoy.getFullYear() + '-' + String(hoy.getMonth() + 1).padStart(2, '0');
       $('opText').addEventListener('input', (e) => { $('opCount').textContent = e.target.value.length; });
 
       // estrellas: se pintan hasta la elegida y, con el mouse, hasta donde pasa el cursor
@@ -5899,7 +5967,7 @@
         <div class="relative h-36 sm:h-44">
           <img src="${doc.img}" alt="${doc.imgAlt}" class="w-full h-full object-cover">
           <div class="absolute inset-0 bg-gradient-to-t from-tannat-900 via-tannat-900/40 to-black/10"></div>
-          <h3 class="absolute bottom-4 left-6 right-14 font-serif text-xl sm:text-2xl font-bold text-white leading-tight">${langData.title}</h3>
+          <h3 id="planModalTitle" class="absolute bottom-4 left-6 right-14 font-serif text-xl sm:text-2xl font-bold text-white leading-tight">${langData.title}</h3>
         </div>
         <div class="p-6 sm:p-8 space-y-3">
           ${langData.body.map(p => `<p class="text-base text-terroir leading-relaxed">${p}</p>`).join('')}
@@ -5960,12 +6028,17 @@
     // Tarjetas de Misión y Visión: se despliegan al pasar el mouse (desktop) o al tocar/enfocar (mobile/teclado).
     // Se maneja con JS directo (no con variantes condicionales de Tailwind) para que la altura se calcule
     // siempre a partir del contenido real (scrollHeight), sin depender de un valor máximo fijo adivinado.
-    function toggleInfoCard(card, forceExpand) {
+    // Con mouse el hover abre/cierra y el clic no debe cerrar lo que el hover acaba de abrir; en táctil (sin hover) el toque alterna
+    // y los mouseenter/mouseleave que el navegador emula al tocar no cuentan.
+    function toggleInfoCard(card, forceExpand, byHover) {
+      const hoverDevice = window.matchMedia('(hover: hover)').matches;
+      if (byHover && !hoverDevice) return;
       const panel = card.querySelector('.info-panel');
       const chevron = card.querySelector('.info-chevron');
       const label = card.querySelector('.info-label');
-      const expand = forceExpand === undefined ? !card.classList.contains('is-open') : forceExpand;
+      const expand = forceExpand !== undefined ? forceExpand : (hoverDevice && card.matches(':hover')) ? true : !card.classList.contains('is-open');
       card.classList.toggle('is-open', expand);
+      card.setAttribute('aria-expanded', expand);
       if (panel) panel.style.maxHeight = expand ? panel.scrollHeight + 'px' : '0px';
       if (chevron) chevron.style.transform = expand ? 'rotate(180deg)' : '';
       if (label) label.style.opacity = expand ? '0' : '';
@@ -6008,7 +6081,17 @@
         closeLegalModal();
         closePlanModal();
         closeGalleryLightbox();
+        return;
       }
+      if (e.key !== 'Tab' || !openModalId) return;
+      // Trampa de foco: Tab y Shift+Tab ciclan solo entre los controles del modal abierto (se recalculan en cada Tab: el contenido se regenera al abrir)
+      const card = document.querySelector('#' + openModalId + ' .modal-card');
+      if (!card) return;
+      const f = [...card.querySelectorAll('a[href], button:not([disabled]), textarea:not([disabled]), select:not([disabled]), input:not([disabled]):not([type="hidden"]), [tabindex]:not([tabindex="-1"])')].filter((el) => el.getClientRects().length);
+      if (!f.length) { e.preventDefault(); card.focus(); return; }
+      const first = f[0], last = f[f.length - 1], a = document.activeElement;
+      if (!card.contains(a) || (e.shiftKey && (a === first || a === card))) { e.preventDefault(); (e.shiftKey ? last : first).focus(); }
+      else if (!e.shiftKey && a === last) { e.preventDefault(); first.focus(); }
     });
 
     // Booking Submit via WhatsApp Direct Link
@@ -6018,8 +6101,8 @@
       const name = document.getElementById('bookName').value;
       const date = document.getElementById('bookDate').value;
       const guests = document.getElementById('bookGuests').value;
-      const pkg = document.querySelector('input[name="bookPackage"]:checked').value;
       const pkgOn = document.querySelector('input[name="bookPackage"]:checked').dataset.match;
+      const pkg = pkgOn === '95' ? dict['form.pkgFull'] : pkgOn === '45' ? dict['form.pkgHalf'] : dict['form.pkgCustom'];
       track('reserva', 'enviar', pkgOn === '95' ? 'dia-completo' : pkgOn === '45' ? 'medio-dia' : 'personalizada');
       const hotel = document.getElementById('bookHotel').value || dict['whatsapp.defaultHotel'];
       const notes = document.getElementById('bookNotes').value || dict['whatsapp.defaultNotes'];

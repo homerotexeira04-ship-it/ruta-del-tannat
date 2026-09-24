@@ -53,7 +53,7 @@ let T;
   for (const l of langs) { const miss = [...all].filter((x) => !(x in T[l])); if (miss.length) fail('faltan en ' + l + ': ' + miss.slice(0, 8).join(', ') + (miss.length > 8 ? ' … (' + miss.length + ')' : '')); }
   const ph = (s) => (String(s).match(/\{[A-Za-z0-9_]+\}/g) || []).sort().join(',');
   for (const key of Object.keys(T.es)) for (const l of langs) if (T[l][key] !== undefined && ph(T[l][key]) !== ph(T.es[key])) fail('marcadores {…} distintos en ' + key + ' (' + l + ')');
-  for (const m of html.matchAll(/data-i18n(?:-ph|-aria)?="([^"]+)"/g)) if (!(m[1] in T.es)) fail('data-i18n sin texto: ' + m[1]);
+  for (const m of html.matchAll(/data-i18n(?:-ph|-aria|-alt|-title)?="([^"]+)"/g)) if (!(m[1] in T.es)) fail('data-i18n sin texto: ' + m[1]);
   // título y descripción por idioma: existen, tienen largo razonable y el español coincide con el HTML estático
   for (const l of langs) {
     const t = T[l]['meta.title'], d = T[l]['meta.description'];
