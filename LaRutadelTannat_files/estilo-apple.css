@@ -1,0 +1,70 @@
+/* Capa de estilo "híbrido Apple" de La Ruta del Tannat.
+   Se carga DESPUÉS de tailwind.css y del <style> del HTML, así que gana por orden sin tocar los componentes.
+   - Tipografía del sistema: SF en iPhone/Mac, Segoe UI en Windows, Roboto en Android (no se descarga ninguna fuente).
+   - Superficies neutras que alternan blanco / gris, tarjetas sin borde, portada centrada, encabezado y barra móvil de vidrio.
+   - El burdeos y el dorado de la marca quedan como acento (botones, etiquetas, secciones oscuras).
+   Todo va en @media screen: la hoja impresa del itinerario no se toca. Para volver al estilo anterior: git revert del commit que la agregó. */
+@media screen {
+  :root { --f: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI Variable Text", "Segoe UI", system-ui, Roboto, "Helvetica Neue", Arial, sans-serif; }
+  html { -webkit-font-smoothing: antialiased; }
+
+  /* 1. Tipografía: una sola familia; los títulos pasan de mayúsculas serif a sans en minúscula normal, apretada. La Copa conserva sus tamaños. */
+  body, .font-sans, .font-serif { font-family: var(--f) !important; }
+  main > section:not(#copa) :is(h1, h2, h3) { text-transform: none !important; font-weight: 600 !important; letter-spacing: -.022em !important; }
+  main > section:not(#copa) h2 { font-size: clamp(2rem, 4.4vw, 3.5rem) !important; line-height: 1.07 !important; }
+  .tannat-pin span, .tannat-popup .tannat-popup-title, .cup-toast, .cup-summary, .cup-card-title { font-family: var(--f) !important; }
+  main .font-light { font-weight: 400 !important; } /* el peso 300 del sistema es muy fino para texto corrido */
+  #copa h2 { text-transform: none !important; letter-spacing: -.02em; } /* el título de La Copa, en minúscula normal como el resto */
+
+  /* 2. Superficies neutras: el ritmo lo da el fondo (blanco / gris Apple), sin líneas divisorias entre secciones. */
+  .bg-crema { background-color: #f5f5f7 !important; }
+  .from-crema { --tw-gradient-from: #f5f5f7 var(--tw-gradient-from-position); --tw-gradient-to: rgb(245 245 247 / 0) var(--tw-gradient-to-position); }
+  .text-terroir { color: #515154 !important; }
+  main > section:not(#hero):not(#copa) { border-color: transparent !important; padding-top: clamp(4.5rem, 9vw, 7.5rem) !important; padding-bottom: clamp(4.5rem, 9vw, 7.5rem) !important; }
+
+  /* 3. Tarjetas: sin borde, radio grande y sombra apenas perceptible. */
+  .rounded-2xl { border-radius: 22px !important; }
+  .rounded-3xl { border-radius: 28px !important; }
+  main .rounded-2xl, main .rounded-3xl { border-color: transparent !important; }
+  main .shadow-sm, main .shadow-md, main .shadow-lg, main .shadow-xl { box-shadow: 0 1px 2px rgba(0,0,0,.04), 0 8px 30px rgba(0,0,0,.06) !important; }
+
+  /* 4. Etiquetas superiores: de píldora en mayúsculas a texto de acento; sobre fondos oscuros, dorado claro. */
+  main div.inline-flex.rounded-full.uppercase { background: transparent !important; border: 0 !important; padding: 0 !important; text-transform: none !important; letter-spacing: -.01em !important; font-size: 1.2rem !important; font-weight: 600 !important; color: #722F37 !important; }
+  main section.bg-tannat-900 div.inline-flex.rounded-full.uppercase { color: #DFCA9D !important; }
+
+  /* 5. Encabezado: vidrio oscuro y más bajo (saturate + blur 20px, como la barra de apple.com). Sigue oscuro porque el sello "Enoturismo Uruguay" es blanco. */
+  .glass-nav { background: rgba(29,6,13,.72); -webkit-backdrop-filter: saturate(180%) blur(20px); backdrop-filter: saturate(180%) blur(20px); border-bottom-width: 0; }
+  #mainHeader .hdr-row { height: 4.25rem; }
+  #mainHeader .hdr-logo { height: 3.25rem; }
+  @media (max-height: 600px) and (max-width: 639px) { #mainHeader .hdr-row { height: 3.75rem; } #mainHeader .hdr-logo { height: 2.75rem; } }
+  @media (max-height: 420px) { #mainHeader .hdr-row { height: 3.25rem; } #mainHeader .hdr-logo { height: 2.5rem; } }
+  #mainHeader nav a { font-style: normal; font-size: .875rem; font-weight: 400; letter-spacing: -.01em; }
+
+  /* 6. Portada: pila centrada, título grande, velo parejo sobre la foto en vez del degradé lateral. */
+  #hero { text-align: center; }
+  #hero > .relative.z-10 > .max-w-3xl { max-width: 60rem; margin-inline: auto; }
+  #hero h1 { font-size: clamp(2.8rem, 7.2vw, 6rem) !important; line-height: 1.03 !important; letter-spacing: -.035em !important; }
+  #hero h1 .italic { font-style: normal !important; font-weight: 500 !important; font-size: clamp(1.3rem, 3vw, 2.4rem) !important; letter-spacing: -.02em !important; color: #DFCA9D !important; margin-top: .6rem !important; }
+  #hero p.max-w-2xl { margin-left: auto; margin-right: auto; font-weight: 400 !important; color: #fff !important; text-shadow: 0 1px 14px rgba(0,0,0,.5); }
+  #hero .flex.flex-col.sm\:flex-row { justify-content: center; }
+  #hero .grid.grid-cols-2 { max-width: 46rem; margin-inline: auto; background: rgba(29,6,13,.6) !important; border-color: rgba(255,255,255,.14) !important; -webkit-backdrop-filter: saturate(180%) blur(20px); backdrop-filter: saturate(180%) blur(20px); }
+  #hero .bg-gradient-to-r { background: radial-gradient(ellipse 72% 34% at 50% 54%, rgba(29,6,13,.62), rgba(29,6,13,0)), linear-gradient(180deg, rgba(29,6,13,.76) 0%, rgba(29,6,13,.74) 40%, rgba(29,6,13,.76) 70%, rgba(29,6,13,.9) 100%) !important; }
+  #hero a.bg-gold { box-shadow: none !important; }
+  main a.rounded-full, main button.rounded-full { font-weight: 600 !important; }
+
+  /* 7. Preguntas frecuentes: lista con separadores finos, sin tarjetas. */
+  #faq .space-y-4 > div { background: transparent !important; box-shadow: none !important; border-radius: 0 !important; border: 0 !important; border-bottom: 1px solid #d2d2d7 !important; }
+  #faq button { padding-left: 0 !important; padding-right: 0 !important; font-size: 1.25rem !important; font-weight: 600 !important; }
+  #faq [id^=faqAns] { padding-left: 0 !important; }
+
+  /* 8. Barra de reserva móvil: cápsula flotante de vidrio (como la barra de pestañas de iOS 26). El espacio del lado del botón de WhatsApp lo sigue reservando su padding derecho. */
+  .mbar { left: .75rem; right: .75rem; bottom: .75rem; border-radius: 9999px; border: 1px solid rgba(255,255,255,.16); background: rgba(29,6,13,.62); -webkit-backdrop-filter: saturate(180%) blur(20px); backdrop-filter: saturate(180%) blur(20px); padding-left: 1.25rem; }
+
+  /* 9. Sin vidrio para quien pidió menos transparencia o si el navegador no soporta backdrop-filter: fondo opaco. */
+  @media (prefers-reduced-transparency: reduce) {
+    .glass-nav, .mbar, #hero .grid.grid-cols-2 { -webkit-backdrop-filter: none; backdrop-filter: none; background: #1d060d !important; }
+  }
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .glass-nav, .mbar, #hero .grid.grid-cols-2 { background: #1d060d !important; }
+  }
+}
