@@ -87,21 +87,70 @@
         "itinerary": [
           {
             "@type": "Place",
-            "name": "Espacio Cultural Bodega Harriague (Punto Cero)"
+            "name": "Espacio Cultural Bodega Harriague (Punto Cero)",
+            "geo": { "@type": "GeoCoordinates", "latitude": -31.3998, "longitude": -57.9846 }
           },
           {
             "@type": "Place",
-            "name": "Bodega Salto Chico (Ribera del Río Uruguay)"
+            "name": "Bodega Salto Chico (Ribera del Río Uruguay)",
+            "geo": { "@type": "GeoCoordinates", "latitude": -31.3799, "longitude": -57.9740 }
           },
           {
             "@type": "Place",
-            "name": "Bodega Bertolini & Broglio (Terroir Daymán)"
+            "name": "Bodega Bertolini & Broglio (Terroir Daymán)",
+            "geo": { "@type": "GeoCoordinates", "latitude": -31.527946170700144, "longitude": -57.91004803293071 }
           },
           {
             "@type": "Place",
-            "name": "Mori Maglio Wines (Viñedo El Asombrado)"
+            "name": "Mori Maglio Wines (Viñedo El Asombrado)",
+            "geo": { "@type": "GeoCoordinates", "latitude": -31.4550, "longitude": -57.9050 }
+          },
+          {
+            "@type": "Place",
+            "name": "Termas del Daymán (parada termal opcional)",
+            "geo": { "@type": "GeoCoordinates", "latitude": -31.4525, "longitude": -57.9084 }
           }
         ]
+      },
+      {
+        "@type": ["Winery", "TouristAttraction"],
+        "@id": "https://homerotexeira04-ship-it.github.io/ruta-del-tannat/LaRutadelTannat.html#winery-harriague",
+        "name": "Espacio Cultural Bodega Harriague",
+        "description": "Establecimiento fundado en el siglo XIX por Don Pascual Harriague, donde se realizaron los primeros cuadros de aclimatación de la uva Tannat en 1874. Hoy es un monumento de arqueología industrial con cavas originales.",
+        "address": { "@type": "PostalAddress", "streetAddress": "Av. Pascual Harriague y Etcheverry, La Caballada", "addressLocality": "Salto", "addressCountry": "UY" },
+        "geo": { "@type": "GeoCoordinates", "latitude": -31.3998, "longitude": -57.9846 }
+      },
+      {
+        "@type": ["Winery", "TouristAttraction"],
+        "@id": "https://homerotexeira04-ship-it.github.io/ruta-del-tannat/LaRutadelTannat.html#winery-saltochico",
+        "name": "Bodega Salto Chico",
+        "description": "Bodega junto a los rápidos y cascadas del Salto Chico, sobre la ribera del Río Uruguay, con viñedos en suelos minerales basálticos y arenas aluviales.",
+        "address": { "@type": "PostalAddress", "streetAddress": "República Italiana 623, Costanera Norte", "addressLocality": "Salto", "addressCountry": "UY" },
+        "geo": { "@type": "GeoCoordinates", "latitude": -31.3799, "longitude": -57.9740 }
+      },
+      {
+        "@type": ["Winery", "TouristAttraction"],
+        "@id": "https://homerotexeira04-ship-it.github.io/ruta-del-tannat/LaRutadelTannat.html#winery-bertolini",
+        "name": "Bodega Bertolini & Broglio",
+        "description": "Bodega boutique de 19 hectáreas en Parada Daymán, reconocida internacionalmente con medallas de oro por su Tannat Exotic y su vinificación por gravedad.",
+        "address": { "@type": "PostalAddress", "streetAddress": "Ruta 3 Km 468.500, Parada Daymán", "addressLocality": "Salto", "addressCountry": "UY" },
+        "geo": { "@type": "GeoCoordinates", "latitude": -31.527946170700144, "longitude": -57.91004803293071 }
+      },
+      {
+        "@type": ["Winery", "TouristAttraction"],
+        "@id": "https://homerotexeira04-ship-it.github.io/ruta-del-tannat/LaRutadelTannat.html#winery-morimaglio",
+        "name": "Mori Maglio Wines",
+        "description": "Bodega familiar en el Viñedo El Asombrado, a pocos minutos del polo termal de Daymán, con vinos de autor en partidas limitadas.",
+        "address": { "@type": "PostalAddress", "addressLocality": "Parada Daymán, Salto", "addressCountry": "UY" },
+        "geo": { "@type": "GeoCoordinates", "latitude": -31.4550, "longitude": -57.9050 }
+      },
+      {
+        "@type": "TouristAttraction",
+        "@id": "https://homerotexeira04-ship-it.github.io/ruta-del-tannat/LaRutadelTannat.html#termas-dayman",
+        "name": "Termas del Daymán",
+        "description": "Complejo termal a unos 10 km de la ciudad de Salto, incluido de forma opcional y coordinada en el circuito de La Ruta del Tannat.",
+        "address": { "@type": "PostalAddress", "addressLocality": "Salto", "addressCountry": "UY" },
+        "geo": { "@type": "GeoCoordinates", "latitude": -31.4525, "longitude": -57.9084 }
       },
       {
         "@type": "FAQPage",
@@ -762,6 +811,7 @@
             <div class="flex items-center bg-black/40 rounded-full p-1 border border-white/10 text-xs">
               <button onclick="setCurrency(&#39;USD&#39;)" id="btnCurUSD" class="px-2.5 py-1 rounded-full font-semibold transition-all bg-gold text-tannat-900 shadow-sm" aria-pressed="true" aria-label="Ver precios en Dólares" data-i18n-aria="a11y.curUSD">USD</button>
               <button onclick="setCurrency(&#39;UYU&#39;)" id="btnCurUYU" class="px-2.5 py-1 rounded-full font-semibold text-gray-300 hover:text-white transition-all" aria-pressed="false" aria-label="Ver precios en Pesos Uruguayos" data-i18n-aria="a11y.curUYU">UYU</button>
+              <button onclick="setCurrency(&#39;BRL&#39;)" id="btnCurBRL" class="px-2.5 py-1 rounded-full font-semibold text-gray-300 hover:text-white transition-all" aria-pressed="false" aria-label="Ver precios en Reales" data-i18n-aria="a11y.curBRL">BRL</button>
             </div>
             <div class="w-px h-4 bg-white/10"></div>
             <div class="flex items-center bg-black/40 rounded-full p-1 border border-white/10 text-xs">
@@ -850,6 +900,7 @@
         <div class="flex items-center bg-black/40 rounded-full p-1 border border-white/10 text-xs">
           <button onclick="setCurrency(&#39;USD&#39;)" class="px-3 py-1 rounded-full font-semibold transition-all bg-gold text-tannat-900" aria-pressed="true" id="btnCurUSDMob">USD</button>
           <button onclick="setCurrency(&#39;UYU&#39;)" class="px-3 py-1 rounded-full font-semibold transition-all text-gray-300" aria-pressed="false" id="btnCurUYUMob">UYU</button>
+          <button onclick="setCurrency(&#39;BRL&#39;)" class="px-3 py-1 rounded-full font-semibold transition-all text-gray-300" aria-pressed="false" id="btnCurBRLMob">BRL</button>
         </div>
         <!-- Lang (Mobile) -->
         <div class="flex items-center bg-black/40 rounded-full p-1 border border-white/10 text-xs">
@@ -1791,7 +1842,7 @@
                 <div class="flex flex-wrap items-start gap-y-1 mb-6">
                   <h3 class="font-serif text-2xl sm:text-3xl font-bold text-white" data-i18n="packages.p1Title">Vinos e Historias</h3>
                   <div class="text-right flex-shrink-0 ml-auto">
-                    <span class="text-3xl sm:text-4xl font-bold text-gold price-val" data-usd="45" data-uyu="1850">USD 45</span>
+                    <span class="text-3xl sm:text-4xl font-bold text-gold price-val" data-usd="45" data-uyu="1850" data-brl="260">USD 45</span>
                     <span class="block text-xs text-gray-400 font-normal" data-i18n="packages.perPerson">por persona</span>
                   </div>
                 </div>
@@ -1845,7 +1896,7 @@
                   <div class="flex flex-wrap items-start gap-y-1 mb-6">
                     <h3 class="font-serif text-2xl sm:text-3xl font-bold text-white" data-i18n="packages.p2Title">El Legado del Tannat</h3>
                     <div class="text-right flex-shrink-0 ml-auto">
-                      <span class="text-3xl sm:text-4xl font-bold text-gold price-val" data-usd="95" data-uyu="3900">USD 95</span>
+                      <span class="text-3xl sm:text-4xl font-bold text-gold price-val" data-usd="95" data-uyu="3900" data-brl="550">USD 95</span>
                       <span class="block text-xs text-gray-400 font-normal" data-i18n="packages.perPerson">por persona</span>
                     </div>
                   </div>
@@ -2591,24 +2642,76 @@
             </div>
           </div>
 
-          <!-- Quick Navigation Links to Google Maps -->
-          <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
-            <div class="p-3 bg-white rounded-xl border border-tannat-100 flex items-center justify-between">
-              <span class="font-semibold" data-i18n="st1.title">01. Bodega Harriague</span>
-              <a href="https://maps.google.com/?q=Bodega+Harriague+Salto+Uruguay" target="_blank" rel="noopener noreferrer" class="text-gold-dark hover:underline inline-flex items-center gap-1" data-i18n="map.gps">GPS ↗</a>
+          <!-- Accesos rápidos: ruta completa (Google Maps soporta varias paradas; Waze no, así que va a la primera) -->
+          <div class="mt-8 flex flex-wrap justify-center gap-3">
+            <a href="https://www.google.com/maps/dir/?api=1&amp;destination=-31.4550,-57.9050&amp;waypoints=-31.3998,-57.9846%7C-31.3799,-57.9740%7C-31.527946170700144,-57.91004803293071&amp;travelmode=driving" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-5 py-2.5 min-h-[44px] rounded-full bg-tannat text-white text-sm font-bold hover:bg-tannat-dark transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-tannat focus-visible:ring-offset-2" data-i18n="map.openRouteGoogle">
+              Abrir ruta completa en Google Maps
+            </a>
+            <a href="https://waze.com/ul?ll=-31.3998,-57.9846&amp;navigate=yes" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-5 py-2.5 min-h-[44px] rounded-full border border-tannat/30 text-tannat text-sm font-bold hover:bg-tannat hover:text-white transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-tannat focus-visible:ring-offset-2" data-i18n="map.openRouteWaze">
+              Abrir primera parada en Waze
+            </a>
+          </div>
+
+          <!-- Quick Navigation Links: GPS, Waze y foco en el mapa por estación -->
+          <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
+            <div class="p-3 bg-white rounded-xl border border-tannat-100">
+              <span class="font-semibold block mb-2" data-i18n="st1.title">01. Bodega Harriague</span>
+              <div class="flex items-center gap-3 flex-wrap">
+                <button type="button" onclick="focusStationOnMap(1)" class="text-tannat hover:underline font-semibold" data-i18n="map.focus">Ver en el mapa</button>
+                <a href="https://maps.google.com/?q=Bodega+Harriague+Salto+Uruguay" target="_blank" rel="noopener noreferrer" class="text-gold-dark hover:underline inline-flex items-center gap-1" data-i18n="map.gps">GPS ↗</a>
+                <a href="https://waze.com/ul?ll=-31.3998,-57.9846&amp;navigate=yes" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline inline-flex items-center gap-1" data-i18n="map.waze">Waze ↗</a>
+              </div>
             </div>
-            <div class="p-3 bg-white rounded-xl border border-tannat-100 flex items-center justify-between">
-              <span class="font-semibold" data-i18n="st2.title">02. Bodega Salto Chico</span>
-              <a href="https://maps.google.com/?q=Bodega+Salto+Chico+Salto+Uruguay" target="_blank" rel="noopener noreferrer" class="text-gold-dark hover:underline inline-flex items-center gap-1" data-i18n="map.gps">GPS ↗</a>
+            <div class="p-3 bg-white rounded-xl border border-tannat-100">
+              <span class="font-semibold block mb-2" data-i18n="st2.title">02. Bodega Salto Chico</span>
+              <div class="flex items-center gap-3 flex-wrap">
+                <button type="button" onclick="focusStationOnMap(2)" class="text-tannat hover:underline font-semibold" data-i18n="map.focus">Ver en el mapa</button>
+                <a href="https://maps.google.com/?q=Bodega+Salto+Chico+Salto+Uruguay" target="_blank" rel="noopener noreferrer" class="text-gold-dark hover:underline inline-flex items-center gap-1" data-i18n="map.gps">GPS ↗</a>
+                <a href="https://waze.com/ul?ll=-31.3799,-57.9740&amp;navigate=yes" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline inline-flex items-center gap-1" data-i18n="map.waze">Waze ↗</a>
+              </div>
             </div>
-            <div class="p-3 bg-white rounded-xl border border-tannat-100 flex items-center justify-between">
-              <span class="font-semibold" data-i18n="st3.title">03. Bertolini &amp; Broglio</span>
-              <a href="https://maps.google.com/?q=Bertolini+%26+Broglio+Salto+Uruguay" target="_blank" rel="noopener noreferrer" class="text-gold-dark hover:underline inline-flex items-center gap-1" data-i18n="map.gps">GPS ↗</a>
+            <div class="p-3 bg-white rounded-xl border border-tannat-100">
+              <span class="font-semibold block mb-2" data-i18n="st3.title">03. Bertolini &amp; Broglio</span>
+              <div class="flex items-center gap-3 flex-wrap">
+                <button type="button" onclick="focusStationOnMap(3)" class="text-tannat hover:underline font-semibold" data-i18n="map.focus">Ver en el mapa</button>
+                <a href="https://maps.google.com/?q=Bertolini+%26+Broglio+Salto+Uruguay" target="_blank" rel="noopener noreferrer" class="text-gold-dark hover:underline inline-flex items-center gap-1" data-i18n="map.gps">GPS ↗</a>
+                <a href="https://waze.com/ul?ll=-31.527946170700144,-57.91004803293071&amp;navigate=yes" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline inline-flex items-center gap-1" data-i18n="map.waze">Waze ↗</a>
+              </div>
             </div>
-            <div class="p-3 bg-white rounded-xl border border-tannat-100 flex items-center justify-between">
-              <span class="font-semibold" data-i18n="st4.title">04. Mori Maglio Wines</span>
-              <a href="https://maps.google.com/?q=Mori+Maglio+Dayman+Salto+Uruguay" target="_blank" rel="noopener noreferrer" class="text-gold-dark hover:underline inline-flex items-center gap-1" data-i18n="map.gps">GPS ↗</a>
+            <div class="p-3 bg-white rounded-xl border border-tannat-100">
+              <span class="font-semibold block mb-2" data-i18n="st4.title">04. Mori Maglio Wines</span>
+              <div class="flex items-center gap-3 flex-wrap">
+                <button type="button" onclick="focusStationOnMap(4)" class="text-tannat hover:underline font-semibold" data-i18n="map.focus">Ver en el mapa</button>
+                <a href="https://maps.google.com/?q=Mori+Maglio+Dayman+Salto+Uruguay" target="_blank" rel="noopener noreferrer" class="text-gold-dark hover:underline inline-flex items-center gap-1" data-i18n="map.gps">GPS ↗</a>
+                <a href="https://waze.com/ul?ll=-31.4550,-57.9050&amp;navigate=yes" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline inline-flex items-center gap-1" data-i18n="map.waze">Waze ↗</a>
+              </div>
             </div>
+          </div>
+
+          <!-- Matriz de distancias: datos reales de ruteo OpenStreetMap/OSRM entre las 4 estaciones, no estimaciones -->
+          <div class="mt-8 pt-6 border-t border-tannat-100">
+            <p class="text-xs font-bold uppercase tracking-wider text-terroir mb-1" data-i18n="map.matrixTitle">Distancias y tiempos de manejo entre estaciones</p>
+            <p class="text-[11px] text-terroir/70 mb-4" data-i18n="map.matrixSource">Calculado con datos reales de OpenStreetMap (ruta en auto, sin contar paradas).</p>
+            <div class="overflow-x-auto">
+              <table class="w-full text-xs border-collapse min-w-[420px]">
+                <thead>
+                  <tr>
+                    <th class="p-2"></th>
+                    <th class="p-2 text-center font-semibold">01</th>
+                    <th class="p-2 text-center font-semibold">02</th>
+                    <th class="p-2 text-center font-semibold">03</th>
+                    <th class="p-2 text-center font-semibold">04</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="border-t border-tannat-100"><th class="p-2 text-left font-semibold">01</th><td class="p-2 text-center text-terroir/40">—</td><td class="p-2 text-center">3 km · 5 min</td><td class="p-2 text-center">19 km · 19 min</td><td class="p-2 text-center">11 km · 13 min</td></tr>
+                  <tr class="border-t border-tannat-100"><th class="p-2 text-left font-semibold">02</th><td class="p-2 text-center">3 km · 5 min</td><td class="p-2 text-center text-terroir/40">—</td><td class="p-2 text-center">21 km · 20 min</td><td class="p-2 text-center">12 km · 14 min</td></tr>
+                  <tr class="border-t border-tannat-100"><th class="p-2 text-left font-semibold">03</th><td class="p-2 text-center">19 km · 19 min</td><td class="p-2 text-center">21 km · 20 min</td><td class="p-2 text-center text-terroir/40">—</td><td class="p-2 text-center">9 km · 7 min</td></tr>
+                  <tr class="border-t border-tannat-100"><th class="p-2 text-left font-semibold">04</th><td class="p-2 text-center">11 km · 13 min</td><td class="p-2 text-center">12 km · 14 min</td><td class="p-2 text-center">9 km · 7 min</td><td class="p-2 text-center text-terroir/40">—</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="text-[11px] text-terroir/70 mt-3" data-i18n="map.matrixTotal">Recorriendo las 4 estaciones en orden (01→02→03→04): 33 km y unos 32 min de manejo neto.</p>
           </div>
 
         </div>
@@ -2936,7 +3039,7 @@
   <div class="xl:hidden fixed bottom-0 left-0 right-0 z-30 bg-tannat-900/95 border-t border-gold/30 p-3 pr-[5.5rem] backdrop-blur-lg flex items-center justify-between gap-2 mbar">
     <div>
       <span class="block text-[10px] uppercase text-gold font-bold" data-i18n="mobileBar.from">Desde Salto</span>
-      <span id="mbarPrice" class="text-white font-bold text-sm price-val" data-usd="45" data-uyu="1850">USD 45 / persona</span>
+      <span id="mbarPrice" class="text-white font-bold text-sm price-val" data-usd="45" data-uyu="1850" data-brl="260">USD 45 / persona</span>
     </div>
     <button onclick="openBookingModal(&#39;General&#39;)" class="bg-gold text-tannat-900 font-extrabold text-xs px-4 py-2.5 rounded-full shadow-md shrink-0 whitespace-nowrap" data-i18n="mobileBar.btn">
       Reservar Ahora
@@ -3019,7 +3122,7 @@
                     <span class="text-sm font-bold text-tannat-dark truncate" data-i18n="packages.p2Title">El Legado del Tannat</span>
                     <span class="text-[11px] text-terroir" data-i18n="packages.p2Tag">Día Completo · 8 Horas</span>
                   </span>
-                  <span class="text-sm font-extrabold text-gold-dark flex-shrink-0 price-val" data-usd="95" data-uyu="3900">USD 95</span>
+                  <span class="text-sm font-extrabold text-gold-dark flex-shrink-0 price-val" data-usd="95" data-uyu="3900" data-brl="550">USD 95</span>
                 </label>
                 <label class="flex items-center justify-between gap-2 p-2.5 rounded-xl border-2 border-gray-200 cursor-pointer transition-all hover:border-gold/50 has-[:checked]:border-gold has-[:checked]:bg-gold-50 focus-within:ring-2 focus-within:ring-gold">
                   <input type="radio" name="bookPackage" value="Vinos e Historias (Medio Día - USD 45 / $U 1.850)" data-match="45" class="sr-only">
@@ -3027,7 +3130,7 @@
                     <span class="text-sm font-bold text-tannat-dark truncate" data-i18n="packages.p1Title">Vinos e Historias</span>
                     <span class="text-[11px] text-terroir" data-i18n="packages.p1Tag">Medio Día · 4 Horas</span>
                   </span>
-                  <span class="text-sm font-extrabold text-gold-dark flex-shrink-0 price-val" data-usd="45" data-uyu="1850">USD 45</span>
+                  <span class="text-sm font-extrabold text-gold-dark flex-shrink-0 price-val" data-usd="45" data-uyu="1850" data-brl="260">USD 45</span>
                 </label>
                 <label class="flex items-center gap-2 p-2.5 rounded-xl border-2 border-gray-200 cursor-pointer transition-all hover:border-gold/50 has-[:checked]:border-gold has-[:checked]:bg-gold-50 focus-within:ring-2 focus-within:ring-gold">
                   <input type="radio" name="bookPackage" value="Visita Personalizada / Grupo Especial" data-match="" class="sr-only">
@@ -3342,6 +3445,7 @@
         "a11y.weather": "Clima actual en Salto, Uruguay",
         "a11y.curUSD": "Ver precios en Dólares",
         "a11y.curUYU": "Ver precios en Pesos Uruguayos",
+        "a11y.curBRL": "Ver precios en Reales",
         "a11y.home": "Inicio La Ruta del Tannat",
         "a11y.nav": "Navegación principal",
         "a11y.menu": "Abrir menú de navegación",
@@ -3753,6 +3857,13 @@
         "map.title": "Mapa del Circuito Enoturístico",
         "map.subtitle": "Haz clic en los puntos del mapa para ubicar cada estación a lo largo de Salto y la Ruta 3 hacia Parada Daymán.",
         "map.gps": "GPS &nearr;",
+        "map.waze": "Waze &nearr;",
+        "map.focus": "Ver en el mapa",
+        "map.openRouteGoogle": "Abrir ruta completa en Google Maps",
+        "map.openRouteWaze": "Abrir primera parada en Waze",
+        "map.matrixTitle": "Distancias y tiempos de manejo entre estaciones",
+        "map.matrixSource": "Calculado con datos reales de OpenStreetMap (ruta en auto, sin contar paradas).",
+        "map.matrixTotal": "Recorriendo las 4 estaciones en orden (01→02→03→04): 33 km y unos 32 min de manejo neto.",
         "map.loading": "Cargando mapa interactivo…",
         "map.viewSheet": "Ver Ficha",
         
@@ -3865,6 +3976,7 @@
         "a11y.weather": "Clima atual em Salto, Uruguai",
         "a11y.curUSD": "Ver preços em Dólares",
         "a11y.curUYU": "Ver preços em Pesos Uruguaios",
+        "a11y.curBRL": "Ver preços em Reais",
         "a11y.home": "Início A Rota do Tannat",
         "a11y.nav": "Navegação principal",
         "a11y.menu": "Abrir menu de navegação",
@@ -4276,6 +4388,13 @@
         "map.title": "Mapa do Circuito Enoturístico",
         "map.subtitle": "Clique nos pontos do mapa para localizar cada vinícola ao longo de Salto e da Rota 3 rumo a Parada Daymán.",
         "map.gps": "GPS &nearr;",
+        "map.waze": "Waze &nearr;",
+        "map.focus": "Ver no mapa",
+        "map.openRouteGoogle": "Abrir rota completa no Google Maps",
+        "map.openRouteWaze": "Abrir primeira parada no Waze",
+        "map.matrixTitle": "Distâncias e tempos de condução entre as estações",
+        "map.matrixSource": "Calculado com dados reais do OpenStreetMap (rota de carro, sem contar as paradas).",
+        "map.matrixTotal": "Percorrendo as 4 estações em ordem (01→02→03→04): 33 km e cerca de 32 min de condução líquida.",
         "map.loading": "Carregando mapa interativo…",
         "map.viewSheet": "Ver Ficha",
         
@@ -4388,6 +4507,7 @@
         "a11y.weather": "Current weather in Salto, Uruguay",
         "a11y.curUSD": "Show prices in US dollars",
         "a11y.curUYU": "Show prices in Uruguayan pesos",
+        "a11y.curBRL": "Show prices in Brazilian reais",
         "a11y.home": "The Tannat Route home",
         "a11y.nav": "Main navigation",
         "a11y.menu": "Open navigation menu",
@@ -4799,6 +4919,13 @@
         "map.title": "Interactive Wine Route Map",
         "map.subtitle": "Click on map markers to locate each historic winery along Salto and Route 3.",
         "map.gps": "GPS &nearr;",
+        "map.waze": "Waze &nearr;",
+        "map.focus": "View on map",
+        "map.openRouteGoogle": "Open full route in Google Maps",
+        "map.openRouteWaze": "Open first stop in Waze",
+        "map.matrixTitle": "Driving distances and times between stations",
+        "map.matrixSource": "Calculated with real OpenStreetMap data (driving route, not counting stops).",
+        "map.matrixTotal": "Driving the 4 stations in order (01→02→03→04): 33 km, about 32 net driving minutes.",
         "map.loading": "Loading interactive map…",
         "map.viewSheet": "View Details",
         
@@ -4978,6 +5105,21 @@
         leafletMap.invalidateSize();
         leafletMap.fitBounds(bounds, { padding: [28, 28] });
       }, 400);
+    }
+
+    // Centra el mapa en una estación y abre su popup; carga Leaflet primero si todavía no se acercó a la pantalla
+    function focusStationOnMap(id) {
+      const sec = document.getElementById('mapa');
+      if (sec) sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      const go = () => {
+        const station = stationsInfo[id];
+        if (!leafletMap || !stationMarkers[id] || !station) return;
+        leafletMap.invalidateSize();
+        leafletMap.setView([station.lat, station.lng], 16);
+        stationMarkers[id].openPopup();
+      };
+      if (leafletMap) setTimeout(go, 350);
+      else loadLeaflet().then(initLeafletMap).then(() => setTimeout(go, 450)).catch((err) => console.warn('[Mapa]', err.message));
     }
 
     // Leaflet (~150 KB) se descarga solo cuando el mapa se acerca a la pantalla; el CSS/JS ya no bloquean el primer render
@@ -5233,42 +5375,30 @@
       document.querySelectorAll('.price-val').forEach(el => {
         const usd = el.getAttribute('data-usd');
         const uyu = el.getAttribute('data-uyu');
+        const brl = el.getAttribute('data-brl');
         const suffix = el.id === 'mbarPrice' ? ` / ${perPerson}` : '';
         if (cur === 'UYU' && uyu) {
           el.innerText = `$U ${uyu}${suffix}`;
+        } else if (cur === 'BRL' && brl) {
+          el.innerText = `R$ ${brl}${suffix}`;
         } else if (usd) {
           el.innerText = `USD ${usd}${suffix}`;
         }
       });
 
-      // Update button styles (Desktop)
-      const btnUSD = document.getElementById('btnCurUSD');
-      const btnUYU = document.getElementById('btnCurUYU');
-      if (btnUSD && btnUYU) {
-        if (cur === 'USD') {
-          btnUSD.className = "px-2.5 py-1 rounded-full font-semibold transition-all bg-gold text-tannat-900 shadow-sm";
-          btnUYU.className = "px-2.5 py-1 rounded-full font-semibold text-gray-300 hover:text-white transition-all";
-        } else {
-          btnUYU.className = "px-2.5 py-1 rounded-full font-semibold transition-all bg-gold text-tannat-900 shadow-sm";
-          btnUSD.className = "px-2.5 py-1 rounded-full font-semibold text-gray-300 hover:text-white transition-all";
-        }
-      }
-
-      if (btnUSD && btnUYU) { btnUSD.setAttribute('aria-pressed', String(cur === 'USD')); btnUYU.setAttribute('aria-pressed', String(cur !== 'USD')); }
-
-      // Update button styles (Mobile)
-      const btnUSDMob = document.getElementById('btnCurUSDMob');
-      const btnUYUMob = document.getElementById('btnCurUYUMob');
-      if (btnUSDMob && btnUYUMob) {
-        if (cur === 'USD') {
-          btnUSDMob.className = "px-3 py-1 rounded-full font-semibold transition-all bg-gold text-tannat-900";
-          btnUYUMob.className = "px-3 py-1 rounded-full font-semibold text-gray-300";
-        } else {
-          btnUYUMob.className = "px-3 py-1 rounded-full font-semibold transition-all bg-gold text-tannat-900";
-          btnUSDMob.className = "px-3 py-1 rounded-full font-semibold text-gray-300";
-        }
-        btnUSDMob.setAttribute('aria-pressed', String(cur === 'USD')); btnUYUMob.setAttribute('aria-pressed', String(cur !== 'USD'));
-      }
+      // Update button styles (Desktop + Mobile): resalta el botón de la moneda activa, apaga los otros dos
+      const active = "px-2.5 py-1 rounded-full font-semibold transition-all bg-gold text-tannat-900 shadow-sm";
+      const inactive = "px-2.5 py-1 rounded-full font-semibold text-gray-300 hover:text-white transition-all";
+      const activeMob = "px-3 py-1 rounded-full font-semibold transition-all bg-gold text-tannat-900";
+      const inactiveMob = "px-3 py-1 rounded-full font-semibold transition-all text-gray-300";
+      [['btnCurUSD', 'USD', active, inactive], ['btnCurUYU', 'UYU', active, inactive], ['btnCurBRL', 'BRL', active, inactive],
+       ['btnCurUSDMob', 'USD', activeMob, inactiveMob], ['btnCurUYUMob', 'UYU', activeMob, inactiveMob], ['btnCurBRLMob', 'BRL', activeMob, inactiveMob]]
+        .forEach(([id, code, on, off]) => {
+          const btn = document.getElementById(id);
+          if (!btn) return;
+          btn.className = cur === code ? on : off;
+          btn.setAttribute('aria-pressed', String(cur === code));
+        });
     }
 
     // Language Switcher (Complete Dynamic Update)
@@ -6031,7 +6161,7 @@
       if (savedLang && ['es', 'pt', 'en'].includes(savedLang) && savedLang !== currentLang) {
         setLanguage(savedLang);
       }
-      if (savedCurrency && ['USD', 'UYU'].includes(savedCurrency) && savedCurrency !== currentCurrency) {
+      if (savedCurrency && ['USD', 'UYU', 'BRL'].includes(savedCurrency) && savedCurrency !== currentCurrency) {
         setCurrency(savedCurrency);
       }
     })();
