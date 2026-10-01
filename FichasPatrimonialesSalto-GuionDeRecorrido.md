@@ -3,8 +3,7 @@
 **Guion de recorrido patrimonial · Palacio Gallino (comercial) y Consulado Argentino**
 
 > Adaptación narrada de las *Fichas Arquitectónicas Patrimoniales* (Salto, setiembre de 2026), que se apoyan en la *Guía del Salto: urbanístico, arquitectónico y artístico* (FARQ-UdelaR, 2010) y en la *Guía de Recursos Patrimoniales de Salto* (2025). Está escrita para leerse o narrarse en voz alta, de pie en la vereda: cada parada lleva unos 4 a 5 minutos.
->
-> **Cómo leer las referencias a las imágenes.** Cada parada lleva una fotografía real del edificio (la de la parada 1 es de época; la de la parada 2, de 2010). Donde dice «en la foto», se señala solo lo que se ve en ella; lo demás hay que verlo en la calle, y los datos que no se pueden comprobar en la imagen se atribuyen al relevamiento.
+
 
 ---
 
