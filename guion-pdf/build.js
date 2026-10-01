@@ -19,10 +19,6 @@ const FIGURAS = {
     { file: 'figuras/fig-1-1.jpg', cap: '<b>Figura 1.1 · Imagen de época</b> (c. 1911-1930). Tienda «París Londres»: marquesina, letrero y vidrieras de la planta baja.' },
     { file: 'figuras/fig-1-2.jpg', cap: '<b>Figura 1.2 · Estado actual.</b> «El Revoltijo Electrodomésticos»: planta baja modernizada, balcones y frontón de 1911 conservados.' },
   ],
-  parada2: [
-    { file: 'figuras/fig-2-1.jpg', cap: '<b>Figura 2.1 · Imagen de época</b> (c. 1900). Residencia señorial frente a la Plaza 18 de Julio: simetría, zaguán y pilastras.' },
-    { file: 'figuras/fig-2-2.jpg', cap: '<b>Figura 2.2 · Estado actual.</b> Sede del Consulado Argentino: mástil con bandera, placa de bronce, rejas de seguridad.' },
-  ],
 };
 
 const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -90,25 +86,28 @@ function figurasHtml(key) {
 function fotosHtml(key) {
   const slots = manifest[key];
   if (!slots || !slots.length) return '';
-  const cls = slots.length === 1 ? 'n1' : slots.length === 2 ? 'n2' : 'n3';
-  const items = slots.map((s) => {
-    if (slotOk(s)) {
-      const credit = s.credit ? `<span class="cr">${esc(s.credit)}</span>` : '';
-      return `<figure><img src="${relImg('fotos/' + s.file)}" alt="${esc(s.caption || s.descripcion)}"><figcaption>${esc(s.caption || s.descripcion)}${credit}</figcaption></figure>`;
-    }
-    pendientes++;
-    return `<figure class="pendiente"><div class="ph">Foto real pendiente</div><figcaption>${esc(s.descripcion)}</figcaption></figure>`;
+  const reales = slots.filter(slotOk);
+  const faltan = slots.filter((x) => !slotOk(x));
+  pendientes += faltan.length;
+  const figs = reales.map((x) => {
+    const credito = x.author ? `<span class="cr">Foto: ${esc(x.author)} · ${esc(x.license)} · Wikimedia Commons</span>` : '';
+    return `<figure><img src="${relImg('fotos/' + x.file)}" alt="${esc(x.caption)}"><figcaption>${esc(x.caption)}${credito}</figcaption></figure>`;
   }).join('');
-  return `<div class="fotos ${cls}">${items}</div>`;
+  const bars = faltan.map((x) => `<div class="pendiente"><b>Foto pendiente</b> · ${esc(x.descripcion)}</div>`).join('');
+  return `<div class="fotos">${figs}</div>${bars}`;
 }
 
 function creditosHtml() {
   const rows = [];
   for (const k of Object.keys(manifest)) {
-    for (const s of manifest[k] || []) if (slotOk(s) && s.credit) rows.push(`<li>${esc(s.caption || s.descripcion)} — ${esc(s.credit)}</li>`);
+    for (const x of manifest[k] || []) {
+      if (!Array.isArray(manifest[k]) || !slotOk(x) || !x.author) continue;
+      rows.push(`<li>${esc(x.caption)} Foto de ${esc(x.author)}, <a href="${x.license_url}">${esc(x.license)}</a>. Fuente: <span class="url">${esc(x.source)}</span></li>`);
+    }
   }
-  const base = '<li>Figuras 1.1, 1.2, 2.1 y 2.2: ilustraciones de las <em>Fichas Arquitectónicas Patrimoniales</em> (Salto, setiembre de 2026).</li>';
-  return `<h3 class="sub">Créditos de las imágenes</h3><ul class="lista">${base}${rows.join('')}</ul>`;
+  const base = '<li>Figuras 1.1 y 1.2: ilustraciones de las <em>Fichas Arquitectónicas Patrimoniales</em> (Salto, setiembre de 2026).</li>';
+  const nota = '<p class="nota-lic">Las fotografías conservan su licencia original (Creative Commons Atribución-CompartirIgual) y se muestran sin modificaciones, solo reescaladas.</p>';
+  return `<h3 class="sub">Créditos de las imágenes</h3><ul class="lista">${base}${rows.join('')}</ul>${nota}`;
 }
 
 // --- Render ---
@@ -188,7 +187,7 @@ function findChrome() {
 const { cover, body } = render(parse(fs.readFileSync(SRC, 'utf8')));
 fs.mkdirSync(path.dirname(HTML), { recursive: true });
 const css = fs.readFileSync(path.join(HERE, 'estilo.css'), 'utf8');
-const borrador = pendientes > 0 ? '<div class="borrador">Borrador · faltan fotos reales</div>' : '';
+const borrador = pendientes > 0 ? `<div class="borrador">Borrador · ${pendientes === 1 ? 'falta 1 foto' : 'faltan ' + pendientes + ' fotos'}</div>` : '';
 const portada = cover.replace('<section class="portada">', `<section class="portada">${borrador}`);
 fs.writeFileSync(HTML, `<!doctype html><html lang="es"><head><meta charset="utf-8"><title>Salto a pie: dos edificios para leer la ciudad</title><style>${css}</style></head><body>${portada}${body}</body></html>`);
 

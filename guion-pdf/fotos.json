@@ -1,32 +1,43 @@
 {
-  "_ayuda": "Cada foto real va en guion-pdf/fotos/ y se declara acá con su crédito. Mientras un espacio no tenga 'file', el PDF muestra un recuadro 'Foto real pendiente'.",
-  "portada": null,
+  "_ayuda": "Las fotos reales van en guion-pdf/fotos/ y se declaran acá con autor, licencia y fuente. Un espacio sin 'file' se muestra como 'Foto pendiente'. Todas las fotos actuales vienen de Wikimedia Commons (CC BY-SA).",
   "parada1": [
     {
-      "descripcion": "La esquina de Uruguay y Dr. Juan Carlos Soca vista de frente: ochava, balcones y frontón",
-      "file": null,
-      "caption": "",
-      "credit": ""
+      "file": "calle-uruguay.jpg",
+      "caption": "La calle Uruguay, en el centro de Salto: el eje cívico-comercial donde está esta parada.",
+      "author": "Shant",
+      "license": "CC BY-SA 2.5",
+      "license_url": "https://creativecommons.org/licenses/by-sa/2.5/",
+      "source": "https://commons.wikimedia.org/wiki/File:Calle_en_Salto.jpg"
     },
     {
-      "descripcion": "Detalle del frontón triangular con el año 1911",
-      "file": null,
-      "caption": "",
-      "credit": ""
+      "file": "museo-gallino.jpg",
+      "caption": "No es el mismo edificio: el Palacio Gallino de Uruguay 1067, hoy Museo de Bellas Artes «María Irene Olarreaga Gallino».",
+      "author": "Lberretta88",
+      "license": "CC BY-SA 3.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:Palacio_Gallino_-_Museo_de_Bellas_Artes_y_Artes_Decorativas_Salto.jpg"
+    },
+    {
+      "descripcion": "El edificio de Uruguay 891 (París Londres / El Revoltijo): no encontré una foto con licencia libre; falta sacarla en la calle.",
+      "file": null
     }
   ],
   "parada2": [
     {
-      "descripcion": "La fachada del Consulado Argentino, Artigas 1162, frente a Plaza Artigas",
-      "file": null,
-      "caption": "",
-      "credit": ""
+      "file": "consulado.jpg",
+      "caption": "Fachada del Consulado Argentino, frente a Plaza Artigas (foto de enero de 2010).",
+      "author": "Cornelius Kibelka",
+      "license": "CC BY-SA 2.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/2.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:Argentine_Consulate_in_Salto.jpg"
     },
     {
-      "descripcion": "La puerta en arco, la placa de bronce y el mástil con la bandera",
-      "file": null,
-      "caption": "",
-      "credit": ""
+      "file": "plaza-artigas.jpg",
+      "caption": "Plaza Artigas, frente al Consulado (foto de enero de 2010).",
+      "author": "Cornelius",
+      "license": "CC BY-SA 2.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/2.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:Plaza_Artigas,_Salto.jpg"
     }
   ]
 }

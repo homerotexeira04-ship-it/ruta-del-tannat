@@ -9,7 +9,7 @@
 
 @page {
   size: A4;
-  margin: 18mm 17mm 20mm;
+  margin: 17mm 17mm 17mm;
   @bottom-left { content: "Salto a pie · Palacio Gallino y Consulado Argentino"; font: 8pt "Liberation Sans", sans-serif; color: #7a7d84; }
   @bottom-right { content: "Página " counter(page); font: 8pt "Liberation Sans", sans-serif; color: #7a7d84; }
 }
@@ -23,11 +23,11 @@
 html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 body {
   margin: 0;
-  font: 10.6pt/1.55 "Bitstream Charter", "Liberation Serif", serif;
+  font: 10.2pt/1.5 "Bitstream Charter", "Liberation Serif", serif;
   color: var(--texto);
   background: #fff;
 }
-p { margin: 0 0 3.2mm; orphans: 3; widows: 3; hyphens: manual; }
+p { margin: 0 0 2.9mm; orphans: 3; widows: 3; hyphens: manual; }
 em { font-style: italic; }
 strong { color: var(--navy); }
 
@@ -115,26 +115,23 @@ table.ficha caption {
 table.ficha th, table.ficha td { padding: 1.6mm 3mm; border-bottom: .25mm solid var(--linea); vertical-align: top; text-align: left; }
 table.ficha th { width: 34mm; font-weight: 700; color: var(--navy); background: #f1f4f9; }
 
-/* Fotos reales */
-.fotos { display: grid; gap: 3mm; margin: 0 0 6mm; grid-template-columns: 1fr 1fr; }
-.fotos.n1 { grid-template-columns: 1fr; }
-.fotos.n3 figure:first-child { grid-column: 1 / -1; }
+/* Fotos reales: sin recorte, proporción original */
+.fotos { display: grid; gap: 3mm; width: 78%; margin: 0 auto 3mm; grid-template-columns: 1fr 1fr; }
 figure { margin: 0; break-inside: avoid; }
-.fotos img { display: block; width: 100%; height: 62mm; object-fit: cover; }
-.fotos.n1 img, .fotos.n3 figure:first-child img { height: 82mm; }
+.fotos img { display: block; width: 100%; height: auto; }
 figcaption { margin-top: 1.4mm; font: 8.2pt/1.35 "Liberation Sans", sans-serif; color: var(--suave); }
 figcaption b { color: var(--navy); }
-.cr { display: block; font-size: 7.4pt; color: #868990; }
-.pendiente .ph {
-  display: flex; align-items: center; justify-content: center;
-  height: 62mm;
+.cr { display: block; margin-top: .6mm; font-size: 7.2pt; color: #868990; }
+.pendiente {
+  margin: 0 0 6mm;
+  padding: 3mm 4mm;
   border: .4mm dashed #b9a98a;
   background: var(--papel);
-  font: 700 9pt "Liberation Sans", sans-serif;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-  color: #a08f6e;
+  font: 8.6pt/1.35 "Liberation Sans", sans-serif;
+  color: #7d6d4c;
 }
+.pendiente b { letter-spacing: .06em; text-transform: uppercase; }
+.fotos + .pendiente { margin-top: 0; }
 
 /* Figuras de las fichas (época / actual) */
 .figuras { display: grid; grid-template-columns: 1fr 1fr; gap: 3mm; margin: 0 0 5mm; break-inside: avoid; }
@@ -143,7 +140,7 @@ figcaption b { color: var(--navy); }
 
 /* Guion */
 h3.sub {
-  margin: 6mm 0 3mm;
+  margin: 4mm 0 1.5mm;
   font: 700 9.5pt "Liberation Sans", sans-serif;
   letter-spacing: .12em;
   text-transform: uppercase;
@@ -152,7 +149,7 @@ h3.sub {
 }
 h4 {
   display: flex; align-items: baseline; gap: 2.6mm;
-  margin: 5.5mm 0 2.4mm;
+  margin: 4.2mm 0 2mm;
   font: 700 12pt/1.25 "Liberation Sans", sans-serif;
   color: var(--navy);
   break-after: avoid;
@@ -169,15 +166,15 @@ h4 .num {
 
 /* Claves */
 .claves {
-  margin: 6mm 0 0;
-  padding: 4.5mm 6mm 2mm;
+  margin: 3mm 0 0;
+  padding: 3mm 6mm .5mm;
   background: var(--papel);
   border: .35mm solid var(--bronce);
   break-inside: avoid;
 }
-.claves h3 { margin: 0 0 3mm; font: 700 11pt "Liberation Sans", sans-serif; color: var(--navy); }
+.claves h3 { margin: 0 0 2.4mm; font: 700 11pt "Liberation Sans", sans-serif; color: var(--navy); }
 .claves ol { margin: 0; padding: 0; list-style: none; counter-reset: c; }
-.claves li { position: relative; margin: 0 0 3mm; padding-left: 8mm; counter-increment: c; font-size: 10.2pt; }
+.claves li { position: relative; margin: 0 0 1.6mm; padding-left: 8mm; counter-increment: c; font-size: 9.7pt; line-height: 1.42; }
 .claves li::before {
   content: counter(c);
   position: absolute; left: 0; top: .3mm;
@@ -194,6 +191,9 @@ h4 .num {
 .cierre { break-before: page; }
 .cierre + .cierre { break-before: auto; margin-top: 9mm; }
 .h2c { margin: 0 0 4mm; font: 700 16pt "Liberation Sans", sans-serif; color: var(--navy); }
-.cierre h2.h2c ~ p:first-of-type { font-size: 11.5pt; }
+.h2c + p { font-size: 11.5pt; }
 ul.lista { margin: 0 0 4mm; padding-left: 5mm; font: 9pt/1.4 "Liberation Sans", sans-serif; }
 ul.lista li { margin-bottom: 1.8mm; }
+ul.lista a { color: var(--navy); }
+.url { word-break: break-all; color: #6b7078; }
+.nota-lic { font: italic 8.2pt/1.4 "Liberation Sans", sans-serif; color: var(--suave); }
