@@ -2286,7 +2286,7 @@
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
 
-          <div class="relative p-6 bg-white rounded-2xl border border-tannat-100 text-center cursor-pointer transition-shadow hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-gold" tabindex="0" role="button" aria-expanded="false" onmouseenter="toggleInfoCard(this,true,true)" onmouseleave="toggleInfoCard(this,false,true)" onclick="toggleInfoCard(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleInfoCard(this);}">
+          <div class="relative p-6 bg-white rounded-2xl border border-tannat-100 text-center cursor-pointer transition-shadow hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-gold" tabindex="0" role="button" aria-expanded="false" onclick="toggleInfoCard(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleInfoCard(this);}">
             <div class="w-12 h-12 rounded-full bg-tannat/10 text-tannat flex items-center justify-center mx-auto mb-4">
               <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064"></path></svg>
             </div>
@@ -2305,7 +2305,7 @@
             </span>
           </div>
 
-          <div class="relative p-6 bg-white rounded-2xl border border-tannat-100 text-center cursor-pointer transition-shadow hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-gold" tabindex="0" role="button" aria-expanded="false" onmouseenter="toggleInfoCard(this,true,true)" onmouseleave="toggleInfoCard(this,false,true)" onclick="toggleInfoCard(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleInfoCard(this);}">
+          <div class="relative p-6 bg-white rounded-2xl border border-tannat-100 text-center cursor-pointer transition-shadow hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-gold" tabindex="0" role="button" aria-expanded="false" onclick="toggleInfoCard(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleInfoCard(this);}">
             <div class="w-12 h-12 rounded-full bg-tannat/10 text-tannat flex items-center justify-center mx-auto mb-4">
               <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
             </div>
@@ -2324,7 +2324,7 @@
             </span>
           </div>
 
-          <div class="relative p-6 bg-white rounded-2xl border border-tannat-100 text-center cursor-pointer transition-shadow hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-gold" tabindex="0" role="button" aria-expanded="false" onmouseenter="toggleInfoCard(this,true,true)" onmouseleave="toggleInfoCard(this,false,true)" onclick="toggleInfoCard(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleInfoCard(this);}">
+          <div class="relative p-6 bg-white rounded-2xl border border-tannat-100 text-center cursor-pointer transition-shadow hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-gold" tabindex="0" role="button" aria-expanded="false" onclick="toggleInfoCard(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleInfoCard(this);}">
             <div class="w-12 h-12 rounded-full bg-tannat/10 text-tannat flex items-center justify-center mx-auto mb-4">
               <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
             </div>
@@ -6236,18 +6236,17 @@
       });
     });
 
-    // Tarjetas de Misión y Visión: se despliegan al pasar el mouse (desktop) o al tocar/enfocar (mobile/teclado).
-    // Se maneja con JS directo (no con variantes condicionales de Tailwind) para que la altura se calcule
-    // siempre a partir del contenido real (scrollHeight), sin depender de un valor máximo fijo adivinado.
-    // Con mouse el hover abre/cierra y el clic no debe cerrar lo que el hover acaba de abrir; en táctil (sin hover) el toque alterna
-    // y los mouseenter/mouseleave que el navegador emula al tocar no cuentan.
-    function toggleInfoCard(card, forceExpand, byHover) {
-      const hoverDevice = window.matchMedia('(hover: hover)').matches;
-      if (byHover && !hoverDevice) return;
+    // Tarjetas de Misión y Visión: alternan con clic o teclado (Enter/Espacio). Se maneja con JS directo
+    // (no con variantes condicionales de Tailwind) para que la altura se calcule siempre a partir del
+    // contenido real (scrollHeight), sin depender de un valor máximo fijo adivinado.
+    // No disparar esto también en mouseenter/mouseleave: un clic con mouse siempre ocurre con el cursor
+    // ya encima (dispara mouseenter antes), así que un hover que abre/cierra por su cuenta termina
+    // peleando con el clic y la tarjeta se queda sin poder cerrarse.
+    function toggleInfoCard(card) {
       const panel = card.querySelector('.info-panel');
       const chevron = card.querySelector('.info-chevron');
       const label = card.querySelector('.info-label');
-      const expand = forceExpand !== undefined ? forceExpand : (hoverDevice && card.matches(':hover')) ? true : !card.classList.contains('is-open');
+      const expand = !card.classList.contains('is-open');
       card.classList.toggle('is-open', expand);
       card.setAttribute('aria-expanded', expand);
       if (panel) panel.style.maxHeight = expand ? panel.scrollHeight + 'px' : '0px';
