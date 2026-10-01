@@ -497,6 +497,11 @@
     }
     .flip-card-back { transform: rotateY(180deg); }
     .flip-card:focus-visible { outline: 2px solid #C29D62; outline-offset: 3px; border-radius: 1rem; }
+    /* Acordeón del FAQ: grid-template-rows 0fr→1fr anima contra el alto real del contenido (no un max-height fijo que desincroniza la duración). */
+    .faq-ans { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .4s cubic-bezier(0.4, 0, 0.2, 1); }
+    .faq-ans.is-open { grid-template-rows: 1fr; }
+    .faq-ans-inner { overflow: hidden; }
+    @media (prefers-reduced-motion: reduce) { .faq-ans { transition: none; } }
     /* Sombra editorial multicapa y difusa (spec del rediseño), reemplaza shadow-sm/shadow-md en tarjetas clave */
     .shadow-editorial { box-shadow: 0 10px 30px -10px rgba(18, 18, 20, 0.08); }
     .shadow-editorial-hover:hover { box-shadow: 0 16px 40px -12px rgba(18, 18, 20, 0.16); }
@@ -1370,9 +1375,9 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           
           <!-- Station 1: Bodega Harriague -->
-          <div role="button" tabindex="0" onclick="openStationModal(1)" onkeydown="if(event.key===&#39;Enter&#39;||event.key===&#39; &#39;){event.preventDefault();openStationModal(1);}" class="group bg-crema rounded-2xl overflow-hidden border border-tannat-100 shadow-md hover:shadow-2xl hover:-translate-y-1.5 transition-all flex flex-col focus:outline-none focus:ring-2 focus:ring-gold" aria-labelledby="stc1-b stc1-t">
+          <div role="button" tabindex="0" onclick="openStationModal(1)" onkeydown="if(event.key===&#39;Enter&#39;||event.key===&#39; &#39;){event.preventDefault();openStationModal(1);}" class="group bg-crema rounded-2xl overflow-hidden border border-tannat-100 shadow-editorial shadow-editorial-hover hover:-translate-y-1.5 transition-all flex flex-col focus:outline-none focus:ring-2 focus:ring-gold" aria-labelledby="stc1-b stc1-t">
             <div class="aspect-[4/3] relative overflow-hidden bg-tannat-900">
-              <img src="./LaRutadelTannat_files/8254D59E-F679-48CA-94EB-EC6CFB40EC77.webp" width="700" height="525" alt="Espacio Cultural Bodega Harriague" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" loading="lazy">
+              <img src="./LaRutadelTannat_files/8254D59E-F679-48CA-94EB-EC6CFB40EC77.webp" width="700" height="525" alt="Espacio Cultural Bodega Harriague" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy">
               <div id="stc1-b" class="absolute top-3 left-3 bg-tannat text-gold-light text-xs font-bold px-3 py-1 rounded-full shadow-md" data-i18n="st1.badge">
                 Estación 01
               </div>
@@ -1383,6 +1388,9 @@
                 <h3 id="stc1-t" class="font-serif text-xl font-bold text-tannat-dark mb-2 group-hover:text-gold-dark transition-colors" data-i18n="st1.title">Espacio Cultural Bodega Harriague</h3>
                 <p class="text-base text-terroir line-clamp-3 mb-4" data-i18n="st1.desc">
                   Recinto arqueológico e industrial. Cuna donde se implantaron los primeros cuadros de Tannat en 1874. Proyecto patrimonial U-riharri.
+                </p>
+                <p class="flex items-center gap-1.5 text-xs text-terroir/80 mb-4" data-i18n="st1.note">
+                  <span class="w-1.5 h-1.5 rounded-full bg-gold flex-shrink-0"></span>Espacio cultural · sin producción propia de vino
                 </p>
               </div>
               <div class="pt-4 border-t border-tannat-100 flex items-center justify-between text-xs font-semibold text-tannat">
@@ -1395,9 +1403,9 @@
           </div>
 
           <!-- Station 2: Salto Chico -->
-          <div role="button" tabindex="0" onclick="openStationModal(2)" onkeydown="if(event.key===&#39;Enter&#39;||event.key===&#39; &#39;){event.preventDefault();openStationModal(2);}" class="group bg-crema rounded-2xl overflow-hidden border border-tannat-100 shadow-md hover:shadow-2xl hover:-translate-y-1.5 transition-all flex flex-col focus:outline-none focus:ring-2 focus:ring-gold" aria-labelledby="stc2-b stc2-t">
+          <div role="button" tabindex="0" onclick="openStationModal(2)" onkeydown="if(event.key===&#39;Enter&#39;||event.key===&#39; &#39;){event.preventDefault();openStationModal(2);}" class="group bg-crema rounded-2xl overflow-hidden border border-tannat-100 shadow-editorial shadow-editorial-hover hover:-translate-y-1.5 transition-all flex flex-col focus:outline-none focus:ring-2 focus:ring-gold" aria-labelledby="stc2-b stc2-t">
             <div class="aspect-[4/3] relative overflow-hidden bg-tannat-900">
-              <img src="./LaRutadelTannat_files/salto-chico-cartel-inavi.webp" width="498" height="280" alt="Cartel de entrada de Viñas y Bodega del Salto Chico" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" loading="lazy">
+              <img src="./LaRutadelTannat_files/salto-chico-cartel-inavi.webp" width="498" height="280" alt="Cartel de entrada de Viñas y Bodega del Salto Chico" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy">
               <div id="stc2-b" class="absolute top-3 left-3 bg-tannat text-gold-light text-xs font-bold px-3 py-1 rounded-full shadow-md" data-i18n="st2.badge">
                 Estación 02
               </div>
@@ -1409,6 +1417,10 @@
                 <p class="text-base text-terroir line-clamp-3 mb-4" data-i18n="st2.desc">
                   Viñedos sobre cascadas basálticas. 6 hectáreas de cepas europeas y moderna tecnología de vinificación artesanal.
                 </p>
+                <div class="flex flex-wrap gap-x-4 gap-y-1 text-xs text-terroir/80 mb-4">
+                  <span class="inline-flex items-center gap-1.5" data-i18n="st2.soil"><span class="w-1.5 h-1.5 rounded-full bg-gold flex-shrink-0"></span>Suelo basáltico y arenas aluviales</span>
+                  <span class="inline-flex items-center gap-1.5" data-i18n="st2.wine"><span class="w-1.5 h-1.5 rounded-full bg-tannat flex-shrink-0"></span>Gran Reserva Tannat</span>
+                </div>
               </div>
               <div class="pt-4 border-t border-tannat-100 flex items-center justify-between text-xs font-semibold text-tannat">
                 <span data-i18n="st2.loc">Colonia Osimani, Salto</span>
@@ -1420,9 +1432,9 @@
           </div>
 
           <!-- Station 3: Bertolini & Broglio -->
-          <div role="button" tabindex="0" onclick="openStationModal(3)" onkeydown="if(event.key===&#39;Enter&#39;||event.key===&#39; &#39;){event.preventDefault();openStationModal(3);}" class="group bg-crema rounded-2xl overflow-hidden border border-tannat-100 shadow-md hover:shadow-2xl hover:-translate-y-1.5 transition-all flex flex-col focus:outline-none focus:ring-2 focus:ring-gold" aria-labelledby="stc3-b stc3-t">
+          <div role="button" tabindex="0" onclick="openStationModal(3)" onkeydown="if(event.key===&#39;Enter&#39;||event.key===&#39; &#39;){event.preventDefault();openStationModal(3);}" class="group bg-crema rounded-2xl overflow-hidden border border-tannat-100 shadow-editorial shadow-editorial-hover hover:-translate-y-1.5 transition-all flex flex-col focus:outline-none focus:ring-2 focus:ring-gold" aria-labelledby="stc3-b stc3-t">
             <div class="aspect-[4/3] relative overflow-hidden bg-tannat-900">
-              <img src="./LaRutadelTannat_files/bertolini-broglio-inavi.jpg" width="960" height="720" alt="Fachada real de Bodega Bertolini &amp; Broglio, Ruta 3, Salto" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" loading="lazy">
+              <img src="./LaRutadelTannat_files/bertolini-broglio-inavi.jpg" width="960" height="720" alt="Fachada real de Bodega Bertolini &amp; Broglio, Ruta 3, Salto" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy">
               <div id="stc3-b" class="absolute top-3 left-3 bg-tannat text-gold-light text-xs font-bold px-3 py-1 rounded-full shadow-md" data-i18n="st3.badge">
                 Estación 03
               </div>
@@ -1434,6 +1446,10 @@
                 <p class="text-base text-terroir line-clamp-3 mb-4" data-i18n="st3.desc">
                   19 hectáreas de viñedos conducidos en parrales. Pioneros en vinificación por gravedad y creadores del premiado Tannat Exotic.
                 </p>
+                <div class="flex flex-wrap gap-x-4 gap-y-1 text-xs text-terroir/80 mb-4">
+                  <span class="inline-flex items-center gap-1.5" data-i18n="st3.soil"><span class="w-1.5 h-1.5 rounded-full bg-gold flex-shrink-0"></span>Suelo basáltico, Parada Daymán</span>
+                  <span class="inline-flex items-center gap-1.5" data-i18n="st3.wine"><span class="w-1.5 h-1.5 rounded-full bg-tannat flex-shrink-0"></span>Tannat Exotic Senza Crianza</span>
+                </div>
               </div>
               <div class="pt-4 border-t border-tannat-100 flex items-center justify-between text-xs font-semibold text-tannat">
                 <span data-i18n="st3.loc">Ruta 3 Km 468.5, Daymán</span>
@@ -1445,9 +1461,9 @@
           </div>
 
           <!-- Station 4: Mori Maglio Wines -->
-          <div role="button" tabindex="0" onclick="openStationModal(4)" onkeydown="if(event.key===&#39;Enter&#39;||event.key===&#39; &#39;){event.preventDefault();openStationModal(4);}" class="group bg-crema rounded-2xl overflow-hidden border border-tannat-100 shadow-md hover:shadow-2xl hover:-translate-y-1.5 transition-all flex flex-col focus:outline-none focus:ring-2 focus:ring-gold" aria-labelledby="stc4-b stc4-t">
+          <div role="button" tabindex="0" onclick="openStationModal(4)" onkeydown="if(event.key===&#39;Enter&#39;||event.key===&#39; &#39;){event.preventDefault();openStationModal(4);}" class="group bg-crema rounded-2xl overflow-hidden border border-tannat-100 shadow-editorial shadow-editorial-hover hover:-translate-y-1.5 transition-all flex flex-col focus:outline-none focus:ring-2 focus:ring-gold" aria-labelledby="stc4-b stc4-t">
             <div class="aspect-[4/3] relative overflow-hidden bg-tannat-900">
-              <img src="./LaRutadelTannat_files/138db8c89a626f5efc0f940f343ad390bf0ec8ca.jpg" width="1024" height="768" alt="Mori Maglio Wines" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" loading="lazy">
+              <img src="./LaRutadelTannat_files/138db8c89a626f5efc0f940f343ad390bf0ec8ca.jpg" width="1024" height="768" alt="Mori Maglio Wines" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy">
               <div id="stc4-b" class="absolute top-3 left-3 bg-tannat text-gold-light text-xs font-bold px-3 py-1 rounded-full shadow-md" data-i18n="st4.badge">
                 Estación 04
               </div>
@@ -1459,6 +1475,10 @@
                 <p class="text-base text-terroir line-clamp-3 mb-4" data-i18n="st4.desc">
                   Tradición vitivinícola viva en Parada Daymán. Vinos de autor con identidad territorial y maridajes gourmet de cordero y cítricos salteños.
                 </p>
+                <div class="flex flex-wrap gap-x-4 gap-y-1 text-xs text-terroir/80 mb-4">
+                  <span class="inline-flex items-center gap-1.5" data-i18n="st4.soil"><span class="w-1.5 h-1.5 rounded-full bg-gold flex-shrink-0"></span>Suelo basáltico, Parada Daymán</span>
+                  <span class="inline-flex items-center gap-1.5" data-i18n="st4.wine"><span class="w-1.5 h-1.5 rounded-full bg-tannat flex-shrink-0"></span>Tannat Reserva</span>
+                </div>
               </div>
               <div class="pt-4 border-t border-tannat-100 flex items-center justify-between text-xs font-semibold text-tannat">
                 <span data-i18n="st4.loc">Parada Daymán, Salto</span>
@@ -1501,7 +1521,7 @@
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
 
-          <div class="rounded-2xl border border-tannat-100 p-6 hover:shadow-md transition-shadow" style="background-color: rgba(197,160,89,0.15);">
+          <div class="rounded-2xl border border-tannat-100 p-6 hover:shadow-md transition-shadow" style="background-color: rgba(194,157,98,0.15);">
             <div class="w-12 h-12 rounded-xl bg-white shadow-sm flex items-center justify-center mb-4">
               <svg class="w-6 h-6 text-tannat" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 2v3.5"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 5.5c1.8-1.2 3.2-.6 3.5.8"></path><circle cx="8.7" cy="9" r="2"></circle><circle cx="15.3" cy="9" r="2"></circle><circle cx="7" cy="13" r="2"></circle><circle cx="12" cy="13" r="2"></circle><circle cx="17" cy="13" r="2"></circle><circle cx="9.5" cy="17" r="2"></circle><circle cx="14.5" cy="17" r="2"></circle></svg>
             </div>
@@ -1517,7 +1537,7 @@
             <p class="text-base text-terroir leading-relaxed" data-i18n="sustain.p2Desc">Visitas guiadas a escala humana, pensadas para no saturar bodegas centenarias ni el entorno natural que las rodea.</p>
           </div>
 
-          <div class="rounded-2xl border border-tannat-100 p-6 hover:shadow-md transition-shadow" style="background-color: rgba(223,202,157,0.28);">
+          <div class="rounded-2xl border border-tannat-100 p-6 hover:shadow-md transition-shadow" style="background-color: rgba(217,180,122,0.28);">
             <div class="w-12 h-12 rounded-xl bg-white shadow-sm flex items-center justify-center mb-4">
               <svg class="w-6 h-6 text-tannat" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="4.7" rx="5" ry="1.7" stroke-width="1.5"></ellipse><path stroke-linecap="round" stroke-width="1.5" d="M7 4.7C4.7 8.2 4.7 15.8 7 19.3"></path><path stroke-linecap="round" stroke-width="1.5" d="M17 4.7C19.3 8.2 19.3 15.8 17 19.3"></path><ellipse cx="12" cy="19.3" rx="5" ry="1.7" stroke-width="1.5"></ellipse><path stroke-linecap="round" stroke-width="1.5" d="M5.3 9.3C7.3 10 16.7 10 18.7 9.3"></path><path stroke-linecap="round" stroke-width="1.5" d="M4.7 14.7C7 15.4 17 15.4 19.3 14.7"></path></svg>
             </div>
@@ -1525,7 +1545,7 @@
             <p class="text-base text-terroir leading-relaxed" data-i18n="sustain.p3Desc">El circuito prioriza bodegas boutique y familiares por sobre la producción masiva, sosteniendo oficios y economías locales.</p>
           </div>
 
-          <div class="rounded-2xl border border-tannat-100 p-6 hover:shadow-md transition-shadow" style="background-color: rgba(114,47,55,0.12);">
+          <div class="rounded-2xl border border-tannat-100 p-6 hover:shadow-md transition-shadow" style="background-color: rgba(143,38,54,0.12);">
             <div class="w-12 h-12 rounded-xl bg-white shadow-sm flex items-center justify-center mb-4">
               <svg class="w-6 h-6 text-tannat" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="17" r="2.3" stroke-width="1.5"></circle><circle cx="19" cy="7" r="2.3" stroke-width="1.5"></circle><path stroke-linecap="round" stroke-width="1.5" d="M7.2 15.3L16.8 8.7"></path></svg>
             </div>
@@ -1862,7 +1882,7 @@
           <!-- Package 1: Medio Día -->
           <div class="group bg-tannat-dark/80 rounded-3xl border border-gold/30 flex flex-col hover:border-gold transition-colors relative shadow-2xl overflow-hidden">
             <div class="relative h-48 sm:h-52 overflow-hidden">
-              <img src="./LaRutadelTannat_files/vinos-historias-cava-guia.webp" width="960" height="1440" alt="Guía junto a grandes barricas de roble en una cava vitivinícola, imagen ilustrativa" class="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-700" loading="lazy">
+              <img src="./LaRutadelTannat_files/vinos-historias-cava-guia.webp" width="960" height="1440" alt="Guía junto a grandes barricas de roble en una cava vitivinícola, imagen ilustrativa" class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700" loading="lazy">
               <div class="absolute inset-0 bg-gradient-to-t from-tannat-dark via-tannat-dark/15 to-transparent"></div>
               <span class="absolute top-3 left-3 bg-tannat text-gold-light text-xs font-bold px-3 py-1 rounded-full shadow-md" data-i18n="packages.p1Tag">Medio Día · 4 Horas</span>
             </div>
@@ -1916,7 +1936,7 @@
 
             <div class="group relative bg-gradient-to-b from-tannat to-tannat-dark rounded-3xl border-2 border-gold flex flex-col shadow-2xl overflow-hidden">
               <div class="relative h-48 sm:h-52 overflow-hidden">
-                <img src="./LaRutadelTannat_files/vip-vinedo-atardecer.webp" width="960" height="1440" alt="Atardecer dorado sobre un viñedo, imagen ilustrativa del circuito completo" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" loading="lazy">
+                <img src="./LaRutadelTannat_files/vip-vinedo-atardecer.webp" width="960" height="1440" alt="Atardecer dorado sobre un viñedo, imagen ilustrativa del circuito completo" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy">
                 <div class="absolute inset-0 bg-gradient-to-t from-tannat via-tannat/10 to-transparent"></div>
                 <span class="absolute top-3 left-3 bg-gold text-tannat-900 text-xs font-bold px-3 py-1 rounded-full shadow-md" data-i18n="packages.p2Tag">Día Completo · 8 Horas</span>
               </div>
@@ -2713,9 +2733,18 @@
           </p>
         </div>
 
-        <!-- Interactive Map Visual -->
-        <div class="bg-crema rounded-3xl p-6 sm:p-10 border border-tannat-100 shadow-xl">
-          <div class="relative aspect-square sm:aspect-[16/9] w-full bg-[#EFECE6] rounded-2xl overflow-hidden border border-tannat-100">
+        <!-- Filtros rápidos: muestran/ocultan marcadores reales del mapa (no recortan contenido, solo la vista) -->
+        <div class="flex justify-center mb-6">
+          <div class="inline-flex items-center gap-1 bg-crema rounded-full p-1 border border-tannat-100 shadow-sm">
+            <button type="button" id="mapFilterAll" onclick="filterMapMarkers('all')" aria-pressed="true" class="px-3.5 py-1.5 rounded-full font-semibold transition-all bg-tannat text-white shadow-sm" data-i18n="map.filterAll">Ruta Completa</button>
+            <button type="button" id="mapFilterWineries" onclick="filterMapMarkers('wineries')" aria-pressed="false" class="px-3.5 py-1.5 rounded-full font-semibold transition-all text-tannat hover:bg-tannat/10" data-i18n="map.filterWineries">Solo Bodegas</button>
+            <button type="button" id="mapFilterThermal" onclick="filterMapMarkers('thermal')" aria-pressed="false" class="px-3.5 py-1.5 rounded-full font-semibold transition-all text-tannat hover:bg-tannat/10" data-i18n="map.filterThermal">Termas</button>
+          </div>
+        </div>
+
+        <!-- Interactive Map Visual: marco premium con filo dorado -->
+        <div class="bg-crema rounded-3xl p-6 sm:p-10 border border-gold/30 shadow-editorial">
+          <div class="relative aspect-square sm:aspect-[16/9] w-full bg-[#EFECE6] rounded-2xl overflow-hidden border-2 border-gold/40">
             <div id="leafletMap" class="absolute inset-0 w-full h-full" aria-label="Mapa interactivo real de La Ruta del Tannat en Salto, Uruguay" data-i18n-aria="a11y.map">
               <p class="w-full h-full flex items-center justify-center text-sm text-terroir px-6 text-center" data-i18n="map.loading">Cargando mapa interactivo…</p>
             </div>
@@ -2821,10 +2850,12 @@
               <span data-i18n="faq.q1">¿Qué sucede en caso de lluvia o mal tiempo?</span>
               <svg id="faqIcon1" class="w-5 h-5 text-gold transform transition-transform shrink-0 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
             </button>
-            <div id="faqAns1" class="hidden px-6 pb-6 text-base text-terroir leading-relaxed">
+            <div id="faqAns1" class="faq-ans" aria-hidden="true">
+              <div class="faq-ans-inner px-6 pb-6 text-base text-terroir leading-relaxed">
               <p data-i18n="faq.a1">
                 Todas nuestras experiencias continúan normalmente. Las visitas a viñedos se adaptan hacia las cavas históricas subterráneas, salas de barricas y salones de cata climatizados para garantizar su confort y seguridad.
               </p>
+            </div>
             </div>
           </div>
 
@@ -2834,10 +2865,12 @@
               <span data-i18n="faq.q2">¿El circuito incluye traslados desde los hoteles termales?</span>
               <svg id="faqIcon2" class="w-5 h-5 text-gold transform transition-transform shrink-0 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
             </button>
-            <div id="faqAns2" class="hidden px-6 pb-6 text-base text-terroir leading-relaxed">
+            <div id="faqAns2" class="faq-ans" aria-hidden="true">
+              <div class="faq-ans-inner px-6 pb-6 text-base text-terroir leading-relaxed">
               <p data-i18n="faq.a2">
                 Sí. Los paquetes incluyen servicio de recogida y regreso tanto en hoteles del centro de la ciudad de Salto como en la zona termal de Daymán y Arapey (previa coordinación al momento de la reserva).
               </p>
+            </div>
             </div>
           </div>
 
@@ -2847,10 +2880,12 @@
               <span data-i18n="faq.q3">¿Hay opciones para personas que no beben alcohol o menores?</span>
               <svg id="faqIcon3" class="w-5 h-5 text-gold transform transition-transform shrink-0 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
             </button>
-            <div id="faqAns3" class="hidden px-6 pb-6 text-base text-terroir leading-relaxed">
+            <div id="faqAns3" class="faq-ans" aria-hidden="true">
+              <div class="faq-ans-inner px-6 pb-6 text-base text-terroir leading-relaxed">
               <p data-i18n="faq.a3">
                 Por supuesto. Disponemos de jugos de uva 100% naturales artesanales, aguas saborizadas con cítricos de Salto y opciones gastronómicas especiales para menores y personas abstemias, manteniendo la tarifa preferencial de acompañante.
               </p>
+            </div>
             </div>
           </div>
 
@@ -2860,10 +2895,12 @@
               <span data-i18n="faq.q4">¿Qué tipo de vestimenta y calzado se recomienda?</span>
               <svg id="faqIcon4" class="w-5 h-5 text-gold transform transition-transform shrink-0 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
             </button>
-            <div id="faqAns4" class="hidden px-6 pb-6 text-base text-terroir leading-relaxed">
+            <div id="faqAns4" class="faq-ans" aria-hidden="true">
+              <div class="faq-ans-inner px-6 pb-6 text-base text-terroir leading-relaxed">
               <p data-i18n="faq.a4">
                 Recomendamos ropa cómoda, sombrero o gorro para el sol y calzado cerrado y bajo para caminar con total tranquilidad por los senderos de viñedos y las áreas de suelo basáltico.
               </p>
+            </div>
             </div>
           </div>
 
@@ -2873,10 +2910,12 @@
               <span data-i18n="faq.q5">¿Cómo hago una reserva?</span>
               <svg id="faqIcon5" class="w-5 h-5 text-gold transform transition-transform shrink-0 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
             </button>
-            <div id="faqAns5" class="hidden px-6 pb-6 text-base text-terroir leading-relaxed">
+            <div id="faqAns5" class="faq-ans" aria-hidden="true">
+              <div class="faq-ans-inner px-6 pb-6 text-base text-terroir leading-relaxed">
               <p data-i18n="faq.a5">
                 Usá el botón «Reservar Ahora», elegí el paquete y completá el formulario: se arma un mensaje de WhatsApp con tus datos que enviás desde tu propio teléfono. No hace falta crear una cuenta. El equipo coordina con las bodegas y te confirma horarios, cupos y precios por ese mismo chat.
               </p>
+            </div>
             </div>
           </div>
 
@@ -2886,10 +2925,12 @@
               <span data-i18n="faq.q6">¿Puedo pagar desde el sitio? ¿Los precios son finales?</span>
               <svg id="faqIcon6" class="w-5 h-5 text-gold transform transition-transform shrink-0 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
             </button>
-            <div id="faqAns6" class="hidden px-6 pb-6 text-base text-terroir leading-relaxed">
+            <div id="faqAns6" class="faq-ans" aria-hidden="true">
+              <div class="faq-ans-inner px-6 pb-6 text-base text-terroir leading-relaxed">
               <p data-i18n="faq.a6">
                 Por ahora no: el sitio no procesa pagos. La sección de pagos es una demostración ilustrativa de este proyecto académico y los precios (en dólares y pesos uruguayos) son de referencia. La confirmación final de cada reserva se coordina de forma directa por WhatsApp.
               </p>
+            </div>
             </div>
           </div>
 
@@ -2899,10 +2940,12 @@
               <span data-i18n="faq.q7">¿Cuánto dura el circuito?</span>
               <svg id="faqIcon7" class="w-5 h-5 text-gold transform transition-transform shrink-0 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
             </button>
-            <div id="faqAns7" class="hidden px-6 pb-6 text-base text-terroir leading-relaxed">
+            <div id="faqAns7" class="faq-ans" aria-hidden="true">
+              <div class="faq-ans-inner px-6 pb-6 text-base text-terroir leading-relaxed">
               <p data-i18n="faq.a7">
                 Depende del tiempo que tengas: desde una escapada de medio día (unas 4 horas) hasta el circuito completo, de jornada entera, por las 4 estaciones. En Paquetes está el detalle de cada opción.
               </p>
+            </div>
             </div>
           </div>
 
@@ -2912,10 +2955,12 @@
               <span data-i18n="faq.q8">¿Cómo llego a Salto?</span>
               <svg id="faqIcon8" class="w-5 h-5 text-gold transform transition-transform shrink-0 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
             </button>
-            <div id="faqAns8" class="hidden px-6 pb-6 text-base text-terroir leading-relaxed">
+            <div id="faqAns8" class="faq-ans" aria-hidden="true">
+              <div class="faq-ans-inner px-6 pb-6 text-base text-terroir leading-relaxed">
               <p data-i18n="faq.a8">
                 Por la Ruta 3: Salto está a unos 490 km de Montevideo, alrededor de 6 horas en auto. La ciudad también tiene aeropuerto (Nueva Hespérides, código STY). Si venís desde Argentina, el puente internacional de la represa de Salto Grande conecta Concordia con Salto. El detalle está en «Cómo Llegar y Cuánto Quedarte».
               </p>
+            </div>
             </div>
           </div>
 
@@ -2925,10 +2970,12 @@
               <span data-i18n="faq.q9">¿Cuándo conviene viajar?</span>
               <svg id="faqIcon9" class="w-5 h-5 text-gold transform transition-transform shrink-0 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
             </button>
-            <div id="faqAns9" class="hidden px-6 pb-6 text-base text-terroir leading-relaxed">
+            <div id="faqAns9" class="faq-ans" aria-hidden="true">
+              <div class="faq-ans-inner px-6 pb-6 text-base text-terroir leading-relaxed">
               <p data-i18n="faq.a9">
                 Todo el año: cada estación muestra algo distinto. La vendimia es el momento cumbre (cosecha manual y pisada tradicional en lagares); el 14 de abril es el Día Nacional del Tannat, en homenaje al natalicio de Don Pascual Harriague; en invierno hay catas de vinos de guarda junto a la chimenea; y en primavera, con el clima templado, paseos y copas al aire libre.
               </p>
+            </div>
             </div>
           </div>
 
@@ -2938,10 +2985,12 @@
               <span data-i18n="faq.q10">¿Dónde puedo alojarme?</span>
               <svg id="faqIcon10" class="w-5 h-5 text-gold transform transition-transform shrink-0 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
             </button>
-            <div id="faqAns10" class="hidden px-6 pb-6 text-base text-terroir leading-relaxed">
+            <div id="faqAns10" class="faq-ans" aria-hidden="true">
+              <div class="faq-ans-inner px-6 pb-6 text-base text-terroir leading-relaxed">
               <p data-i18n="faq.a10">
                 Hay tres zonas: el centro de Salto (punto de partida), Termas del Daymán (a unos 10 km, con complejos termales) y Termas del Arapey (a unos 80 km, para extender el viaje). Los alojamientos que mencionamos son solo informativos y no son partners comerciales de este proyecto: coordiná tu reserva directamente con cada establecimiento.
               </p>
+            </div>
             </div>
           </div>
 
@@ -2951,10 +3000,12 @@
               <span data-i18n="faq.q11">¿Quién está detrás de este proyecto? ¿Es una agencia de viajes?</span>
               <svg id="faqIcon11" class="w-5 h-5 text-gold transform transition-transform shrink-0 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
             </button>
-            <div id="faqAns11" class="hidden px-6 pb-6 text-base text-terroir leading-relaxed">
+            <div id="faqAns11" class="faq-ans" aria-hidden="true">
+              <div class="faq-ans-inner px-6 pb-6 text-base text-terroir leading-relaxed">
               <p data-i18n="faq.a11">
                 Somos estudiantes, no una agencia consolidada: este es el proyecto final de Federico Camara, Homero Texeira y Anthony Moreira, del Polo Educativo Tecnológico Salto (DGETP-UTU). Es un proyecto estudiantil en marcha; las visitas se coordinan directamente con las bodegas por WhatsApp.
               </p>
+            </div>
             </div>
           </div>
 
@@ -2964,10 +3015,12 @@
               <span data-i18n="faq.q12">¿Puedo dejar mi opinión sobre el circuito?</span>
               <svg id="faqIcon12" class="w-5 h-5 text-gold transform transition-transform shrink-0 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
             </button>
-            <div id="faqAns12" class="hidden px-6 pb-6 text-base text-terroir leading-relaxed">
+            <div id="faqAns12" class="faq-ans" aria-hidden="true">
+              <div class="faq-ans-inner px-6 pb-6 text-base text-terroir leading-relaxed">
               <p data-i18n="faq.a12">
                 Sí, en la sección «Voces del Circuito». Publicamos las opiniones reales de visitantes, sean elogios o críticas; solo descartamos spam, insultos y datos personales. Cada opinión se revisa a mano antes de publicarse.
               </p>
+            </div>
             </div>
           </div>
 
@@ -2977,10 +3030,12 @@
               <span data-i18n="faq.q13">¿Usan cookies o me rastrean?</span>
               <svg id="faqIcon13" class="w-5 h-5 text-gold transform transition-transform shrink-0 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
             </button>
-            <div id="faqAns13" class="hidden px-6 pb-6 text-base text-terroir leading-relaxed">
+            <div id="faqAns13" class="faq-ans" aria-hidden="true">
+              <div class="faq-ans-inner px-6 pb-6 text-base text-terroir leading-relaxed">
               <p data-i18n="faq.a13">
                 No usamos cookies. Solo contamos de forma anónima cuántas veces se abre la página y cuántos toques reciben algunos botones (WhatsApp, reservas, itinerario y La Copa), sin guardar tu dirección IP ni ningún identificador. Si tu navegador tiene activado «No rastrear», no contamos nada. El detalle está en la Política de Privacidad, al pie de la página.
               </p>
+            </div>
             </div>
           </div>
         </div>
@@ -3676,6 +3731,13 @@
         "st3.title": "Bodega Bertolini & Broglio",
         "st3.desc": "19 hectáreas de viñedos conducidos en parrales. Pioneros en vinificación por gravedad y creadores del premiado Tannat Exotic.",
         "st3.loc": "Ruta 3 Km 468.5, Daymán",
+        "st1.note": "Espacio cultural · sin producción propia de vino",
+        "st2.soil": "Suelo basáltico y arenas aluviales",
+        "st2.wine": "Gran Reserva Tannat",
+        "st3.soil": "Suelo basáltico, Parada Daymán",
+        "st3.wine": "Tannat Exotic Senza Crianza",
+        "st4.soil": "Suelo basáltico, Parada Daymán",
+        "st4.wine": "Tannat Reserva",
         
         "st4.badge": "Estación 04",
         "st4.tag": "Viñedo El Asombrado",
@@ -3960,6 +4022,9 @@
         "map.matrixTitle": "Distancias y tiempos de manejo entre estaciones",
         "map.matrixSource": "Calculado con datos reales de OpenStreetMap (ruta en auto, sin contar paradas).",
         "map.matrixTotal": "Recorriendo las 4 estaciones en orden (01→02→03→04): 33 km y unos 32 min de manejo neto.",
+        "map.filterAll": "Ruta Completa",
+        "map.filterWineries": "Solo Bodegas",
+        "map.filterThermal": "Termas",
         "map.loading": "Cargando mapa interactivo…",
         "map.viewSheet": "Ver Ficha",
         
@@ -4224,6 +4289,13 @@
         "st3.title": "Vinícola Bertolini & Broglio",
         "st3.desc": "19 hectares de vinhedos em latada. Pioneiros em vinificação por gravidade e criadores do premiado Tannat Exotic Ouro.",
         "st3.loc": "Rota 3 Km 468.5, Daymán",
+        "st1.note": "Espaço cultural · sem produção própria de vinho",
+        "st2.soil": "Solo basáltico e areias aluviais",
+        "st2.wine": "Gran Reserva Tannat",
+        "st3.soil": "Solo basáltico, Parada Daymán",
+        "st3.wine": "Tannat Exotic Senza Crianza",
+        "st4.soil": "Solo basáltico, Parada Daymán",
+        "st4.wine": "Tannat Reserva",
         
         "st4.badge": "Estação 04",
         "st4.tag": "Vinhedo El Asombrado",
@@ -4508,6 +4580,9 @@
         "map.matrixTitle": "Distâncias e tempos de condução entre as estações",
         "map.matrixSource": "Calculado com dados reais do OpenStreetMap (rota de carro, sem contar as paradas).",
         "map.matrixTotal": "Percorrendo as 4 estações em ordem (01→02→03→04): 33 km e cerca de 32 min de condução líquida.",
+        "map.filterAll": "Rota Completa",
+        "map.filterWineries": "Só Vinícolas",
+        "map.filterThermal": "Termas",
         "map.loading": "Carregando mapa interativo…",
         "map.viewSheet": "Ver Ficha",
         
@@ -4772,6 +4847,13 @@
         "st3.title": "Bertolini & Broglio Boutique Winery",
         "st3.desc": "19 hectares in high trellises. Pioneers in gravity-fed winemaking and producers of the award-winning Tannat Exotic Gold.",
         "st3.loc": "Route 3 Km 468.5, Daymán",
+        "st1.note": "Cultural space · no wine production of its own",
+        "st2.soil": "Basaltic soil and alluvial sands",
+        "st2.wine": "Gran Reserva Tannat",
+        "st3.soil": "Basaltic soil, Parada Daymán",
+        "st3.wine": "Tannat Exotic Senza Crianza",
+        "st4.soil": "Basaltic soil, Parada Daymán",
+        "st4.wine": "Tannat Reserva",
         
         "st4.badge": "Station 04",
         "st4.tag": "El Asombrado Vineyard",
@@ -5056,6 +5138,9 @@
         "map.matrixTitle": "Driving distances and times between stations",
         "map.matrixSource": "Calculated with real OpenStreetMap data (driving route, not counting stops).",
         "map.matrixTotal": "Driving the 4 stations in order (01→02→03→04): 33 km, about 32 net driving minutes.",
+        "map.filterAll": "Full Route",
+        "map.filterWineries": "Wineries Only",
+        "map.filterThermal": "Thermal Springs",
         "map.loading": "Loading interactive map…",
         "map.viewSheet": "View Details",
         
@@ -5150,6 +5235,7 @@
     // búsqueda por nombre de Google Maps, que es más precisa para llegar.
     const THERMAL_SPOT = { lat: -31.4525, lng: -57.9084, mapsUrl: "https://maps.google.com/?q=Termas+del+Dayman+Salto+Uruguay" };
     let leafletMap = null;
+    let thermalMarker = null;
     const stationMarkers = {};
 
     function tannatPinIcon(label, isThermal) {
@@ -5215,7 +5301,7 @@
         stationMarkers[id] = marker;
       });
 
-      L.marker([THERMAL_SPOT.lat, THERMAL_SPOT.lng], { icon: tannatPinIcon('♨', true) })
+      thermalMarker = L.marker([THERMAL_SPOT.lat, THERMAL_SPOT.lng], { icon: tannatPinIcon('♨', true) })
         .addTo(leafletMap)
         .bindPopup(thermalPopupHtml);
 
@@ -5237,6 +5323,37 @@
       }, 400);
     }
 
+    // Filtros rápidos del mapa: muestra/oculta marcadores y reencuadra a lo que queda visible
+    let mapFilterMode = 'all';
+    function filterMapMarkers(mode) {
+      mapFilterMode = mode;
+      if (!leafletMap) return;
+      const showWineries = mode === 'all' || mode === 'wineries';
+      const showThermal = mode === 'all' || mode === 'thermal';
+      const visibleLatLngs = [];
+      [1, 2, 3, 4].forEach(id => {
+        const m = stationMarkers[id];
+        if (!m) return;
+        if (showWineries) { if (!leafletMap.hasLayer(m)) m.addTo(leafletMap); visibleLatLngs.push(m.getLatLng()); }
+        else if (leafletMap.hasLayer(m)) leafletMap.removeLayer(m);
+      });
+      if (thermalMarker) {
+        if (showThermal) { if (!leafletMap.hasLayer(thermalMarker)) thermalMarker.addTo(leafletMap); visibleLatLngs.push(thermalMarker.getLatLng()); }
+        else if (leafletMap.hasLayer(thermalMarker)) leafletMap.removeLayer(thermalMarker);
+      }
+      if (visibleLatLngs.length) {
+        leafletMap.invalidateSize();
+        leafletMap.fitBounds(L.latLngBounds(visibleLatLngs), { padding: [28, 28], maxZoom: 15 });
+      }
+      const active = "px-3.5 py-1.5 rounded-full font-semibold transition-all bg-tannat text-white shadow-sm";
+      const inactive = "px-3.5 py-1.5 rounded-full font-semibold transition-all text-tannat hover:bg-tannat/10";
+      [['mapFilterAll', 'all'], ['mapFilterWineries', 'wineries'], ['mapFilterThermal', 'thermal']].forEach(([elId, code]) => {
+        const btn = document.getElementById(elId);
+        if (!btn) return;
+        btn.className = mode === code ? active : inactive;
+        btn.setAttribute('aria-pressed', String(mode === code));
+      });
+    }
 
     // Centra el mapa en una estación y abre su popup; carga Leaflet primero si todavía no se acercó a la pantalla
     function focusStationOnMap(id) {
@@ -5245,6 +5362,7 @@
       const go = () => {
         const station = stationsInfo[id];
         if (!leafletMap || !stationMarkers[id] || !station) return;
+        if (!leafletMap.hasLayer(stationMarkers[id])) filterMapMarkers('all'); // la estación estaba oculta por un filtro
         leafletMap.invalidateSize();
         leafletMap.setView([station.lat, station.lng], 16);
         stationMarkers[id].openPopup();
@@ -5650,18 +5768,20 @@
       const ans = document.getElementById(`faqAns${num}`);
       const icon = document.getElementById(`faqIcon${num}`);
       const btn = document.getElementById(`faqBtn${num}`);
-      const isHidden = ans.classList.contains('hidden');
+      const isClosed = !ans.classList.contains('is-open');
 
       // Close all first
       document.querySelectorAll('[id^="faqAns"]').forEach((a) => {
         const n = a.id.slice(6);
-        a.classList.add('hidden');
+        a.classList.remove('is-open');
+        a.setAttribute('aria-hidden', 'true');
         document.getElementById(`faqIcon${n}`).classList.remove('rotate-180');
         document.getElementById(`faqBtn${n}`).setAttribute('aria-expanded', 'false');
       });
 
-      if (isHidden) {
-        ans.classList.remove('hidden');
+      if (isClosed) {
+        ans.classList.add('is-open');
+        ans.setAttribute('aria-hidden', 'false');
         icon.classList.add('rotate-180');
         btn.setAttribute('aria-expanded', 'true');
       }
