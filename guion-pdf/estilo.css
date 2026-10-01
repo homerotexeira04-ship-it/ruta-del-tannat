@@ -133,11 +133,6 @@ figcaption b { color: var(--navy); }
 .pendiente b { letter-spacing: .06em; text-transform: uppercase; }
 .fotos + .pendiente { margin-top: 0; }
 
-/* Figuras de las fichas (época / actual) */
-.figuras { display: grid; grid-template-columns: 1fr 1fr; gap: 3mm; margin: 0 0 5mm; break-inside: avoid; }
-.figuras img { display: block; width: 100%; height: auto; border: .25mm solid var(--linea); }
-.nota-fig { grid-column: 1 / -1; margin: -1mm 0 0; font: italic 7.6pt "Liberation Sans", sans-serif; color: #868990; }
-
 /* Guion */
 h3.sub {
   margin: 4mm 0 1.5mm;
