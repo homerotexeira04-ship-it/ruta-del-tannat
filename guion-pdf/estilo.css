@@ -55,7 +55,8 @@ strong { color: inherit; font-weight: 700; }
   color: var(--suave);
 }
 .sub1 strong { font-weight: 400; color: inherit; }
-.intro { margin-top: 18mm; font-size: 10.4pt; color: var(--texto); }
+.intro { margin-top: 22mm; font-size: 10.6pt; color: var(--texto); }
+.intro p { margin: 0 0 2mm; }
 .pie-portada {
   position: absolute;
   left: 28mm; bottom: 20mm;
