@@ -4,7 +4,7 @@
 
 > Adaptación narrada de las *Fichas Arquitectónicas Patrimoniales* (Salto, setiembre de 2026), que se apoyan en la *Guía del Salto: urbanístico, arquitectónico y artístico* (FARQ-UdelaR, 2010) y en la *Guía de Recursos Patrimoniales de Salto* (2025). Está escrita para leerse o narrarse en voz alta, de pie en la vereda: cada parada lleva unos 4 a 5 minutos.
 >
-> **Cómo leer las referencias a las imágenes.** La figura *X.1* es el registro de época y la *X.2* el estado actual (son las ilustraciones de las fichas originales; la versión PDF las incluye). Donde dice «en la imagen», se señala solo lo que se ve en ellas; lo demás hay que verlo en la calle.
+> **Cómo leer las referencias a las imágenes.** En la parada 1, la figura *1.1* es el registro de época y la *1.2* el estado actual: son ilustraciones de las fichas originales. En la parada 2 se usa una fotografía real del Consulado. Donde dice «en la imagen» o «en la foto», se señala solo lo que se ve en ella; lo demás hay que verlo en la calle.
 
 ---
 
@@ -72,7 +72,7 @@ Hoy el edificio conserva íntegras su estructura, sus pisos superiores y su rema
 | **Cuándo** | Fines del siglo XIX – inicios del XX |
 | **Quién lo encargó / autor** | No figuran en el relevamiento (casona de familia acomodada salteña) |
 | **Qué fue / qué es** | Residencia señorial urbana unifamiliar → hoy sede consular de la República Argentina |
-| **Estilo** | Clasicismo historicista italianizante |
+| **Estilo** | Clasicismo historicista italianizante según la ficha; en la fachada también se ve ornamentación de aire art nouveau (rostros femeninos en relieve, herrería de líneas curvas) |
 | **Contexto urbano** | Área tutelada de Plaza Artigas |
 | **Jurisdicción consular** | Salto, Artigas y Rivera |
 
@@ -88,17 +88,15 @@ Ahora sí, den media vuelta y miren el frente.
 
 #### 2. Lectura de fachada y contraste temporal
 
-El hilo conductor de este edificio es la **simetría**. Hagan el ejercicio: tracen una línea imaginaria por el centro de la puerta. Lo que ven a la izquierda lo ven igual a la derecha. Ese orden estricto es el clasicismo de aire italiano, el lenguaje de las casas de las familias importantes del novecientos: una casa seria, ordenada, respetable.
+Es lo que muestra la foto de esta parada, tomada en 2010, así que algún detalle puede haber cambiado desde entonces. No tenemos una imagen de época del frente, de modo que el contraste lo vamos a hacer con la imaginación: primero miren la casa que fue y después busquen lo que le agregaron para que sea un consulado.
 
-Tomen las dos imágenes: la de época (Fig. 2.1) y la actual (Fig. 2.2). En la primera hay una casa de familia, con su puerta, sus ventanales, sus pilastras y su cornisa. En la segunda es la misma casa, con algunos agregados que cuentan que cambió de oficio. Vamos de a una cosa.
+**La casa: la puerta.** Un arco de medio punto, o sea un semicírculo perfecto, con una puerta de hierro forjado de dibujo trabajado. Arriba del arco, un mascarón: un rostro de mujer en relieve, rodeado de molduras con motivos de flores. Detrás de esa puerta, según el relevamiento, hay un zaguán con zócalos de mármol, el pasillo de entrada que funcionaba como filtro de privacidad entre la calle y la intimidad de la casa. Después, una cancela de hierro forjado, un vestíbulo y los patios interiores, que daban luz y ventilación a las habitaciones.
 
-**La puerta.** Un arco de medio punto, o sea un semicírculo perfecto, con molduras. Y arriba una banderola de hierro: ese calado en forma de abanico por donde entra la luz. Detrás de esa puerta hay un zaguán con zócalos de mármol, el pasillo de entrada que funcionaba como filtro de privacidad entre la calle y la intimidad de la casa. Después, una cancela de hierro forjado, un vestíbulo y los patios interiores, que daban luz y ventilación a las habitaciones.
+**La casa: las ventanas.** A cada lado de la puerta hay una ventana alta, también con arco de medio punto, con postigos de madera y un balconcillo de hierro forjado en la base. Fíjense que la de la izquierda repite el mascarón de la puerta: la casa se firma con las mismas caras. (La de la derecha cuesta verla, porque en la foto se interpone un árbol.)
 
-**Los ventanales.** Cuenten: cuatro, dos a cada lado de la puerta. Altos, verticales, con las jambas y los dinteles moldurados, y entre ellos pilastras con capiteles trabajados (columnas planas, pegadas al muro, que marcan el ritmo). Cada ventanal está protegido por herrería artesanal.
+**La casa: el remate.** Suban hasta arriba: una hilera de ménsulas, esos soportes pequeños que parecen sostener la cornisa, y sobre ella un pretil coronado por herrería ornamental de líneas curvas, como una flor abierta. Esa mezcla de rostros, flores y hierro curvo tiene aire de art nouveau, aunque la ficha clasifica el conjunto como clasicismo historicista italianizante.
 
-**El remate.** Suban hasta arriba: una cornisa con dentículos, esos bloquecitos en fila, apoyada en ménsulas, y un pretil que esconde la azotea tradicional. Por eso la casa termina en una línea limpia.
-
-**Lo nuevo.** Ahora busquen lo que la imagen de época no tiene. Junto al portal, el **escudo, la placa de bronce de la Cancillería argentina**. Y arriba, sobre la cornisa, el **mástil con la bandera**. Dos señales y alcanzan: la fachada sigue hablando de casona señorial, pero sus signos ya son diplomáticos. A eso se suman las rejas de seguridad que se ven en la imagen actual.
+**Lo que lo hace consulado.** Ahora quítenle la casa de la cabeza y busquen lo que no es de casa. Junto a la puerta, un escudo oval con las armas argentinas y la palabra «Consulado». En la vereda, un cartel de «Consulado Argentino» que reserva el espacio frente al edificio, y en el cordón la leyenda «Espacio reservado». Según el relevamiento, arriba hay además un mástil donde se iza la bandera nacional argentina; en la foto de 2010 no se aprecia, así que búsquenlo. Con eso alcanza: la fachada sigue hablando de casona señorial, pero sus señales ya son diplomáticas.
 
 #### 3. La historia viva: por qué un consulado argentino, y por qué acá
 
@@ -108,13 +106,13 @@ Por eso hay un consulado. Según el relevamiento, los antecedentes de la represe
 
 ¿Y por qué en esta casa? Porque sus ambientes son amplios, con techos de más de cuatro metros, y se adaptaron de forma natural a despachos y salas de espera. Una casa hecha para recibir visitas pasó a recibir público.
 
-Hoy está en excelente estado: conserva sus carpinterías de madera noble con postigos, sus rejas artesanales y sus molduras, por fuera y por dentro, integrada al área protegida de Plaza Artigas. Y eso es lo que hay para llevarse: la casa cambió de oficio, no de rostro. Un uso nuevo y digno mantuvo viva una pieza de arquitectura civil de fines del siglo XIX, ahora al servicio de la integración entre las dos orillas.
+El relevamiento la describe en excelente estado de mantenimiento, con carpinterías de madera con postigos, rejas artesanales y molduras exteriores e interiores, dentro del área protegida de Plaza Artigas. En la foto se ven los postigos, la herrería y el paso del tiempo sobre el revoque, que también cuenta su historia. Lo que hay para llevarse es esto: la casa cambió de oficio, no de rostro. Un uso nuevo y digno mantuvo viva una pieza de arquitectura civil de fines del siglo XIX, ahora al servicio de la integración entre las dos orillas.
 
 ### 3 claves de observación rápida
 
-1. **El arco y el abanico.** El semicírculo de la puerta y la banderola de hierro encima: la entrada, pensada para filtrar la calle.
-2. **Símbolos nuevos sobre una fachada vieja.** La placa de bronce junto al portal y el mástil con la bandera sobre la cornisa.
-3. **Cuatro ventanales, un solo ritmo.** Dos a cada lado, con pilastras entre ellos y rejas artesanales: la simetría en acción.
+1. **El arco con mascarón.** La puerta en semicírculo, con un rostro de mujer en relieve encima.
+2. **El escudo y el cartel.** El escudo oval junto a la puerta y el cartel que reserva el espacio: la casa cambió de oficio.
+3. **Ventanas con postigos y hierro.** Arcos altos a cada lado de la puerta, con postigos de madera y balconcillos de forja.
 
 ---
 
@@ -135,7 +133,9 @@ Dos esquinas de Salto, dos maneras de ser ciudad: la vidriera y el zaguán, el e
 
 ### Notas para el equipo (borrar antes de publicar)
 
-- **Las figuras son dibujos, no fotos.** Las cuatro imágenes de las fichas son ilustraciones esquemáticas en elevación frontal, aunque llevan rótulos de «archivo fotográfico» y «relevamiento fotográfico». Si se publican, conviene rotularlas como ilustraciones. En el guion usé «imagen de época» e «imagen actual» y señalé solo lo que los dibujos muestran.
-- **Ochava y frontón.** Los dibujos del Palacio Gallino son frontales y no muestran el corte diagonal. Ubiqué la ochava, la puerta y el «1911» en la esquina según la ficha y los leí como el eje central del dibujo. Conviene verificarlo en terreno antes de publicar.
+- **La foto real del Consulado contradice la ficha.** La foto de Wikimedia Commons (enero de 2010, frente a Plaza Artigas) muestra una puerta en arco con dos ventanas en arco, una a cada lado, y no los «cuatro ventanales» de la ficha. La puerta no está centrada, así que no hay «estricta simetría». No se ven pilastras con capiteles ni cornisa con dentículos, y sí mascarones de rostro femenino, herrería de líneas curvas en el remate, postigos de madera y un escudo oval esmaltado (no una placa de bronce). Tampoco se ve el mástil con la bandera ni una banderola radial sobre la puerta. Por eso reescribí la lectura de fachada de la parada 2 según lo que muestra la foto y saqué del PDF las figuras 2.1 y 2.2. Si tienen una fuente más reciente o una foto propia que muestre lo contrario, se puede volver al texto anterior (está en el historial de git). La dirección del Consulado (Artigas 1162) coincide con otras fuentes.
+- **Las figuras 1.1 y 1.2 son dibujos, no fotos.** Son ilustraciones esquemáticas en elevación frontal, aunque llevan rótulos de «archivo fotográfico» y «relevamiento fotográfico». Si se publican, conviene rotularlas como ilustraciones. Como no hay foto libre del edificio de Uruguay 891, no se pudo comprobar con una imagen real lo que muestran. Dado que la ficha falló en el Consulado, conviene tratar con cautela sus detalles sobre este edificio.
+- **Ochava y frontón.** Los dibujos del Palacio Gallino son frontales y no muestran el corte diagonal. Ubiqué la ochava, la puerta y el «1911» en la esquina según la ficha y los leí como el eje central del dibujo. Conviene verificarlo en terreno antes de publicar. Una publicación de Facebook confirma que la tienda «París-Londres» estaba en la esquina de Uruguay y Soca y vendía ropa, calzado y artículos del hogar.
+- **Falta la foto del edificio de Uruguay 891.** En Wikimedia Commons solo hay fotos del Palacio Gallino de Uruguay 1067 (el museo). No encontré otra fuente con licencia libre. La opción más limpia es sacarla en la calle.
 - **Datos que no figuran en el relevamiento** y quedaron como tales: autor del Palacio Gallino, y autor y comitente del Consulado.
-- **Verificar con fuente primaria:** el año 1857 y «una de las más antiguas» del consulado vienen de la ficha, sin cita directa.
+- **Verificar con fuente primaria:** el año 1857 y «una de las más antiguas» del consulado vienen de la ficha, sin cita directa. Lo mismo vale para el «excelente estado de mantenimiento»: en la foto de 2010 el revoque se ve envejecido.
