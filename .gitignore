@@ -1,4 +1,4 @@
-.claude/
+.claude/settings.local.json
 .agents/
 skills-lock.json
 node_modules/
