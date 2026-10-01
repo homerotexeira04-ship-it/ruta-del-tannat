@@ -1,0 +1,209 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><title>Salto a pie: dos edificios para leer la ciudad</title><style>:root {
+  --navy: #1b365d;
+  --bronce: #a5682a;
+  --papel: #faf6ee;
+  --linea: #d9cfbd;
+  --texto: #25282d;
+  --suave: #5c6068;
+}
+
+@page {
+  size: A4;
+  margin: 18mm 17mm 20mm;
+  @bottom-left { content: "Salto a pie · Palacio Gallino y Consulado Argentino"; font: 8pt "Liberation Sans", sans-serif; color: #7a7d84; }
+  @bottom-right { content: "Página " counter(page); font: 8pt "Liberation Sans", sans-serif; color: #7a7d84; }
+}
+@page :first {
+  margin: 0;
+  @bottom-left { content: none; }
+  @bottom-right { content: none; }
+}
+
+* { box-sizing: border-box; }
+html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+body {
+  margin: 0;
+  font: 10.6pt/1.55 "Bitstream Charter", "Liberation Serif", serif;
+  color: var(--texto);
+  background: #fff;
+}
+p { margin: 0 0 3.2mm; orphans: 3; widows: 3; hyphens: manual; }
+em { font-style: italic; }
+strong { color: var(--navy); }
+
+/* ---------- Portada ---------- */
+.portada {
+  height: 297mm;
+  padding: 38mm 24mm 24mm;
+  background: linear-gradient(180deg, var(--navy) 0 112mm, #fff 112mm);
+  break-after: page;
+  position: relative;
+}
+.kicker {
+  margin: 0 0 7mm;
+  font: 700 9pt "Liberation Sans", sans-serif;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: #e3c99d;
+}
+.portada h1 {
+  margin: 0 0 6mm;
+  font: 700 33pt/1.08 "Liberation Sans", sans-serif;
+  color: #fff;
+  max-width: 150mm;
+}
+.sub1 {
+  margin: 0;
+  font: 400 12.5pt/1.4 "Liberation Sans", sans-serif;
+  color: #dfe6f1;
+  max-width: 140mm;
+}
+.sub1 strong { color: #fff; font-weight: 400; }
+.intro {
+  margin-top: 40mm;
+  padding: 7mm 8mm 4mm;
+  background: var(--papel);
+  border-left: 1.6mm solid var(--bronce);
+  font-size: 10.4pt;
+}
+.pie-portada {
+  position: absolute;
+  left: 24mm; bottom: 18mm;
+  margin: 0;
+  font: 9pt "Liberation Sans", sans-serif;
+  color: var(--suave);
+}
+.borrador {
+  position: absolute;
+  top: 8mm; right: 8mm;
+  padding: 1.2mm 3mm;
+  background: #fff3cd;
+  border: .3mm solid #c9a227;
+  font: 700 7.5pt "Liberation Sans", sans-serif;
+  color: #6b5200;
+}
+
+/* ---------- Paradas ---------- */
+.parada { break-before: page; }
+.parada header { margin-bottom: 5mm; padding-bottom: 3mm; border-bottom: .5mm solid var(--navy); }
+.etq {
+  display: block;
+  margin-bottom: 1.5mm;
+  font: 700 9pt "Liberation Sans", sans-serif;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  color: var(--bronce);
+}
+.parada h2 { margin: 0; font: 700 19pt/1.15 "Liberation Sans", sans-serif; color: var(--navy); }
+
+table.ficha {
+  width: 100%;
+  margin-bottom: 5mm;
+  border-collapse: collapse;
+  font: 9pt/1.35 "Liberation Sans", sans-serif;
+  break-inside: avoid;
+}
+table.ficha caption {
+  padding: 1.8mm 3mm;
+  text-align: left;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: #fff;
+  background: var(--navy);
+}
+table.ficha th, table.ficha td { padding: 1.6mm 3mm; border-bottom: .25mm solid var(--linea); vertical-align: top; text-align: left; }
+table.ficha th { width: 34mm; font-weight: 700; color: var(--navy); background: #f1f4f9; }
+
+/* Fotos reales */
+.fotos { display: grid; gap: 3mm; margin: 0 0 6mm; grid-template-columns: 1fr 1fr; }
+.fotos.n1 { grid-template-columns: 1fr; }
+.fotos.n3 figure:first-child { grid-column: 1 / -1; }
+figure { margin: 0; break-inside: avoid; }
+.fotos img { display: block; width: 100%; height: 62mm; object-fit: cover; }
+.fotos.n1 img, .fotos.n3 figure:first-child img { height: 82mm; }
+figcaption { margin-top: 1.4mm; font: 8.2pt/1.35 "Liberation Sans", sans-serif; color: var(--suave); }
+figcaption b { color: var(--navy); }
+.cr { display: block; font-size: 7.4pt; color: #868990; }
+.pendiente .ph {
+  display: flex; align-items: center; justify-content: center;
+  height: 62mm;
+  border: .4mm dashed #b9a98a;
+  background: var(--papel);
+  font: 700 9pt "Liberation Sans", sans-serif;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: #a08f6e;
+}
+
+/* Figuras de las fichas (época / actual) */
+.figuras { display: grid; grid-template-columns: 1fr 1fr; gap: 3mm; margin: 0 0 5mm; break-inside: avoid; }
+.figuras img { display: block; width: 100%; height: auto; border: .25mm solid var(--linea); }
+.nota-fig { grid-column: 1 / -1; margin: -1mm 0 0; font: italic 7.6pt "Liberation Sans", sans-serif; color: #868990; }
+
+/* Guion */
+h3.sub {
+  margin: 6mm 0 3mm;
+  font: 700 9.5pt "Liberation Sans", sans-serif;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--bronce);
+  break-after: avoid;
+}
+h4 {
+  display: flex; align-items: baseline; gap: 2.6mm;
+  margin: 5.5mm 0 2.4mm;
+  font: 700 12pt/1.25 "Liberation Sans", sans-serif;
+  color: var(--navy);
+  break-after: avoid;
+}
+h4 .num {
+  flex: none;
+  width: 6.4mm; height: 6.4mm; line-height: 6.4mm;
+  text-align: center;
+  border-radius: 50%;
+  background: var(--bronce);
+  font-size: 9pt;
+  color: #fff;
+}
+
+/* Claves */
+.claves {
+  margin: 6mm 0 0;
+  padding: 4.5mm 6mm 2mm;
+  background: var(--papel);
+  border: .35mm solid var(--bronce);
+  break-inside: avoid;
+}
+.claves h3 { margin: 0 0 3mm; font: 700 11pt "Liberation Sans", sans-serif; color: var(--navy); }
+.claves ol { margin: 0; padding: 0; list-style: none; counter-reset: c; }
+.claves li { position: relative; margin: 0 0 3mm; padding-left: 8mm; counter-increment: c; font-size: 10.2pt; }
+.claves li::before {
+  content: counter(c);
+  position: absolute; left: 0; top: .3mm;
+  display: block;
+  width: 5.6mm; height: 5.6mm;
+  text-align: center;
+  border-radius: 50%;
+  background: var(--navy);
+  font: 700 8.5pt/5.6mm "Liberation Sans", sans-serif;
+  color: #fff;
+}
+
+/* Cierre y fuentes */
+.cierre { break-before: page; }
+.cierre + .cierre { break-before: auto; margin-top: 9mm; }
+.h2c { margin: 0 0 4mm; font: 700 16pt "Liberation Sans", sans-serif; color: var(--navy); }
+.cierre h2.h2c ~ p:first-of-type { font-size: 11.5pt; }
+ul.lista { margin: 0 0 4mm; padding-left: 5mm; font: 9pt/1.4 "Liberation Sans", sans-serif; }
+ul.lista li { margin-bottom: 1.8mm; }
+</style></head><body><section class="portada"><div class="borrador">Borrador · faltan fotos reales</div>
+  <p class="kicker">Patrimonio de Salto · Guion de recorrido</p>
+  <h1>Salto a pie: dos edificios para leer la ciudad</h1>
+  <p class="sub1"><strong>Guion de recorrido patrimonial · Palacio Gallino (comercial) y Consulado Argentino</strong></p>
+  <div class="intro"><p>Adaptación narrada de las <em>Fichas Arquitectónicas Patrimoniales</em> (Salto, setiembre de 2026), que se apoyan en la <em>Guía del Salto: urbanístico, arquitectónico y artístico</em> (FARQ-UdelaR, 2010) y en la <em>Guía de Recursos Patrimoniales de Salto</em> (2025). Está escrita para leerse o narrarse en voz alta, de pie en la vereda: cada parada lleva unos 4 a 5 minutos.</p><p><strong>Cómo leer las referencias a las imágenes.</strong> La figura <em>X.1</em> es el registro de época y la <em>X.2</em> el estado actual (son las ilustraciones de las fichas originales; la versión PDF las incluye). Donde dice «en la imagen», se señala solo lo que se ve en ellas; lo demás hay que verlo en la calle.</p></div>
+  <p class="pie-portada">Salto, República Oriental del Uruguay · Setiembre de 2026</p>
+</section><section class="parada"><header><span class="etq">Parada 1</span><h2>Palacio Gallino (comercial): la vidriera que cambió de mercadería</h2></header><table class="ficha"><caption>Ficha rápida</caption><tr><th><strong>Dónde</strong></th><td>Calle Uruguay 891, esquina Dr. Juan Carlos Soca</td></tr><tr><th><strong>Cuándo</strong></th><td>Obras terminadas en 1911 (el año está en el frontón)</td></tr><tr><th><strong>Quién lo encargó</strong></th><td>Familia Gallino</td></tr><tr><th><strong>Autor</strong></th><td>No figura en el relevamiento</td></tr><tr><th><strong>Qué fue / qué es</strong></th><td>Tienda departamental «París Londres» → hoy «El Revoltijo Electrodomésticos»</td></tr><tr><th><strong>Tipo y estilo</strong></th><td>Edificio de renta con planta baja comercial · eclecticismo comercial clásico</td></tr><tr><th><strong>Contexto urbano</strong></th><td>Calle Uruguay, el eje cívico-comercial de Salto, dentro del área de protección patrimonial</td></tr></table><div class="fotos n2"><figure class="pendiente"><div class="ph">Foto real pendiente</div><figcaption>La esquina de Uruguay y Dr. Juan Carlos Soca vista de frente: ochava, balcones y frontón</figcaption></figure><figure class="pendiente"><div class="ph">Foto real pendiente</div><figcaption>Detalle del frontón triangular con el año 1911</figcaption></figure></div><h3 class="sub">Guion</h3><h4><span class="num">1</span>Entrada en escena: dónde estamos parados</h4><p><em>(Si pueden, crucen a la vereda de enfrente, en diagonal a la esquina, para verla de frente.)</em></p><p>Estamos en Uruguay y Dr. Soca, en plena calle Uruguay, el eje donde se cruzan el comercio y la vida cívica de Salto. Lo primero que ve cualquiera hoy es un negocio: el cartel y las vidrieras de «El Revoltijo», electrodomésticos. Es lo más fácil de mirar y, justamente por eso, lo que menos nos cuenta.</p><p>Así que les propongo un truco: no empiecen por el cartel. Empiecen por la esquina.</p><p>Fíjense que el edificio no dobla en ángulo recto: la esquina está cortada en diagonal. Eso se llama <strong>ochava</strong>, y tiene dos razones. Una práctica: la normativa urbana pedía visibilidad en los cruces. Y otra comercial: la ochava convierte la esquina en la entrada principal, le da presencia, y ensancha un poco el espacio del peatón para que pueda frenar a mirar las vidrieras con comodidad. Es una esquina diseñada para que la gente se detenga.</p><h4><span class="num">2</span>Lectura de fachada y contraste temporal</h4><div class="figuras"><figure><img src="../figuras/fig-1-1.jpg" alt=""><figcaption><b>Figura 1.1 · Imagen de época</b> (c. 1911-1930). Tienda «París Londres»: marquesina, letrero y vidrieras de la planta baja.</figcaption></figure><figure><img src="../figuras/fig-1-2.jpg" alt=""><figcaption><b>Figura 1.2 · Estado actual.</b> «El Revoltijo Electrodomésticos»: planta baja modernizada, balcones y frontón de 1911 conservados.</figcaption></figure><p class="nota-fig">Ilustraciones de las fichas originales.</p></div><p>Ahora sí, tomen las dos imágenes: a la izquierda el registro de época (Fig. 1.1), a la derecha el estado actual (Fig. 1.2). En las dos, la esquina es el eje: la puerta abajo, el remate triangular arriba. Vamos a leer el edificio en tres miradas.</p><p><strong>Primera mirada: abajo, donde cambió todo.</strong> En la imagen de época, miren la marquesina que cubre la entrada y las vidrieras: ahí estaba el letrero de la tienda «París Londres». Pasen ahora a la imagen actual: una vidriera moderna, de vidrios amplios, y un cartel corrido de «El Revoltijo» que recorre todo el frente. Cambió el vidrio, cambió la marquesina, cambió el cartel. Pero no cambió la idea: la planta baja sigue siendo una gran vitrina pensada para que la calle se asome adentro.</p><p><strong>Segunda mirada: arriba, donde casi no cambió nada.</strong> Levanten la vista, que acá está lo mejor y casi nadie lo hace. Comparen las dos imágenes: de la planta alta para arriba son prácticamente la misma. Busquen los <strong>balcones de hierro forjado</strong>; los ventanales altos y verticales, cada uno con su pequeño remate triangular y sus molduras; y más arriba la cornisa, apoyada en unos adornos que parecen sostenerla (se llaman ménsulas), con un pretil de balaustres por encima.</p><p>Y un detalle para sorprender a los que van con ustedes: esa fachada que parece de piedra es, en realidad, ladrillo macizo asentado a la cal, con perfiles de hierro por dentro y un revoque exterior que imita la piedra.</p><p><strong>Tercera mirada: la firma.</strong> Sigan subiendo hasta el remate triangular, sobre la esquina. Ahí está esculpido el año <strong>1911</strong>, cuando terminaron las obras. Un cartel se cambia en una tarde; un año esculpido en el remate se queda.</p><h4><span class="num">3</span>La historia viva: qué pasaba adentro</h4><p>Imaginen esta esquina a comienzos del siglo XX. Salto vivía una etapa de prosperidad económica, y este edificio fue el corazón de ese auge comercial. Acá funcionaba «París Londres», una tienda departamental, y para la época era una novedad absoluta: todo bajo un mismo techo. No se venía solo a comprar, se venía a pasear. La sociedad salteña llegaba por telas europeas, prendas de alta confección, perfumería y artículos de lujo para el hogar. Con ese nombre, la tienda no necesitaba explicar qué prometía: Europa, a la altura de la calle Uruguay.</p><p>El edificio estaba pensado para eso. Abajo, un salón amplio y continuo, con columnas y vigas de hierro en lugar de muros divisorios, para que la mercadería se viera de punta a punta. Arriba, los depósitos de la mercadería importada y las oficinas de administración. Por eso se lo clasifica como edificio <strong>de renta</strong>: nació para producir, no solo para lucirse.</p><p>Después, el giro. A mediados del siglo XX el comercio cambió, la tienda cerró sus puertas y el edificio pasó a «El Revoltijo», que instaló acá su casa central de electrodomésticos. Miren qué buen hilo se sigue: ayer lo que se exhibía era el lujo importado para vestirse y para la casa; hoy, el equipamiento del hogar moderno. Cambió la mercadería, pero el edificio siguió cumpliendo su destino de siempre: ser un comercio con vida.</p><p>Ahora una aclaración que conviene hacer acá, porque en Salto se confunde seguido. <strong>Este es el Palacio Gallino comercial, Uruguay 891: la tienda.</strong> Otra cosa distinta es la residencia señorial de la misma familia, en Uruguay 1067: una casona de 1925 remodelada por el ingeniero Luis F. Gallino, que hoy aloja el Museo de Bellas Artes «María Irene Olarreaga Gallino» y es Monumento Histórico Nacional. Misma familia y misma calle, pero dos edificios y dos funciones: uno para comerciar, otro para vivir. Si buscan el museo, no es acá: cambia el número.</p><p>Hoy el edificio conserva íntegras su estructura, sus pisos superiores y su remate; solo la planta baja se adaptó al comercio actual. Y ahí está su valor: es un testimonio de cómo Salto quería verse a inicios del siglo XX, moderna, cosmopolita y próspera. La ciudad no lo guardó como pieza de museo: lo conservó trabajando.</p><div class="claves"><h3>3 claves de observación rápida</h3><ol><li><strong>La esquina cortada.</strong> Busquen la ochava: es la entrada principal y el punto desde el que se lee todo lo demás.</li><li><strong>Dos épocas en una fachada.</strong> Bajen la mirada (vidriera moderna) y súbanla (balcones de forja, frontones, molduras): el mismo edificio con dos tiempos.</li><li><strong>El «1911».</strong> En el remate triangular, sobre la esquina: la fecha de nacimiento del edificio.</li></ol></div></section>
+<section class="parada"><header><span class="etq">Parada 2</span><h2>Consulado Argentino: una casona que cambió de oficio</h2></header><table class="ficha"><caption>Ficha rápida</caption><tr><th><strong>Dónde</strong></th><td>Calle Gral. José Artigas 1162, acera sur, frente a Plaza Artigas</td></tr><tr><th><strong>Cuándo</strong></th><td>Fines del siglo XIX – inicios del XX</td></tr><tr><th><strong>Quién lo encargó / autor</strong></th><td>No figuran en el relevamiento (casona de familia acomodada salteña)</td></tr><tr><th><strong>Qué fue / qué es</strong></th><td>Residencia señorial urbana unifamiliar → hoy sede consular de la República Argentina</td></tr><tr><th><strong>Estilo</strong></th><td>Clasicismo historicista italianizante</td></tr><tr><th><strong>Contexto urbano</strong></th><td>Área tutelada de Plaza Artigas</td></tr><tr><th><strong>Jurisdicción consular</strong></th><td>Salto, Artigas y Rivera</td></tr></table><div class="fotos n2"><figure class="pendiente"><div class="ph">Foto real pendiente</div><figcaption>La fachada del Consulado Argentino, Artigas 1162, frente a Plaza Artigas</figcaption></figure><figure class="pendiente"><div class="ph">Foto real pendiente</div><figcaption>La puerta en arco, la placa de bronce y el mástil con la bandera</figcaption></figure></div><h3 class="sub">Guion</h3><h4><span class="num">1</span>Entrada en escena: dónde estamos parados</h4><p>Estamos en Artigas 1162, en la vereda sur, frente a Plaza Artigas. Antes de mirar el edificio, miren la plaza: ella explica la casa.</p><p>Porque la pregunta es: ¿por qué una casa tan elegante acá, y no abajo, cerca del puerto? La respuesta está en el río. Hacia fines del siglo XIX, las epidemias y las crecidas periódicas del Uruguay empujaron a las familias acomodadas a dejar el bajo portuario y subir a las cotas altas de la cuchilla. La plaza, que entonces se llamaba Plaza 18 de Julio, pasó a ser el nuevo sector residencial distinguido. Esta casa es consecuencia de esa mudanza: familias que subieron para vivir a salvo del agua.</p><p>Ahora sí, den media vuelta y miren el frente.</p><h4><span class="num">2</span>Lectura de fachada y contraste temporal</h4><div class="figuras"><figure><img src="../figuras/fig-2-1.jpg" alt=""><figcaption><b>Figura 2.1 · Imagen de época</b> (c. 1900). Residencia señorial frente a la Plaza 18 de Julio: simetría, zaguán y pilastras.</figcaption></figure><figure><img src="../figuras/fig-2-2.jpg" alt=""><figcaption><b>Figura 2.2 · Estado actual.</b> Sede del Consulado Argentino: mástil con bandera, placa de bronce, rejas de seguridad.</figcaption></figure><p class="nota-fig">Ilustraciones de las fichas originales.</p></div><p>El hilo conductor de este edificio es la <strong>simetría</strong>. Hagan el ejercicio: tracen una línea imaginaria por el centro de la puerta. Lo que ven a la izquierda lo ven igual a la derecha. Ese orden estricto es el clasicismo de aire italiano, el lenguaje de las casas de las familias importantes del novecientos: una casa seria, ordenada, respetable.</p><p>Tomen las dos imágenes: la de época (Fig. 2.1) y la actual (Fig. 2.2). En la primera hay una casa de familia, con su puerta, sus ventanales, sus pilastras y su cornisa. En la segunda es la misma casa, con algunos agregados que cuentan que cambió de oficio. Vamos de a una cosa.</p><p><strong>La puerta.</strong> Un arco de medio punto, o sea un semicírculo perfecto, con molduras. Y arriba una banderola de hierro: ese calado en forma de abanico por donde entra la luz. Detrás de esa puerta hay un zaguán con zócalos de mármol, el pasillo de entrada que funcionaba como filtro de privacidad entre la calle y la intimidad de la casa. Después, una cancela de hierro forjado, un vestíbulo y los patios interiores, que daban luz y ventilación a las habitaciones.</p><p><strong>Los ventanales.</strong> Cuenten: cuatro, dos a cada lado de la puerta. Altos, verticales, con las jambas y los dinteles moldurados, y entre ellos pilastras con capiteles trabajados (columnas planas, pegadas al muro, que marcan el ritmo). Cada ventanal está protegido por herrería artesanal.</p><p><strong>El remate.</strong> Suban hasta arriba: una cornisa con dentículos, esos bloquecitos en fila, apoyada en ménsulas, y un pretil que esconde la azotea tradicional. Por eso la casa termina en una línea limpia.</p><p><strong>Lo nuevo.</strong> Ahora busquen lo que la imagen de época no tiene. Junto al portal, el <strong>escudo, la placa de bronce de la Cancillería argentina</strong>. Y arriba, sobre la cornisa, el <strong>mástil con la bandera</strong>. Dos señales y alcanzan: la fachada sigue hablando de casona señorial, pero sus signos ya son diplomáticos. A eso se suman las rejas de seguridad que se ven en la imagen actual.</p><h4><span class="num">3</span>La historia viva: por qué un consulado argentino, y por qué acá</h4><p>Concordia está enfrente, del otro lado del río. La relación entre Salto y la costa entrerriana fue, a lo largo de los siglos, una hermandad social, económica y familiar: es lo que podemos llamar una <strong>frontera activa</strong>, una frontera que se usa, que conecta más de lo que separa.</p><p>Por eso hay un consulado. Según el relevamiento, los antecedentes de la representación consular argentina en Salto se remontan a 1857, bajo la Confederación Argentina, con capital en Paraná, y es una de las más antiguas de Argentina. Hoy su jurisdicción cubre Salto, Artigas y Rivera.</p><p>¿Y por qué en esta casa? Porque sus ambientes son amplios, con techos de más de cuatro metros, y se adaptaron de forma natural a despachos y salas de espera. Una casa hecha para recibir visitas pasó a recibir público.</p><p>Hoy está en excelente estado: conserva sus carpinterías de madera noble con postigos, sus rejas artesanales y sus molduras, por fuera y por dentro, integrada al área protegida de Plaza Artigas. Y eso es lo que hay para llevarse: la casa cambió de oficio, no de rostro. Un uso nuevo y digno mantuvo viva una pieza de arquitectura civil de fines del siglo XIX, ahora al servicio de la integración entre las dos orillas.</p><div class="claves"><h3>3 claves de observación rápida</h3><ol><li><strong>El arco y el abanico.</strong> El semicírculo de la puerta y la banderola de hierro encima: la entrada, pensada para filtrar la calle.</li><li><strong>Símbolos nuevos sobre una fachada vieja.</strong> La placa de bronce junto al portal y el mástil con la bandera sobre la cornisa.</li><li><strong>Cuatro ventanales, un solo ritmo.</strong> Dos a cada lado, con pilastras entre ellos y rejas artesanales: la simetría en acción.</li></ol></div></section>
+<section class="cierre"><h2 class="h2c">Para cerrar el recorrido</h2><p>Dos esquinas de Salto, dos maneras de ser ciudad: la vidriera y el zaguán, el edificio que se muestra al peatón y el que protege la intimidad. Y un mismo movimiento de fondo: una ciudad que va cambiando de oficio sus edificios sin perderles la cara.</p></section>
+<section class="cierre"><h2 class="h2c">Fuentes</h2><ul class="lista"><li>Machado da Silva, A.; Rodríguez Prati, E.; Vlaeminck, L. (2010). <em>Guía del Salto: urbanístico, arquitectónico y artístico</em>. Facultad de Arquitectura, Universidad de la República (Farq-UdelaR), Regional Norte Sede Salto.</li><li>Pardo, J. A.; Eguiluz, A. et al. (2025). <em>Guía de Recursos Patrimoniales de Salto</em>. Versión 1.0.</li><li>Comisión del Patrimonio Cultural de la Nación (MEC). Inventario y declaratorias patrimoniales del Departamento de Salto.</li><li>Intendencia Departamental de Salto. <em>Plan Local de la Ciudad de Salto</em> (delimitación de áreas tuteladas).</li><li>Ministerio de Relaciones Exteriores de Uruguay / Cancillería Argentina. Registro consular territorial (Artigas 1162).</li><li>Plataforma Nómada (FADU-UdelaR). Catálogo digital de bienes de interés patrimonial del litoral uruguayo.</li></ul><h3 class="sub">Créditos de las imágenes</h3><ul class="lista"><li>Figuras 1.1, 1.2, 2.1 y 2.2: ilustraciones de las <em>Fichas Arquitectónicas Patrimoniales</em> (Salto, setiembre de 2026).</li></ul></section></body></html>

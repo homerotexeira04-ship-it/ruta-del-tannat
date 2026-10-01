@@ -1,0 +1,32 @@
+{
+  "_ayuda": "Cada foto real va en guion-pdf/fotos/ y se declara acá con su crédito. Mientras un espacio no tenga 'file', el PDF muestra un recuadro 'Foto real pendiente'.",
+  "portada": null,
+  "parada1": [
+    {
+      "descripcion": "La esquina de Uruguay y Dr. Juan Carlos Soca vista de frente: ochava, balcones y frontón",
+      "file": null,
+      "caption": "",
+      "credit": ""
+    },
+    {
+      "descripcion": "Detalle del frontón triangular con el año 1911",
+      "file": null,
+      "caption": "",
+      "credit": ""
+    }
+  ],
+  "parada2": [
+    {
+      "descripcion": "La fachada del Consulado Argentino, Artigas 1162, frente a Plaza Artigas",
+      "file": null,
+      "caption": "",
+      "credit": ""
+    },
+    {
+      "descripcion": "La puerta en arco, la placa de bronce y el mástil con la bandera",
+      "file": null,
+      "caption": "",
+      "credit": ""
+    }
+  ]
+}
