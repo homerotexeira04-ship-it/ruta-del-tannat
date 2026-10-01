@@ -13,14 +13,6 @@ const SRC = path.join(ROOT, 'FichasPatrimonialesSalto-GuionDeRecorrido.md');
 const OUT = path.join(ROOT, 'FichasPatrimonialesSalto-GuionDeRecorrido.pdf');
 const HTML = path.join(HERE, 'build', 'guion.html');
 
-// Ilustraciones de las fichas originales: el guion las nombra como Figura X.1 / X.2.
-const FIGURAS = {
-  parada1: [
-    { file: 'figuras/fig-1-1.jpg', cap: '<b>Figura 1.1 · Imagen de época</b> (c. 1911-1930). Tienda «París Londres»: marquesina, letrero y vidrieras de la planta baja.' },
-    { file: 'figuras/fig-1-2.jpg', cap: '<b>Figura 1.2 · Estado actual.</b> «El Revoltijo Electrodomésticos»: planta baja modernizada, balcones y frontón de 1911 conservados.' },
-  ],
-};
-
 const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 const inline = (s) => esc(s).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>').replace(/\*(.+?)\*/g, '<em>$1</em>');
 
@@ -78,11 +70,6 @@ let pendientes = 0;
 
 function relImg(p) { return path.relative(path.dirname(HTML), path.join(HERE, p)).split(path.sep).join('/'); }
 
-function figurasHtml(key) {
-  const f = FIGURAS[key].map((x) => `<figure><img src="${relImg(x.file)}" alt=""><figcaption>${x.cap}</figcaption></figure>`).join('');
-  return `<div class="figuras">${f}<p class="nota-fig">Ilustraciones de las fichas originales.</p></div>`;
-}
-
 function fotosHtml(key) {
   const slots = manifest[key];
   if (!slots || !slots.length) return '';
@@ -90,7 +77,7 @@ function fotosHtml(key) {
   const faltan = slots.filter((x) => !slotOk(x));
   pendientes += faltan.length;
   const figs = reales.map((x) => {
-    const credito = x.author ? `<span class="cr">Foto: ${esc(x.author)} · ${esc(x.license)} · Wikimedia Commons</span>` : '';
+    const credito = x.author ? `<span class="cr">Foto: ${esc(x.author)} · ${esc(x.license)} · Wikimedia Commons</span>` : (x.credit_text ? `<span class="cr">${esc(x.credit_text)}</span>` : '');
     return `<figure><img src="${relImg('fotos/' + x.file)}" alt="${esc(x.caption)}"><figcaption>${esc(x.caption)}${credito}</figcaption></figure>`;
   }).join('');
   const bars = faltan.map((x) => `<div class="pendiente"><b>Foto pendiente</b> · ${esc(x.descripcion)}</div>`).join('');
@@ -100,14 +87,15 @@ function fotosHtml(key) {
 function creditosHtml() {
   const rows = [];
   for (const k of Object.keys(manifest)) {
-    for (const x of manifest[k] || []) {
-      if (!Array.isArray(manifest[k]) || !slotOk(x) || !x.author) continue;
-      rows.push(`<li>${esc(x.caption)} Foto de ${esc(x.author)}, <a href="${x.license_url}">${esc(x.license)}</a>. Fuente: <span class="url">${esc(x.source)}</span></li>`);
+    if (!Array.isArray(manifest[k])) continue;
+    for (const x of manifest[k]) {
+      if (!slotOk(x)) continue;
+      if (x.author) rows.push(`<li>${esc(x.caption)} Foto de ${esc(x.author)}, <a href="${x.license_url}">${esc(x.license)}</a>. Fuente: <span class="url">${esc(x.source)}</span></li>`);
+      else if (x.credit_text) rows.push(`<li>${esc(x.caption)} ${esc(x.credit_text)}</li>`);
     }
   }
-  const base = '<li>Figuras 1.1 y 1.2: ilustraciones de las <em>Fichas Arquitectónicas Patrimoniales</em> (Salto, setiembre de 2026).</li>';
-  const nota = '<p class="nota-lic">Las fotografías conservan su licencia original (Creative Commons Atribución-CompartirIgual) y se muestran sin modificaciones, solo reescaladas.</p>';
-  return `<h3 class="sub">Créditos de las imágenes</h3><ul class="lista">${base}${rows.join('')}</ul>${nota}`;
+  const nota = '<p class="nota-lic">Las fotografías de Wikimedia Commons conservan su licencia original (Creative Commons Atribución-CompartirIgual) y se muestran sin modificaciones, solo reescaladas.</p>';
+  return `<h3 class="sub">Créditos de las imágenes</h3><ul class="lista">${rows.join('')}</ul>${nota}`;
 }
 
 // --- Render ---
@@ -162,7 +150,6 @@ function render(tokens) {
       if (b.t === 'h' && b.l === 4) {
         const m = b.text.match(/^(\d+)\. (.*)$/);
         html += `<h4>${m ? `<span class="num">${m[1]}</span>${inline(m[2])}` : inline(b.text)}</h4>`;
-        if (/^2\. Lectura de fachada/.test(b.text) && FIGURAS[key]) html += figurasHtml(key);
         continue;
       }
       if (b.t === 'p') { html += `<p>${inline(b.text)}</p>`; continue; }

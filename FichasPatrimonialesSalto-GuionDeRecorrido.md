@@ -4,7 +4,7 @@
 
 > Adaptación narrada de las *Fichas Arquitectónicas Patrimoniales* (Salto, setiembre de 2026), que se apoyan en la *Guía del Salto: urbanístico, arquitectónico y artístico* (FARQ-UdelaR, 2010) y en la *Guía de Recursos Patrimoniales de Salto* (2025). Está escrita para leerse o narrarse en voz alta, de pie en la vereda: cada parada lleva unos 4 a 5 minutos.
 >
-> **Cómo leer las referencias a las imágenes.** En la parada 1, la figura *1.1* es el registro de época y la *1.2* el estado actual: son ilustraciones de las fichas originales. En la parada 2 se usa una fotografía real del Consulado. Donde dice «en la imagen» o «en la foto», se señala solo lo que se ve en ella; lo demás hay que verlo en la calle.
+> **Cómo leer las referencias a las imágenes.** Cada parada lleva una fotografía real del edificio (la de la parada 1 es de época; la de la parada 2, de 2010). Donde dice «en la foto», se señala solo lo que se ve en ella; lo demás hay que verlo en la calle, y los datos que no se pueden comprobar en la imagen se atribuyen al relevamiento.
 
 ---
 
@@ -13,7 +13,7 @@
 | Ficha rápida | |
 |---|---|
 | **Dónde** | Calle Uruguay 891, esquina Dr. Juan Carlos Soca |
-| **Cuándo** | Obras terminadas en 1911 (el año está en el frontón) |
+| **Cuándo** | 1911, según el relevamiento (año que figuraría en el remate de la esquina) |
 | **Quién lo encargó** | Familia Gallino |
 | **Autor** | No figura en el relevamiento |
 | **Qué fue / qué es** | Tienda departamental «París Londres» → hoy «El Revoltijo Electrodomésticos» |
@@ -30,37 +30,37 @@ Estamos en Uruguay y Dr. Soca, en plena calle Uruguay, el eje donde se cruzan el
 
 Así que les propongo un truco: no empiecen por el cartel. Empiecen por la esquina.
 
-Fíjense que el edificio no dobla en ángulo recto: la esquina está cortada en diagonal. Eso se llama **ochava**, y tiene dos razones. Una práctica: la normativa urbana pedía visibilidad en los cruces. Y otra comercial: la ochava convierte la esquina en la entrada principal, le da presencia, y ensancha un poco el espacio del peatón para que pueda frenar a mirar las vidrieras con comodidad. Es una esquina diseñada para que la gente se detenga.
+Fíjense que el edificio no dobla en ángulo recto: la esquina está cortada en diagonal. Eso se llama **ochava**, y tiene dos razones. Una práctica: la normativa urbana pedía visibilidad en los cruces. Y otra comercial: la ochava convierte la esquina en la entrada principal (en la foto de esta parada se ve la puerta justo ahí, bajo una marquesina), le da presencia, y ensancha un poco el espacio del peatón para que pueda frenar a mirar las vidrieras con comodidad. Es una esquina diseñada para que la gente se detenga.
 
 #### 2. Lectura de fachada y contraste temporal
 
-Ahora sí, tomen las dos imágenes: a la izquierda el registro de época (Fig. 1.1), a la derecha el estado actual (Fig. 1.2). En las dos, la esquina es el eje: la puerta abajo, el remate triangular arriba. Vamos a leer el edificio en tres miradas.
+Ahora saquen la foto de esta parada. Es una imagen de época, de cuando la tienda estaba en su apogeo (se nota por los automóviles de la calle, de las primeras décadas del siglo XX). Está coloreada, así que los colores son una reconstrucción. Les propongo un juego: mirar la foto y el edificio de hoy a la vez, y buscar qué sigue igual y qué cambió. Lo hacemos en tres miradas.
 
-**Primera mirada: abajo, donde cambió todo.** En la imagen de época, miren la marquesina que cubre la entrada y las vidrieras: ahí estaba el letrero de la tienda «París Londres». Pasen ahora a la imagen actual: una vidriera moderna, de vidrios amplios, y un cartel corrido de «El Revoltijo» que recorre todo el frente. Cambió el vidrio, cambió la marquesina, cambió el cartel. Pero no cambió la idea: la planta baja sigue siendo una gran vitrina pensada para que la calle se asome adentro.
+**Primera mirada: abajo, donde cambió todo.** En la foto, miren la planta baja: vidrieras a lo largo de las dos calles, con un tablero enmarcado de cartelería encima de cada una, el gran letrero oval de «París Londres» sobre la esquina y una marquesina plana que cubre la entrada, entre dos pilares robustos. Ahora levanten la vista de la foto y miren lo que hay hoy: según el relevamiento, la planta baja fue modernizada para el comercio actual, con la vidriera y el cartel de «El Revoltijo». Cambió el letrero, cambió el vidrio, cambió la marquesina. Pero no cambió la idea: la planta baja sigue siendo una gran vitrina pensada para que la calle se asome adentro.
 
-**Segunda mirada: arriba, donde casi no cambió nada.** Levanten la vista, que acá está lo mejor y casi nadie lo hace. Comparen las dos imágenes: de la planta alta para arriba son prácticamente la misma. Busquen los **balcones de hierro forjado**; los ventanales altos y verticales, cada uno con su pequeño remate triangular y sus molduras; y más arriba la cornisa, apoyada en unos adornos que parecen sostenerla (se llaman ménsulas), con un pretil de balaustres por encima.
+**Segunda mirada: arriba, donde (según el relevamiento) casi no cambió nada.** Levanten la vista, que acá está lo mejor y casi nadie lo hace. En la foto, de la planta alta para arriba el edificio es una sucesión de ventanas altas, cada una coronada por un adorno en relieve con forma de guirnalda, y delante de ellas los **balcones de hierro forjado**, que corren a lo largo de las dos calles. En el centro de la esquina, el cuerpo de la ochava se destaca del resto: una ventana alta con arco de medio punto, un balconcillo de hierro forjado debajo y molduras en relieve alrededor. Comparen con lo que ven hoy.
 
-Y un detalle para sorprender a los que van con ustedes: esa fachada que parece de piedra es, en realidad, ladrillo macizo asentado a la cal, con perfiles de hierro por dentro y un revoque exterior que imita la piedra.
+Y un detalle para sorprender a los que van con ustedes: según el relevamiento, esa fachada que parece de piedra es, en realidad, ladrillo macizo asentado a la cal, con perfiles de hierro por dentro y un revoque exterior que imita la piedra.
 
-**Tercera mirada: la firma.** Sigan subiendo hasta el remate triangular, sobre la esquina. Ahí está esculpido el año **1911**, cuando terminaron las obras. Un cartel se cambia en una tarde; un año esculpido en el remate se queda.
+**Tercera mirada: el remate.** Sigan subiendo hasta el borde del techo: una cornisa, un pretil, y sobre la esquina el remate se redondea y se eleva con una pequeña balaustrada, como un coronamiento. Y un desafío: según el relevamiento, en el remate de la esquina está esculpido el año **1911**, la fecha en que terminaron las obras. En la foto no alcanza a leerse, así que búsquenlo ustedes cuando estén ahí.
 
 #### 3. La historia viva: qué pasaba adentro
 
 Imaginen esta esquina a comienzos del siglo XX. Salto vivía una etapa de prosperidad económica, y este edificio fue el corazón de ese auge comercial. Acá funcionaba «París Londres», una tienda departamental, y para la época era una novedad absoluta: todo bajo un mismo techo. No se venía solo a comprar, se venía a pasear. La sociedad salteña llegaba por telas europeas, prendas de alta confección, perfumería y artículos de lujo para el hogar. Con ese nombre, la tienda no necesitaba explicar qué prometía: Europa, a la altura de la calle Uruguay.
 
-El edificio estaba pensado para eso. Abajo, un salón amplio y continuo, con columnas y vigas de hierro en lugar de muros divisorios, para que la mercadería se viera de punta a punta. Arriba, los depósitos de la mercadería importada y las oficinas de administración. Por eso se lo clasifica como edificio **de renta**: nació para producir, no solo para lucirse.
+El edificio estaba pensado para eso. Según el relevamiento, abajo había un salón amplio y continuo, con columnas y vigas de hierro en lugar de muros divisorios, para que la mercadería se viera de punta a punta; y arriba, los depósitos de la mercadería importada y las oficinas de administración. Por eso se lo clasifica como edificio **de renta**: nació para producir, no solo para lucirse.
 
 Después, el giro. A mediados del siglo XX el comercio cambió, la tienda cerró sus puertas y el edificio pasó a «El Revoltijo», que instaló acá su casa central de electrodomésticos. Miren qué buen hilo se sigue: ayer lo que se exhibía era el lujo importado para vestirse y para la casa; hoy, el equipamiento del hogar moderno. Cambió la mercadería, pero el edificio siguió cumpliendo su destino de siempre: ser un comercio con vida.
 
 Ahora una aclaración que conviene hacer acá, porque en Salto se confunde seguido. **Este es el Palacio Gallino comercial, Uruguay 891: la tienda.** Otra cosa distinta es la residencia señorial de la misma familia, en Uruguay 1067: una casona de 1925 remodelada por el ingeniero Luis F. Gallino, que hoy aloja el Museo de Bellas Artes «María Irene Olarreaga Gallino» y es Monumento Histórico Nacional. Misma familia y misma calle, pero dos edificios y dos funciones: uno para comerciar, otro para vivir. Si buscan el museo, no es acá: cambia el número.
 
-Hoy el edificio conserva íntegras su estructura, sus pisos superiores y su remate; solo la planta baja se adaptó al comercio actual. Y ahí está su valor: es un testimonio de cómo Salto quería verse a inicios del siglo XX, moderna, cosmopolita y próspera. La ciudad no lo guardó como pieza de museo: lo conservó trabajando.
+Según el relevamiento, hoy el edificio conserva íntegras su estructura, sus pisos superiores y su remate; solo la planta baja se adaptó al comercio actual. Y ahí está su valor: es un testimonio de cómo Salto quería verse a inicios del siglo XX, moderna, cosmopolita y próspera. La ciudad no lo guardó como pieza de museo: lo conservó trabajando.
 
 ### 3 claves de observación rápida
 
 1. **La esquina cortada.** Busquen la ochava: es la entrada principal y el punto desde el que se lee todo lo demás.
-2. **Dos épocas en una fachada.** Bajen la mirada (vidriera moderna) y súbanla (balcones de forja, frontones, molduras): el mismo edificio con dos tiempos.
-3. **El «1911».** En el remate triangular, sobre la esquina: la fecha de nacimiento del edificio.
+2. **Dos épocas en una fachada.** Abajo, vidriera y cartel nuevos; arriba, balcones de forja y guirnaldas en relieve sobre cada ventana.
+3. **El remate de la esquina.** Redondeado, con una pequeña balaustrada. Busquen el año 1911, que según el relevamiento está ahí.
 
 ---
 
@@ -133,9 +133,11 @@ Dos esquinas de Salto, dos maneras de ser ciudad: la vidriera y el zaguán, el e
 
 ### Notas para el equipo (borrar antes de publicar)
 
-- **La foto real del Consulado contradice la ficha.** La foto de Wikimedia Commons (enero de 2010, frente a Plaza Artigas) muestra una puerta en arco con dos ventanas en arco, una a cada lado, y no los «cuatro ventanales» de la ficha. La puerta no está centrada, así que no hay «estricta simetría». No se ven pilastras con capiteles ni cornisa con dentículos, y sí mascarones de rostro femenino, herrería de líneas curvas en el remate, postigos de madera y un escudo oval esmaltado (no una placa de bronce). Tampoco se ve el mástil con la bandera ni una banderola radial sobre la puerta. Por eso reescribí la lectura de fachada de la parada 2 según lo que muestra la foto y saqué del PDF las figuras 2.1 y 2.2. Si tienen una fuente más reciente o una foto propia que muestre lo contrario, se puede volver al texto anterior (está en el historial de git). La dirección del Consulado (Artigas 1162) coincide con otras fuentes.
-- **Las figuras 1.1 y 1.2 son dibujos, no fotos.** Son ilustraciones esquemáticas en elevación frontal, aunque llevan rótulos de «archivo fotográfico» y «relevamiento fotográfico». Si se publican, conviene rotularlas como ilustraciones. Como no hay foto libre del edificio de Uruguay 891, no se pudo comprobar con una imagen real lo que muestran. Dado que la ficha falló en el Consulado, conviene tratar con cautela sus detalles sobre este edificio.
-- **Ochava y frontón.** Los dibujos del Palacio Gallino son frontales y no muestran el corte diagonal. Ubiqué la ochava, la puerta y el «1911» en la esquina según la ficha y los leí como el eje central del dibujo. Conviene verificarlo en terreno antes de publicar. Una publicación de Facebook confirma que la tienda «París-Londres» estaba en la esquina de Uruguay y Soca y vendía ropa, calzado y artículos del hogar.
-- **Falta la foto del edificio de Uruguay 891.** En Wikimedia Commons solo hay fotos del Palacio Gallino de Uruguay 1067 (el museo). No encontré otra fuente con licencia libre. La opción más limpia es sacarla en la calle.
+- **Las fotos reales contradicen la ficha en los dos edificios.** Por eso reescribí la lectura de fachada de ambas paradas según lo que se ve, y saqué del PDF las ilustraciones 1.1, 1.2, 2.1 y 2.2, que no coinciden con las fotos. El texto anterior sigue en el historial de git.
+  - **Palacio Gallino comercial (foto de época, aportada por el equipo):** la esquina es una ochava con la entrada bajo una marquesina, y hay balcones de hierro forjado a lo largo de las dos calles y un letrero oval de «París Londres». Pero el remate de la esquina es redondeado con una pequeña balaustrada, y no un frontón triangular. Sobre las ventanas hay guirnaldas en relieve, no frontones. El año «1911» no se lee en la foto (la imagen es chica), así que quedó atribuido al relevamiento como un dato por verificar en la calle.
+  - **Consulado Argentino (foto de 2010):** dos ventanas con arco, una a cada lado de la puerta (no cuatro). La puerta no está centrada, así que no hay «estricta simetría». No se ven pilastras con capiteles ni cornisa con dentículos, y sí mascarones de rostro femenino, herrería de líneas curvas en el remate, postigos de madera y un escudo oval esmaltado (no una placa de bronce). Tampoco se ve el mástil con la bandera ni una banderola radial sobre la puerta. La dirección (Artigas 1162) coincide con otras fuentes.
+  - Dado que la ficha falló en lo visible, conviene tratar con cautela sus detalles no visibles (salón con columnas de hierro, zaguán con zócalos de mármol, techos de más de 4 m, el año 1857 del consulado).
+- **Foto del Palacio Gallino comercial: falta confirmar la fuente.** La imagen es una fotografía de época coloreada, aportada por el equipo. No consta autor, archivo ni fecha, y la coloración no es la original. Antes de publicar hay que confirmar la autoría y el permiso de uso, y ponerle el crédito correcto. En el PDF figura como «fuente a confirmar».
+- **Falta una foto actual del edificio de Uruguay 891.** Con la foto de época y lo que dice el relevamiento sobre «El Revoltijo» se puede armar el contraste, pero una foto de hoy, sacada en la calle, lo mejoraría. En Wikimedia Commons no hay ninguna libre.
 - **Datos que no figuran en el relevamiento** y quedaron como tales: autor del Palacio Gallino, y autor y comitente del Consulado.
-- **Verificar con fuente primaria:** el año 1857 y «una de las más antiguas» del consulado vienen de la ficha, sin cita directa. Lo mismo vale para el «excelente estado de mantenimiento»: en la foto de 2010 el revoque se ve envejecido.
+- **Verificar con fuente primaria:** el año 1857 y «una de las más antiguas» del consulado vienen de la ficha, sin cita directa. Una publicación de Facebook confirma que la tienda «París-Londres» estaba en la esquina de Uruguay y Soca y vendía ropa, calzado y artículos del hogar.

@@ -1,13 +1,10 @@
 {
-  "_ayuda": "Las fotos reales van en guion-pdf/fotos/ y se declaran acá con autor, licencia y fuente. Un espacio sin 'file' se muestra como 'Foto pendiente'. Todas las fotos actuales vienen de Wikimedia Commons (CC BY-SA).",
+  "_ayuda": "Las fotos reales van en guion-pdf/fotos/ y se declaran acá. Las de Wikimedia Commons llevan author, license, license_url y source; las que no tienen licencia conocida llevan credit_text. Un espacio sin 'file' se muestra como 'Foto pendiente'.",
   "parada1": [
     {
-      "file": "calle-uruguay.jpg",
-      "caption": "La calle Uruguay, en el centro de Salto: el eje cívico-comercial donde está esta parada.",
-      "author": "Shant",
-      "license": "CC BY-SA 2.5",
-      "license_url": "https://creativecommons.org/licenses/by-sa/2.5/",
-      "source": "https://commons.wikimedia.org/wiki/File:Calle_en_Salto.jpg"
+      "file": "paris-londres-epoca.jpg",
+      "caption": "La tienda «París Londres» en la esquina de Uruguay y Soca, en una foto de época coloreada. Por los automóviles, es de las primeras décadas del siglo XX.",
+      "credit_text": "Fotografía de época coloreada, aportada por el equipo del proyecto. Autoría, archivo y fecha: a confirmar."
     },
     {
       "file": "museo-gallino.jpg",
@@ -16,10 +13,6 @@
       "license": "CC BY-SA 3.0",
       "license_url": "https://creativecommons.org/licenses/by-sa/3.0/",
       "source": "https://commons.wikimedia.org/wiki/File:Palacio_Gallino_-_Museo_de_Bellas_Artes_y_Artes_Decorativas_Salto.jpg"
-    },
-    {
-      "descripcion": "El edificio de Uruguay 891 (París Londres / El Revoltijo): no encontré una foto con licencia libre; falta sacarla en la calle.",
-      "file": null
     }
   ],
   "parada2": [
