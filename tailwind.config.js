@@ -6,7 +6,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        tannat: { DEFAULT: '#721B28', dark: '#4A101D', light: '#8F2636', 50: '#FAF5F6', 100: '#F4EBED', 900: '#121214' },
+        tannat: { DEFAULT: '#721B28', dark: '#4A101D', light: '#8F2636', 50: '#FAF5F6', 100: '#F4EBED', 900: '#2B0A14' },
         gold: { DEFAULT: '#C29D62', light: '#D9B47A', dark: '#8A703F', 50: '#FCF9F2' },
         terroir: { DEFAULT: '#5A4D41', light: '#8E7F72', dark: '#3A3027' },
         basalt: { DEFAULT: '#242424', surface: '#181818', card: '#2A2A2A' },
