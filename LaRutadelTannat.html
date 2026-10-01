@@ -496,6 +496,10 @@
       -webkit-backface-visibility: hidden;
     }
     .flip-card-back { transform: rotateY(180deg); }
+    .flip-card:focus-visible { outline: 2px solid #C29D62; outline-offset: 3px; border-radius: 1rem; }
+    /* Sombra editorial multicapa y difusa (spec del rediseño), reemplaza shadow-sm/shadow-md en tarjetas clave */
+    .shadow-editorial { box-shadow: 0 10px 30px -10px rgba(18, 18, 20, 0.08); }
+    .shadow-editorial-hover:hover { box-shadow: 0 16px 40px -12px rgba(18, 18, 20, 0.16); }
     @media (prefers-reduced-motion: reduce) {
       .flip-card-inner { transition: none; }
     }
@@ -1115,7 +1119,7 @@
                 <span class="absolute -left-[41px] top-3 w-5 h-5 rounded-full bg-gold border-4 border-white shadow z-10"></span>
                 <div class="flip-card cursor-pointer select-none" tabindex="0" role="button" aria-pressed="false" aria-labelledby="fc-1819-f fc-1819-b">
                   <div class="flip-card-inner">
-                    <div id="fc-1819-f" class="flip-card-face flip-card-front flex flex-col p-4 sm:p-5 rounded-2xl bg-white border border-tannat-100 shadow-sm hover:shadow-md transition-shadow">
+                    <div id="fc-1819-f" class="flip-card-face flip-card-front flex flex-col p-4 sm:p-5 rounded-2xl bg-white border border-tannat-100 shadow-editorial shadow-editorial-hover transition-shadow">
                       <span class="font-serif text-2xl font-bold text-tannat">1819</span>
                       <p class="mt-1 text-terroir leading-relaxed" data-i18n="pioneer.y1819">Nace el 14 de abril en Hasparren, en el País Vasco francés (Bajos Pirineos).</p>
                       <span class="mt-auto pt-3 text-[11px] font-semibold uppercase tracking-wider text-tannat/60" data-i18n="pioneer.flipHint">Descubrí más →</span>
@@ -1133,7 +1137,7 @@
                 <span class="absolute -left-[41px] top-3 w-5 h-5 rounded-full bg-tannat border-4 border-white shadow z-10"></span>
                 <div class="flip-card cursor-pointer select-none" tabindex="0" role="button" aria-pressed="false" aria-labelledby="fc-1838-f fc-1838-b">
                   <div class="flip-card-inner">
-                    <div id="fc-1838-f" class="flip-card-face flip-card-front flex flex-col p-4 sm:p-5 rounded-2xl bg-white border border-tannat-100 shadow-sm hover:shadow-md transition-shadow">
+                    <div id="fc-1838-f" class="flip-card-face flip-card-front flex flex-col p-4 sm:p-5 rounded-2xl bg-white border border-tannat-100 shadow-editorial shadow-editorial-hover transition-shadow">
                       <span class="font-serif text-2xl font-bold text-tannat">1838</span>
                       <p class="mt-1 text-terroir leading-relaxed" data-i18n="pioneer.y1838">Llega a Montevideo desde Francia y comienza a trabajar en un saladero en la zona del Cerro.</p>
                       <span class="mt-auto pt-3 text-[11px] font-semibold uppercase tracking-wider text-tannat/60" data-i18n="pioneer.flipHint">Descubrí más →</span>
@@ -1151,7 +1155,7 @@
                 <span class="absolute -left-[41px] top-3 w-5 h-5 rounded-full bg-tannat border-4 border-white shadow z-10"></span>
                 <div class="flip-card cursor-pointer select-none" tabindex="0" role="button" aria-pressed="false" aria-labelledby="fc-1860-f fc-1860-b">
                   <div class="flip-card-inner">
-                    <div id="fc-1860-f" class="flip-card-face flip-card-front flex flex-col p-4 sm:p-5 rounded-2xl bg-white border border-tannat-100 shadow-sm hover:shadow-md transition-shadow">
+                    <div id="fc-1860-f" class="flip-card-face flip-card-front flex flex-col p-4 sm:p-5 rounded-2xl bg-white border border-tannat-100 shadow-editorial shadow-editorial-hover transition-shadow">
                       <span class="font-serif text-2xl font-bold text-tannat">1860</span>
                       <p class="mt-1 text-terroir leading-relaxed" data-i18n="pioneer.y1860">Se instala en Salto y funda el saladero La Caballada, a orillas del río Uruguay.</p>
                       <span class="mt-auto pt-3 text-[11px] font-semibold uppercase tracking-wider text-tannat/60" data-i18n="pioneer.flipHint">Descubrí más →</span>
@@ -1169,7 +1173,7 @@
                 <span class="absolute -left-[41px] top-3 w-5 h-5 rounded-full bg-gold border-4 border-white shadow z-10"></span>
                 <div class="flip-card cursor-pointer select-none" tabindex="0" role="button" aria-pressed="false" aria-labelledby="fc-1874-f fc-1874-b">
                   <div class="flip-card-inner">
-                    <div id="fc-1874-f" class="flip-card-face flip-card-front flex flex-col p-4 sm:p-5 rounded-2xl bg-white border border-tannat-100 shadow-sm hover:shadow-md transition-shadow">
+                    <div id="fc-1874-f" class="flip-card-face flip-card-front flex flex-col p-4 sm:p-5 rounded-2xl bg-white border border-tannat-100 shadow-editorial shadow-editorial-hover transition-shadow">
                       <span class="font-serif text-2xl font-bold text-tannat">1874</span>
                       <p class="mt-1 text-terroir leading-relaxed" data-i18n="pioneer.y1874">Planta en sus tierras las primeras cepas de Tannat, traídas desde Concordia (Argentina). El viñedo llegaría a cubrir cerca de 200 hectáreas y el vino se popularizó con su propio apellido: "Harriague".</p>
                       <span class="mt-auto pt-3 text-[11px] font-semibold uppercase tracking-wider text-tannat/60" data-i18n="pioneer.flipHint">Descubrí más →</span>
@@ -1187,7 +1191,7 @@
                 <span class="absolute -left-[41px] top-3 w-5 h-5 rounded-full bg-tannat border-4 border-white shadow z-10"></span>
                 <div class="flip-card cursor-pointer select-none" tabindex="0" role="button" aria-pressed="false" aria-labelledby="fc-1894-f fc-1894-b">
                   <div class="flip-card-inner">
-                    <div id="fc-1894-f" class="flip-card-face flip-card-front flex flex-col p-4 sm:p-5 rounded-2xl bg-white border border-tannat-100 shadow-sm hover:shadow-md transition-shadow">
+                    <div id="fc-1894-f" class="flip-card-face flip-card-front flex flex-col p-4 sm:p-5 rounded-2xl bg-white border border-tannat-100 shadow-editorial shadow-editorial-hover transition-shadow">
                       <span class="font-serif text-2xl font-bold text-tannat">1894</span>
                       <p class="mt-1 text-terroir leading-relaxed" data-i18n="pioneer.y1894">Fallece el 12 de enero en París. Su nombre queda para siempre unido a la cepa que aclimató en Salto.</p>
                       <span class="mt-auto pt-3 text-[11px] font-semibold uppercase tracking-wider text-tannat/60" data-i18n="pioneer.flipHint">Descubrí más →</span>
@@ -1205,7 +1209,7 @@
                 <span class="absolute -left-[41px] top-3 w-5 h-5 rounded-full bg-gold border-4 border-white shadow z-10"></span>
                 <div class="flip-card cursor-pointer select-none" tabindex="0" role="button" aria-pressed="false" aria-labelledby="fc-2016-f fc-2016-b">
                   <div class="flip-card-inner">
-                    <div id="fc-2016-f" class="flip-card-face flip-card-front flex flex-col p-4 sm:p-5 rounded-2xl bg-white border border-tannat-100 shadow-sm hover:shadow-md transition-shadow">
+                    <div id="fc-2016-f" class="flip-card-face flip-card-front flex flex-col p-4 sm:p-5 rounded-2xl bg-white border border-tannat-100 shadow-editorial shadow-editorial-hover transition-shadow">
                       <span class="font-serif text-2xl font-bold text-tannat">2016</span>
                       <p class="mt-1 text-terroir leading-relaxed" data-i18n="pioneer.y2016">El INAVI declara el 14 de abril — su fecha de nacimiento — Día Nacional del Tannat en su homenaje.</p>
                       <span class="mt-auto pt-3 text-[11px] font-semibold uppercase tracking-wider text-tannat/60" data-i18n="pioneer.flipHint">Descubrí más →</span>
