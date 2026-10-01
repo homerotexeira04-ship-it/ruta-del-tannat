@@ -120,6 +120,15 @@ El relevamiento la describe en excelente estado de mantenimiento, con carpinter�
 
 Dos esquinas de Salto, dos maneras de ser ciudad: la vidriera y el zaguán, el edificio que se muestra al peatón y el que protege la intimidad. Y un mismo movimiento de fondo: una ciudad que va cambiando de oficio sus edificios sin perderles la cara.
 
+## Nota metodológica
+
+Este guion parte de las *Fichas Arquitectónicas Patrimoniales* y de las guías que ellas citan, y las contrasta con fotografías reales de cada edificio: una foto de época coloreada de la tienda «París Londres», una foto de 2010 del Consulado Argentino, y fotos de la Plaza Artigas y del Museo Gallino. Cuando la fotografía y la ficha no coinciden, el guion describe lo que se ve en la foto y atribuye al relevamiento lo que la imagen no permite comprobar. Las diferencias principales son:
+
+- **Consulado Argentino.** La ficha menciona cuatro ventanales, simetría estricta, pilastras con capiteles, una placa de bronce y un mástil con bandera. La foto de 2010 muestra una ventana con arco a cada lado de la puerta, la puerta fuera del centro, mascarones de rostro femenino, herrería de líneas curvas, postigos de madera y un escudo oval. El mástil no se aprecia.
+- **Palacio Gallino comercial.** La ficha describe un frontón triangular con el año 1911 y frontones sobre las ventanas. La foto de época muestra un remate redondeado con una pequeña balaustrada y adornos en relieve sobre las ventanas. El año 1911 no se lee en la imagen, por eso se presenta como dato del relevamiento, para verificarlo en el lugar.
+
+Por esa razón no se incluyen las ilustraciones de las fichas originales. El trabajo tiene además límites: no hay una foto actual del edificio de Uruguay 891; las fotos son de fechas distintas y pueden no reflejar el estado actual; y los datos de interior, el año 1857 del consulado y el estado de conservación provienen del relevamiento y no se pudieron contrastar con imágenes.
+
 ## Fuentes
 
 - Machado da Silva, A.; Rodríguez Prati, E.; Vlaeminck, L. (2010). *Guía del Salto: urbanístico, arquitectónico y artístico*. Facultad de Arquitectura, Universidad de la República (Farq-UdelaR), Regional Norte Sede Salto.
@@ -133,7 +142,7 @@ Dos esquinas de Salto, dos maneras de ser ciudad: la vidriera y el zaguán, el e
 
 ### Notas para el equipo (borrar antes de publicar)
 
-- **Las fotos reales contradicen la ficha en los dos edificios.** Por eso reescribí la lectura de fachada de ambas paradas según lo que se ve, y saqué del PDF las ilustraciones 1.1, 1.2, 2.1 y 2.2, que no coinciden con las fotos. El texto anterior sigue en el historial de git.
+- **Las fotos reales contradicen la ficha en los dos edificios** (la nota metodológica del PDF resume estas diferencias). Por eso reescribí la lectura de fachada de ambas paradas según lo que se ve, y saqué del PDF las ilustraciones 1.1, 1.2, 2.1 y 2.2, que no coinciden con las fotos. El texto anterior sigue en el historial de git.
   - **Palacio Gallino comercial (foto de época, aportada por el equipo):** la esquina es una ochava con la entrada bajo una marquesina, y hay balcones de hierro forjado a lo largo de las dos calles y un letrero oval de «París Londres». Pero el remate de la esquina es redondeado con una pequeña balaustrada, y no un frontón triangular. Sobre las ventanas hay guirnaldas en relieve, no frontones. El año «1911» no se lee en la foto (la imagen es chica), así que quedó atribuido al relevamiento como un dato por verificar en la calle.
   - **Consulado Argentino (foto de 2010):** dos ventanas con arco, una a cada lado de la puerta (no cuatro). La puerta no está centrada, así que no hay «estricta simetría». No se ven pilastras con capiteles ni cornisa con dentículos, y sí mascarones de rostro femenino, herrería de líneas curvas en el remate, postigos de madera y un escudo oval esmaltado (no una placa de bronce). Tampoco se ve el mástil con la bandera ni una banderola radial sobre la puerta. La dirección (Artigas 1162) coincide con otras fuentes.
   - Dado que la ficha falló en lo visible, conviene tratar con cautela sus detalles no visibles (salón con columnas de hierro, zaguán con zócalos de mármol, techos de más de 4 m, el año 1857 del consulado).

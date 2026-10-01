@@ -184,11 +184,16 @@ h4 .num {
 
 /* Cierre y fuentes */
 .cierre { break-before: page; }
-.cierre + .cierre { break-before: auto; margin-top: 9mm; }
+.cierre + .cierre { break-before: auto; margin-top: 6mm; }
 .h2c { margin: 0 0 4mm; font: 700 16pt "Liberation Sans", sans-serif; color: var(--navy); }
-.h2c + p { font-size: 11.5pt; }
+.h2c + p { font-size: 10.6pt; }
 ul.lista { margin: 0 0 4mm; padding-left: 5mm; font: 9pt/1.4 "Liberation Sans", sans-serif; }
-ul.lista li { margin-bottom: 1.8mm; }
+ul.lista li { margin-bottom: 1.2mm; }
 ul.lista a { color: var(--navy); }
 .url { word-break: break-all; color: #6b7078; }
 .nota-lic { font: italic 8.2pt/1.4 "Liberation Sans", sans-serif; color: var(--suave); }
+
+/* Nota metodológica: texto corrido, con el tipo del cuerpo */
+.metodo { font-size: 10pt; }
+.metodo ul.lista { font: 10pt/1.5 "Bitstream Charter", "Liberation Serif", serif; margin-bottom: 3mm; }
+.metodo ul.lista li { margin-bottom: 2mm; }

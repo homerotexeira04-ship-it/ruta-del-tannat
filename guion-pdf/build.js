@@ -137,7 +137,7 @@ function render(tokens) {
     const [label, ...rest] = s.title.split(' · ');
     let html = isParada
       ? `<section class="parada"><header><span class="etq">${inline(label)}</span><h2>${inline(rest.join(' · '))}</h2></header>`
-      : `<section class="cierre"><h2 class="h2c">${inline(s.title)}</h2>`;
+      : `<section class="cierre${/^Nota metodol/.test(s.title) ? ' metodo' : ''}"><h2 class="h2c">${inline(s.title)}</h2>`;
     let inClaves = false;
     for (let k = 0; k < s.blocks.length; k++) {
       const b = s.blocks[k];
