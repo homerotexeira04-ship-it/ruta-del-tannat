@@ -1,5 +1,6 @@
 /* Fotos de fondo de las estaciones: de dónde salen, quién las sacó y con qué licencia (se muestran en Créditos y fuentes).
-   Los archivos de img/fondos/ son recortes de 960 × 540 ya desenfocados a partir de las originales de Wikimedia Commons. */
+   En img/fondos/ hay dos archivos por estación, hechos a partir de la original de Wikimedia Commons: la foto recortada a 16:9 y reducida a 1920 × 1080 (nombre.webp)
+   y una copia chica, desenfocada y aclarada que se ve a través de la tarjeta (nombre-difuso.webp). */
 (function (g) {
   'use strict';
   var RE = (g.RE = g.RE || {});
@@ -9,7 +10,7 @@
   var CC0 = { nombre: 'CC0 1.0 (dominio público)', url: 'https://creativecommons.org/publicdomain/zero/1.0/deed.es' };
 
   RE.fotos = {
-    cambios: 'Recortadas a 16:9, reducidas y desenfocadas para usarlas de fondo.',
+    cambios: 'Recortadas a 16:9 y reducidas; una copia desenfocada y aclarada se usa detrás de las tarjetas.',
     hidraulica: { lugar: 'Represa de Salto Grande, Salto', autor: 'Shant', licencia: CC_BY_SA_3, archivo: 'Represa Salto Grande.jpg', url: 'https://commons.wikimedia.org/wiki/File:Represa_Salto_Grande.jpg' },
     eolica: { lugar: 'Parque eólico Sierra de los Caracoles, Maldonado', autor: 'Andrés Franchi Ugart', licencia: CC_BY_SA_3, archivo: 'Parque Eólico «Sierra de los Caracoles» - panoramio (1).jpg', url: 'https://commons.wikimedia.org/wiki/File:Parque_E%C3%B3lico_%22Sierra_de_los_Caracoles%22_-_panoramio_(1).jpg' },
     solar: { lugar: 'Paneles solares en el departamento de Paysandú', autor: 'Mx. Granger', licencia: CC0, archivo: 'Solar panels in Paysandú Department.jpg', url: 'https://commons.wikimedia.org/wiki/File:Solar_panels_in_Paysand%C3%BA_Department.jpg' },
