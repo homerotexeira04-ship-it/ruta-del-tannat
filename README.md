@@ -18,6 +18,7 @@ Publicado con GitHub Pages: https://homerotexeira04-ship-it.github.io/ruta-del-t
 | `scripts/` | Chequeos del sitio: `check.js` (estático), `smoke.js` (en Chrome real) y `lh-assert.js` (mínimos de Lighthouse) |
 | `.github/workflows/checks.yml` | Los mismos chequeos, automáticos en GitHub Actions |
 | `404.html`, `robots.txt`, `sitemap.xml`, `favicon.ico`, `apple-touch-icon.png` | Archivos públicos de SEO y navegación |
+| `energia/` | **Otro proyecto**: el juego «Ruta de la Energía Uruguay» para la pantalla interactiva Ricoh D6510 (inspirado en Energimundo). Tiene su propio README, pruebas (`.github/workflows/energia.yml`) y service worker; no comparte código con el sitio del Tannat |
 
 ## Cambiar el diseño (Tailwind)
 
