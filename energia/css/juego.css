@@ -10,27 +10,29 @@
   font-size: calc(min(100vw / 1920, 100vh / 1080) * 16);
   --bg: #FBF7EF;
   --ink: #23302B;
-  --ink-soft: #56615B;
+  --ink-soft: #384239;
   --tarjeta: #FFFFFF;
   --borde: #E7DFC9;
   --cta: #F5A31A;
   --cta-ink: #2A1C04;
-  --ok: #4C7A34; --ok-ink: #2F5A1E; --ok-luz: #E4EFDA;
-  --mal: #B03A2E; --mal-ink: #A4352A; --mal-luz: #F9E1DD;
+  --ok: #4C7A34; --ok-ink: #2B5019; --ok-luz: #E4EFDA;
+  --mal: #B03A2E; --mal-ink: #7A2219; --mal-luz: #F9E1DD;
   --fuente-titulo: 'Fredoka', 'Nunito', 'Segoe UI', system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
   --fuente-texto: 'Nunito', 'Segoe UI', system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
   --sombra: 0 .75rem 2.25rem rgba(35, 48, 43, .09);
+  --cristal: .5;                        /* cuánto blanco lleva la tarjeta por encima de la foto desenfocada (0 = transparente, 1 = blanca) */
+  --difuso: url(../img/fondos/hidraulica-difuso.webp);
 
-  /* colores de la estación en curso (los pone el atributo data-e del <body>) */
-  --e-color: #1C6E9C; --e-ink: #1C6E9C; --e-luz: #DCEEF6; --e-sobre: #FFFFFF; --e-rgb: 28, 110, 156;
+  /* colores de la estación en curso (los pone el atributo data-e del <body>). --e-ink es el de los textos: oscuro, para que se lea sobre la tarjeta de vidrio. */
+  --e-color: #1C6E9C; --e-ink: #0D4D70; --e-luz: #DCEEF6; --e-sobre: #FFFFFF; --e-rgb: 28, 110, 156;
 }
 @supports (height: 100dvh) { :root { font-size: calc(min(100vw / 1920, 100dvh / 1080) * 16); } }
 
-body[data-e="hidraulica"] { --e-color: #1C6E9C; --e-ink: #1C6E9C; --e-luz: #DCEEF6; --e-sobre: #FFFFFF; --e-rgb: 28, 110, 156; }
-body[data-e="eolica"]     { --e-color: #2E8C9E; --e-ink: #1B6B7B; --e-luz: #DEF3F1; --e-sobre: #FFFFFF; --e-rgb: 46, 140, 158; }
-body[data-e="solar"]      { --e-color: #E8990F; --e-ink: #8A5600; --e-luz: #FCEBC9; --e-sobre: #2A1C04; --e-rgb: 232, 153, 15; }
-body[data-e="biomasa"]    { --e-color: #4C7A34; --e-ink: #3F6B2A; --e-luz: #E4EFDA; --e-sobre: #FFFFFF; --e-rgb: 76, 122, 52; }
-body[data-e="uruguay"]    { --e-color: #4A3F6B; --e-ink: #4A3F6B; --e-luz: #E8E4F2; --e-sobre: #FFFFFF; --e-rgb: 74, 63, 107; }
+body[data-e="hidraulica"] { --e-color: #1C6E9C; --e-ink: #0D4D70; --e-luz: #DCEEF6; --e-sobre: #FFFFFF; --e-rgb: 28, 110, 156; --difuso: url(../img/fondos/hidraulica-difuso.webp); }
+body[data-e="eolica"]     { --e-color: #2E8C9E; --e-ink: #0F4F5C; --e-luz: #DEF3F1; --e-sobre: #FFFFFF; --e-rgb: 46, 140, 158; --difuso: url(../img/fondos/eolica-difuso.webp); }
+body[data-e="solar"]      { --e-color: #E8990F; --e-ink: #6B4100; --e-luz: #FCEBC9; --e-sobre: #2A1C04; --e-rgb: 232, 153, 15; --difuso: url(../img/fondos/solar-difuso.webp); }
+body[data-e="biomasa"]    { --e-color: #4C7A34; --e-ink: #2B4F1D; --e-luz: #E4EFDA; --e-sobre: #FFFFFF; --e-rgb: 76, 122, 52; --difuso: url(../img/fondos/biomasa-difuso.webp); }
+body[data-e="uruguay"]    { --e-color: #4A3F6B; --e-ink: #4A3F6B; --e-luz: #E8E4F2; --e-sobre: #FFFFFF; --e-rgb: 74, 63, 107; --difuso: url(../img/fondos/uruguay-difuso.webp); }
 
 /* ---------- base y comportamiento de pantalla de uso público ---------- */
 *, *::before, *::after { box-sizing: border-box; }
@@ -54,7 +56,9 @@ svg { display: block; }
 :focus-visible { outline: .25rem solid var(--e-ink); outline-offset: .2rem; border-radius: .5rem; }
 [hidden] { display: none !important; }
 
-/* ---------- fondo: cinco fotos ya desenfocadas (sin filtros en vivo) ---------- */
+/* ---------- fondo: la foto de cada estación, nítida; la tarjeta es de «vidrio» (sin filtros en vivo) ----------
+   Cada estación tiene dos archivos: la foto nítida (1920 × 1080, es la que se ve alrededor) y una copia ya desenfocada y chica
+   que se ve a través de la tarjeta. Así la foto se reconoce en toda la pantalla y el texto sigue leyéndose. */
 .fondo { position: fixed; inset: 0; z-index: 0; pointer-events: none; background: var(--bg); }
 .fondo__img { position: absolute; inset: 0; background-size: cover; background-position: center; opacity: 0; transition: opacity .8s ease; }
 body[data-e="hidraulica"] .fondo__img[data-e="hidraulica"],
@@ -62,14 +66,14 @@ body[data-e="eolica"] .fondo__img[data-e="eolica"],
 body[data-e="solar"] .fondo__img[data-e="solar"],
 body[data-e="biomasa"] .fondo__img[data-e="biomasa"],
 body[data-e="uruguay"] .fondo__img[data-e="uruguay"] { opacity: 1; }
-.fondo__velo { position: absolute; inset: 0; background: linear-gradient(135deg, rgba(var(--e-rgb), .4), rgba(251, 247, 239, .55) 70%); transition: background .8s ease; }
+.fondo__velo { position: absolute; inset: 0; background: linear-gradient(135deg, rgba(var(--e-rgb), .1), rgba(251, 247, 239, .06) 70%); transition: background .8s ease; }
 
 /* ---------- estructura ---------- */
 .app { position: relative; z-index: 1; width: 120rem; height: 67.5rem; display: flex; flex-direction: column; gap: .75rem; padding: 1.125rem 2rem 2.7rem; }
 
 .cabecera {
   flex: none; display: flex; align-items: center; justify-content: space-between; gap: 1.25rem; margin-right: 18.5rem; height: 8.25rem; padding: .8rem 1.75rem 1.2rem;
-  background: rgba(255, 255, 255, .78); border: 1px solid rgba(255, 255, 255, .7); border-radius: 1.75rem; box-shadow: var(--sombra); position: relative;
+  background: rgba(255, 255, 255, .66); border: 1px solid rgba(255, 255, 255, .7); border-radius: 1.75rem; box-shadow: var(--sombra); position: relative;
 }
 .cabecera__marca { flex: none; }
 .cabecera__etiqueta { display: inline-block; margin-bottom: .3rem; padding: .2rem .8rem; border-radius: 999px; background: var(--tarjeta); border: 1px solid var(--borde); color: var(--ink-soft); font-size: 1.15rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
@@ -97,7 +101,7 @@ body[data-e="uruguay"] .fondo__img[data-e="uruguay"] { opacity: 1; }
 /* ---------- recorrido (las cinco estaciones) ---------- */
 .ruta { flex: none; display: flex; align-items: flex-start; justify-content: space-between; gap: .5rem; padding: 0 .5rem; }
 .ruta__nodo { position: relative; flex: 1; display: flex; flex-direction: column; align-items: center; gap: .4rem; min-width: 0; }
-.ruta__nodo:not(:last-child)::after { content: ""; position: absolute; top: 2.3rem; left: 58%; width: 88%; height: .25rem; background: repeating-linear-gradient(to right, var(--borde) 0 .4rem, transparent .4rem .8rem); }
+.ruta__nodo:not(:last-child)::after { content: ""; position: absolute; top: 2.3rem; left: 58%; width: 88%; height: .25rem; background: repeating-linear-gradient(to right, #fff 0 .4rem, transparent .4rem .8rem); filter: drop-shadow(0 0 .12rem rgba(35, 48, 43, .7)); }
 .ruta__nodo--hecho:not(:last-child)::after { background: repeating-linear-gradient(to right, var(--n-ink) 0 .4rem, transparent .4rem .8rem); }
 .ruta__circulo { position: relative; z-index: 1; display: grid; place-items: center; width: 4.75rem; height: 4.75rem; border-radius: 50%; background: var(--tarjeta); border: .22rem solid var(--borde); color: #8F8870; transition: background .25s, border-color .25s, color .25s; }
 .ruta__circulo svg { width: 2.7rem; height: 2.7rem; }
@@ -128,9 +132,15 @@ body[data-e="uruguay"] .fondo__img[data-e="uruguay"] { opacity: 1; }
 /* ---------- escenario y tarjeta ---------- */
 .escenario { flex: 1; min-height: 0; display: flex; }
 .escenario:focus { outline: none; }
+/* El «vidrio» es un panel detrás de la tarjeta: la foto desenfocada de la estación, fija a la pantalla (así coincide con la foto nítida de afuera) y aclarada con blanco. */
+.escenario { position: relative; isolation: isolate; }
+.escenario::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; border-radius: 1.75rem; border: 1px solid rgba(255, 255, 255, .8); box-shadow: var(--sombra);
+  background: linear-gradient(rgba(255, 255, 255, var(--cristal)), rgba(255, 255, 255, var(--cristal))), var(--difuso) center / cover fixed, var(--tarjeta);
+}
 .tarjeta {
   flex: 1; min-width: 0; min-height: 0; display: flex; flex-direction: column; justify-content: center; justify-content: safe center; gap: 1rem; padding: 1.5rem 2.5rem;
-  background: var(--tarjeta); border: 1px solid var(--borde); border-radius: 1.75rem; box-shadow: var(--sombra); overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--borde) transparent;
+  border-radius: 1.75rem; overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--borde) transparent;
   animation: aparece .3s ease;
 }
 .tarjeta--centro { align-items: center; text-align: center; }
@@ -267,7 +277,7 @@ body[data-e="uruguay"] .fondo__img[data-e="uruguay"] { opacity: 1; }
 .explicacion__titulo { font-size: 1.95rem; font-weight: 800; line-height: 1.2; }
 .explicacion__cuerpo { margin-top: .2rem; color: #3E4A44; font-size: 1.75rem; font-weight: 600; line-height: 1.35; }
 .explicacion__fuente { display: block; margin-top: .35rem; color: var(--ink-soft); font-size: 1.3rem; font-weight: 700; }
-.explicacion--guia { align-items: center; color: var(--ink-soft); font-size: 1.75rem; font-weight: 700; }
+.explicacion--guia { align-items: center; color: var(--ink-soft); font-size: 1.75rem; font-weight: 700; background: transparent; border-color: transparent; }
 .pie-pregunta .boton { align-self: center; min-width: 21rem; }
 
 /* ---------- estación completada ---------- */

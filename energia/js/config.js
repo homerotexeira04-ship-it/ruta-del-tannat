@@ -5,7 +5,7 @@
   var RE = (g.RE = g.RE || {});
 
   RE.config = {
-    version: '1.0.0',
+    version: '1.1.0',
     titulo: 'Ruta de la Energía Uruguay',
 
     // ---- Puesto en pantalla interactiva ----

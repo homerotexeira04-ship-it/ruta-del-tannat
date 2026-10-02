@@ -1,6 +1,6 @@
 /* Service worker de la Ruta de la Energía: guarda todo el juego en el navegador para que funcione sin conexión.
    Si cambia cualquier archivo, subí CACHE_VERSION: así los equipos descargan la versión nueva y borran la vieja. */
-const CACHE_VERSION = 'energia-1.0.0';
+const CACHE_VERSION = 'energia-1.1.0';
 
 const ARCHIVOS = [
   './',
@@ -15,6 +15,11 @@ const ARCHIVOS = [
   './img/fondos/solar.webp',
   './img/fondos/biomasa.webp',
   './img/fondos/uruguay.webp',
+  './img/fondos/hidraulica-difuso.webp',
+  './img/fondos/eolica-difuso.webp',
+  './img/fondos/solar-difuso.webp',
+  './img/fondos/biomasa-difuso.webp',
+  './img/fondos/uruguay-difuso.webp',
   './img/iconos/icono.svg',
   './img/iconos/icono-180.png',
   './img/iconos/icono-192.png',

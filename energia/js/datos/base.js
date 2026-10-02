@@ -5,7 +5,7 @@
   var RE = (g.RE = g.RE || {});
 
   RE.datos = {
-    version: '1.0.0',
+    version: '1.1.0',
     revision: '2026-10-02',
 
     // Las cinco estaciones del recorrido. La introducción no debe adelantar respuestas de las preguntas.

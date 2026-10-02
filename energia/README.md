@@ -123,10 +123,14 @@ Los datos de potencia y de la matriz eléctrica cambian cada año: están marcad
 | `js/motor.js`, `js/almacen.js` | Sorteo de preguntas, puntaje, contrarreloj, desafío; guardado y ranking (sin tocar la pantalla) |
 | `js/ui/`, `js/kiosco.js`, `js/audio.js` | Pantallas, teclado en pantalla, diálogos, modo puesto, sonido |
 | `js/datos/` | Preguntas, fuentes, lugares, matriz eléctrica y créditos de las fotos |
-| `fonts/`, `img/` | Tipografías y fotos de fondo propias, con su licencia |
+| `fonts/`, `img/` | Tipografías y fotos de fondo propias, con su licencia (por estación: la foto nítida de 1920 × 1080 y una copia desenfocada y aclarada que se ve a través de la tarjeta) |
 | `sw.js`, `manifest.webmanifest` | Funcionamiento sin conexión e instalación. **Al cambiar cualquier archivo, subir `CACHE_VERSION` en `sw.js`** |
 | `dist/ruta-de-la-energia.html` | El juego en un solo archivo (se arma con `npm run build`) |
 | `scripts/`, `tests/` | Chequeo del banco, armado del archivo único y pruebas |
+
+### Cuánta foto se ve
+
+La foto de cada estación ocupa toda la pantalla y se ve **nítida** alrededor de la tarjeta. La tarjeta es de «vidrio»: deja ver, desenfocada, la misma foto. Cuánto blanco lleva se cambia con **una sola cifra**, `--cristal` en `css/juego.css` (0 = transparente, 1 = blanca; hoy `.5`). Si la subís se lee más fácil y se ve menos foto; si la bajás, al revés. Después de tocarla corré `npm run smoke` o, más rápido, `node --test tests/browser/cristal.test.js`: mide el contraste real de cada texto de diez pantallas con las cinco fotos y avisa si alguno baja de 4,5:1.
 
 ## Chequeos y pruebas
 
@@ -139,7 +143,7 @@ npm run smoke    # en Chrome real, 57 pruebas: diseño en 1920×1080 y 4K, acces
 npm run todo     # todo lo anterior
 ```
 
-Las pruebas en Chrome miden, entre otras cosas, que **ninguna de las 100 preguntas se corte o necesite desplazarse** en 1920 × 1080 (el tamaño real de la D6510), en 3840 × 2160 y en otros tamaños, que no haya violaciones de accesibilidad (axe, WCAG 2.1 AA), que todo texto sobre las fotos tenga contraste suficiente y que el juego abra y se juegue sin conexión. Se corren solas en GitHub Actions (`.github/workflows/energia.yml`) cuando cambia esta carpeta.
+Las pruebas en Chrome miden, entre otras cosas, que **ninguna de las 100 preguntas se corte o necesite desplazarse** en 1920 × 1080 (el tamaño real de la D6510), en 3840 × 2160 y en otros tamaños, que no haya violaciones de accesibilidad (axe, WCAG 2.1 AA), que todo texto, también el que queda sobre la tarjeta translúcida, tenga contraste suficiente con cada una de las cinco fotos (`cristal.test.js`) y que el juego abra y se juegue sin conexión. Se corren solas en GitHub Actions (`.github/workflows/energia.yml`) cuando cambia esta carpeta.
 
 ## Créditos
 
