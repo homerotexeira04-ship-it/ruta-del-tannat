@@ -1,6 +1,7 @@
-/* Ruta de la Energía Uruguay: estilos para pantalla interactiva de 85" (16:9, 3840×2160).
-   Todo se mide en rem y el tamaño de letra de la raíz sigue a la pantalla: 1rem = 16 px en una pantalla de 1920×1080,
-   32 px en una de 3840×2160. El diseño es de 120 × 67,5 rem y se escala entero, sin cortes ni desbordes. */
+/* Ruta de la Energía Uruguay: estilos para la pantalla interactiva Ricoh D6510 (65", 16:9, Full HD 1920×1080, 10 toques).
+   Todo se mide en rem y el tamaño de letra de la raíz sigue a la pantalla: 1rem = 16 px en una pantalla de 1920×1080
+   (la D6510: 1 px ≈ 0,75 mm) y 32 px en una de 3840×2160. El diseño es de 120 × 67,5 rem y se escala entero,
+   sin cortes ni desbordes. */
 
 @font-face { font-family: 'Fredoka'; src: url(../fonts/fredoka-latin.woff2) format('woff2'); font-weight: 300 700; font-style: normal; font-display: swap; }
 @font-face { font-family: 'Nunito'; src: url(../fonts/nunito-latin.woff2) format('woff2'); font-weight: 200 1000; font-style: normal; font-display: swap; }
@@ -71,7 +72,7 @@ body[data-e="uruguay"] .fondo__img[data-e="uruguay"] { opacity: 1; }
   background: rgba(255, 255, 255, .78); border: 1px solid rgba(255, 255, 255, .7); border-radius: 1.75rem; box-shadow: var(--sombra); position: relative;
 }
 .cabecera__marca { flex: none; }
-.cabecera__etiqueta { display: inline-block; margin-bottom: .3rem; padding: .2rem .8rem; border-radius: 999px; background: var(--tarjeta); border: 1px solid var(--borde); color: var(--ink-soft); font-size: 1.05rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+.cabecera__etiqueta { display: inline-block; margin-bottom: .3rem; padding: .2rem .8rem; border-radius: 999px; background: var(--tarjeta); border: 1px solid var(--borde); color: var(--ink-soft); font-size: 1.15rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
 .cabecera h1 { font-family: var(--fuente-titulo); font-weight: 600; font-size: 2.75rem; line-height: 1.1; color: var(--ink); white-space: nowrap; }
 .cabecera__subtitulo { max-width: 38rem; color: var(--ink-soft); font-size: 1.3rem; font-weight: 600; line-height: 1.3; text-align: right; }
 .cabecera__barra { position: absolute; left: 1.75rem; right: 1.75rem; bottom: .55rem; height: .55rem; border-radius: 999px; background: var(--bg); border: 1px solid var(--borde); overflow: hidden; }
@@ -80,7 +81,7 @@ body[data-e="uruguay"] .fondo__img[data-e="uruguay"] { opacity: 1; }
 
 .hud { display: flex; flex: 1; min-width: 0; align-items: center; justify-content: flex-end; gap: .6rem; }
 .chip { display: flex; flex: none; align-items: baseline; gap: .45rem; padding: .3rem .95rem; background: var(--tarjeta); border: 1px solid var(--borde); border-radius: .9rem; box-shadow: 0 2px 0 rgba(0, 0, 0, .03); white-space: nowrap; }
-.chip__etiqueta { color: var(--ink-soft); font-size: 1rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; }
+.chip__etiqueta { color: var(--ink-soft); font-size: 1.1rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; }
 .chip__valor { display: inline-flex; align-items: center; gap: .3rem; font-size: 1.75rem; font-weight: 800; line-height: 1.2; }
 .chip__valor svg { width: 1.5rem; height: 1.5rem; color: var(--mal); }
 .chip--nombre { flex: 0 1 auto; min-width: 0; }
@@ -89,7 +90,8 @@ body[data-e="uruguay"] .fondo__img[data-e="uruguay"] { opacity: 1; }
 .boton-icono svg { width: 1.75rem; height: 1.75rem; }
 .boton-icono:active { transform: scale(.94); }
 
-.logo { position: absolute; z-index: 3; top: 2.7rem; right: 2rem; display: flex; align-items: center; justify-content: center; width: 17.25rem; padding: .7rem 1.1rem; background: var(--tarjeta); border: 1.5px solid var(--borde); border-radius: 1.2rem; box-shadow: var(--sombra); touch-action: none; }
+.encabezado { position: relative; flex: none; }
+.logo { position: absolute; z-index: 3; top: 1.6rem; right: 0; display: flex; align-items: center; justify-content: center; width: 17.25rem; padding: .7rem 1.1rem; background: var(--tarjeta); border: 1.5px solid var(--borde); border-radius: 1.2rem; box-shadow: var(--sombra); touch-action: none; }
 .logo img { display: block; width: 100%; height: auto; }
 
 /* ---------- recorrido (las cinco estaciones) ---------- */
@@ -101,7 +103,7 @@ body[data-e="uruguay"] .fondo__img[data-e="uruguay"] { opacity: 1; }
 .ruta__circulo svg { width: 2.7rem; height: 2.7rem; }
 .ruta__nodo--actual .ruta__circulo { border-color: var(--n-ink); color: var(--n-ink); box-shadow: 0 0 0 .3rem rgba(var(--n-rgb), .18); }
 .ruta__nodo--hecho .ruta__circulo { background: var(--n-fondo); border-color: var(--n-fondo); color: var(--n-sobre); }
-.ruta__nombre { font-size: 1.25rem; font-weight: 800; color: var(--ink-soft); text-align: center; line-height: 1.1; }
+.ruta__nombre { padding: .1rem .85rem; border-radius: 999px; background: rgba(255, 255, 255, .88); font-size: 1.25rem; font-weight: 800; color: var(--ink-soft); text-align: center; line-height: 1.2; }
 .ruta__nodo--actual .ruta__nombre { color: var(--ink); }
 .ruta__nodo[data-e="hidraulica"] { --n-ink: #1C6E9C; --n-fondo: #1C6E9C; --n-sobre: #FFFFFF; --n-rgb: 28, 110, 156; }
 .ruta__nodo[data-e="eolica"]     { --n-ink: #1B6B7B; --n-fondo: #2E8C9E; --n-sobre: #FFFFFF; --n-rgb: 46, 140, 158; }
@@ -134,9 +136,11 @@ body[data-e="uruguay"] .fondo__img[data-e="uruguay"] { opacity: 1; }
 .tarjeta--centro { align-items: center; text-align: center; }
 @keyframes aparece { from { opacity: 0; transform: translateY(.3rem); } to { opacity: 1; transform: none; } }
 
-.pie { position: absolute; left: 2rem; right: 2rem; bottom: .6rem; display: flex; align-items: center; justify-content: space-between; gap: 2rem; color: #2F3A35; font-size: 1.05rem; font-weight: 700; line-height: 1.25; text-shadow: 0 0 .4rem rgba(255, 255, 255, .9); }
-.pie__foto { display: inline-flex; align-items: center; gap: .3rem; }
-.pie button { display: inline; padding: 0 .3rem; border: 0; background: none; color: var(--e-ink); font-weight: 800; text-decoration: underline; text-underline-offset: .2rem; }
+.pie { position: absolute; left: 2rem; right: 2rem; bottom: .4rem; display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; color: #2F3A35; font-size: 1.2rem; font-weight: 700; line-height: 1.25; }
+.pie > span { min-width: 0; padding: .15rem 1.1rem; border-radius: 999px; background: rgba(255, 255, 255, .88); white-space: nowrap; }
+.pie > span:empty { display: none; }
+.pie__foto { display: inline-flex; align-items: center; gap: .35rem; overflow: hidden; text-overflow: ellipsis; }
+.pie button { display: inline-block; min-height: 2.2rem; padding: .1rem .7rem; border: 0; background: none; color: var(--e-ink); font-weight: 800; text-decoration: underline; text-underline-offset: .2rem; }
 
 /* ---------- piezas comunes ---------- */
 .kicker { color: var(--e-ink); font-size: 1.45rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; }
@@ -164,14 +168,14 @@ body[data-e="uruguay"] .fondo__img[data-e="uruguay"] { opacity: 1; }
 .datos { display: flex; justify-content: center; gap: 1.25rem; flex-wrap: wrap; }
 .dato { min-width: 11rem; padding: .9rem 1.6rem; border: 1px solid var(--borde); border-radius: 1.1rem; background: var(--bg); text-align: center; }
 .dato__num { font-family: var(--fuente-titulo); font-weight: 700; font-size: 2.6rem; line-height: 1.1; color: var(--e-ink); }
-.dato__etiqueta { margin-top: .15rem; color: var(--ink-soft); font-size: 1.05rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; }
+.dato__etiqueta { margin-top: .15rem; color: var(--ink-soft); font-size: 1.15rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; }
 
 /* ---------- inicio ---------- */
 .inicio { flex: 1; display: grid; grid-template-columns: 1fr 34rem; gap: 2.5rem; align-items: center; min-height: 0; }
 .inicio__izq { display: flex; flex-direction: column; gap: 1.1rem; align-items: stretch; min-width: 0; }
 .inicio__izq .titulo { font-size: 3rem; }
 .inicio__izq .bajada { max-width: none; font-size: 1.55rem; }
-.etiqueta-campo { display: block; margin-bottom: .45rem; color: var(--ink-soft); font-size: 1.15rem; font-weight: 800; }
+.etiqueta-campo { display: block; margin-bottom: .45rem; color: var(--ink-soft); font-size: 1.25rem; font-weight: 800; }
 .modos { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
 .modo { display: flex; align-items: center; gap: 1rem; padding: .9rem 1.3rem; text-align: left; background: var(--bg); border: .19rem solid var(--borde); border-radius: 1.2rem; min-height: 5.5rem; }
 .modo[aria-pressed="true"] { border-color: var(--e-ink); background: var(--e-luz); box-shadow: 0 0 0 .2rem rgba(var(--e-rgb), .22); }
@@ -196,7 +200,7 @@ body[data-e="uruguay"] .fondo__img[data-e="uruguay"] { opacity: 1; }
 .campo--vacio { color: #6B6554; font-weight: 600; }
 .campo:focus-within, .campo:focus-visible { border-color: var(--e-ink); }
 .inicio__comenzar { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
-.nota { color: var(--ink-soft); font-size: 1.15rem; font-weight: 600; line-height: 1.35; }
+.nota { color: var(--ink-soft); font-size: 1.25rem; font-weight: 600; line-height: 1.35; }
 
 .inicio__der { display: flex; flex-direction: column; gap: 1rem; min-width: 0; }
 .guia { padding: 1rem 1.3rem; border: 1px solid var(--borde); border-radius: 1.4rem; background: var(--e-luz); }
@@ -206,7 +210,7 @@ body[data-e="uruguay"] .fondo__img[data-e="uruguay"] { opacity: 1; }
 .ranking { padding: 1.1rem 1.3rem; border: 1px solid var(--borde); border-radius: 1.4rem; background: var(--bg); }
 .ranking__titulo { display: flex; align-items: center; justify-content: center; gap: .6rem; margin-bottom: .2rem; color: var(--ink-soft); font-size: 1.15rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; text-align: center; }
 .ranking__titulo svg { width: 1.6rem; height: 1.6rem; color: var(--e-ink); flex: none; }
-.ranking__cat { margin-bottom: .6rem; color: var(--ink-soft); font-size: 1.1rem; font-weight: 700; text-align: center; }
+.ranking__cat { margin-bottom: .6rem; color: var(--ink-soft); font-size: 1.2rem; font-weight: 700; text-align: center; }
 .ranking__fila { display: flex; align-items: center; gap: .9rem; margin-bottom: .45rem; padding: .45rem .9rem; border: 1px solid var(--borde); border-radius: .9rem; background: var(--tarjeta); }
 .ranking__fila--yo { border: .17rem solid var(--cta); background: #FFF3D6; }
 .ranking__puesto { flex: none; display: grid; place-items: center; width: 2.4rem; height: 2.4rem; border-radius: 50%; background: var(--bg); border: 1px solid var(--borde); font-weight: 800; font-size: 1.2rem; }
@@ -237,7 +241,7 @@ body[data-e="uruguay"] .fondo__img[data-e="uruguay"] { opacity: 1; }
 .pregunta__texto { max-width: 104rem; margin: .5rem auto .7rem; text-align: center; font-size: 2.8rem; font-weight: 800; line-height: 1.22; }
 .respuestas { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem 1.4rem; }
 .respuesta {
-  display: flex; align-items: center; gap: 1.2rem; min-height: 7.4rem; padding: .8rem 1.7rem; text-align: left; font-size: 2.1rem; font-weight: 700; line-height: 1.2; color: var(--ink);
+  display: flex; align-items: center; gap: 1.2rem; min-height: 8.2rem; padding: .8rem 1.7rem; text-align: left; font-size: 2.1rem; font-weight: 700; line-height: 1.2; color: var(--ink);
   background: var(--bg); border: .2rem solid var(--borde); border-radius: 1.2rem; transition: border-color .15s, background .15s;
 }
 .respuesta:active:not([disabled]) { transform: scale(.985); border-color: var(--e-ink); }
@@ -253,7 +257,7 @@ body[data-e="uruguay"] .fondo__img[data-e="uruguay"] { opacity: 1; }
 .respuesta--correcta .respuesta__marca { color: var(--ok-ink); }
 .respuesta--incorrecta .respuesta__marca { color: var(--mal-ink); }
 
-.pie-pregunta { display: grid; grid-template-columns: 1fr auto; gap: 1.5rem; align-items: stretch; margin-top: .5rem; min-height: 11.2rem; }
+.pie-pregunta { display: grid; grid-template-columns: 1fr auto; gap: 1.5rem; align-items: stretch; margin-top: .5rem; min-height: 11.6rem; }
 .explicacion { display: flex; gap: 1.1rem; align-items: flex-start; padding: .9rem 1.4rem; border-radius: 1.2rem; background: var(--bg); border: 1px dashed var(--borde); }
 .explicacion--ok { background: var(--ok-luz); border: 0; }
 .explicacion--mal { background: var(--mal-luz); border: 0; }
@@ -273,13 +277,13 @@ body[data-e="uruguay"] .fondo__img[data-e="uruguay"] { opacity: 1; }
 .desafio { flex: 1; display: flex; flex-direction: column; min-height: 0; gap: 1rem; }
 .desafio__cab { text-align: center; }
 .desafio__cab .titulo { font-size: 2.6rem; }
-.desafio__cab .bajada { margin: .2rem auto 0; max-width: none; font-size: 1.5rem; }
+.desafio__cab .bajada { margin: .2rem auto 0; max-width: none; font-size: 1.45rem; line-height: 1.35; }
 .desafio__tablero { flex: 1; min-height: 0; display: grid; grid-template-columns: 1.15fr 1fr; gap: 2rem; align-items: center; }
-.lugares { display: flex; flex-direction: column; gap: .75rem; }
-.lugar { display: flex; align-items: center; gap: 1.1rem; min-height: 5.1rem; padding: .5rem 1.2rem; text-align: left; background: var(--bg); border: .2rem dashed var(--borde); border-radius: 1.1rem; font-size: 1.55rem; font-weight: 800; line-height: 1.15; transition: border-color .15s, background .15s; }
-.lugar__icono { flex: none; width: 3.2rem; height: 3.2rem; color: var(--ink-soft); }
+.lugares { display: flex; flex-direction: column; gap: .6rem; }
+.lugar { display: flex; align-items: center; gap: 1.1rem; min-height: 4.5rem; padding: .35rem 1.2rem; text-align: left; background: var(--bg); border: .2rem dashed var(--borde); border-radius: 1.1rem; font-size: 1.55rem; font-weight: 800; line-height: 1.15; transition: border-color .15s, background .15s; }
+.lugar__icono { flex: none; width: 3rem; height: 3rem; color: var(--ink-soft); }
 .lugar__texto { flex: 1; min-width: 0; }
-.lugar__hueco { flex: none; display: grid; place-items: center; min-width: 13.5rem; min-height: 3.5rem; padding: 0 1rem; border: .15rem dashed var(--borde); border-radius: .8rem; background: var(--tarjeta); color: var(--ink-soft); font-size: 1.35rem; font-weight: 700; text-align: center; }
+.lugar__hueco { flex: none; display: grid; place-items: center; min-width: 13.5rem; min-height: 3.2rem; padding: 0 1rem; border: .15rem dashed var(--borde); border-radius: .8rem; background: var(--tarjeta); color: var(--ink-soft); font-size: 1.35rem; font-weight: 700; text-align: center; }
 .lugar--elegido { border-style: solid; border-color: var(--e-ink); background: var(--e-luz); box-shadow: 0 0 0 .2rem rgba(var(--e-rgb), .25); }
 .lugar--sobre { border-style: solid; border-color: var(--e-ink); background: var(--e-luz); }
 .lugar--resuelto { border-style: solid; border-color: var(--ok); background: var(--ok-luz); }
@@ -288,11 +292,12 @@ body[data-e="uruguay"] .fondo__img[data-e="uruguay"] { opacity: 1; }
 .lugar--revelado .lugar__hueco { border-style: solid; border-color: #B8860B; background: #fff; color: #6B4F00; font-weight: 800; }
 .lugar--error { border-color: var(--mal); background: var(--mal-luz); }
 .fichas { display: grid; grid-template-columns: 1fr 1fr; gap: .9rem; align-content: center; }
-.ficha { display: grid; place-items: center; min-height: 4.6rem; padding: .3rem 1rem; border: .19rem solid var(--borde); border-radius: 1rem; background: var(--tarjeta); box-shadow: 0 .2rem 0 rgba(0, 0, 0, .07); font-size: 1.55rem; font-weight: 800; line-height: 1.1; text-align: center; touch-action: none; }
+.ficha { display: grid; place-items: center; min-height: 4.4rem; padding: .3rem 1rem; border: .19rem solid var(--borde); border-radius: 1rem; background: var(--tarjeta); box-shadow: 0 .2rem 0 rgba(0, 0, 0, .07); font-size: 1.55rem; font-weight: 800; line-height: 1.1; text-align: center; touch-action: none; }
 .ficha--elegida { border-color: var(--e-ink); background: var(--e-luz); transform: scale(1.04); }
 .ficha--usada { opacity: .42; box-shadow: none; }
 .ficha--arrastrando { position: fixed; z-index: 500; margin: 0; pointer-events: none; box-shadow: 0 .6rem 1.4rem rgba(0, 0, 0, .22); transform: scale(1.06); }
-.desafio__estado { text-align: center; color: var(--ink-soft); font-size: 1.5rem; font-weight: 800; min-height: 2.2rem; }
+.desafio__pie { flex: none; display: flex; align-items: center; justify-content: center; gap: 2rem; min-height: 4.9rem; }
+.desafio__estado { text-align: center; color: var(--ink-soft); font-size: 1.5rem; font-weight: 800; line-height: 1.25; }
 .desafio__estado--mal { color: var(--mal-ink); }
 .desafio__estado--ok { color: var(--ok-ink); }
 
@@ -349,7 +354,7 @@ body[data-e="uruguay"] .fondo__img[data-e="uruguay"] { opacity: 1; }
 .creditos li { margin-bottom: .25rem; padding-left: .2rem; }
 .creditos .fuentes { columns: 2; column-gap: 1.6rem; }
 .creditos .fuentes li { break-inside: avoid; }
-.creditos small { color: var(--ink-soft); font-size: 1.15rem; font-weight: 600; }
+.creditos small { color: var(--ink-soft); font-size: 1.2rem; font-weight: 600; }
 
 /* ---------- capas (logros, aviso de inactividad, administración, teclado) ---------- */
 .capa { position: fixed; inset: 0; z-index: 2000; display: flex; align-items: center; justify-content: center; background: rgba(35, 48, 43, .55); }

@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Ruta de la Energía Uruguay</title>
 <meta name="description" content="Juego educativo sobre las energías renovables de Uruguay, para pantallas interactivas. Inspirado en Energimundo (Salto Grande).">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; manifest-src 'self'; worker-src 'self'; connect-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="theme-color" content="#FBF7EF">
 <meta name="mobile-web-app-capable" content="yes">
 <link rel="manifest" href="manifest.webmanifest">
@@ -26,22 +27,23 @@
 </div>
 
 <div class="app" id="app">
-  <header class="cabecera" id="cabecera">
+  <header class="encabezado">
+  <div class="cabecera" id="cabecera">
     <div class="cabecera__marca">
       <span class="cabecera__etiqueta">Educación Media Básica · 12 a 15 años</span>
       <h1>Ruta de la Energía Uruguay</h1>
     </div>
     <div class="hud" id="hud"></div>
     <div class="cabecera__barra" id="barraProgreso" role="progressbar" aria-label="Progreso del recorrido" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" hidden><span id="barraProgresoRelleno"></span></div>
-  </header>
-
+  </div>
   <div class="logo" id="logo"><img src="img/logo-energimundo.png" alt="Energimundo" width="695" height="163"></div>
+  </header>
 
   <nav aria-label="Estaciones del recorrido"><ol class="ruta" id="ruta"></ol></nav>
 
   <main class="escenario" id="escenario" tabindex="-1"></main>
 
-  <footer class="pie" id="pie"><span class="pie__foto" id="fotoPie"></span><span class="pie__datos">Datos de MIEM, UTE, ADME, CTM Salto Grande, Uruguay XXI y otras fuentes citadas en <button type="button" id="botonCreditos">Créditos y fuentes</button>. Juego educativo inspirado en Energimundo.</span></footer>
+  <footer class="pie" id="pie"><span class="pie__foto" id="fotoPie"></span><span class="pie__datos">Datos de MIEM, UTE, ADME, CTM Salto Grande, Uruguay XXI y otras fuentes: <button type="button" id="botonCreditos">Créditos y fuentes</button></span></footer>
 </div>
 
 <div class="solo-lectores" id="avisos" aria-live="polite" aria-atomic="true"></div>

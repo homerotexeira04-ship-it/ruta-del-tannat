@@ -27,7 +27,7 @@
     var previo = d.activeElement;
     var tarjeta = h('div', { class: 'dialogo' + (o.clase ? ' ' + o.clase : ''), tabindex: '-1' }, contenido);
     var fondo = h('div', { class: 'capa', role: 'dialog', 'aria-modal': 'true', 'aria-label': o.etiqueta || 'Diálogo' }, tarjeta);
-    var entrada = { nodo: fondo, previo: previo, alCerrar: o.alCerrar, escape: o.escape !== false };
+    var entrada = { nodo: fondo, previo: previo, alCerrar: o.alCerrar, escape: o.escape !== false, sinInactividad: !!o.sinInactividad };
     pila.push(entrada);
     ui.el.capas.appendChild(fondo);
     bloquear(true);
@@ -54,6 +54,8 @@
     var cf = d.querySelectorAll('.confeti'); for (var j = 0; j < cf.length; j++) cf[j].remove();
   };
   capas.hayAbiertas = function () { return pila.length > 0; };
+  // Hay una administración o un PIN abierto: no se vuelve al inicio por inactividad (salvo que se abandone mucho rato).
+  capas.hayBloqueantes = function () { return pila.some(function (e) { return e.sinInactividad; }); };
 
   // Escape cierra el diálogo de arriba; Tab no se escapa de él.
   d.addEventListener('keydown', function (ev) {

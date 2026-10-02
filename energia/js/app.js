@@ -15,7 +15,7 @@
   }
 
   function registrarServiceWorker() {
-    if (!('serviceWorker' in g.navigator) || !/^https?:$/.test(g.location.protocol)) return;
+    if (g.RE_SIN_SW || !('serviceWorker' in g.navigator) || !/^https?:$/.test(g.location.protocol)) return;
     g.navigator.serviceWorker.register('sw.js').then(function (reg) {
       reg.addEventListener('updatefound', function () {
         var nuevo = reg.installing;

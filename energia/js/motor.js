@@ -71,15 +71,19 @@
     });
     var pos = sortearPosiciones(elegidas.length, rng), cuenta = {};
     return elegidas.map(function (e, i) {
-      var q = e.q;
       cuenta[e.ei] = (cuenta[e.ei] || 0) + 1;
-      return {
-        id: q.id, estacion: q.estacion, estIdx: e.ei, enEstacion: cuenta[e.ei], numero: i + 1,
-        dificultad: q.dificultad, tipo: q.tipo, pregunta: q.pregunta,
-        opciones: ordenarOpciones(q, pos[i], rng), correcta: pos[i],
-        explicacion: q.explicacion, fuente: q.fuente, vigencia: q.vigencia
-      };
+      return armarPregunta(e.q, e.ei, i + 1, cuenta[e.ei], pos[i], rng);
     });
+  }
+
+  // La pregunta tal como se muestra en una partida: opciones en su orden de esa partida y posición de la correcta.
+  function armarPregunta(q, estIdx, numero, enEstacion, pos, rng) {
+    return {
+      id: q.id, estacion: q.estacion, estIdx: estIdx, enEstacion: enEstacion, numero: numero,
+      dificultad: q.dificultad, tipo: q.tipo, pregunta: q.pregunta,
+      opciones: ordenarOpciones(q, pos, rng), correcta: pos,
+      explicacion: q.explicacion, fuente: q.fuente, vigencia: q.vigencia
+    };
   }
 
   // ---------- contrarreloj ----------
@@ -232,7 +236,7 @@
 
   RE.motor = {
     sortearPosiciones: sortearPosiciones, tieneRacha: tieneRacha, tieneEscalera: tieneEscalera, ordenarOpciones: ordenarOpciones,
-    elegirPreguntas: elegirPreguntas, limiteMs: limiteMs, nuevoDesafio: nuevoDesafio, probarLugar: probarLugar, INTENTOS_LUGAR: INTENTOS_LUGAR,
+    elegirPreguntas: elegirPreguntas, armarPregunta: armarPregunta, limiteMs: limiteMs, nuevoDesafio: nuevoDesafio, probarLugar: probarLugar, INTENTOS_LUGAR: INTENTOS_LUGAR,
     nuevaPartida: nuevaPartida, actual: actual, esUltimaDeEstacion: esUltimaDeEstacion, esUltima: esUltima,
     responder: responder, avanzar: avanzar, resolverLugar: resolverLugar, insigniaPara: insigniaPara, logroPara: logroPara, resumen: resumen
   };
