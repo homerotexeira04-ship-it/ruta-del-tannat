@@ -17,6 +17,7 @@
     pantallaCompletaAlComenzar: true, // pide pantalla completa con el primer toque en «Comenzar»
     mantenerPantallaEncendida: true,  // evita que la pantalla se apague mientras se juega (si el navegador lo permite)
     sonidoPorDefecto: true,
+    nombreMax: 24,                    // largo máximo del nombre o alias en el ranking
 
     // ---- Juego ----
     // plantilla = dificultades de las preguntas de cada estación (1 fácil, 2 media, 3 difícil), en el orden en que salen.

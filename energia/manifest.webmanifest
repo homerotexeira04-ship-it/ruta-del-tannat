@@ -1,0 +1,18 @@
+{
+  "name": "Ruta de la Energía Uruguay",
+  "short_name": "Ruta Energía",
+  "description": "Juego educativo sobre las energías renovables de Uruguay, para pantallas interactivas. Inspirado en Energimundo.",
+  "lang": "es-UY",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "fullscreen",
+  "display_override": ["fullscreen", "standalone"],
+  "orientation": "landscape",
+  "background_color": "#FBF7EF",
+  "theme_color": "#FBF7EF",
+  "icons": [
+    { "src": "img/iconos/icono-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "img/iconos/icono-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "img/iconos/icono-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

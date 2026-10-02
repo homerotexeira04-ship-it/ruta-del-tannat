@@ -73,7 +73,7 @@
   }
   function limpiarEntrada(e) {
     return {
-      id: String(e.id), nombre: U.limpiarNombre(e.nombre, 28) || 'Anónimo/a',
+      id: String(e.id), nombre: U.limpiarNombre(e.nombre, C.nombreMax) || 'Anónimo/a',
       puntaje: Math.max(0, Math.round(+e.puntaje || 0)), aciertos: Math.max(0, Math.round(+e.aciertos || 0)),
       total: Math.max(0, Math.round(+e.total || 0)), pct: Math.max(0, Math.round(+e.pct || 0)),
       mejorRacha: Math.max(0, Math.round(+e.mejorRacha || 0)),
