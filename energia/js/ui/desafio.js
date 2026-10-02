@@ -68,7 +68,7 @@
       ui.capas.confeti();
       RE.audio.reproducir('logro');
       var boton = ui.boton('Ver mis resultados', { id: 'botonResultados', icono: 'flechaDer', iconoAntes: false, onclick: function () { clearTimeout(auto); ui.finalizar(); } });
-      acciones.replaceChildren(boton);
+      pie.appendChild(boton);
       if (ui.usandoTeclado()) boton.focus({ preventScroll: true });
       var auto = setTimeout(function () { if (ui.estado.pantalla === 'desafio') ui.finalizar(); }, 3800);
       var antes = ui.limpiarPantalla;
@@ -155,7 +155,7 @@
       b.addEventListener('pointercancel', soltar);
       fichas[dep] = b;
     });
-    var acciones = h('div', { class: 'acciones' });
+    var pie = h('div', { class: 'desafio__pie' }, estado);
 
     function tecla(ev) { if (ev.key === 'Escape' && sel && !ui.capas.hayAbiertas()) { sel = null; repintar(); decir(''); } }
     d.addEventListener('keydown', tecla);
@@ -172,6 +172,6 @@
         h('div', { class: 'desafio__tablero' },
           h('div', { class: 'lugares' }, des.items.map(function (it) { return lugares[it.id]; })),
           h('div', { class: 'fichas', role: 'group', 'aria-label': 'Departamentos' }, des.deptos.map(function (dep) { return fichas[dep]; }))),
-        estado, acciones));
+        pie));
   };
 })(typeof globalThis !== 'undefined' ? globalThis : this);

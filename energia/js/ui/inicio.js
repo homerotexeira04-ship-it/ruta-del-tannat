@@ -1,4 +1,6 @@
-/* Interfaz: pantalla de inicio (recorrido, contrarreloj, nombre opcional y ranking de la categoría elegida). */
+/* Interfaz: pantalla de inicio (recorrido, contrarreloj, nombre opcional y ranking de la categoría elegida).
+   Se arma una sola vez y al tocar una opción solo cambia lo que corresponde: así, dos personas pueden tocar opciones
+   distintas a la vez sin que una pantalla redibujada se lleve por delante el toque de la otra. */
 (function (g) {
   'use strict';
   var RE = (g.RE = g.RE || {});
@@ -29,64 +31,86 @@
   };
 
   ui.pantallas.inicio = function () {
-    var e = ui.estado, tarjeta = h('section', { class: 'tarjeta', 'aria-labelledby': 'tituloInicio' });
+    var e = ui.estado, o = e.ops, pt = C.puntos;
+    var botonesModo = {}, botonesRitmo = {};
 
-    function pintar(foco) {
-      var o = e.ops, cat = RE.almacen.ranking.categoria(o.modo, o.contrarreloj);
-      var top = RE.almacen.ranking.top(cat, C.ranking.mostrar);
-      var m = C.modos[o.modo];
+    // ----- recorrido -----
+    Object.keys(C.modos).forEach(function (clave) {
+      var mo = C.modos[clave];
+      botonesModo[clave] = h('button', { type: 'button', class: 'modo', 'data-foco': 'modo-' + clave, onclick: function () { o.modo = clave; actualizar(); } },
+        h('span', { class: 'modo__marca' }, ui.icono('check')),
+        h('span', null, h('span', { class: 'modo__nombre' }, mo.nombre), h('span', { class: 'modo__detalle' }, (5 * mo.plantilla.length) + ' preguntas y un desafío · ' + mo.minutos)));
+    });
 
-      function btnModo(clave) {
-        var mo = C.modos[clave];
-        return h('button', { type: 'button', class: 'modo', 'data-foco': 'modo-' + clave, 'aria-pressed': o.modo === clave ? 'true' : 'false', onclick: function () { o.modo = clave; pintar('modo-' + clave); } },
-          h('span', { class: 'modo__marca' }, ui.icono('check')),
-          h('span', null, h('span', { class: 'modo__nombre' }, mo.nombre), h('span', { class: 'modo__detalle' }, (5 * mo.plantilla.length) + ' preguntas y un desafío · ' + mo.minutos)));
-      }
-      function btnRitmo(clave) {
-        return h('button', { type: 'button', class: 'ritmo', 'data-foco': 'ritmo-' + clave, 'aria-pressed': o.ritmo === clave ? 'true' : 'false', onclick: function () { o.ritmo = clave; pintar('ritmo-' + clave); } }, C.ritmos[clave].nombre);
-      }
+    // ----- contrarreloj -----
+    var interruptor = h('button', { type: 'button', class: 'interruptor', role: 'switch', 'data-foco': 'reloj', onclick: function () { o.contrarreloj = !o.contrarreloj; actualizar(); } },
+      h('span', { class: 'interruptor__pista', 'aria-hidden': 'true' }), 'Modo contrarreloj');
+    Object.keys(C.ritmos).forEach(function (clave) {
+      botonesRitmo[clave] = h('button', { type: 'button', class: 'ritmo', 'data-foco': 'ritmo-' + clave, onclick: function () { o.ritmo = clave; actualizar(); } }, C.ritmos[clave].nombre);
+    });
+    var ritmos = h('div', { class: 'ritmos', role: 'group', 'aria-label': 'Ritmo de la contrarreloj' },
+      h('span', { class: 'etiqueta-campo', style: 'margin:0 .4rem 0 0;align-self:center' }, 'Ritmo:'), Object.keys(C.ritmos).map(function (k) { return botonesRitmo[k]; }));
+    var notaReloj = h('span', { class: 'nota' }, 'Con tiempo límite por pregunta y puntos extra por responder rápido.');
 
-      var campo = h('button', { type: 'button', class: 'campo' + (o.nombre ? '' : ' campo--vacio'), 'data-foco': 'nombre', id: 'campoNombre', 'aria-label': o.nombre ? 'Nombre para el ranking: ' + o.nombre + '. Tocá para cambiarlo.' : 'Escribir un nombre o alias para el ranking (opcional)', onclick: abrirTeclado }, o.nombre || 'Tocá acá para escribir un nombre o alias');
-      function abrirTeclado() {
-        ui.teclado.abrir({ valor: o.nombre, titulo: 'Escribí tu nombre o alias', alCambiar: function (v) { o.nombre = v; }, alAceptar: function (v) { o.nombre = v; pintar('nombre'); } });
-      }
-
-      var izq = h('div', { class: 'inicio__izq' },
-        h('h2', { class: 'titulo', id: 'tituloInicio', tabindex: '-1' }, '¡Bienvenido/a a la Ruta de la Energía!'),
-        h('p', { class: 'bajada' }, 'Vas a recorrer 5 estaciones (Hidráulica, Eólica, Solar, Biomasa y Uruguay) y a responder preguntas sobre la electricidad de nuestro país. Al final, un desafío para unir lugares con departamentos.'),
-        h('div', null, h('span', { class: 'etiqueta-campo', id: 'etModo' }, 'Elegí el recorrido'), h('div', { class: 'modos', role: 'group', 'aria-labelledby': 'etModo' }, btnModo('completo'), btnModo('corto'))),
-        h('div', { class: 'reloj-fila' },
-          h('button', { type: 'button', class: 'interruptor', role: 'switch', 'data-foco': 'reloj', 'aria-checked': o.contrarreloj ? 'true' : 'false', onclick: function () { o.contrarreloj = !o.contrarreloj; pintar('reloj'); } },
-            h('span', { class: 'interruptor__pista', 'aria-hidden': 'true' }), 'Modo contrarreloj'),
-          o.contrarreloj ? h('div', { class: 'ritmos', role: 'group', 'aria-label': 'Ritmo de la contrarreloj' }, h('span', { class: 'etiqueta-campo', style: 'margin:0 .4rem 0 0;align-self:center' }, 'Ritmo:'), btnRitmo('tranquilo'), btnRitmo('normal'), btnRitmo('veloz')) : h('span', { class: 'nota' }, 'Con tiempo límite por pregunta y puntos extra por responder rápido.')),
-        h('div', null, h('span', { class: 'etiqueta-campo' }, 'Nombre o alias para el ranking (opcional)'),
-          h('div', { class: 'nombre-fila' }, campo,
-            ui.boton('Alias al azar', { clase: 'boton--fantasma boton--chico', icono: 'dado', onclick: function () { o.nombre = ui.aliasAlAzar(); pintar('nombre'); } }),
-            o.nombre ? ui.boton('Borrar', { clase: 'boton--fantasma boton--chico', icono: 'borrar', onclick: function () { o.nombre = ''; pintar('nombre'); } }) : null)),
-        h('div', { class: 'inicio__comenzar' },
-          ui.boton('Comenzar el recorrido', { id: 'botonComenzar', icono: 'jugar', onclick: function () { ui.alComenzar && ui.alComenzar(); ui.nuevaPartida(); } }),
-          h('p', { class: 'nota' }, m.nombre + ': ' + (5 * m.plantilla.length) + ' preguntas y un desafío final, ' + m.minutos + '. Podés jugar con un alias: el nombre queda a la vista en el ranking de esta pantalla.')));
-
-      var persistente = RE.almacen.estado().persistente;
-      var der = h('aside', { class: 'ranking', 'aria-labelledby': 'tituloRanking' },
-        h('h3', { class: 'ranking__titulo', id: 'tituloRanking' }, ui.icono('trofeo'), 'Mejores puntajes'),
-        h('p', { class: 'ranking__cat' }, ui.nombreCategoria(o.modo, o.contrarreloj)),
-        ui.listaRanking(top, null),
-        persistente ? null : h('p', { class: 'nota', style: 'margin-top:.6rem' }, 'Este navegador no deja guardar datos: el ranking se borra al cerrar la página.'));
-
-      var pt = C.puntos;
-      var guia = h('aside', { class: 'guia', 'aria-labelledby': 'tituloGuia' },
-        h('h3', { id: 'tituloGuia' }, 'Cómo se suman los puntos'),
-        h('ul', null,
-          h('li', null, ui.icono('check'), 'Cada respuesta correcta: +' + pt.acierto + ' puntos.'),
-          h('li', null, ui.icono('llama'), 'Cada ' + pt.bonoRachaCada + ' aciertos seguidos: +' + pt.bonoRacha + ' de bonus.'),
-          h('li', null, ui.icono('reloj'), 'Con contrarreloj: hasta +' + pt.bonoVelocidadMax + ' por responder rápido.'),
-          h('li', null, ui.icono('pin'), 'Desafío final: +' + pt.desafioPrimera + ' por lugar a la primera, +' + pt.desafioSegunda + ' a la segunda.')));
-      tarjeta.replaceChildren(h('div', { class: 'inicio' }, izq, h('div', { class: 'inicio__der' }, guia, der)));
-      if (foco) { var f = tarjeta.querySelector('[data-foco="' + foco + '"]'); if (f && ui.usandoTeclado()) f.focus({ preventScroll: true }); }
+    // ----- nombre -----
+    var campo = h('button', { type: 'button', class: 'campo', 'data-foco': 'nombre', id: 'campoNombre', onclick: abrirTeclado });
+    function abrirTeclado() {
+      ui.teclado.abrir({ valor: o.nombre, titulo: 'Escribí tu nombre o alias', alCambiar: function (v) { o.nombre = v; actualizarNombre(); }, alAceptar: function (v) { o.nombre = v; actualizarNombre(); } });
     }
-    pintar();
+    var botonBorrar = ui.boton('Borrar', { clase: 'boton--fantasma boton--chico', icono: 'borrar', onclick: function () { o.nombre = ''; actualizarNombre(); } });
+    var botonAlias = ui.boton('Alias al azar', { clase: 'boton--fantasma boton--chico', icono: 'dado', onclick: function () { o.nombre = ui.aliasAlAzar(); actualizarNombre(); } });
+
+    // ----- comenzar -----
+    var notaComenzar = h('p', { class: 'nota' });
+
+    // ----- ranking -----
+    var rankingCat = h('p', { class: 'ranking__cat' });
+    var rankingLista = h('div');
+    var avisoGuardado = RE.almacen.estado().persistente ? null : h('p', { class: 'nota', style: 'margin-top:.6rem' }, 'Este navegador no deja guardar datos: el ranking se borra al cerrar la página.');
+
+    function actualizarNombre() {
+      campo.textContent = o.nombre || 'Tocá acá para escribir un nombre o alias';
+      campo.classList.toggle('campo--vacio', !o.nombre);
+      campo.setAttribute('aria-label', o.nombre ? 'Nombre para el ranking: ' + o.nombre + '. Tocá para cambiarlo.' : 'Escribir un nombre o alias para el ranking (opcional)');
+      botonBorrar.hidden = !o.nombre;
+    }
+    function actualizar() {
+      Object.keys(botonesModo).forEach(function (k) { botonesModo[k].setAttribute('aria-pressed', o.modo === k ? 'true' : 'false'); });
+      interruptor.setAttribute('aria-checked', o.contrarreloj ? 'true' : 'false');
+      ritmos.hidden = !o.contrarreloj;
+      notaReloj.hidden = o.contrarreloj;
+      Object.keys(botonesRitmo).forEach(function (k) { botonesRitmo[k].setAttribute('aria-pressed', o.ritmo === k ? 'true' : 'false'); });
+      var m = C.modos[o.modo];
+      notaComenzar.textContent = m.nombre + ': ' + (5 * m.plantilla.length) + ' preguntas y un desafío final, ' + m.minutos + '. Podés jugar con un alias: el nombre queda a la vista en el ranking de esta pantalla.';
+      rankingCat.textContent = ui.nombreCategoria(o.modo, o.contrarreloj);
+      rankingLista.replaceChildren(ui.listaRanking(RE.almacen.ranking.top(RE.almacen.ranking.categoria(o.modo, o.contrarreloj), C.ranking.mostrar), null));
+      actualizarNombre();
+    }
+
+    var izq = h('div', { class: 'inicio__izq' },
+      h('h2', { class: 'titulo', id: 'tituloInicio', tabindex: '-1' }, '¡Bienvenido/a a la Ruta de la Energía!'),
+      h('p', { class: 'bajada' }, 'Vas a recorrer 5 estaciones (Hidráulica, Eólica, Solar, Biomasa y Uruguay) y a responder preguntas sobre la electricidad de nuestro país. Al final, un desafío para unir lugares con departamentos.'),
+      h('div', null, h('span', { class: 'etiqueta-campo', id: 'etModo' }, 'Elegí el recorrido'),
+        h('div', { class: 'modos', role: 'group', 'aria-labelledby': 'etModo' }, Object.keys(C.modos).map(function (k) { return botonesModo[k]; }))),
+      h('div', { class: 'reloj-fila' }, interruptor, ritmos, notaReloj),
+      h('div', null, h('span', { class: 'etiqueta-campo' }, 'Nombre o alias para el ranking (opcional)'),
+        h('div', { class: 'nombre-fila' }, campo, botonAlias, botonBorrar)),
+      h('div', { class: 'inicio__comenzar' },
+        ui.boton('Comenzar el recorrido', { id: 'botonComenzar', icono: 'jugar', onclick: function () { if (ui.alComenzar) ui.alComenzar(); ui.nuevaPartida(); } }),
+        notaComenzar));
+
+    var guia = h('aside', { class: 'guia', 'aria-labelledby': 'tituloGuia' },
+      h('h3', { id: 'tituloGuia' }, 'Cómo se suman los puntos'),
+      h('ul', null,
+        h('li', null, ui.icono('check'), 'Cada respuesta correcta: +' + pt.acierto + ' puntos.'),
+        h('li', null, ui.icono('llama'), 'Cada ' + pt.bonoRachaCada + ' aciertos seguidos: +' + pt.bonoRacha + ' de bonus.'),
+        h('li', null, ui.icono('reloj'), 'Con contrarreloj: hasta +' + pt.bonoVelocidadMax + ' por responder rápido.'),
+        h('li', null, ui.icono('pin'), 'Desafío final: +' + pt.desafioPrimera + ' por lugar a la primera, +' + pt.desafioSegunda + ' a la segunda.')));
+    var ranking = h('aside', { class: 'ranking', 'aria-labelledby': 'tituloRanking' },
+      h('h3', { class: 'ranking__titulo', id: 'tituloRanking' }, ui.icono('trofeo'), 'Mejores puntajes'), rankingCat, rankingLista, avisoGuardado);
+
+    actualizar();
     ui.enfocarPantalla = function () { return false; };
-    return tarjeta;
+    return h('section', { class: 'tarjeta', 'aria-labelledby': 'tituloInicio' }, h('div', { class: 'inicio' }, izq, h('div', { class: 'inicio__der' }, guia, ranking)));
   };
 })(typeof globalThis !== 'undefined' ? globalThis : this);

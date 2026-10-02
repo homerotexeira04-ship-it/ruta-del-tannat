@@ -135,13 +135,24 @@
   };
 
   // ---------- paso de pantalla ----------
+  // Antirrebote: apenas se abre una pantalla se ignoran por un instante los toques sobre ella. Así, un toque doble en «Continuar»
+  // o un toque «fantasma» de una pantalla infrarroja (un antebrazo apoyado) no encadenan pantallas sin querer. El teclado y los
+  // clics programados (detail 0) no se frenan.
+  ui.bloqueoHasta = 0;
+  d.addEventListener('click', function (ev) {
+    if (ev.detail === 0 || ui.ahora() >= ui.bloqueoHasta) return;
+    var t = ev.target;
+    if (t && t.closest && t.closest('#escenario')) { ev.stopPropagation(); ev.preventDefault(); }
+  }, true);
+
   var usandoTeclado = false;
-  d.addEventListener('keydown', function (ev) { if (ev.key === 'Tab' || ev.key.indexOf('Arrow') === 0) usandoTeclado = true; }, true);
+  d.addEventListener('keydown', function () { usandoTeclado = true; }, true);
   d.addEventListener('pointerdown', function () { usandoTeclado = false; }, true);
   ui.usandoTeclado = function () { return usandoTeclado; };
 
   ui.ir = function (pantalla, tema) {
     var e = ui.estado, P = e.partida;
+    ui.bloqueoHasta = ui.ahora() + (C.antirreboteMs || 0);
     if (ui.limpiarPantalla) { ui.limpiarPantalla(); ui.limpiarPantalla = null; }
     e.pantalla = pantalla;
     d.body.setAttribute('data-pantalla', pantalla);
@@ -169,6 +180,7 @@
 
   ui.finalizar = function () {
     var e = ui.estado, P = e.partida;
+    if (!P || e.resumen) return;   // ya se anotó esta partida (el botón y el cierre automático no pueden anotarla dos veces)
     var res = M.resumen(P, ui.ahora());
     var guardado = RE.almacen.ranking.guardar({
       nombre: P.nombre, puntaje: res.puntaje, aciertos: res.aciertos, total: res.total, pct: res.pct, mejorRacha: res.mejorRacha,
@@ -193,7 +205,33 @@
     ui.estado.ops = { modo: a.modoPorDefecto, contrarreloj: false, ritmo: a.ritmoPorDefecto, nombre: '' };
   };
 
+  // Con dos dedos a la vez, Chrome entrega pointerdown/pointerup de cada uno pero NO genera el «click» de ninguno: en una
+  // pantalla compartida se perderían los dos toques. Si un toque terminó sobre el mismo botón donde empezó y el click no
+  // llegó enseguida, se lo dispara acá. Con un solo dedo el click llega solo y esto no hace nada.
+  function toquesSimultaneos() {
+    var abajo = {};
+    d.addEventListener('pointerdown', function (ev) {
+      if (ev.pointerType === 'mouse') return;
+      var b = ev.target && ev.target.closest ? ev.target.closest('button') : null;
+      if (b) abajo[ev.pointerId] = { el: b, x: ev.clientX, y: ev.clientY };
+    }, true);
+    d.addEventListener('pointercancel', function (ev) { delete abajo[ev.pointerId]; }, true);
+    d.addEventListener('pointerup', function (ev) {
+      var p = abajo[ev.pointerId];
+      delete abajo[ev.pointerId];
+      if (!p || Math.abs(ev.clientX - p.x) > 24 || Math.abs(ev.clientY - p.y) > 24) return;
+      var el = p.el, llego = false;
+      function visto() { llego = true; }
+      el.addEventListener('click', visto, { capture: true, once: true });
+      setTimeout(function () {
+        el.removeEventListener('click', visto, true);
+        if (!llego && !el.disabled && d.body.contains(el)) el.click();
+      }, 120);
+    }, true);
+  }
+
   ui.iniciar = function () {
+    toquesSimultaneos();
     el.app = $('app'); el.hud = $('hud'); el.barra = $('barraProgreso'); el.barraRelleno = $('barraProgresoRelleno');
     el.ruta = $('ruta'); el.escenario = $('escenario'); el.avisos = $('avisos'); el.fondoPie = $('fotoPie'); el.capas = $('capas');
     ui.el = el;

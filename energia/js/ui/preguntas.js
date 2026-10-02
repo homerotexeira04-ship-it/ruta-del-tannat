@@ -57,7 +57,7 @@
     });
 
     function guia() {
-      pie.replaceChildren(h('div', { class: 'explicacion explicacion--guia' }, P.contrarreloj ? 'Elegí una respuesta antes de que se acabe el tiempo.' : 'Tocá la respuesta que creas correcta.'), h('span'));
+      pie.replaceChildren(h('div', { class: 'explicacion explicacion--guia' }, P.contrarreloj ? 'Elegí una respuesta antes de que se acabe el tiempo.' : 'Tocá la respuesta correcta.'), h('span'));
     }
     guia();
 

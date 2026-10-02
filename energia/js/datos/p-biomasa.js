@@ -77,7 +77,7 @@
     p: 'En el relleno sanitario de Las Rosas (Maldonado), ¿qué se hace con el biogás de la basura?',
     o: ['Se quema en motores para generar electricidad', 'Se envasa en garrafas para usar en las cocinas',
         'Se inyecta bajo tierra para sellar el relleno', 'Se convierte en agua potable para el barrio'],
-    e: 'Los motores de la planta generan electricidad que se vuelca a la red de UTE; es el único relleno del país que lo hace.',
+    e: 'El biogás se capta con una red de caños y alimenta motores que generan electricidad, que se vende a la red de UTE.',
     f: ['lasrosas-prensa'], no: ['bio-010', 'bio-019'] });
 
   q({ id: 'bio-012', d: 2, t: 'dato',

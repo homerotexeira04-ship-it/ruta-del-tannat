@@ -1,0 +1,4 @@
+# El .bat de Windows tiene que guardarse con saltos de línea CRLF tal cual (si no, cmd.exe se confunde).
+energia/dist/*.bat -text
+# El juego en un solo archivo se genera con «npm run build»: no se muestra en las revisiones de cambios.
+energia/dist/ruta-de-la-energia.html linguist-generated=true -diff

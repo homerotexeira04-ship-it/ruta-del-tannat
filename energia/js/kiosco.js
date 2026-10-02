@@ -14,7 +14,12 @@
   function actividad() { ultimo = ui.ahora(); }
   ['pointerdown', 'pointermove', 'keydown', 'wheel', 'touchstart'].forEach(function (t) { d.addEventListener(t, actividad, { capture: true, passive: true }); });
 
-  function cerrarAviso() { if (aviso) { aviso.cerrar(); aviso = null; } }
+  // Al descartar el aviso se ignoran por un instante los toques: el que lo descartó no debe «pasar» a lo que había debajo.
+  function cerrarAviso() {
+    if (!aviso) return;
+    aviso.cerrar(); aviso = null;
+    ui.bloqueoHasta = ui.ahora() + (C.antirreboteMs || 0);
+  }
 
   function mostrarAviso() {
     cuenta = C.inactividadCuentaS;
@@ -24,7 +29,7 @@
       h('p', null, 'Si nadie toca la pantalla, vuelve al inicio y se pierde el recorrido en curso.'),
       num,
       ui.boton('Seguir jugando', { id: 'botonSeguir', icono: 'jugar', onclick: function () { cerrarAviso(); actividad(); } })), { etiqueta: 'Aviso de inactividad', escape: false });
-    dlg.nodo.addEventListener('pointerdown', function () { cerrarAviso(); actividad(); });
+    dlg.nodo.addEventListener('click', function () { cerrarAviso(); actividad(); }); // con el click y no al apoyar el dedo: así el toque no cae sobre lo que hay debajo
     aviso = dlg; aviso.num = num;
     ui.anunciar('¿Seguís ahí? En ' + cuenta + ' segundos se vuelve al inicio.');
   }
@@ -37,14 +42,17 @@
       if (cuenta <= 0) { cerrarAviso(); ui.reiniciar(true); actividad(); }
       return;
     }
-    if (ui.teclado && ui.teclado.estaAbierto()) return;
+    if (ui.teclado && ui.teclado.estaAbierto()) {      // teclado en pantalla abierto y abandonado: se cierra y se vuelve al inicio
+      if (quieto > C.inicioLimpiaAlS) { ui.teclado.cerrar(); ui.reiniciar(true); actividad(); }
+      return;
+    }
     if (e.pantalla === 'inicio') {
       var sinTocar = e.ops.nombre || e.ops.contrarreloj || e.ops.modo !== RE.almacen.ajustes.leer().modoPorDefecto;
       if (quieto > C.inicioLimpiaAlS && sinTocar) { ui.reiniciar(true); actividad(); }
       else if (hayActualizacion && quieto > 20 && !ui.capas.hayAbiertas()) g.location.reload();
       return;
     }
-    if (ui.capas.hayAbiertas() && !aviso) return;     // administración o créditos abiertos: lo cierra quien lo abrió
+    if (ui.capas.hayBloqueantes()) { if (quieto > 180) { ui.reiniciar(true); actividad(); } return; }   // administración abierta y abandonada
     if (quieto > C.inactividadAvisoS) mostrarAviso();
   }, 1000);
 
@@ -62,10 +70,12 @@
   d.addEventListener('visibilitychange', function () { if (!d.hidden) pedirBloqueoPantalla(); });
 
   kiosco.estaEnPantallaCompleta = function () { return !!(d.fullscreenElement || d.webkitFullscreenElement); };
+  // En modo kiosco el navegador ya ocupa toda la pantalla: pedirla otra vez solo haría aparecer el cartel «Esc para salir».
+  function yaOcupaTodaLaPantalla() { return Math.abs(g.innerWidth - g.screen.width) < 3 && Math.abs(g.innerHeight - g.screen.height) < 3; }
   kiosco.pantallaCompleta = function (si) {
     try {
       var r = d.documentElement;
-      if (si && !kiosco.estaEnPantallaCompleta()) { var p = (r.requestFullscreen || r.webkitRequestFullscreen).call(r); if (p && p.catch) p.catch(function () { /* se negó: sigue en ventana */ }); }
+      if (si && !kiosco.estaEnPantallaCompleta() && !yaOcupaTodaLaPantalla()) { var p = (r.requestFullscreen || r.webkitRequestFullscreen).call(r); if (p && p.catch) p.catch(function () { /* se negó: sigue en ventana */ }); }
       else if (!si && kiosco.estaEnPantallaCompleta()) (d.exitFullscreen || d.webkitExitFullscreen).call(d);
     } catch (e) { /* sin pantalla completa */ }
   };
@@ -120,7 +130,7 @@
     var borrar = tecla('', function () { ingreso = ingreso.slice(0, -1); pintar(); }, 'Borrar'); borrar.appendChild(ui.icono('borrar'));
     grilla.appendChild(borrar); grilla.appendChild(tecla('0', function () { digito('0'); }));
     grilla.appendChild(tecla('Salir', function () { dlg.cerrar(); }));
-    dlg = ui.capas.abrir(h('div', { style: 'display:contents' }, h('h2', null, 'Administración'), h('p', null, 'Ingresá el PIN del puesto.'), puntos, error, grilla), { etiqueta: 'PIN de administración' });
+    dlg = ui.capas.abrir(h('div', { style: 'display:contents' }, h('h2', null, 'Administración'), h('p', null, 'Ingresá el PIN del puesto.'), puntos, error, grilla), { etiqueta: 'PIN de administración', sinInactividad: true });
     pintar();
   }
 
@@ -153,7 +163,7 @@
       return cuerpo;
     }
     function redibujar() { dlg.tarjeta.replaceChildren(actualizar()); var f = dlg.tarjeta.querySelector('button'); if (f) f.focus({ preventScroll: true }); }
-    dlg = ui.capas.abrir(actualizar(), { etiqueta: 'Administración del puesto', clase: 'panel-admin' });
+    dlg = ui.capas.abrir(actualizar(), { etiqueta: 'Administración del puesto', clase: 'panel-admin', sinInactividad: true });
     ui.anunciar('Panel de administración abierto.');
   }
 

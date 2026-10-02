@@ -46,6 +46,16 @@ const ARCHIVOS = [
   './js/app.js'
 ];
 
+const RAIZ = new URL('./', self.location).pathname;
+
+// Si el sitio del Tannat (que vive en el mismo origen) borra esta caché al actualizarse, o si algo la vacía, se la vuelve a llenar
+// en la próxima visita con internet. Es todo o nada: si falta la red, se reintenta la próxima vez.
+async function reponer() {
+  const cache = await caches.open(CACHE_VERSION);
+  const guardados = await cache.keys();
+  if (guardados.length < ARCHIVOS.length) await cache.addAll(ARCHIVOS);
+}
+
 self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(CACHE_VERSION).then((c) => c.addAll(ARCHIVOS)).then(() => self.skipWaiting()));
 });
@@ -62,11 +72,11 @@ self.addEventListener('fetch', (e) => {
   const req = e.request;
   if (req.method !== 'GET') return;
   const url = new URL(req.url);
-  if (url.origin !== self.location.origin || !url.pathname.startsWith(new URL('./', self.location).pathname)) return;
+  if (url.origin !== self.location.origin || !url.pathname.startsWith(RAIZ)) return;
+  if (req.mode === 'navigate') e.waitUntil(reponer().catch(() => { /* sin red: se reintenta en la próxima visita */ }));
   e.respondWith(
-    caches.match(req, { ignoreSearch: true }).then((guardado) => {
-      if (guardado) return guardado;
-      return fetch(req).catch(() => (req.mode === 'navigate' ? caches.match('./index.html') : Response.error()));
-    })
+    caches.open(CACHE_VERSION).then((cache) =>
+      cache.match(req, { ignoreSearch: true }).then((guardado) => guardado || fetch(req).catch(() => (req.mode === 'navigate' ? cache.match('./index.html') : Response.error())))
+    )
   );
 });
