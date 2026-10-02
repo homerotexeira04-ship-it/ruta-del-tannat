@@ -161,3 +161,11 @@ test('todos los botones y fichas tienen al menos 4 cm de lado en la pantalla de 
   await page2.cerrarContexto();
   assert.ok(lado * 0.744 >= 25, 'el enlace del pie mide ' + (lado * 0.744 / 10).toFixed(1) + ' cm');
 });
+
+test('un nombre de hasta 13 letras entra entero en la cabecera, incluso con el puntaje y la racha más altos', async () => {
+  const page = await B.pagina();
+  await page.evaluate(() => { RE.ui.estado.ops.nombre = 'Valentina Paz'; RE.ui.nuevaPartida(); const P = RE.ui.estado.partida; P.preguntas.forEach((q, i) => { P.i = i; P.respondida = false; RE.motor.responder(P, q.correcta, 0); }); P.desafio.items.forEach((it) => RE.motor.resolverLugar(P, it.id, it.depto)); RE.ui.finalizar(); });
+  const r = await page.evaluate(() => { const v = document.querySelector('.chip--nombre .chip__valor'); return { texto: v.textContent, cortado: v.scrollWidth > v.clientWidth + 1, puntaje: RE.ui.estado.partida.puntaje, racha: RE.ui.estado.partida.racha }; });
+  await page.cerrarContexto();
+  assert.deepEqual(r, { texto: 'Valentina Paz', cortado: false, puntaje: 340, racha: 25 });
+});

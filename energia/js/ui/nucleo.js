@@ -56,8 +56,9 @@
   };
 
   // ---------- cabecera ----------
+  // La etiqueta del nombre («Jugando») se deja solo para lectores de pantalla: así el nombre entra entero en la cabecera.
   function chip(etiqueta, valor, extra) {
-    return h('div', { class: 'chip' + (extra ? ' ' + extra : '') }, h('span', { class: 'chip__etiqueta' }, etiqueta), h('span', { class: 'chip__valor' }, valor));
+    return h('div', { class: 'chip' + (extra ? ' ' + extra : '') }, h('span', { class: 'chip__etiqueta' + (extra === 'chip--nombre' ? ' solo-lectores' : '') }, etiqueta), h('span', { class: 'chip__valor' }, valor));
   }
 
   ui.completadas = function () {

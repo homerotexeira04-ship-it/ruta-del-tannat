@@ -135,7 +135,7 @@ npm install
 npm run check    # banco de preguntas
 npm test         # motor, guardado, contraste de colores (50 pruebas)
 npm run build    # rearma dist/ruta-de-la-energia.html
-npm run smoke    # en Chrome real, 56 pruebas: diseño en 1920×1080 y 4K, accesibilidad, partidas completas, toques simultáneos, sin conexión
+npm run smoke    # en Chrome real, 57 pruebas: diseño en 1920×1080 y 4K, accesibilidad, partidas completas, toques simultáneos, sin conexión
 npm run todo     # todo lo anterior
 ```
 

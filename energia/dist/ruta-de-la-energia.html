@@ -97,7 +97,7 @@ body[data-e="uruguay"] .fondo__img[data-e="uruguay"] { opacity: 1; }
 .chip__valor { display: inline-flex; align-items: center; gap: .3rem; font-size: 1.75rem; font-weight: 800; line-height: 1.2; }
 .chip__valor svg { width: 1.5rem; height: 1.5rem; color: var(--mal); }
 .chip--nombre { flex: 0 1 auto; min-width: 0; }
-.chip--nombre .chip__valor { max-width: 11rem; overflow: hidden; text-overflow: ellipsis; display: block; font-size: 1.5rem; }
+.chip--nombre .chip__valor { max-width: 15rem; overflow: hidden; text-overflow: ellipsis; display: block; font-size: 1.5rem; }
 .boton-icono { display: grid; place-items: center; width: 3.5rem; height: 3.5rem; padding: 0; background: var(--tarjeta); border: 2px solid var(--borde); border-radius: 50%; color: var(--ink); }
 .boton-icono svg { width: 1.75rem; height: 1.75rem; }
 .boton-icono:active { transform: scale(.94); }
@@ -2080,8 +2080,9 @@ body[data-e="uruguay"] .fondo__img[data-e="uruguay"] { opacity: 1; }
   };
 
   // ---------- cabecera ----------
+  // La etiqueta del nombre («Jugando») se deja solo para lectores de pantalla: así el nombre entra entero en la cabecera.
   function chip(etiqueta, valor, extra) {
-    return h('div', { class: 'chip' + (extra ? ' ' + extra : '') }, h('span', { class: 'chip__etiqueta' }, etiqueta), h('span', { class: 'chip__valor' }, valor));
+    return h('div', { class: 'chip' + (extra ? ' ' + extra : '') }, h('span', { class: 'chip__etiqueta' + (extra === 'chip--nombre' ? ' solo-lectores' : '') }, etiqueta), h('span', { class: 'chip__valor' }, valor));
   }
 
   ui.completadas = function () {

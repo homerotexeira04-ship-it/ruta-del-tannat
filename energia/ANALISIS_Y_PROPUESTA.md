@@ -378,7 +378,7 @@ Pediste ejecutar todo lo de «lo más importante que encontré», con una sola r
 | **L3** marca | El pie ya no afirma que nadie «verificó» los datos | `flujo.test.js` |
 | **L4, L5** privacidad y seguridad | Nada sale de la pantalla; alias en lugar de nombre; los textos del jugador nunca se insertan como HTML; política de seguridad (CSP) que **prohíbe toda conexión de salida** y los programas de afuera | `flujo.test.js`, `privacidad.test.js` (intenta `fetch`, `XMLHttpRequest`, imágenes, `sendBeacon` y scripts hacia otro sitio: todo bloqueado) |
 | **Nuevo** toques simultáneos (no estaba en el análisis) | Al probar con toques reales de varios dedos apareció algo que no había medido: con **dos dedos a la vez Chrome no genera el `click` de ninguno**, así que en una pantalla compartida se perdían los dos toques (el original usa `onclick`, por lo que debería tener la misma limitación; no lo medí). Ahora un toque que termina sobre el mismo botón donde empezó se atiende aunque Chrome no genere el `click`; el inicio ya no se redibuja entero al tocar una opción; y un **antirrebote** de 0,3 s al abrir cada pantalla evita que un toque doble o un toque «fantasma» de la pantalla infrarroja encadene pantallas | `tactil.test.js`, `antirrebote.test.js` (dos y tres dedos a la vez: respuestas, opciones del inicio, teclado en pantalla, arrastre) |
-| **M** mantenimiento | Datos separados del código, linter del banco, 50 pruebas de Node y 56 pruebas en Chrome, CI, versión y fecha de revisión de los datos | `npm run todo` |
+| **M** mantenimiento | Datos separados del código, linter del banco, 50 pruebas de Node y 57 pruebas en Chrome, CI, versión y fecha de revisión de los datos | `npm run todo` |
 
 ### 8.3 Antes y después
 
