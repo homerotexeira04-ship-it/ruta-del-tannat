@@ -1,0 +1,59 @@
+name: Ruta de la Energía
+
+# Chequeos del juego de la carpeta energia/. Se corre solo cuando cambia algo de esa carpeta (o este archivo)
+# y también se puede lanzar a mano: pestaña Actions → Ruta de la Energía → Run workflow.
+on:
+  push:
+    branches: [master]
+    paths: ['energia/**', '.github/workflows/energia.yml']
+  pull_request:
+    paths: ['energia/**', '.github/workflows/energia.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: energia-${{ github.ref }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    working-directory: energia
+
+jobs:
+  banco-y-motor:
+    name: Preguntas, motor y archivo único
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: energia/package-lock.json
+      - run: npm ci
+      - name: Banco de preguntas (esquema, fuentes, trampas por largo de opción)
+        run: npm run check
+      - name: Pruebas del motor, del guardado y del contraste de colores
+        run: npm test
+      - name: El archivo único de dist está al día
+        run: |
+          npm run build
+          git diff --exit-code -- dist || { echo "::error::Falta rearmar el archivo único: corré 'npm run build' dentro de energia/ y subí energia/dist/ruta-de-la-energia.html"; exit 1; }
+
+  navegador:
+    name: Pantallas, accesibilidad y funcionamiento sin conexión
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: energia/package-lock.json
+      - run: npm ci
+      - name: Pruebas en Chrome (diseño en 1920×1080 y otros tamaños, axe, partidas completas, toques simultáneos, sin conexión)
+        run: npm run smoke
+        env:
+          CHROME_PATH: /usr/bin/google-chrome
