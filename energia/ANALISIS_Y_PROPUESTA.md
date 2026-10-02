@@ -2,7 +2,7 @@
 
 **Archivo analizado:** `JUEGORENOVABLESLICEO.html` (1.468 líneas, 119 KB, un solo archivo con CSS y JS adentro).
 **Fecha del análisis:** 2026-10-02.
-**Estado:** solo análisis. **No toqué el código del juego** ni publiqué nada; primero decidís vos qué cambios hacemos (sección 7).
+**Estado:** este análisis es del juego **original**. Después pediste ejecutarlo todo (solo para una pantalla interactiva Ricoh, no para celulares; primero dijiste 85" y después aclaraste que es la **Ricoh D6510**, de 65"): lo que se hizo está en la **sección 8** y el juego nuevo está en esta carpeta (ver el [README](README.md)). Las secciones 1 a 7 se dejan como estaban, salvo las correcciones marcadas con ✏️.
 
 Las referencias tipo `L790` son líneas del archivo original. Los IDs de preguntas tipo `solar#12` son «estación # posición dentro del banco, en el orden del archivo».
 
@@ -338,6 +338,73 @@ Una **PWA** (aplicación web instalable): el mismo juego, adaptado a cualquier p
 
 ---
 
+## 8. Qué se hizo (versión 1.0)
+
+Pediste ejecutar todo lo de «lo más importante que encontré», con una sola restricción: **el juego se usa únicamente en una pantalla interactiva Ricoh y no en celulares**, y que decidiera yo el resto. Mientras trabajaba aclaraste que no es de 85" sino la **Ricoh D6510**. Según la [ficha técnica de Ricoh](https://tiimg.tistatic.com/fm/7977644/08_d6510.pdf), es una pantalla de **65" Full HD (1920 × 1080, puntos de 0,744 mm)**, táctil por infrarrojos: **10 toques a la vez conectada a una PC por USB y 2 con el controlador de Ricoh**, con ±10 mm de precisión; no trae computadora propia y se maneja con una PC o con el controlador Windows opcional de Ricoh. Eso cambia el diseño: los hallazgos de celular (P1, P3, P4 en vertical) dejan de aplicar y se reemplazan por una exigencia más clara: **que nada se corte, se tape ni obligue a desplazarse en 1920 × 1080** (y que siga entrando en 4K y en otros tamaños si alguien lo prueba en una computadora), y que **varias personas puedan tocar a la vez** sin perder toques.
+
+### 8.1 Decisiones que tomé por vos (sección 7)
+
+| # | Decisión | Qué hice | Por qué |
+|---|---|---|---|
+| 1 | Dónde vive | Carpeta `energia/` de este repositorio, con su propio service worker (alcance `/energia/`), sin tocar el sitio del Tannat salvo una línea en su README | No pediste un repo nuevo; se puede mover sin cambios |
+| 2 | Dónde se usa | **Solo la Ricoh D6510** (65", 1920 × 1080, 10 toques o 2 con el controlador de Ricoh). Diseño de 1920 × 1080 que escala entero a otros tamaños; botones y fichas de al menos 4 cm (el sensor puede errar 1 cm), medido con una prueba automática y letras grandes (1 punto de diseño = 0,744 mm en esa pantalla); funciona con Chrome o Edge en Windows; atiende dos o más toques simultáneos | Tu restricción y la ficha de Ricoh |
+| 3 | «App» | **Instalable (PWA) y un archivo único** (`dist/ruta-de-la-energia.html`, unos 490 KB) para copiar en un pendrive. Sin APK | Una pantalla Ricoh abre Chrome; un APK solo agregaría trámite |
+| 4 | Contenido | Banco **reescrito de cero**: 100 preguntas con fuente, vigencia, dificultad y exclusiones entre preguntas | Los datos erróneos y el sesgo de largo estaban en el banco, no en el código |
+| 5 | Marca y respaldo | El pie ya no dice «verificados»: dice de qué fuentes salen los datos y remite a «Créditos y fuentes». **Se conservó el logo de Energimundo** (el original ya lo usaba) | Pendiente tuyo: confirmar el permiso (ver 8.4) |
+| 6 | Alcance | Entró todo: **recorrido corto**, **modo puesto**, ranking por categoría, repaso de errores | Cabía sin riesgo y resuelve K1 a K5 |
+
+### 8.2 Resultado por hallazgo
+
+| Hallazgo | Qué se hizo | Cómo se comprueba |
+|---|---|---|
+| **P1 a P6** pantallas | Diseño propio de 16:9 (1920 × 1080) que se escala; encabezado de alto fijo; el logo dentro del encabezado; el nombre se corta con «…» y no a una letra; sin `overflow:hidden` en la tarjeta; zoom del navegador permitido y toques dobles desactivados (`touch-action`) | `tests/browser/diseno.test.js`: 100 preguntas × (sin responder, acierto, error) × 5 tamaños, más todas las pantallas y el tamaño de cada botón en centímetros de la D6510 |
+| **J1, C1, C6** opción más larga | Los 300 distractores se reescribieron con largo y plausibilidad parecidos | La más larga acierta **24 %** (antes 79 %), la más corta 19 %; ninguna estrategia por largo pasa de 33 % (`npm run check`) |
+| **J2** ciclo A→B→C→D | La posición se sortea sin rachas de tres ni escaleras | Diez trampas de posición y de largo, 1.500 partidas cada una: todas entre 17 % y 33 % (`tests/unit/motor.test.js`) |
+| **J3** contrarreloj | El tiempo sale de lo que hay que leer (6 s + palabras / 2,5) y del ritmo elegido; hasta +5 por rapidez; se frena con un diálogo abierto o con la pantalla oculta | `flujo.test.js`, `motor.test.js` |
+| **J4** desafío | Une 5 lugares (3 en el corto) con su **departamento**, con 2 fichas de más, 10 puntos a la primera y 5 a la segunda; a la segunda equivocación se muestra la respuesta | `motor.test.js`, `flujo.test.js`, `tactil.test.js` |
+| **J5** ranking | Una tabla por categoría (recorrido × contrarreloj), desempate por precisión y tiempo, top 5 | `almacen.test.js` |
+| **J6** repaso | Pantalla de repaso de lo que se falló, con la respuesta y la fuente | `flujo.test.js` |
+| **J7** fugas | Exclusiones entre preguntas (`noJuntarCon`), simétricas | `motor.test.js` (500 partidas) |
+| **C2, C3** datos | Corregidos y rotulados: Ley 18.585, tarifa Doble Horario, Caracoles 2008-2009, «más de 40 parques», Segunda Transición, matriz 2025 con sus **dos bases oficiales** (entregada a la red 13.040 GWh / toda la generación 15.855 GWh) | `js/datos/` y la pantalla final |
+| **C4** fuentes | 56 fuentes con enlace; cada pregunta cita las suyas y el año del dato | `check-banco.js` |
+| **C5, C7, C8** redacción, tipo, vigencia | «¿» balanceados, explicaciones de hasta 30 palabras, dificultad 1-3 por pregunta, año de vigencia | `check-banco.js` |
+| **A1** contraste | Botón principal con texto oscuro (**8,0:1**, antes 2,33:1); colores de texto por estación; los textos sobre las fotos van en recuadros claros | `contraste.test.js` y `a11y.test.js` (axe, 0 violaciones en todas las pantallas) |
+| **A2** movimiento reducido | La barra de tiempo corre con JavaScript; el logro se ve completo; sin temblor | `flujo.test.js` |
+| **A3, A4, A6** teclado y lectores | Teclas A-D y 1-4, foco que sigue la partida, regiones `aria-live`, el desafío también va con teclado, objetivos de 56 px o más, botón de silencio | `flujo.test.js`, `a11y.test.js` |
+| **B1 a B12** código | Web Audio perezoso con `try`; ningún pintado espera a la red; el nombre se conserva; los nombres entran como texto (no HTML); «guardado» solo si se guardó; tipografías con respaldo; reloj que cuenta solo el tiempo en pantalla; ícono propio; la pregunta actualiza solo lo que cambia; sin `color-mix`; constantes en `config.js`; pruebas y CI | `flujo.test.js`, `.github/workflows/energia.yml` |
+| **R1 a R4** red y offline | Fuentes y fotos propias (cinco WebP ya desenfocados de ~25 KB), service worker, manifiesto, íconos, archivo único | `offline.test.js`, `archivo-unico.test.js` (abre desde `file://` sin pedir nada por red) |
+| **K1 a K5** puesto | Aviso «¿Seguís ahí?» y vuelta al inicio; administración con PIN (exportar y borrar el ranking, estadística de preguntas); nombre opcional con alias al azar y teclado en pantalla; pantalla completa y pantalla encendida; sin menú contextual; recorrido corto | `flujo.test.js` |
+| **L1, L2** fotos | Cada foto con autor y licencia, en el pie y en «Créditos y fuentes». La foto de Biomasa (la planta de UPM vista desde la costa argentina) se reemplazó por una de la planta de Montes del Plata en Colonia, tomada desde Uruguay | `flujo.test.js` (créditos) |
+| **L3** marca | El pie ya no afirma que nadie «verificó» los datos | `flujo.test.js` |
+| **L4, L5** privacidad y seguridad | Nada sale de la pantalla; alias en lugar de nombre; los textos del jugador nunca se insertan como HTML; política de seguridad (CSP) que **prohíbe toda conexión de salida** y los programas de afuera | `flujo.test.js`, `privacidad.test.js` (intenta `fetch`, `XMLHttpRequest`, imágenes, `sendBeacon` y scripts hacia otro sitio: todo bloqueado) |
+| **Nuevo** toques simultáneos (no estaba en el análisis) | Al probar con toques reales de varios dedos apareció algo que no había medido: con **dos dedos a la vez Chrome no genera el `click` de ninguno**, así que en una pantalla compartida se perdían los dos toques (el original usa `onclick`, por lo que debería tener la misma limitación; no lo medí). Ahora un toque que termina sobre el mismo botón donde empezó se atiende aunque Chrome no genere el `click`; el inicio ya no se redibuja entero al tocar una opción; y un **antirrebote** de 0,3 s al abrir cada pantalla evita que un toque doble o un toque «fantasma» de la pantalla infrarroja encadene pantallas | `tactil.test.js`, `antirrebote.test.js` (dos y tres dedos a la vez: respuestas, opciones del inicio, teclado en pantalla, arrastre) |
+| **M** mantenimiento | Datos separados del código, linter del banco, 50 pruebas de Node y 56 pruebas en Chrome, CI, versión y fecha de revisión de los datos | `npm run todo` |
+
+### 8.3 Antes y después
+
+| | Original | Ahora |
+|---|---|---|
+| Acierto de quien elige siempre la opción más larga | 79 % | 24 % |
+| Acierto de quien sigue el ciclo de posiciones | 97 % | 25 % |
+| Contraste del botón principal | 2,33 : 1 | 8,0 : 1 |
+| Preguntas con la explicación completa visible en 1280 × 800 | 0 de 100 | 100 de 100 (y en 1920 × 1080 —el tamaño de la D6510—, 4K, 1366 × 768 y 1024 × 768) |
+| Violaciones de accesibilidad (axe) | varias | 0 |
+| Lo que baja de internet al jugar | ~2,1 MB de fotos y tipografías | nada (todo va en el juego) |
+| Si falla el sonido o el guardado | pantalla en blanco / dice «guardado» igual | sigue funcionando / avisa que no se guardó |
+
+### 8.4 Lo que no se hizo o queda en tus manos
+
+* **No se probó en la pantalla Ricoh D6510 real**, ni en Windows con Chrome o Edge, ni en Safari. Las pruebas corrieron en Chromium 141 con la pantalla simulada (1920 × 1080 y 3840 × 2160) y con toques reales, de uno y de varios dedos, por el protocolo de Chrome. El archivo `.bat` de `dist/` tampoco se pudo probar en Windows. Conviene una prueba de 15 minutos en el equipo antes de dejarlo.
+* **Revisión humana de contenido.** Hay 12 preguntas cuya única fuente no se pudo abrir completa (solo se verificó por buscador): `eol-016`, `sol-010`, `sol-016`, `bio-005`, `bio-010`, `bio-011`, `bio-012`, `bio-014`, `bio-016`, `bio-018`, `bio-019` y `uru-003`. Son conocimientos generales (biogás, bagazo, efecto estela…) y de bajo riesgo, pero alguien debería confirmarlas contra la fuente antes de publicar.
+* **Permiso del logo de Energimundo** (CTM Salto Grande / LATU): se conservó el uso del original; conviene tener constancia.
+* **Mapa de Uruguay** para el desafío: no se hizo (haría falta dibujar los 19 departamentos). El desafío se resuelve con nombres.
+* **Otros tipos de pregunta** (ordenar, estimar, simular una sequía; D1 a D5): no se agregaron. La complementariedad de las fuentes aparece en preguntas sueltas (`hid-014`, `sol-005`, `uru-020`), no en una actividad propia.
+* **Pantalla de atracción** (K4): no se hizo; el inicio ya muestra el ranking y las reglas.
+* **APK:** no se hizo (ver decisión 3).
+* **Lector de pantalla real:** la accesibilidad se midió con axe y con pruebas de teclado y foco, no con NVDA ni TalkBack.
+* **Rendimiento en el equipo real:** no se midió; se quitaron los desenfoques en vivo y casi todas las animaciones infinitas para no depender de la potencia del equipo.
+* **El PIN** de fábrica (`4286`) hay que cambiarlo en `js/config.js` antes de dejarlo.
+
 ## Apéndice A — Verificación de datos (26 chequeos)
 
 **✗ Error / desactualizado**
@@ -347,7 +414,7 @@ Una **PWA** (aplicación web instalable): el mismo juego, adaptado a cualquier p
 | `solar#12` | Ley de Energía Solar Térmica = Ley 18.597 | La solar térmica es la **Ley 18.585** (18‑09‑2009); la **18.597** (21‑09‑2009) es *Uso Eficiente de la Energía* | [Ley 18.585](https://legislativo.parlamento.gub.uy/temporales/leytemp6274519.htm) · [Ley 18.597](https://parlamento.gub.uy/documentosyleyes/leyes/ley/18597) · [MIEM, leyes de energía solar](https://www.miem.gub.uy/energia/leyes-vinculadas-la-energia-solar) |
 | `final#13` | Tarifa «Doble u Horario Inteligente» | *Tarifa Residencial Doble Horario (TRD)* y *Triple Horario (TRT)*, dentro del *Plan Inteligente* | [UTE, opciones tarifarias](https://www.ute.com.uy/clientes/soluciones-para-el-hogar/planes-hogar/opciones-tarifarias-para-hogares) · [Plan Inteligente Hogares](https://www.ute.com.uy/clientes/soluciones-para-el-hogar/planes-hogar/plan-inteligente-hogares) |
 | `wind#6` | Primer parque eólico de UTE «a inicios de los 2000» | 5 aerogeneradores en 2008; producción industrial 5‑feb‑2009; ampliación a 20 MW en 2010 | [UTE: 15 años del Parque Eólico Sierra de los Caracoles](https://www.ute.com.uy/noticias/15-anos-del-parque-eolico-sierra-de-los-caracoles-ing-emanuele-cambilargiu) |
-| `wind#3` | «cerca de 30 parques» | Fuentes públicas: 43 parques; ~1.505 MW (jul. 2025) | [Energía eólica en Uruguay (Wikipedia)](https://es.wikipedia.org/wiki/Energ%C3%ADa_e%C3%B3lica_en_Uruguay) · [energiaeolica.gub.uy](http://www.energiaeolica.gub.uy/index.php?page=parques-en-uruguay) |
+| `wind#3` ✏️ | «cerca de 30 parques» | Uruguay XXI (oct. 2025): **41 parques**, unos 1.500 MW; Wikipedia habla de 43. En el juego nuevo se dice «más de 40 parques» | [Uruguay XXI, Energías renovables 2025](https://www.uruguayxxi.gub.uy/uploads/informacion/260810-8be4/Informe%20Energ%C3%ADas%20Renovables%202025.pdf) · [Energía eólica en Uruguay (Wikipedia)](https://es.wikipedia.org/wiki/Energ%C3%ADa_e%C3%B3lica_en_Uruguay) · [energiaeolica.gub.uy](http://www.energiaeolica.gub.uy/index.php?page=parques-en-uruguay) |
 | `final#6` | «Segunda **Transformación** Energética» | Nombre del MIEM: «Segunda **Transición** Energética» | [MIEM](https://www.gub.uy/ministerio-industria-energia-mineria/politicas-y-gestion/segunda-transicion-energetica-movilidad-electrica) |
 
 **~ Matiz o rotulado**
@@ -356,9 +423,9 @@ Una **PWA** (aplicación web instalable): el mismo juego, adaptado a cualquier p
 |---|---|---|---|
 | `hydro#4`, `wind#1`, `biomass#4`, gráfico | 46/34/14/4/2 «según el Balance Energético Preliminar» | Ese reparto es el del comunicado preliminar sobre lo entregado al SIN (13.040 GWh). El **Balance Energético Preliminar 2025** da **15.855 GWh: hidráulica 6.100 (38,5 %), eólica 4.457 (28,1 %), biomasa 4.415 (27,9 %), solar 591 (3,7 %), fósiles 293 (1,8 %)** | [Ámbito (SIN, 13.040 GWh)](https://www.ambito.com/uruguay/llego-al-98-energia-electrica-renovable-2025-y-se-consolida-como-referente-regional-n6230863) · [Medios Públicos](https://mediospublicos.uy/el-98-de-la-energia-electrica-generada-en-2025-fue-de-origen-renovable-informo-el-miem/) · [Todo el Campo (Balance Preliminar, 15.855 GWh)](https://todoelcampo.com.uy/archives/46249) |
 | `biomass#19` | ≈ 40 % del consumo final | BEN 2024: residuos de biomasa **36 %** del consumo final (35 % los combustibles fósiles) | [Infonegocios, BEN 2024](https://infonegocios.biz/enfoque/hacia-la-segunda-transicion-energetica-hitos-relevantes-del-ben-2024) |
-| `hydro#15`, `hydro#19` | 15 km; salto de 22–25 m | 13 km al norte de Salto; salto de 26 m | [Salto Grande Dam (Wikipedia)](https://en.wikipedia.org/wiki/Salto_Grande_Dam) |
+| `hydro#15`, `hydro#19` ✏️ | 15 km; salto de 22–25 m | 13 km al norte de Salto (Intendencia de Salto). Salto: **25,30 m** según la ficha técnica de la CTM (la cifra de 26 m que figuraba acá era de Wikipedia y es menos confiable) | [Intendencia de Salto](https://turismo.salto.gub.uy/sitios-de-interes/represa-de-salto-grande) · [CTM Salto Grande, ficha técnica](https://www.saltogrande.org/ficha_tecnica.php) |
 | `wind#20` | «comprar acciones» (Pampa y Valentines) | Valentines: acciones desde US$ 100. Pampa: certificados de un fideicomiso, ≈4.000 minoristas, ~15 % del capital | [Valentines](https://enperspectiva.uy/enperspectiva-uy/ute-lanzo-emision-de-acciones-para-el-parque-eolico-valentines/) · [Pampa (UTE)](https://www.ute.com.uy/noticias/inversores-de-parque-eolico-pampa-obtuvieron-22-sobre-el-capital-invertido) |
-| `biomass#8` | Galofer quema cáscara de arroz | Mezcla: hasta 20 % de cáscara de arroz y biomasa forestal; 14 MW | [MIEM, planta Galofer](https://www.gub.uy/ministerio-industria-energia-mineria/publicaciones/plantas-operacion-galofer) |
+| `biomass#8` ✏️ | Galofer quema cáscara de arroz | **Era correcto.** Al leer después la página del MIEM: la cáscara de arroz es el **único combustible** de la planta (14 MWe, Villa Sara, Treinta y Tres). La «mezcla» que figuraba acá venía de una fuente secundaria y no se sostiene | [MIEM, planta Galofer](https://www.gub.uy/ministerio-industria-energia-mineria/publicaciones/plantas-operacion-galofer) |
 | `hydro#11` | Palmar «Soriano y Flores» | Central en Soriano; el embalse limita con Flores, Durazno y Río Negro | [Represa de Palmar](https://es.wikipedia.org/wiki/Represa_de_Palmar) |
 | `solar#4` | «El futuro» Parque Melo, 140.000 paneles, >75 MW | Cifras correctas; ya en construcción (inicio abril 2026; fin previsto 2028; 100 MWp) | [UTE, Parque Solar Melo](https://www.ute.com.uy/noticias/parque-solar-fotovoltaico-melo-el-mas-grande-del-pais-ute-anuncio-el-inicio-de-su-construccion) |
 

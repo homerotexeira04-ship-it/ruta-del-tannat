@@ -4,7 +4,7 @@ Tipografías incluidas en esta carpeta (versión variable, subconjunto latino):
   Nunito   - Copyright 2014 The Nunito Project Authors (https://github.com/googlefonts/nunito)
 
 Ambas se distribuyen con la licencia SIL Open Font License 1.1, que se copia abajo.
-Se alojan junto al juego para que funcione sin conexión; no se modificaron salvo el recorte de caracteres.
+Se alojan junto al juego para que funcione sin conexión, tal como las publica Google Fonts (subconjunto latino, sin modificaciones).
 
 This Font Software is licensed under the SIL Open Font License, Version 1.1.
 This license is copied below, and is also available with a FAQ at:
