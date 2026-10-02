@@ -57,7 +57,7 @@ test('el nombre se limpia: sin etiquetas, sin saltos de línea, con largo máxim
   const R = RE.almacen.ranking;
   assert.equal(R.guardar(entrada({ nombre: '  Ana\n\n\t Pérez  ' })).entrada.nombre, 'Ana Pérez');
   assert.equal(R.guardar(entrada({ nombre: '   ' })).entrada.nombre, 'Anónimo/a');
-  assert.ok(R.guardar(entrada({ nombre: 'x'.repeat(100) })).entrada.nombre.length <= 28);
+  assert.ok(R.guardar(entrada({ nombre: 'x'.repeat(100) })).entrada.nombre.length <= 24);
   assert.equal(R.guardar(entrada({ nombre: 'Liceo N°5 "2°B" & co' })).entrada.nombre, 'Liceo N°5 "2°B" & co');
 });
 

@@ -150,7 +150,7 @@
     preguntas.forEach(function (q) { porEst[q.estIdx] = (porEst[q.estIdx] || 0) + 1; });
     return {
       modo: modo, contrarreloj: !!o.contrarreloj, ritmo: C.ritmos[o.ritmo] ? o.ritmo : 'normal',
-      nombre: U.limpiarNombre(o.nombre, 28),
+      nombre: U.limpiarNombre(o.nombre, C.nombreMax),
       preguntas: preguntas, total: preguntas.length, porEstacion: porEst,
       i: 0, respondida: false, elegida: null, terminoPreguntas: false,
       puntaje: 0, racha: 0, mejorRacha: 0, aciertos: 0, aciertosEstacion: {},

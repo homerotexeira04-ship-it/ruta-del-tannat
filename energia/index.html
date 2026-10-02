@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="es-UY">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ruta de la Energía Uruguay</title>
+<meta name="description" content="Juego educativo sobre las energías renovables de Uruguay, para pantallas interactivas. Inspirado en Energimundo (Salto Grande).">
+<meta name="theme-color" content="#FBF7EF">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/svg+xml" href="img/iconos/icono.svg">
+<link rel="apple-touch-icon" href="img/iconos/icono-180.png">
+<link rel="preload" href="fonts/fredoka-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/nunito-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/juego.css">
+</head>
+<body data-e="hidraulica" data-pantalla="inicio">
+
+<div class="fondo" aria-hidden="true">
+  <div class="fondo__img" data-e="hidraulica" style="background-image:url(img/fondos/hidraulica.webp)"></div>
+  <div class="fondo__img" data-e="eolica" style="background-image:url(img/fondos/eolica.webp)"></div>
+  <div class="fondo__img" data-e="solar" style="background-image:url(img/fondos/solar.webp)"></div>
+  <div class="fondo__img" data-e="biomasa" style="background-image:url(img/fondos/biomasa.webp)"></div>
+  <div class="fondo__img" data-e="uruguay" style="background-image:url(img/fondos/uruguay.webp)"></div>
+  <div class="fondo__velo"></div>
+</div>
+
+<div class="app" id="app">
+  <header class="cabecera" id="cabecera">
+    <div class="cabecera__marca">
+      <span class="cabecera__etiqueta">Educación Media Básica · 12 a 15 años</span>
+      <h1>Ruta de la Energía Uruguay</h1>
+    </div>
+    <div class="hud" id="hud"></div>
+    <div class="cabecera__barra" id="barraProgreso" role="progressbar" aria-label="Progreso del recorrido" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" hidden><span id="barraProgresoRelleno"></span></div>
+  </header>
+
+  <div class="logo" id="logo"><img src="img/logo-energimundo.png" alt="Energimundo" width="695" height="163"></div>
+
+  <nav aria-label="Estaciones del recorrido"><ol class="ruta" id="ruta"></ol></nav>
+
+  <main class="escenario" id="escenario" tabindex="-1"></main>
+
+  <footer class="pie" id="pie"><span class="pie__foto" id="fotoPie"></span><span class="pie__datos">Datos de MIEM, UTE, ADME, CTM Salto Grande, Uruguay XXI y otras fuentes citadas en <button type="button" id="botonCreditos">Créditos y fuentes</button>. Juego educativo inspirado en Energimundo.</span></footer>
+</div>
+
+<div class="solo-lectores" id="avisos" aria-live="polite" aria-atomic="true"></div>
+<div id="capas"></div>
+
+<noscript><p style="position:fixed;inset:0;display:grid;place-items:center;background:#FBF7EF;color:#23302B;font:700 24px/1.4 system-ui,sans-serif;text-align:center;padding:2em">Este juego necesita JavaScript. Activalo en el navegador y volvé a cargar la página.</p></noscript>
+
+<script src="js/config.js"></script>
+<script src="js/util.js"></script>
+<script src="js/datos/base.js"></script>
+<script src="js/datos/fuentes.js"></script>
+<script src="js/datos/fotos.js"></script>
+<script src="js/datos/p-hidraulica.js"></script>
+<script src="js/datos/p-eolica.js"></script>
+<script src="js/datos/p-solar.js"></script>
+<script src="js/datos/p-biomasa.js"></script>
+<script src="js/datos/p-uruguay.js"></script>
+<script src="js/almacen.js"></script>
+<script src="js/motor.js"></script>
+<script src="js/iconos.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/ui/nucleo.js"></script>
+<script src="js/ui/capas.js"></script>
+<script src="js/ui/teclado.js"></script>
+<script src="js/ui/inicio.js"></script>
+<script src="js/ui/preguntas.js"></script>
+<script src="js/ui/desafio.js"></script>
+<script src="js/ui/final.js"></script>
+<script src="js/ui/creditos.js"></script>
+<script src="js/kiosco.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

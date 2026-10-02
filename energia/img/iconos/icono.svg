@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Ruta de la Energía Uruguay">
+  <rect width="512" height="512" rx="112" fill="#23302B"/>
+  <circle cx="256" cy="256" r="176" fill="#F5A31A"/>
+  <path d="M272 108 L174 281 H240 L207 404 L338 223 H272 Z" fill="#23302B"/>
+</svg>
