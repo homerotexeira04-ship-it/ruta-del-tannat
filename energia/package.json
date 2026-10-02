@@ -1,0 +1,15 @@
+{
+  "name": "ruta-de-la-energia",
+  "private": true,
+  "description": "Ruta de la Energía Uruguay: juego educativo para pantalla interactiva (HTML + JavaScript sin framework). Acá solo se usa npm para validar el banco de preguntas, correr las pruebas y armar la versión de un solo archivo.",
+  "scripts": {
+    "check": "node scripts/check-banco.js",
+    "test": "node --test tests/unit/",
+    "build": "node scripts/build-un-archivo.js",
+    "smoke": "node tests/browser/run.js"
+  },
+  "devDependencies": {
+    "axe-core": "^4.10.0",
+    "puppeteer-core": "^25.11.0"
+  }
+}
