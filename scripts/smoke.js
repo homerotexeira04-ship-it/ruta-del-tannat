@@ -1,4 +1,4 @@
-// Pruebas de humo en un Chrome real (puppeteer-core): errores, desbordes, idiomas, botón de WhatsApp, La Copa e itinerario impreso.
+// Pruebas de humo en un Chrome real (puppeteer-core): errores, desbordes, idiomas, botón de WhatsApp, La Copa, itinerario impreso y menú del encabezado.
 // Uso: node scripts/smoke.js      (levanta su propio servidor; o usa SITE_URL=http://... si ya hay uno)
 //      CHROME_PATH=/ruta/a/chrome si Chrome no está en un lugar conocido.
 const puppeteer = require('puppeteer-core'); const http = require('http'); const fs = require('fs'); const path = require('path');
@@ -87,6 +87,32 @@ function servidor() {
       await page.emulateMediaType('screen'); if (hojas !== 1 || visibles.join() !== 'printItinerary') res.push(l + ': ' + hojas + ' hoja(s), visibles=' + visibles.join());
     }
     check('el itinerario imprime en 1 hoja A4 (es/pt/en) y oculta el resto [ocupa ' + ocupa.join(', ') + ' del alto útil]', res.length === 0, res.join(' | ')); await page.close(); }
+
+  // 8. encabezado agrupado: una sola línea (ES/PT/EN, 1280 a 1920 px); los 4 grupos abren con clic (uno a la vez), cierran con Esc y con clic afuera, y llevan a TODAS las secciones
+  { const page = await abrir(1440, 900, false); const malos = [];
+    const partidos = () => page.evaluate(() => { const n = (el) => { const r = document.createRange(); r.selectNodeContents(el); return new Set([...r.getClientRects()].map((x) => Math.round(x.top))).size; }; return [...document.querySelectorAll('[data-nav-group] > button span, #mainHeader .hdr-row > button span')].filter((e) => e.offsetParent && n(e) > 1).map((e) => e.textContent.trim()); });
+    for (const l of ['es', 'pt', 'en']) { await page.evaluate((l) => setLanguage(l), l); for (const W of [1280, 1440, 1920]) { await page.setViewport({ width: W, height: 900 }); await sleep(250); const m = await partidos(); if (m.length) malos.push(l + ' ' + W + 'px (' + m.join(', ') + ')'); } }
+    await page.evaluate(() => setLanguage('es'));
+    check('el menú del encabezado cabe en una línea (ES/PT/EN, 1280 a 1920 px)', malos.length === 0, malos.join(' | '));
+    const abiertos = () => page.evaluate(() => [...document.querySelectorAll('[data-nav-group] > button')].map((b) => b.getAttribute('aria-expanded') === 'true' ? 1 : 0).join(''));
+    await page.click('[aria-controls="navGrp1"]'); const a1 = await abiertos();
+    await page.click('[aria-controls="navGrp3"]'); const a2 = await abiertos();
+    await page.keyboard.press('Escape'); const a3 = await abiertos(), foco = await page.evaluate(() => document.activeElement.getAttribute('aria-controls'));
+    await page.click('[aria-controls="navGrp2"]'); await page.mouse.click(20, 500); const a4 = await abiertos();
+    check('los grupos del menú abren con clic (uno a la vez) y cierran con Esc y con clic afuera', a1 === '1000' && a2 === '0010' && a3 === '0000' && foco === 'navGrp3' && a4 === '0000', [a1, a2, a3, foco, a4].join(' '));
+    const sin = await page.evaluate(() => { const enMenu = new Set([...document.querySelectorAll('[data-nav-group] a')].map((a) => a.getAttribute('href').slice(1))); return [...document.querySelectorAll('main section[id]')].map((s) => s.id).filter((id) => id !== 'hero' && !enMenu.has(id)); });
+    check('todas las secciones de la página son alcanzables desde el menú', sin.length === 0, 'sin acceso: ' + sin.join(', ')); await page.close(); }
+
+  // 9. menú del celular: 4 grupos en acordeón (se abre uno a la vez) con las 17 secciones, y abierto no pisa la barra fija de reserva
+  { const page = await abrir(360, 640, true); const r = await page.evaluate(async () => {
+      const esp = (ms) => new Promise((ok) => setTimeout(ok, ms)), d = [...document.querySelectorAll('#mobileMenu details')], bar = document.querySelector('div.mbar');
+      document.getElementById('mobileMenuBtn').click(); await esp(200);
+      d[2].querySelector('summary').click(); await esp(100); d[0].querySelector('summary').click(); await esp(100);
+      const exclusivo = d.map((x) => x.open ? 1 : 0).join('') === '1000';
+      d[2].querySelector('summary').click(); await esp(150);
+      return { grupos: d.length, exclusivo, enlaces: document.querySelectorAll('#mobileMenu details a').length, solapa: Math.round(document.getElementById('mobileMenu').getBoundingClientRect().bottom - bar.getBoundingClientRect().top) };
+    });
+    check('el menú del celular agrupa las 17 secciones en acordeón y no pisa la barra de reserva', r.grupos === 4 && r.exclusivo && r.enlaces === 17 && r.solapa <= 0, JSON.stringify(r)); await page.close(); }
 
   await browser.close(); srv.cerrar();
   if (failures.length) { console.log('\n' + failures.length + ' prueba(s) fallaron:\n - ' + failures.join('\n - ')); process.exit(1); }
