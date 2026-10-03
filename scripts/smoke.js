@@ -1,4 +1,4 @@
-// Pruebas de humo en un Chrome real (puppeteer-core): errores, desbordes, idiomas, botón de WhatsApp, La Copa, itinerario impreso, menú del encabezado, recorrido de estaciones y calendario de temporadas.
+// Pruebas de humo en un Chrome real (puppeteer-core): errores, desbordes, idiomas, botón de WhatsApp, La Copa, itinerario impreso, menú del encabezado, recorrido de estaciones, calendario de temporadas y galería.
 // Uso: node scripts/smoke.js      (levanta su propio servidor; o usa SITE_URL=http://... si ya hay uno)
 //      CHROME_PATH=/ruta/a/chrome si Chrome no está en un lugar conocido.
 const puppeteer = require('puppeteer-core'); const http = require('http'); const fs = require('fs'); const path = require('path');
@@ -125,6 +125,24 @@ function servidor() {
       return { hoy, ini, insignia, clic, deslizar, teclado };
     });
     check('el calendario de temporadas abre en la de hoy, y la pestaña, el deslizado y las flechas lo mueven', r.ini === r.hoy && r.insignia && r.clic && r.deslizar && r.teclado, JSON.stringify(r)); await page.close(); }
+
+  // 11. galería deslizable: no se mueve sola, los botones y el teclado la recorren y cada foto abre un visor con flechas
+  { const page = await abrir(1280, 800, false);
+    const r = await page.evaluate(async () => {
+      const esp = (ms) => new Promise((ok) => setTimeout(ok, ms)), s = document.getElementById('galleryStrip'), items = [...s.children], prev = document.getElementById('galPrev'), next = document.getElementById('galNext');
+      const solas = document.getAnimations().filter((a) => a instanceof CSSAnimation && a.effect && a.effect.target && a.effect.target.closest && a.effect.target.closest('#galeria')).length;
+      const cs = getComputedStyle(s), deslizable = s.scrollWidth > s.clientWidth + 100 && cs.overflowX === 'auto' && cs.scrollSnapType.includes('x');
+      const ini = prev.getAttribute('aria-disabled') === 'true' && next.getAttribute('aria-disabled') === 'false';
+      next.click(); await esp(500); const avanza = s.scrollLeft > 100 && prev.getAttribute('aria-disabled') === 'false';
+      s.scrollTo({ left: s.scrollWidth, behavior: 'instant' }); await esp(300); const fin = next.getAttribute('aria-disabled') === 'true';
+      items[0].focus(); items[0].dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true })); const teclado = document.activeElement === items[1] && items.filter((i) => i.tabIndex === 0).length === 1;
+      items[1].click(); await esp(400);
+      const lb = () => ({ abierto: !document.getElementById('galleryLightbox').classList.contains('hidden'), cap: document.getElementById('lightboxCaption').textContent });
+      const a = lb(); stepGalleryLightbox(1); const b = lb(); stepGalleryLightbox(-1); const c = lb();
+      const visor = a.abierto && !!a.cap && !!b.cap && b.cap !== a.cap && c.cap === a.cap;
+      return { solas, deslizable, ini, avanza, fin, teclado, visor };
+    });
+    check('la galería se desliza (botones, teclado y visor con flechas) y no se mueve sola', r.solas === 0 && r.deslizable && r.ini && r.avanza && r.fin && r.teclado && r.visor, JSON.stringify(r)); await page.close(); }
 
   await browser.close(); srv.cerrar();
   if (failures.length) { console.log('\n' + failures.length + ' prueba(s) fallaron:\n - ' + failures.join('\n - ')); process.exit(1); }
