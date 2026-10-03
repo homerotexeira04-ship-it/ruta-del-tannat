@@ -23,6 +23,18 @@ const markup = html.replace(/<script[\s\S]*?<\/script>/g, '').replace(/<style[\s
   console.log('archivos citados verificados:', n);
 }
 
+// ---------- 1b. el CSS se pide con ?v=N, igual a la versión de la caché del service worker ----------
+// Sin esto, quien ya visitó el sitio recibe el HTML nuevo con el CSS viejo (el service worker sirve el CSS "caché primero")
+// y en la primera vista faltan estilos de lo que se acaba de agregar.
+{
+  const sw = read('sw.js'), v = (/CACHE_VERSION = 'tannat-v(\d+)'/.exec(sw) || [])[1];
+  const enHtml = (/<link rel="stylesheet" href="\.\/LaRutadelTannat_files\/tailwind\.css\?v=(\d+)"/.exec(html) || [])[1];
+  const enSw = (/'\.\/LaRutadelTannat_files\/tailwind\.css\?v=(\d+)'/.exec(sw) || [])[1];
+  if (!v) fail("sw.js: no encuentro CACHE_VERSION = 'tannat-vN'");
+  else if (enHtml !== v || enSw !== v) fail('el CSS se pide con ?v=' + enHtml + ' en el HTML y ?v=' + enSw + ' en sw.js, pero CACHE_VERSION es v' + v + ': tienen que coincidir (al subir CACHE_VERSION, subí también el ?v= de tailwind.css en LaRutadelTannat.html y en CORE_ASSETS de sw.js)');
+  else console.log('versión del CSS = caché del service worker: v' + v);
+}
+
 // ---------- 2. anclas e ids ----------
 {
   const ids = [...markup.matchAll(/\sid="([^"]+)"/g)].map((m) => m[1]); const seen = new Set();
