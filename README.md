@@ -42,11 +42,11 @@ En GitHub Actions (`.github/workflows/checks.yml`) corren solos en cada cambio a
 npm install           # solo la primera vez
 npm run check         # archivos citados, anclas, ids, JSON-LD, idiomas ES/PT/EN y FAQ al día
 npm test              # backend de opiniones y contador de uso, con una planilla simulada
-npm run smoke         # en Chrome real: errores, desbordes, WhatsApp, La Copa, itinerario y menú del encabezado (CHROME_PATH si no lo encuentra)
+npm run smoke         # en Chrome real: errores, desbordes, WhatsApp, La Copa, itinerario, menú del encabezado y movimiento: hover, presión, galería y modales (CHROME_PATH si no lo encuentra)
 npm run check:links   # enlaces externos (más lento)
 ```
 
-`npm run smoke` mide en un navegador, así que sirve para no romper cosas que no se ven en el código: que La Copa siga entrando en la pantalla de un celular, que el botón de WhatsApp no tape "Reservar", que el itinerario siga saliendo en una sola hoja o que el menú del encabezado siga cabiendo en una línea y llevando a todas las secciones.
+`npm run smoke` mide en un navegador, así que sirve para no romper cosas que no se ven en el código: que La Copa siga entrando en la pantalla de un celular, que el botón de WhatsApp no tape "Reservar", que el itinerario siga saliendo en una sola hoja, que el menú del encabezado siga cabiendo en una línea y llevando a todas las secciones, que el hover de las tarjetas siga animando, que los modales no se escondan al reabrirlos o que la galería en movimiento se pueda pausar.
 
 ## Claude Code
 

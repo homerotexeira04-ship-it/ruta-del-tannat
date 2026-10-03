@@ -445,8 +445,11 @@
     .gallery-track { display: flex; flex-direction: column; gap: 1rem; will-change: transform; animation-timing-function: linear; animation-iteration-count: infinite; }
     .gallery-track.scroll-up { animation-name: galleryScrollUp; }
     .gallery-track.scroll-down { animation-name: galleryScrollDown; }
-    .gallery-columns:focus-within .gallery-track { animation-play-state: paused; }
+    .gallery-columns:focus-within .gallery-track, .gallery-columns.is-paused .gallery-track, .gallery-columns.is-offscreen .gallery-track { animation-play-state: paused; }
     @media (hover: hover) { .gallery-columns:hover .gallery-track { animation-play-state: paused; } }
+    /* Botón de pausa (WCAG 2.2.2: el movimiento automático de más de 5 s se puede detener): muestra "Pausar" o "Reanudar" según data-paused; sin movimiento no hace falta */
+    #galPause[data-paused="true"] .gp-pause, #galPause:not([data-paused="true"]) .gp-play { display: none; }
+    @media (prefers-reduced-motion: reduce) { #galPause { display: none; } }
     @keyframes galleryScrollUp { from { transform: translateY(0); } to { transform: translateY(-50%); } }
     @keyframes galleryScrollDown { from { transform: translateY(-50%); } to { transform: translateY(0); } }
     .gallery-item { position: relative; aspect-ratio: 1 / 1; border-radius: 1rem; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); flex-shrink: 0; cursor: pointer; }
@@ -2526,6 +2529,12 @@
           <p class="text-terroir font-light" data-i18n="gallery.subtitle">
             Imágenes reales de las bodegas, los viñedos y las termas que forman parte del circuito.
           </p>
+          <button type="button" id="galPause" class="mt-6 inline-flex items-center gap-2 px-4 min-h-[44px] rounded-full border border-tannat/25 text-tannat text-sm font-semibold hover:bg-tannat/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold transition-colors">
+            <svg class="gp-pause w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.75 5.25v13.5m-7.5-13.5v13.5"></path></svg>
+            <svg class="gp-play w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 010 1.972l-11.54 6.347a1.125 1.125 0 01-1.667-.986V5.653z"></path></svg>
+            <span class="gp-pause" data-i18n="gallery.pause">Pausar movimiento</span>
+            <span class="gp-play" data-i18n="gallery.play">Reanudar movimiento</span>
+          </button>
         </div>
 
         <div class="gallery-columns" role="group" aria-label="Galería de fotografías del circuito, con desplazamiento automático" data-i18n-aria="a11y.gallery">
@@ -4021,6 +4030,8 @@
         "gallery.badge": "Postales del Circuito",
         "gallery.title": "Galería",
         "gallery.subtitle": "Imágenes reales de las bodegas, los viñedos, las termas y el patrimonio que forman parte del circuito.",
+        "gallery.pause": "Pausar movimiento",
+        "gallery.play": "Reanudar movimiento",
         "gallery.cap1": "Viñedo uruguayo al amanecer",
         "gallery.cap2": "Bodega Harriague · Punto Cero del Tannat",
         "gallery.cap3": "Viñas y Bodega del Salto Chico",
@@ -4572,6 +4583,8 @@
         "gallery.badge": "Postais do Circuito",
         "gallery.title": "Galeria",
         "gallery.subtitle": "Imagens reais das vinícolas, dos vinhedos, das termas e do patrimônio que fazem parte do circuito.",
+        "gallery.pause": "Pausar movimento",
+        "gallery.play": "Retomar movimento",
         "gallery.cap1": "Vinhedo uruguaio ao amanhecer",
         "gallery.cap2": "Vinícola Harriague · Ponto Zero do Tannat",
         "gallery.cap3": "Vinhas e Vinícola do Salto Chico",
@@ -5123,6 +5136,8 @@
         "gallery.badge": "Postcards from the Circuit",
         "gallery.title": "Gallery",
         "gallery.subtitle": "Real images of the wineries, vineyards, hot springs, and heritage that make up the circuit.",
+        "gallery.pause": "Pause motion",
+        "gallery.play": "Resume motion",
         "gallery.cap1": "Uruguayan vineyard at sunrise",
         "gallery.cap2": "Harriague Winery · Ground Zero of Tannat",
         "gallery.cap3": "Salto Chico Vines and Winery",
@@ -6374,6 +6389,14 @@
         if (item) openGalleryLightbox(item.querySelector('img'));
       });
     });
+
+    // Galería: botón de pausa/reanudar y pausa automática cuando sale de pantalla (no gasta batería ni CPU donde nadie la mira)
+    (function initGalleryPause() {
+      const cols = document.querySelector('.gallery-columns'), btn = document.getElementById('galPause');
+      if (!cols || !btn) return;
+      btn.addEventListener('click', () => { const pausar = btn.dataset.paused !== 'true'; btn.dataset.paused = String(pausar); cols.classList.toggle('is-paused', pausar); });
+      if ('IntersectionObserver' in window) new IntersectionObserver((es) => cols.classList.toggle('is-offscreen', !es[0].isIntersecting)).observe(cols);
+    })();
 
     // Tarjetas de Misión y Visión: alternan con clic o teclado (Enter/Espacio). Se maneja con JS directo
     // (no con variantes condicionales de Tailwind) para que la altura se calcule siempre a partir del

@@ -146,6 +146,23 @@ function servidor() {
     const r = await page.evaluate(async () => { const esp = (ms) => new Promise((ok) => setTimeout(ok, ms)); openBookingModal('General'); await esp(400); closeBookingModal(); await esp(60); openBookingModal('General'); await esp(500); const m = document.getElementById('bookingModal'); return { visible: !m.classList.contains('hidden'), abierto: m.classList.contains('modal-open') }; });
     check('un modal cerrado y reabierto enseguida queda visible', r.visible && r.abierto, JSON.stringify(r)); await page.close(); }
 
+  // 14. la galería (movimiento automático) se puede pausar con un botón (WCAG 2.2.2), se reanuda y se queda quieta fuera de pantalla
+  { const page = await abrir(1280, 800, false);
+    const redMov = await page.evaluate(() => { const b = document.getElementById('galPause'); return { anim: getComputedStyle(document.querySelector('.gallery-track')).animationName, boton: b ? getComputedStyle(b).display : 'no existe' }; });
+    check('con "reducir movimiento" la galería no se mueve y el botón de pausa se esconde', redMov.anim === 'none' && redMov.boton === 'none', JSON.stringify(redMov));
+    await page.emulateMediaFeatures([{ name: 'prefers-reduced-motion', value: 'no-preference' }]); await page.reload({ waitUntil: 'load' }); await page.evaluate(() => document.fonts.ready); await sleep(700);
+    if (!await page.$('#galPause')) check('la galería corre sola, se pausa con el botón, se reanuda y se queda quieta fuera de pantalla', false, 'no existe #galPause');
+    else {
+      const estado = () => page.evaluate(() => getComputedStyle(document.querySelector('.gallery-track')).animationPlayState);
+      await page.evaluate(() => document.getElementById('galPause').scrollIntoView({ block: 'start', behavior: 'instant' })); await page.mouse.move(2, 2); await sleep(500);
+      const corre = await estado();
+      const rotulo = () => page.evaluate(() => document.getElementById('galPause').innerText.trim());
+      const r1 = await rotulo(); await page.click('#galPause'); await page.mouse.move(2, 2); await sleep(150); const pausada = await estado(), r2 = await rotulo();
+      await page.click('#galPause'); await page.mouse.move(2, 2); await sleep(150); const reanuda = await estado();
+      await page.evaluate(() => window.scrollTo(0, 0)); await sleep(400); const fuera = await estado();
+      check('la galería corre sola, se pausa con el botón, se reanuda y se queda quieta fuera de pantalla', corre === 'running' && pausada === 'paused' && reanuda === 'running' && fuera === 'paused' && r1 !== r2, [corre, pausada, reanuda, fuera, r1 + ' → ' + r2].join(' / '));
+    } await page.close(); }
+
   await browser.close(); srv.cerrar();
   if (failures.length) { console.log('\n' + failures.length + ' prueba(s) fallaron:\n - ' + failures.join('\n - ')); process.exit(1); }
   console.log('\nTodas las pruebas de humo pasaron');
