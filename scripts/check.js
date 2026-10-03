@@ -65,6 +65,14 @@ let T;
   console.log('idiomas:', langs.join('/'), '| claves por idioma:', langs.map((l) => Object.keys(T[l]).length).join('/'));
 }
 
+// ---------- 4a. sin rayas largas (—) en el texto visible: ni en el HTML ni en los 3 diccionarios (el texto legal y los comentarios quedan afuera) ----------
+{
+  const malas = [];
+  for (const m of markup.replace(/<!--[\s\S]*?-->/g, '').matchAll(/[^<>\n]*—[^<>\n]*/g)) malas.push('html: ' + m[0].trim().slice(0, 60));
+  for (const l of Object.keys(T)) for (const [k, v] of Object.entries(T[l])) if (String(v).includes('—')) malas.push(l + ' ' + k);
+  if (malas.length) fail('raya larga (—) en texto visible; usá coma, dos puntos o paréntesis: ' + malas.slice(0, 4).join(' | ') + (malas.length > 4 ? ' … (' + malas.length + ')' : ''));
+}
+
 // ---------- 4b. FAQ: lo visible y el dato estructurado (JSON-LD FAQPage) dicen lo mismo ----------
 {
   const botones = (markup.match(/id="faqBtn\d+"/g) || []).length;
