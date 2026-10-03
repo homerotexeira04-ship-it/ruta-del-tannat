@@ -24,7 +24,9 @@ function servidor() {
 (async () => {
   const srv = process.env.SITE_URL ? { url: process.env.SITE_URL, cerrar() {} } : await servidor();
   const origin = new URL(srv.url).origin;
-  const browser = await puppeteer.launch({ executablePath: CHROME, headless: 'new', args: ['--no-sandbox', '--disable-dev-shm-usage'] });
+  // Un Chrome sin pantalla (p. ej. el de GitHub Actions) no detecta mouse y reporta (hover: none): ahí los :hover no se aplican, a propósito.
+  // Se fuerza "mouse fino con hover" para que las pruebas de escritorio midan lo mismo en cualquier máquina (la emulación táctil del celular lo reemplaza sola).
+  const browser = await puppeteer.launch({ executablePath: CHROME, headless: 'new', args: ['--no-sandbox', '--disable-dev-shm-usage', '--blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4'] });
   const abrir = async (W, H, mobile) => {
     const page = await browser.newPage(); await page.setViewport({ width: W, height: H, isMobile: mobile, hasTouch: mobile });
     await page.emulateMediaFeatures([{ name: 'prefers-reduced-motion', value: 'reduce' }]);
@@ -119,12 +121,12 @@ function servidor() {
     await page.emulateMediaFeatures([{ name: 'prefers-reduced-motion', value: 'no-preference' }]); await page.reload({ waitUntil: 'load' }); await page.evaluate(() => document.fonts.ready); await sleep(700);
     await recorrer(page, 800); await sleep(1700); // deja terminar el reveal
     const sel = '.shadow-editorial-hover[class*="hover:-translate-y"]';
-    const c = await page.evaluate(async (sel) => { const el = document.querySelector(sel); el.scrollIntoView({ block: 'center', behavior: 'instant' }); await new Promise((ok) => setTimeout(ok, 500)); const r = el.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2, prop: getComputedStyle(el).transitionProperty }; }, sel);
+    const c = await page.evaluate(async (sel) => { const el = document.querySelector(sel); el.scrollIntoView({ block: 'center', behavior: 'instant' }); await new Promise((ok) => setTimeout(ok, 500)); const r = el.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2, prop: getComputedStyle(el).transitionProperty, hover: matchMedia('(hover: hover)').matches }; }, sel);
     await page.mouse.move(2, 2); await sleep(500);
-    await page.evaluate((sel) => { const el = document.querySelector(sel); window.__pasos = new Set(); const t0 = performance.now(); (function f() { const m = /matrix\(([^)]*)\)/.exec(getComputedStyle(el).transform); window.__pasos.add(m ? m[1].split(',')[5].trim() : '0'); if (performance.now() - t0 < 500) requestAnimationFrame(f); })(); }, sel);
-    await page.mouse.move(c.x, c.y); await sleep(700);
-    const pasos = await page.evaluate(() => window.__pasos.size);
-    check('el hover de las tarjetas anima en vez de saltar (' + pasos + ' pasos)', pasos >= 3, 'transition-property=' + c.prop + ', pasos=' + pasos); await page.close(); }
+    await page.evaluate((sel) => { const el = document.querySelector(sel); window.__pasos = null; el.addEventListener('mouseenter', () => { const v = new Set(); window.__pasos = v; const t0 = performance.now(); (function f() { const m = /matrix\(([^)]*)\)/.exec(getComputedStyle(el).transform); v.add(m ? m[1].split(',')[5].trim() : '0'); if (performance.now() - t0 < 600) requestAnimationFrame(f); })(); }, { once: true }); }, sel);
+    await page.mouse.move(c.x, c.y); await sleep(1100);
+    const pasos = await page.evaluate(() => (window.__pasos ? window.__pasos.size : -1));
+    check('el hover de las tarjetas anima en vez de saltar (' + pasos + ' pasos)', c.hover && pasos >= 3, (c.hover ? '' : 'el Chrome de prueba no reporta mouse ((hover: hover) falso) y los hover no se aplican; ') + 'transition-property=' + c.prop + ', pasos=' + pasos); await page.close(); }
 
   // 11. al apretar, los botones se achican un poco (confirma que el toque se registró): se mide la propiedad scale con el botón presionado
   { const page = await abrir(1280, 800, false);
