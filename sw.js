@@ -4,7 +4,7 @@ const CORE_ASSETS = [
   './LaRutadelTannat.html',
   './index.html',
   './manifest.json',
-  './LaRutadelTannat_files/tailwind.css',
+  './LaRutadelTannat_files/tailwind.css?v=19', // el ?v= sigue a CACHE_VERSION (npm run check avisa si no coinciden)
   './LaRutadelTannat_files/logo-ruta-del-tannat-450.webp',
   './LaRutadelTannat_files/logo-enoturismo-uruguay.webp',
   './LaRutadelTannat_files/favicon.svg',

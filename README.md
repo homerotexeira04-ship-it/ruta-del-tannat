@@ -10,7 +10,6 @@ Publicado con GitHub Pages: https://homerotexeira04-ship-it.github.io/ruta-del-t
 |---|---|
 | `LaRutadelTannat.html` | Página completa (contenido, estilos propios, textos ES/PT/EN y lógica) |
 | `LaRutadelTannat_files/tailwind.css` | CSS de Tailwind **compilado** (no editar a mano) |
-| `LaRutadelTannat_files/estilo-apple.css` | Capa de estilo "híbrido Apple" (tipografía del sistema, superficies neutras, encabezado y barra móvil de vidrio). Se carga después de todo lo demás y se edita a mano; al cambiarla, subir `CACHE_VERSION` en `sw.js` |
 | `LaRutadelTannat_files/copa-tannat-*.js` | La Copa de Tannat (render en canvas + interfaz), se carga al acercarse a la sección |
 | `sw.js`, `manifest.json` | Instalación como app y uso sin conexión |
 | `index.html` | Solo redirige a la página principal |
@@ -28,7 +27,7 @@ npm install      # solo la primera vez
 npm run build:css
 ```
 
-Después de cambiar cualquier archivo que use el service worker (`sw.js`), subir `CACHE_VERSION` para que los visitantes reciban la versión nueva. Si se edita `copa-tannat-render.js` o `copa-tannat-ui.js`, subir también el `?v=` con que los carga el HTML.
+Después de cambiar cualquier archivo que use el service worker (`sw.js`), subir `CACHE_VERSION` para que los visitantes reciban la versión nueva, y con el mismo número el `?v=` de `tailwind.css` (en el `<link>` del HTML y en `CORE_ASSETS` de `sw.js`): sin él, quien ya visitó el sitio vería la primera vez el HTML nuevo con el CSS viejo. `npm run check` avisa si no coinciden. Si se edita `copa-tannat-render.js` o `copa-tannat-ui.js`, subir también el `?v=` con que los carga el HTML.
 
 ## Imágenes
 
