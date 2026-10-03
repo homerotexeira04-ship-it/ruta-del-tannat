@@ -301,13 +301,16 @@
     @keyframes wxPulse { 0%, 100% { opacity: .35; } 50% { opacity: .8; } }
 
     /* Menús de grupo del encabezado (escritorio) y acordeón del menú móvil */
-    .nav-panel { background: #2B0A14; }
+    .nav-panel { background: #2B0A14; transform-origin: top left; animation: navIn 160ms cubic-bezier(.23, 1, .32, 1); }
+    .nav-panel.no-anim { animation: none; } /* abierto con el teclado: no se hace esperar */
+    @keyframes navIn { from { opacity: 0; transform: scale(.97) translateY(-4px); } }
+    @keyframes navFade { from { opacity: 0; } }
     .nav-chev { transition: transform .2s ease; }
     [aria-expanded="true"] > .nav-chev, details[open] > summary > .nav-chev { transform: rotate(180deg); }
     .nav-m-grp:last-of-type { border-bottom: 0; } /* la fila de moneda e idioma de abajo ya trae su propia línea */
     .nav-m-grp > summary { list-style: none; }
     .nav-m-grp > summary::-webkit-details-marker { display: none; }
-    @media (prefers-reduced-motion: reduce) { .nav-chev { transition: none; } }
+    @media (prefers-reduced-motion: reduce) { .nav-chev { transition: none; } .nav-panel { animation: navFade 120ms ease; } } /* menos movimiento, no cero: queda el fundido */
 
     /* Respuesta al apretar: lo que se presiona se achica un poco (botones .97; filas y tarjetas grandes .99). Usa la propiedad `scale`,
        que se SUMA a los transform de Tailwind (hover:scale-105, -translate-y-*) en vez de pisarlos. Las anclas con forma de botón son las rounded-full. */
@@ -429,6 +432,8 @@
     .modal-overlay.modal-open { opacity: 1; }
     .modal-card { transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1), transform 0.28s cubic-bezier(0.16, 1, 0.3, 1); opacity: 0; transform: scale(0.94) translateY(14px); }
     .modal-overlay.modal-open .modal-card { opacity: 1; transform: scale(1) translateY(0); }
+    .modal-overlay:not(.modal-open), .modal-overlay:not(.modal-open) .modal-card { transition-duration: .18s; } /* al cerrar sale más rápido de lo que entró */
+    @media (prefers-reduced-motion: reduce) { .modal-card { transform: none; } } /* sin escala ni desplazamiento: queda el fundido */
     .modal-card:focus { outline: none; } /* el foco entra a la tarjeta al abrir (showModal); no es un control */
 
     /* Galería — muro fotográfico con desplazamiento vertical automático */
@@ -515,10 +520,12 @@
     .flip-card-back { transform: rotateY(180deg); }
     .flip-card:focus-visible { outline: 2px solid #C29D62; outline-offset: 3px; border-radius: 1rem; }
     /* Acordeón del FAQ: grid-template-rows 0fr→1fr anima contra el alto real del contenido (no un max-height fijo que desincroniza la duración). */
-    .faq-ans { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .4s cubic-bezier(0.4, 0, 0.2, 1); }
-    .faq-ans.is-open { grid-template-rows: 1fr; }
-    .faq-ans-inner { overflow: hidden; }
-    @media (prefers-reduced-motion: reduce) { .faq-ans { transition: none; } }
+    /* FAQ: abre en 300 ms y cierra en 200 ms (la salida, más rápida que la entrada), con curva fuerte y el texto entrando con un leve fundido */
+    .faq-ans { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .2s cubic-bezier(.23, 1, .32, 1); }
+    .faq-ans.is-open { grid-template-rows: 1fr; transition-duration: .3s; }
+    .faq-ans-inner { overflow: hidden; opacity: 0; transition: opacity .15s ease; }
+    .faq-ans.is-open .faq-ans-inner { opacity: 1; transition: opacity .25s ease .05s; }
+    @media (prefers-reduced-motion: reduce) { .faq-ans { transition: none; } } /* sin el cambio de alto; el fundido del texto se queda */
     /* Sombra editorial multicapa y difusa (spec del rediseño), reemplaza shadow-sm/shadow-md en tarjetas clave */
     .shadow-editorial { box-shadow: 0 10px 30px -10px rgba(43, 10, 20, 0.12); }
     @media (hover: hover) { .shadow-editorial-hover:hover { box-shadow: 0 16px 40px -12px rgba(43, 10, 20, 0.2); } }
@@ -892,7 +899,7 @@
               <span data-i18n="nav.grpTannat">El Tannat</span>
               <svg class="nav-chev w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
             </button>
-            <div id="navGrp1" class="hidden op-in nav-panel absolute left-0 top-full mt-6 w-64 p-2 rounded-2xl border border-white/10 shadow-2xl">
+            <div id="navGrp1" class="hidden nav-panel absolute left-0 top-full mt-6 w-64 p-2 rounded-2xl border border-white/10 shadow-2xl">
               <a href="#historia" class="block px-3 py-2 rounded-lg text-sm text-gray-200 hover:text-gold hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold transition-colors" data-i18n="nav.history">Historia</a>
               <a href="#pionero" class="block px-3 py-2 rounded-lg text-sm text-gray-200 hover:text-gold hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold transition-colors" data-i18n="nav.pioneer">El Pionero</a>
               <a href="#copa" class="block px-3 py-2 rounded-lg text-sm text-gray-200 hover:text-gold hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold transition-colors" data-i18n="nav.cup">La Copa de Tannat</a>
@@ -905,7 +912,7 @@
               <span data-i18n="nav.grpRoute">La Ruta</span>
               <svg class="nav-chev w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
             </button>
-            <div id="navGrp2" class="hidden op-in nav-panel absolute left-0 top-full mt-6 w-64 p-2 rounded-2xl border border-white/10 shadow-2xl">
+            <div id="navGrp2" class="hidden nav-panel absolute left-0 top-full mt-6 w-64 p-2 rounded-2xl border border-white/10 shadow-2xl">
               <a href="#estaciones" class="block px-3 py-2 rounded-lg text-sm text-gray-200 hover:text-gold hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold transition-colors" data-i18n="nav.stations">Estaciones</a>
               <a href="#termas" class="block px-3 py-2 rounded-lg text-sm text-gray-200 hover:text-gold hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold transition-colors" data-i18n="nav.thermal">Termas</a>
               <a href="#galeria" class="block px-3 py-2 rounded-lg text-sm text-gray-200 hover:text-gold hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold transition-colors" data-i18n="nav.gallery">Galería</a>
@@ -917,7 +924,7 @@
               <span data-i18n="nav.grpTrip">Tu Viaje</span>
               <svg class="nav-chev w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
             </button>
-            <div id="navGrp3" class="hidden op-in nav-panel absolute left-0 top-full mt-6 w-64 p-2 rounded-2xl border border-white/10 shadow-2xl">
+            <div id="navGrp3" class="hidden nav-panel absolute left-0 top-full mt-6 w-64 p-2 rounded-2xl border border-white/10 shadow-2xl">
               <a href="#temporadas" class="block px-3 py-2 rounded-lg text-sm text-gray-200 hover:text-gold hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold transition-colors" data-i18n="nav.seasons">¿Cuándo viajar?</a>
               <a href="#alojamiento" class="block px-3 py-2 rounded-lg text-sm text-gray-200 hover:text-gold hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold transition-colors" data-i18n="nav.stay">Dónde Alojarse</a>
               <a href="#paquetes" class="block px-3 py-2 rounded-lg text-sm text-gray-200 hover:text-gold hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold transition-colors" data-i18n="nav.experiences">Experiencias</a>
@@ -930,7 +937,7 @@
               <span data-i18n="nav.grpProject">El Proyecto</span>
               <svg class="nav-chev w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
             </button>
-            <div id="navGrp4" class="hidden op-in nav-panel absolute left-0 top-full mt-6 w-64 p-2 rounded-2xl border border-white/10 shadow-2xl">
+            <div id="navGrp4" class="hidden nav-panel absolute left-0 top-full mt-6 w-64 p-2 rounded-2xl border border-white/10 shadow-2xl">
               <a href="#sostenibilidad" class="block px-3 py-2 rounded-lg text-sm text-gray-200 hover:text-gold hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold transition-colors" data-i18n="nav.sustain">Turismo Sostenible</a>
               <a href="#testimonios" class="block px-3 py-2 rounded-lg text-sm text-gray-200 hover:text-gold hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold transition-colors" data-i18n="nav.voices">Voces del Circuito</a>
               <a href="#nosotros" class="block px-3 py-2 rounded-lg text-sm text-gray-200 hover:text-gold hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold transition-colors" data-i18n="nav.team">Nosotros</a>
@@ -3439,7 +3446,7 @@
       const overlay = document.getElementById(id);
       overlay.classList.remove('modal-open');
       document.body.classList.remove('overflow-hidden');
-      setTimeout(() => overlay.classList.add('hidden'), 280);
+      setTimeout(() => { if (!overlay.classList.contains('modal-open')) overlay.classList.add('hidden'); }, 200); // el guardia evita esconder un modal que se reabrió mientras tanto
       if (openModalId !== id) return; // Escape llama a todos los cierres: solo el modal abierto devuelve el foco
       openModalId = null;
       const t = lastFocusedTrigger; lastFocusedTrigger = null;
@@ -5866,13 +5873,16 @@
     (function initNavGroups() {
       const groups = [...document.querySelectorAll('[data-nav-group]')];
       const btnOf = (g) => g.querySelector('button'), isOpen = (g) => btnOf(g).getAttribute('aria-expanded') === 'true';
-      const set = (g, open, refocus) => {
-        g.querySelector('[id^="navGrp"]').classList.toggle('hidden', !open);
+      const set = (g, open, refocus, instant) => {
+        const panel = g.querySelector('[id^="navGrp"]');
+        panel.classList.toggle('no-anim', !!instant);
+        panel.classList.toggle('hidden', !open);
         btnOf(g).setAttribute('aria-expanded', String(open));
         if (!open && refocus) btnOf(g).focus();
       };
       groups.forEach((g) => {
-        btnOf(g).addEventListener('click', () => { const abrir = !isOpen(g); groups.forEach((x) => set(x, false)); set(g, abrir); });
+        // e.detail === 0: el "clic" vino del teclado (Enter/Espacio) → sin animación
+        btnOf(g).addEventListener('click', (e) => { const abrir = !isOpen(g); groups.forEach((x) => set(x, false)); set(g, abrir, false, e.detail === 0); });
         g.addEventListener('keydown', (e) => { if (e.key === 'Escape' && isOpen(g)) set(g, false, true); });
         g.addEventListener('focusout', (e) => { if (isOpen(g) && !g.contains(e.relatedTarget)) set(g, false); });
         g.addEventListener('click', (e) => { if (e.target.closest('a')) set(g, false); });

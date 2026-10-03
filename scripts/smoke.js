@@ -134,6 +134,18 @@ function servidor() {
     await page.mouse.move(2, 600); await page.mouse.up(); // se suelta afuera: no dispara el clic ni abre la reserva
     check('los botones se achican al apretarlos (scale ' + esc + ')', parseFloat(esc) > 0.9 && parseFloat(esc) < 1, 'scale=' + esc); await page.close(); }
 
+  // 12. los menús del encabezado animan al abrirse con el mouse y no al abrirse con el teclado (una acción de teclado no se hace esperar)
+  { const page = await abrir(1280, 800, false);
+    await page.click('[aria-controls="navGrp1"]'); const conMouse = await page.evaluate(() => getComputedStyle(document.getElementById('navGrp1')).animationName);
+    await page.keyboard.press('Escape'); await page.focus('[aria-controls="navGrp2"]'); await page.keyboard.press('Enter');
+    const conTeclado = await page.evaluate(() => getComputedStyle(document.getElementById('navGrp2')).animationName);
+    check('el menú del encabezado anima con el mouse y no con el teclado', conMouse !== 'none' && conTeclado === 'none', conMouse + ' / ' + conTeclado); await page.close(); }
+
+  // 13. un modal que se cierra y se vuelve a abrir enseguida queda visible (el temporizador de cierre anterior no se lo lleva por delante)
+  { const page = await abrir(1280, 800, false);
+    const r = await page.evaluate(async () => { const esp = (ms) => new Promise((ok) => setTimeout(ok, ms)); openBookingModal('General'); await esp(400); closeBookingModal(); await esp(60); openBookingModal('General'); await esp(500); const m = document.getElementById('bookingModal'); return { visible: !m.classList.contains('hidden'), abierto: m.classList.contains('modal-open') }; });
+    check('un modal cerrado y reabierto enseguida queda visible', r.visible && r.abierto, JSON.stringify(r)); await page.close(); }
+
   await browser.close(); srv.cerrar();
   if (failures.length) { console.log('\n' + failures.length + ' prueba(s) fallaron:\n - ' + failures.join('\n - ')); process.exit(1); }
   console.log('\nTodas las pruebas de humo pasaron');
