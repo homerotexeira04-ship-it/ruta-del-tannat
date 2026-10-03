@@ -400,6 +400,20 @@
     .tannat-pin { display: flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); background: #4A101D; border: 2px solid #C29D62; box-shadow: 0 2px 6px rgba(0,0,0,0.35); }
     .tannat-pin span { transform: rotate(45deg); color: #D9B47A; font-family: "Playfair Display", serif; font-weight: 700; font-size: 13px; }
     .tannat-pin.thermal-pin { background: #9A7B38; }
+    /* Temporadas: selector de pestañas y pista de diapositivas con scroll-snap nativo (se desliza con el dedo; sin librerías ni scroll-jack) */
+    .season-tabs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .5rem; }
+    @media (min-width: 1024px) { .season-tabs { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .75rem; } }
+    .season-tab { position: relative; display: flex; align-items: center; gap: .75rem; min-height: 3.5rem; padding: .7rem .9rem; border-radius: 1rem; border: 1px solid #F4EBED; background: #FAF8F5; color: #4A101D; cursor: pointer; transition: background-color .2s, color .2s, border-color .2s, box-shadow .2s; }
+    .season-tab:hover { border-color: rgba(194, 157, 98, .7); }
+    .season-tab:focus-visible { outline: 2px solid #C29D62; outline-offset: 2px; }
+    .season-tab[aria-selected="true"] { background: #721B28; border-color: #721B28; color: #fff; box-shadow: 0 10px 30px -10px rgba(43, 10, 20, .35); }
+    .season-tab-icon { display: grid; place-items: center; flex: none; width: 2.5rem; height: 2.5rem; border-radius: .75rem; background: rgba(194, 157, 98, .18); color: #7E6536; }
+    .season-tab[aria-selected="true"] .season-tab-icon { background: rgba(255, 255, 255, .14); color: #D9B47A; }
+    .season-track { position: relative; display: flex; gap: 1rem; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scroll-padding-inline: .5rem; padding: .5rem .5rem 1.5rem; margin-inline: -.5rem; scrollbar-width: none; }
+    .season-track::-webkit-scrollbar { display: none; }
+    .season-slide { flex: 0 0 92%; min-width: 0; scroll-snap-align: start; scroll-snap-stop: always; }
+    .season-track::after { content: ""; flex: 0 0 8%; } /* para que la última diapositiva también pueda alinearse al borde con el espiado de las otras */
+    @media (min-width: 768px) { .season-slide { flex-basis: 100%; } .season-track::after { display: none; } }
     /* Recorrido de las 4 estaciones (#estaciones): pines numerados unidos por una línea de un tramo por elemento. Cada tramo se rellena cuando
        el scroll lo lleva a la "línea de lectura" (mitad de la pantalla): empieza al llegar su borde de arriba y termina al llegar el de abajo,
        así los tramos se encadenan sin solaparse. Solo CSS (animation-timeline: view()): no usa JS ni toma el control del scroll. Sin soporte o con
@@ -1687,10 +1701,10 @@
     </section>
 
     <!-- ==================== SECTION: CALENDARIO ENOTURÍSTICO ESTACIONAL (PUNTO 4) ==================== -->
-    <section id="temporadas" class="py-20 bg-crema text-basalt border-t border-tannat-100">
+    <section id="temporadas" class="py-20 lg:py-28 bg-white text-basalt border-t border-tannat-100">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        <div class="text-center max-w-3xl mx-auto mb-16">
+        <div class="max-w-3xl mb-10 lg:mb-12">
           <h2 class="font-serif text-3xl sm:text-5xl font-bold tracking-tight text-tannat-dark mb-4 text-balance" data-i18n="seasons.title">
             ¿Cuándo Vivir la Experiencia?
           </h2>
@@ -1699,127 +1713,96 @@
           </p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-
-          <!-- Summer / Vendimia -->
-          <div id="seasonCard1" class="relative bg-white rounded-3xl border border-tannat-100 shadow-editorial shadow-editorial-hover hover:-translate-y-1 transition-all flex flex-col justify-between overflow-hidden">
-            <span id="seasonNowBadge1" class="hidden absolute top-3 left-3 z-10 bg-tannat text-white text-[10px] font-extrabold uppercase px-2.5 py-0.5 rounded-full shadow-sm gap-1" data-i18n="season.nowBadge">
-              📍 Es Ahora
-            </span>
-            <div class="aspect-[4/3] w-full overflow-hidden bg-tannat-900">
-              <img src="./LaRutadelTannat_files/vendimia-cosecha-inavi.webp" width="750" height="500" alt="Cosecha manual de uva durante la vendimia, foto de INAVI" class="w-full h-full object-cover" loading="lazy">
-            </div>
-            <div class="p-6 flex flex-col justify-between flex-1">
-              <div>
-                <div class="w-12 h-12 rounded-2xl bg-gold/15 text-gold-dark flex items-center justify-center mb-4">
-                  <svg class="w-6 h-6" fill="currentColor" stroke="none" viewBox="0 0 24 24" aria-hidden="true">
+        <!-- Calendario: elegí una temporada o deslizá las diapositivas; abre en la temporada de hoy (fecha real del dispositivo) -->
+        <div class="season-tabs mb-6" role="tablist" aria-label="Temporadas del año" data-i18n-aria="seasons.tabsAria">
+          <button type="button" role="tab" id="seasonTab1" aria-controls="seasonPanel1" aria-selected="true" tabindex="0" class="season-tab">
+            <span class="season-tab-icon"><svg class="w-6 h-6" aria-hidden="true" fill="currentColor" stroke="none" viewBox="0 0 24 24" aria-hidden="true">
                     <circle cx="9" cy="7" r="1.6"/><circle cx="13" cy="7" r="1.6"/><circle cx="11" cy="10" r="1.6"/><circle cx="8" cy="13" r="1.6"/><circle cx="12" cy="13" r="1.6"/><circle cx="10" cy="16" r="1.6"/>
                     <path d="M11 5V3c0-1 1-1.5 2-1.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
-                  </svg>
-                </div>
-                <span class="text-xs font-bold text-gold-dark block mb-1" data-i18n="season.s1Time">Dic-Mar · Verano</span>
-                <h3 class="font-serif text-xl font-bold text-tannat-dark mb-2" data-i18n="season.s1Title">Temporada de Vendimia</h3>
-                <p class="text-sm text-terroir leading-relaxed mb-4" data-i18n="season.s1Desc">
-                  El momento cumbre del año: cosecha manual al amanecer, degustación de uvas directas del racimo, visitas crepusculares y pisada tradicional en lagares.
-                </p>
-              </div>
-              <div class="pt-4 border-t border-tannat-50 text-[11px] font-semibold text-tannat flex items-center gap-1.5">
-                <span class="w-1.5 h-1.5 rounded-full bg-gold flex-shrink-0"></span> <span data-i18n="season.s1Highlight">Cosecha en vivo & pisada de uvas</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Autumn / Harriague Week -->
-          <div id="seasonCard2" class="bg-white rounded-3xl border-2 border-gold/40 shadow-editorial shadow-editorial-hover hover:-translate-y-1 transition-all flex flex-col justify-between relative overflow-hidden">
-            <div class="absolute top-3 right-3 z-10 bg-gold text-tannat-900 text-[10px] font-extrabold uppercase px-2.5 py-0.5 rounded-full shadow-sm" data-i18n="season.s2Pill">
-              Mes del Tannat
-            </div>
-            <span id="seasonNowBadge2" class="hidden absolute top-3 left-3 z-10 bg-tannat text-white text-[10px] font-extrabold uppercase px-2.5 py-0.5 rounded-full shadow-sm gap-1" data-i18n="season.nowBadge">
-              📍 Es Ahora
-            </span>
-            <div class="aspect-[4/3] w-full overflow-hidden bg-tannat-900">
-              <img src="./LaRutadelTannat_files/semana-harriague-festival.webp" width="645" height="350" alt="Festival nocturno de la Semana de Harriague en las ruinas de la bodega histórica" class="w-full h-full object-cover" loading="lazy">
-            </div>
-            <div class="p-6 flex flex-col justify-between flex-1">
-              <div>
-                <div class="w-12 h-12 rounded-2xl bg-gold/15 text-gold-dark flex items-center justify-center mb-4">
-                  <svg class="w-6 h-6" fill="currentColor" stroke="none" viewBox="0 0 24 24" aria-hidden="true">
+                  </svg></span>
+            <span class="min-w-0 text-left text-sm font-semibold leading-snug" data-i18n="season.s1Time">Dic-Mar<span class='hidden sm:inline'> · </span><br class='sm:hidden'>Verano</span>
+            <span id="seasonNowBadge1" class="hidden absolute -top-2 right-3 bg-gold text-tannat-900 text-[11px] font-bold px-2 py-0.5 rounded-full shadow-sm" data-i18n="season.nowBadge">Es ahora</span>
+          </button>
+          <button type="button" role="tab" id="seasonTab2" aria-controls="seasonPanel2" aria-selected="false" tabindex="-1" class="season-tab">
+            <span class="season-tab-icon"><svg class="w-6 h-6" aria-hidden="true" fill="currentColor" stroke="none" viewBox="0 0 24 24" aria-hidden="true">
                     <path d="M12 3C7 6 5 10 5 14a7 7 0 0014 0c0-4-2-8-7-11z"/>
                     <path d="M12 21V9" fill="none" stroke="#FCF9F2" stroke-width="1.2" stroke-linecap="round"/>
-                  </svg>
-                </div>
-                <span class="text-xs font-bold text-gold-dark block mb-1" data-i18n="season.s2Time">Abr-May · Otoño</span>
-                <h3 class="font-serif text-xl font-bold text-tannat-dark mb-2" data-i18n="season.s2Title">Semana de Harriague</h3>
-                <p class="text-sm text-terroir leading-relaxed mb-4" data-i18n="season.s2Desc">
-                  14 de Abril: Día Nacional del Tannat en homenaje al natalicio de Don Pascual Harriague. Viñedos en tonos dorados, festivales vascos y cata de varietales jóvenes.
-                </p>
-              </div>
-              <div class="pt-4 border-t border-tannat-50 text-[11px] font-semibold text-tannat flex items-center gap-1.5">
-                <span class="w-1.5 h-1.5 rounded-full bg-gold flex-shrink-0"></span> <span data-i18n="season.s2Highlight">Día del Tannat & Festivales</span>
-              </div>
-              <div id="harriagueCountdown" class="mt-2 text-[11px] font-bold text-gold-dark"></div>
-            </div>
-          </div>
-
-          <!-- Winter / Cellars & Fires -->
-          <div id="seasonCard3" class="relative bg-white rounded-3xl border border-tannat-100 shadow-editorial shadow-editorial-hover hover:-translate-y-1 transition-all flex flex-col justify-between overflow-hidden">
-            <span id="seasonNowBadge3" class="hidden absolute top-3 left-3 z-10 bg-tannat text-white text-[10px] font-extrabold uppercase px-2.5 py-0.5 rounded-full shadow-sm gap-1" data-i18n="season.nowBadge">
-              📍 Es Ahora
-            </span>
-            <div class="aspect-[4/3] w-full overflow-hidden bg-tannat-900">
-              <img src="./LaRutadelTannat_files/galeria-brindis-cavas.webp" width="850" height="555" alt="El calor de las cavas históricas en invierno" class="w-full h-full object-cover" loading="lazy">
-            </div>
-            <div class="p-6 flex flex-col justify-between flex-1">
-              <div>
-                <div class="w-12 h-12 rounded-2xl bg-gold/15 text-gold-dark flex items-center justify-center mb-4">
-                  <svg class="w-6 h-6" fill="currentColor" stroke="none" viewBox="0 0 24 24" aria-hidden="true">
+                  </svg></span>
+            <span class="min-w-0 text-left text-sm font-semibold leading-snug" data-i18n="season.s2Time">Abr-May<span class='hidden sm:inline'> · </span><br class='sm:hidden'>Otoño</span>
+            <span id="seasonNowBadge2" class="hidden absolute -top-2 right-3 bg-gold text-tannat-900 text-[11px] font-bold px-2 py-0.5 rounded-full shadow-sm" data-i18n="season.nowBadge">Es ahora</span>
+          </button>
+          <button type="button" role="tab" id="seasonTab3" aria-controls="seasonPanel3" aria-selected="false" tabindex="-1" class="season-tab">
+            <span class="season-tab-icon"><svg class="w-6 h-6" aria-hidden="true" fill="currentColor" stroke="none" viewBox="0 0 24 24" aria-hidden="true">
                     <path d="M12 3c1 3-1 4-2 6-1 2 0 4 2 4s3-2 2-4c2 1 3 3 3 5a5 5 0 01-10 0c0-4 2-7 5-11z"/>
-                  </svg>
-                </div>
-                <span class="text-xs font-bold text-gold-dark block mb-1" data-i18n="season.s3Time">Jun-Ago · Invierno</span>
-                <h3 class="font-serif text-xl font-bold text-tannat-dark mb-2" data-i18n="season.s3Title">Poda, Cavas & Fogones</h3>
-                <p class="text-sm text-terroir leading-relaxed mb-4" data-i18n="season.s3Desc">
-                  Cata de vinos Gran Reserva y tintos de guarda junto a la chimenea en bodegas boutique, con maridajes de cordero salteño al asador y guisados criollos.
-                </p>
-              </div>
-              <div class="pt-4 border-t border-tannat-50 text-[11px] font-semibold text-tannat flex items-center gap-1.5">
-                <span class="w-1.5 h-1.5 rounded-full bg-gold flex-shrink-0"></span> <span data-i18n="season.s3Highlight">Maridajes de cordero & Cavas</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Spring / Sprouting & Picnics -->
-          <div id="seasonCard4" class="relative bg-white rounded-3xl border border-tannat-100 shadow-editorial shadow-editorial-hover hover:-translate-y-1 transition-all flex flex-col justify-between overflow-hidden">
-            <span id="seasonNowBadge4" class="hidden absolute top-3 left-3 z-10 bg-tannat text-white text-[10px] font-extrabold uppercase px-2.5 py-0.5 rounded-full shadow-sm gap-1" data-i18n="season.nowBadge">
-              📍 Es Ahora
-            </span>
-            <div class="aspect-[4/3] w-full overflow-hidden bg-tannat-900">
-              <img src="./LaRutadelTannat_files/138db8c89a626f5efc0f940f343ad390bf0ec8ca.jpg" width="1024" height="768" alt="El viñedo reverdece en primavera" class="w-full h-full object-cover" loading="lazy">
-            </div>
-            <div class="p-6 flex flex-col justify-between flex-1">
-              <div>
-                <div class="w-12 h-12 rounded-2xl bg-gold/15 text-gold-dark flex items-center justify-center mb-4">
-                  <svg class="w-6 h-6" fill="currentColor" stroke="none" viewBox="0 0 24 24" aria-hidden="true">
+                  </svg></span>
+            <span class="min-w-0 text-left text-sm font-semibold leading-snug" data-i18n="season.s3Time">Jun-Ago<span class='hidden sm:inline'> · </span><br class='sm:hidden'>Invierno</span>
+            <span id="seasonNowBadge3" class="hidden absolute -top-2 right-3 bg-gold text-tannat-900 text-[11px] font-bold px-2 py-0.5 rounded-full shadow-sm" data-i18n="season.nowBadge">Es ahora</span>
+          </button>
+          <button type="button" role="tab" id="seasonTab4" aria-controls="seasonPanel4" aria-selected="false" tabindex="-1" class="season-tab">
+            <span class="season-tab-icon"><svg class="w-6 h-6" aria-hidden="true" fill="currentColor" stroke="none" viewBox="0 0 24 24" aria-hidden="true">
                     <path d="M12 21V11" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
                     <path d="M12 13c0-3-2-5-5-5 0 3 2 5 5 5z"/>
                     <path d="M12 11c0-3 2-5 5-5 0 3-2 5-5 5z"/>
-                  </svg>
-                </div>
-                <span class="text-xs font-bold text-gold-dark block mb-1" data-i18n="season.s4Time">Sep-Nov · Primavera</span>
-                <h3 class="font-serif text-xl font-bold text-tannat-dark mb-2" data-i18n="season.s4Title">Brotación & Envero</h3>
-                <p class="text-sm text-terroir leading-relaxed mb-4" data-i18n="season.s4Desc">
-                  Renacimiento del viñedo con el brote de los primeros pámpanos. Clima templado ideal para paseos en bicicleta costaneros, picnics campestres y copas de vino al aire libre.
-                </p>
-              </div>
-              <div class="pt-4 border-t border-tannat-50 text-[11px] font-semibold text-tannat flex items-center gap-1.5">
-                <span class="w-1.5 h-1.5 rounded-full bg-gold flex-shrink-0"></span> <span data-i18n="season.s4Highlight">Picnics enoturísticos & Bicicleta</span>
-              </div>
-            </div>
-          </div>
-
+                  </svg></span>
+            <span class="min-w-0 text-left text-sm font-semibold leading-snug" data-i18n="season.s4Time">Sep-Nov<span class='hidden sm:inline'> · </span><br class='sm:hidden'>Primavera</span>
+            <span id="seasonNowBadge4" class="hidden absolute -top-2 right-3 bg-gold text-tannat-900 text-[11px] font-bold px-2 py-0.5 rounded-full shadow-sm" data-i18n="season.nowBadge">Es ahora</span>
+          </button>
         </div>
 
-        <p class="text-center text-[10px] text-terroir mt-6" data-i18n="seasons.credits">Fotografías cedidas para este proyecto por INAVI (cosecha de vendimia) y Bodegas del Uruguay (Semana de Harriague).</p>
+        <div id="seasonTrack" class="season-track">
+        <article role="tabpanel" id="seasonPanel1" aria-labelledby="seasonTab1" class="season-slide">
+          <div class="grid md:grid-cols-12 gap-6 md:gap-10 items-center bg-crema rounded-3xl shadow-editorial p-4 sm:p-6 md:p-8">
+            <div class="md:col-span-5 aspect-[4/3] rounded-2xl overflow-hidden bg-tannat-900">
+              <img src="./LaRutadelTannat_files/vendimia-cosecha-inavi.webp" width="750" height="500" alt="Cosecha manual de uva durante la vendimia, foto de INAVI" class="w-full h-full object-cover" loading="lazy">
+            </div>
+            <div class="md:col-span-7">
+              <h3 class="font-serif text-2xl sm:text-3xl font-bold text-tannat-dark mb-3" data-i18n="season.s1Title">Temporada de Vendimia</h3>
+              <p class="text-base sm:text-lg text-terroir leading-relaxed mb-5" data-i18n="season.s1Desc">El momento cumbre del año: cosecha manual al amanecer, degustación de uvas directas del racimo, visitas crepusculares y pisada tradicional en lagares.</p>
+              <p class="flex items-center gap-2 text-sm font-semibold text-tannat"><span class="w-1.5 h-1.5 rounded-full bg-gold flex-shrink-0" aria-hidden="true"></span><span data-i18n="season.s1Highlight">Cosecha en vivo & pisada de uvas</span></p>
+            </div>
+          </div>
+        </article>
+        <article role="tabpanel" id="seasonPanel2" aria-labelledby="seasonTab2" class="season-slide">
+          <div class="grid md:grid-cols-12 gap-6 md:gap-10 items-center bg-crema rounded-3xl shadow-editorial p-4 sm:p-6 md:p-8">
+            <div class="md:col-span-5 aspect-[4/3] rounded-2xl overflow-hidden bg-tannat-900">
+              <img src="./LaRutadelTannat_files/semana-harriague-festival.webp" width="645" height="350" alt="Festival nocturno de la Semana de Harriague en las ruinas de la bodega histórica" class="w-full h-full object-cover" loading="lazy">
+            </div>
+            <div class="md:col-span-7">
+              <p class="inline-block bg-gold text-tannat-900 text-xs font-bold px-3 py-1 rounded-full mb-3" data-i18n="season.s2Pill">Mes del Tannat</p>
+              <h3 class="font-serif text-2xl sm:text-3xl font-bold text-tannat-dark mb-3" data-i18n="season.s2Title">Semana de Harriague</h3>
+              <p class="text-base sm:text-lg text-terroir leading-relaxed mb-5" data-i18n="season.s2Desc">14 de Abril: Día Nacional del Tannat en homenaje al natalicio de Don Pascual Harriague. Viñedos en tonos dorados, festivales vascos y cata de varietales jóvenes.</p>
+              <p class="flex items-center gap-2 text-sm font-semibold text-tannat"><span class="w-1.5 h-1.5 rounded-full bg-gold flex-shrink-0" aria-hidden="true"></span><span data-i18n="season.s2Highlight">Día del Tannat & Festivales</span></p>
+              <p id="harriagueCountdown" class="mt-3 text-sm font-bold text-gold-dark"></p>
+            </div>
+          </div>
+        </article>
+        <article role="tabpanel" id="seasonPanel3" aria-labelledby="seasonTab3" class="season-slide">
+          <div class="grid md:grid-cols-12 gap-6 md:gap-10 items-center bg-crema rounded-3xl shadow-editorial p-4 sm:p-6 md:p-8">
+            <div class="md:col-span-5 aspect-[4/3] rounded-2xl overflow-hidden bg-tannat-900">
+              <img src="./LaRutadelTannat_files/galeria-brindis-cavas.webp" width="850" height="555" alt="El calor de las cavas históricas en invierno" class="w-full h-full object-cover" loading="lazy">
+            </div>
+            <div class="md:col-span-7">
+              <h3 class="font-serif text-2xl sm:text-3xl font-bold text-tannat-dark mb-3" data-i18n="season.s3Title">Poda, Cavas & Fogones</h3>
+              <p class="text-base sm:text-lg text-terroir leading-relaxed mb-5" data-i18n="season.s3Desc">Cata de vinos Gran Reserva y tintos de guarda junto a la chimenea en bodegas boutique, con maridajes de cordero salteño al asador y guisados criollos.</p>
+              <p class="flex items-center gap-2 text-sm font-semibold text-tannat"><span class="w-1.5 h-1.5 rounded-full bg-gold flex-shrink-0" aria-hidden="true"></span><span data-i18n="season.s3Highlight">Maridajes de cordero & Cavas</span></p>
+            </div>
+          </div>
+        </article>
+        <article role="tabpanel" id="seasonPanel4" aria-labelledby="seasonTab4" class="season-slide">
+          <div class="grid md:grid-cols-12 gap-6 md:gap-10 items-center bg-crema rounded-3xl shadow-editorial p-4 sm:p-6 md:p-8">
+            <div class="md:col-span-5 aspect-[4/3] rounded-2xl overflow-hidden bg-tannat-900">
+              <img src="./LaRutadelTannat_files/138db8c89a626f5efc0f940f343ad390bf0ec8ca.jpg" width="1024" height="768" alt="El viñedo reverdece en primavera" class="w-full h-full object-cover" loading="lazy">
+            </div>
+            <div class="md:col-span-7">
+              <h3 class="font-serif text-2xl sm:text-3xl font-bold text-tannat-dark mb-3" data-i18n="season.s4Title">Brotación & Envero</h3>
+              <p class="text-base sm:text-lg text-terroir leading-relaxed mb-5" data-i18n="season.s4Desc">Renacimiento del viñedo con el brote de los primeros pámpanos. Clima templado ideal para paseos en bicicleta costaneros, picnics campestres y copas de vino al aire libre.</p>
+              <p class="flex items-center gap-2 text-sm font-semibold text-tannat"><span class="w-1.5 h-1.5 rounded-full bg-gold flex-shrink-0" aria-hidden="true"></span><span data-i18n="season.s4Highlight">Picnics enoturísticos & Bicicleta</span></p>
+            </div>
+          </div>
+        </article>
+        </div>
+
+        <p class="text-[11px] text-terroir mt-2" data-i18n="seasons.credits">Fotografías cedidas para este proyecto por INAVI (cosecha de vendimia) y Bodegas del Uruguay (Semana de Harriague).</p>
 
         <!-- ==== Cómo Llegar / Duración (cierra el bloque "Planificá tu Visita" junto
              con las temporadas de arriba y los Paquetes de más abajo) ==== -->
@@ -1829,7 +1812,7 @@
             <p class="text-terroir font-light" data-i18n="plan.subtitle">Salto está más cerca de lo que pensás, y el circuito se adapta al tiempo que tengas disponible.</p>
           </div>
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-            <div role="button" tabindex="0" onclick="openPlanModal('road')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openPlanModal('road');}" class="group p-6 bg-white rounded-2xl border border-tannat-100 shadow-sm text-center cursor-pointer hover:shadow-lg hover:border-gold/40 transition-all focus:outline-none focus:ring-2 focus:ring-gold" data-reveal-item>
+            <div role="button" tabindex="0" onclick="openPlanModal('road')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openPlanModal('road');}" class="group p-6 bg-crema rounded-2xl border border-tannat-100 shadow-sm text-center cursor-pointer hover:shadow-lg hover:border-gold/40 transition-all focus:outline-none focus:ring-2 focus:ring-gold" data-reveal-item>
               <div class="w-12 h-12 rounded-full bg-tannat/10 text-tannat flex items-center justify-center mx-auto mb-4">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
               </div>
@@ -1837,7 +1820,7 @@
               <p class="text-base text-terroir mb-3" data-i18n="plan.roadDesc">Unos 490 km desde Montevideo por la Ruta 3 "Gral. José Gervasio Artigas", el corredor que une la capital con todo el litoral norte.</p>
               <span class="text-xs font-bold text-gold-dark inline-flex items-center gap-1 group-hover:gap-2 transition-all" data-i18n="plan.viewMore">Ver más &rarr;</span>
             </div>
-            <div role="button" tabindex="0" onclick="openPlanModal('air')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openPlanModal('air');}" class="group p-6 bg-white rounded-2xl border border-tannat-100 shadow-sm text-center cursor-pointer hover:shadow-lg hover:border-gold/40 transition-all focus:outline-none focus:ring-2 focus:ring-gold" data-reveal-item>
+            <div role="button" tabindex="0" onclick="openPlanModal('air')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openPlanModal('air');}" class="group p-6 bg-crema rounded-2xl border border-tannat-100 shadow-sm text-center cursor-pointer hover:shadow-lg hover:border-gold/40 transition-all focus:outline-none focus:ring-2 focus:ring-gold" data-reveal-item>
               <div class="w-12 h-12 rounded-full bg-tannat/10 text-tannat flex items-center justify-center mx-auto mb-4">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
               </div>
@@ -1845,7 +1828,7 @@
               <p class="text-base text-terroir mb-3" data-i18n="plan.airDesc">El Aeropuerto Nueva Hespérides (STY) tiene vuelos directos a Montevideo con Paranair. Es la opción más rápida si venís desde más lejos.</p>
               <span class="text-xs font-bold text-gold-dark inline-flex items-center gap-1 group-hover:gap-2 transition-all" data-i18n="plan.viewMore">Ver más &rarr;</span>
             </div>
-            <div role="button" tabindex="0" onclick="openPlanModal('duration')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openPlanModal('duration');}" class="group p-6 bg-white rounded-2xl border border-tannat-100 shadow-sm text-center cursor-pointer hover:shadow-lg hover:border-gold/40 transition-all focus:outline-none focus:ring-2 focus:ring-gold" data-reveal-item>
+            <div role="button" tabindex="0" onclick="openPlanModal('duration')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openPlanModal('duration');}" class="group p-6 bg-crema rounded-2xl border border-tannat-100 shadow-sm text-center cursor-pointer hover:shadow-lg hover:border-gold/40 transition-all focus:outline-none focus:ring-2 focus:ring-gold" data-reveal-item>
               <div class="w-12 h-12 rounded-full bg-tannat/10 text-tannat flex items-center justify-center mx-auto mb-4">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
               </div>
@@ -3754,27 +3737,28 @@
 
         "seasons.title": "¿Cuándo Vivir la Experiencia?",
         "seasons.subtitle": "Cada estación del año transforma el paisaje de Salto y revela una faceta única de la uva, la vendimia y las cavas.",
+        "seasons.tabsAria": "Temporadas del año",
         "seasons.credits": "Fotografías cedidas para este proyecto por INAVI (cosecha de vendimia) y Bodegas del Uruguay (Semana de Harriague).",
-        "season.s1Time": "Dic-Mar · Verano",
+        "season.s1Time": "Dic-Mar<span class='hidden sm:inline'> · </span><br class='sm:hidden'>Verano",
         "season.s1Title": "Temporada de Vendimia",
         "season.s1Desc": "El momento cumbre del año: cosecha manual al amanecer, degustación de uvas directas del racimo, visitas crepusculares y pisada tradicional en lagares.",
         "season.s1Highlight": "Cosecha en vivo & pisada de uvas",
         "season.s2Pill": "Mes del Tannat",
-        "season.s2Time": "Abr-May · Otoño",
+        "season.s2Time": "Abr-May<span class='hidden sm:inline'> · </span><br class='sm:hidden'>Otoño",
         "season.s2Title": "Semana de Harriague",
         "season.s2Desc": "14 de Abril: Día Nacional del Tannat en homenaje al natalicio de Don Pascual Harriague. Viñedos en tonos dorados, festivales vascos y cata de varietales jóvenes.",
         "season.s2Highlight": "Día del Tannat & Festivales",
         "season.harriagueCountdown": "Faltan {n} días para el Día Nacional del Tannat",
         "season.harriagueToday": "¡Hoy es el Día Nacional del Tannat!",
-        "season.s3Time": "Jun-Ago · Invierno",
+        "season.s3Time": "Jun-Ago<span class='hidden sm:inline'> · </span><br class='sm:hidden'>Invierno",
         "season.s3Title": "Poda, Cavas & Fogones",
         "season.s3Desc": "Cata de vinos Gran Reserva y tintos de guarda junto a la chimenea en bodegas boutique, con maridajes de cordero salteño al asador y guisados criollos.",
         "season.s3Highlight": "Maridajes de cordero & Cavas",
-        "season.s4Time": "Sep-Nov · Primavera",
+        "season.s4Time": "Sep-Nov<span class='hidden sm:inline'> · </span><br class='sm:hidden'>Primavera",
         "season.s4Title": "Brotación & Envero",
         "season.s4Desc": "Renacimiento del viñedo con el brote de los primeros pámpanos. Clima templado ideal para paseos en bicicleta costaneros, picnics campestres y copas de vino al aire libre.",
         "season.s4Highlight": "Picnics enoturísticos & Bicicleta",
-        "season.nowBadge": "📍 Es Ahora",
+        "season.nowBadge": "Es ahora",
         "plan.title": "Cómo Llegar y Cuánto Quedarte",
         "plan.subtitle": "Salto está más cerca de lo que pensás, y el circuito se adapta al tiempo que tengas disponible.",
         "plan.roadTitle": "Por la Ruta 3",
@@ -4301,27 +4285,28 @@
 
         "seasons.title": "Quando Viver a Experiência?",
         "seasons.subtitle": "Cada estação do ano transforma a paisagem de Salto e revela uma faceta única da uva, da colheita e das cavas.",
+        "seasons.tabsAria": "Estações do ano",
         "seasons.credits": "Fotografias cedidas para este projeto por INAVI (colheita da vindima) e Bodegas del Uruguay (Semana de Harriague).",
-        "season.s1Time": "Dez-Mar · Verão",
+        "season.s1Time": "Dez-Mar<span class='hidden sm:inline'> · </span><br class='sm:hidden'>Verão",
         "season.s1Title": "Temporada de Colheita",
         "season.s1Desc": "O momento auge do ano: colheita manual ao amanhecer, degustação de uvas direto do cacho, visitas ao entardecer e pisa tradicional nos lagares.",
         "season.s1Highlight": "Colheita ao vivo & pisa de uvas",
         "season.s2Pill": "Mês do Tannat",
-        "season.s2Time": "Abr-Mai · Outono",
+        "season.s2Time": "Abr-Mai<span class='hidden sm:inline'> · </span><br class='sm:hidden'>Outono",
         "season.s2Title": "Semana de Harriague",
         "season.s2Desc": "14 de abril: Dia Nacional do Tannat em homenagem ao nascimento de Don Pascual Harriague. Vinhedos em tons dourados, festivais bascos e degustação de varietais jovens.",
         "season.s2Highlight": "Dia do Tannat & Festivais",
         "season.harriagueCountdown": "Faltam {n} dias para o Dia Nacional do Tannat",
         "season.harriagueToday": "Hoje é o Dia Nacional do Tannat!",
-        "season.s3Time": "Jun-Ago · Inverno",
+        "season.s3Time": "Jun-Ago<span class='hidden sm:inline'> · </span><br class='sm:hidden'>Inverno",
         "season.s3Title": "Poda, Cavas & Fogões",
         "season.s3Desc": "Degustação de vinhos Gran Reserva e tintos de guarda junto à lareira em vinícolas boutique, com harmonizações de cordeiro de Salto no espeto e guisados crioulos.",
         "season.s3Highlight": "Harmonizações de cordeiro & Cavas",
-        "season.s4Time": "Set-Nov · Primavera",
+        "season.s4Time": "Set-Nov<span class='hidden sm:inline'> · </span><br class='sm:hidden'>Primavera",
         "season.s4Title": "Brotação & Envero",
         "season.s4Desc": "O renascimento do vinhedo com o brotar dos primeiros ramos. Clima ameno, ideal para passeios de bicicleta à beira-rio, piqueniques no campo e taças de vinho ao ar livre.",
         "season.s4Highlight": "Piqueniques enoturísticos & Bicicleta",
-        "season.nowBadge": "📍 É Agora",
+        "season.nowBadge": "É agora",
         "plan.title": "Como Chegar e Quanto Tempo Ficar",
         "plan.subtitle": "Salto está mais perto do que você imagina, e o circuito se adapta ao tempo que você tiver disponível.",
         "plan.roadTitle": "Pela Rota 3",
@@ -4848,27 +4833,28 @@
 
         "seasons.title": "When to Live the Experience?",
         "seasons.subtitle": "Each season transforms Salto's landscape and reveals a unique facet of the grape, the harvest, and the cellars.",
+        "seasons.tabsAria": "Seasons of the year",
         "seasons.credits": "Photos provided for this project by INAVI (grape harvest) and Bodegas del Uruguay (Semana de Harriague).",
-        "season.s1Time": "Dec-Mar · Summer",
+        "season.s1Time": "Dec-Mar<span class='hidden sm:inline'> · </span><br class='sm:hidden'>Summer",
         "season.s1Title": "Harvest Season",
         "season.s1Desc": "The peak moment of the year: hand-picked harvest at dawn, grape tastings straight from the vine, sunset visits, and traditional grape-treading.",
         "season.s1Highlight": "Live harvest & grape treading",
         "season.s2Pill": "Tannat Month",
-        "season.s2Time": "Apr-May · Autumn",
+        "season.s2Time": "Apr-May<span class='hidden sm:inline'> · </span><br class='sm:hidden'>Autumn",
         "season.s2Title": "Harriague Week",
         "season.s2Desc": "April 14: National Tannat Day honoring the birth of Don Pascual Harriague. Golden-hued vineyards, Basque festivals, and tastings of young varietals.",
         "season.s2Highlight": "Tannat Day & Festivals",
         "season.harriagueCountdown": "{n} days left until National Tannat Day",
         "season.harriagueToday": "Today is National Tannat Day!",
-        "season.s3Time": "Jun-Aug · Winter",
+        "season.s3Time": "Jun-Aug<span class='hidden sm:inline'> · </span><br class='sm:hidden'>Winter",
         "season.s3Title": "Pruning, Cellars & Firesides",
         "season.s3Desc": "Gran Reserva and cellar-aged red wine tastings by the fireplace in boutique wineries, paired with spit-roasted Salteño lamb and hearty local stews.",
         "season.s3Highlight": "Lamb pairings & Cellars",
-        "season.s4Time": "Sep-Nov · Spring",
+        "season.s4Time": "Sep-Nov<span class='hidden sm:inline'> · </span><br class='sm:hidden'>Spring",
         "season.s4Title": "Budburst & Veraison",
         "season.s4Desc": "The vineyard's rebirth as the first shoots emerge. Mild weather perfect for riverside bike rides, countryside picnics, and open-air glasses of wine.",
         "season.s4Highlight": "Wine-country picnics & Cycling",
-        "season.nowBadge": "📍 It's Now",
+        "season.nowBadge": "It's now",
         "plan.title": "How to Get There & How Long to Stay",
         "plan.subtitle": "Salto is closer than you think, and the circuit adapts to however much time you have.",
         "plan.roadTitle": "By Route 3",
@@ -5424,23 +5410,51 @@
     fetchWeather();
     setInterval(fetchWeather, 30 * 60 * 1000); // refresco cada 30 min
 
-    // Temporada actual: usa la fecha real del dispositivo para resaltar la tarjeta vigente
-    function highlightCurrentSeason() {
-      const month = new Date().getMonth(); // 0 = enero ... 11 = diciembre
-      let seasonIndex;
-      if (month === 11 || month <= 2) seasonIndex = 1;       // Dic, Ene, Feb, Mar — Verano / Vendimia
-      else if (month <= 4) seasonIndex = 2;                  // Abr, May — Otoño / Semana de Harriague
-      else if (month <= 7) seasonIndex = 3;                  // Jun, Jul, Ago — Invierno
-      else seasonIndex = 4;                                  // Sep, Oct, Nov — Primavera
-      const badge = document.getElementById('seasonNowBadge' + seasonIndex);
-      if (badge) {
-        badge.classList.remove('hidden');
-        badge.classList.add('inline-flex', 'items-center');
+    // Temporadas: pestañas + diapositivas con scroll-snap nativo. La pestaña activa sigue a la diapositiva que se ve (IntersectionObserver, sin
+    // listeners de scroll) y al revés (clic o flechas del teclado). Arranca en la temporada de hoy, según la fecha real del dispositivo.
+    (function initSeasons() {
+      const track = document.getElementById('seasonTrack');
+      const tabs = [...document.querySelectorAll('.season-tab')];
+      if (!track || tabs.length !== 4) return;
+      const slides = [...track.children];
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+      const month = new Date().getMonth(); // 0 = enero
+      const today = (month === 11 || month <= 2) ? 0 : month <= 4 ? 1 : month <= 7 ? 2 : 3; // verano (dic a mar), otoño (abr, may), invierno (jun a ago), primavera (sep a nov)
+      let quiet = 0; // mientras una pestaña mueve la pista, el observador no cambia la selección
+      const active = () => tabs.findIndex((t) => t.getAttribute('aria-selected') === 'true');
+      const left = (i) => slides[i].offsetLeft - parseFloat(getComputedStyle(track).paddingLeft);
+      const mark = (i) => {
+        tabs.forEach((t, j) => { t.setAttribute('aria-selected', String(j === i)); t.tabIndex = j === i ? 0 : -1; });
+        slides.forEach((sl, j) => sl.setAttribute('aria-hidden', String(j !== i)));
+      };
+      const go = (i, smooth) => {
+        mark(i);
+        quiet = performance.now() + (smooth ? 900 : 200);
+        track.scrollTo({ left: left(i), behavior: smooth && !reduce.matches ? 'smooth' : 'auto' });
+      };
+      tabs.forEach((t, i) => {
+        t.addEventListener('click', () => go(i, true));
+        t.addEventListener('keydown', (e) => {
+          const step = { ArrowRight: 1, ArrowLeft: -1 }[e.key];
+          const j = e.key === 'Home' ? 0 : e.key === 'End' ? 3 : step ? (i + step + 4) % 4 : -1;
+          if (j < 0) return;
+          e.preventDefault(); go(j, true); tabs[j].focus();
+        });
+      });
+      track.addEventListener('scrollend', () => { quiet = 0; });
+      if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver((es) => {
+          if (performance.now() < quiet) return;
+          const e = es.find((x) => x.isIntersecting && x.intersectionRatio >= 0.6);
+          if (e) mark(slides.indexOf(e.target));
+        }, { root: track, threshold: [0.6] });
+        slides.forEach((sl) => io.observe(sl));
       }
-      const card = document.getElementById('seasonCard' + seasonIndex);
-      if (card) card.classList.add('ring-2', 'ring-gold', 'ring-offset-2');
-    }
-    highlightCurrentSeason();
+      if ('ResizeObserver' in window) new ResizeObserver(() => track.scrollTo({ left: left(Math.max(active(), 0)), behavior: 'auto' })).observe(track);
+      const badge = document.getElementById('seasonNowBadge' + (today + 1));
+      if (badge) badge.classList.remove('hidden');
+      go(today, false);
+    })();
 
     // Cuenta regresiva real hasta el 14 de abril (Día Nacional del Tannat / Semana de Harriague)
     function updateHarriagueCountdown() {
