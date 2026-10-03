@@ -3,6 +3,7 @@
 // crema pasa a pergamino cálido; dorado champán envejecido. terroir/basalt (texto) sin cambios.
 module.exports = {
   content: ['./LaRutadelTannat.html', './LaRutadelTannat_files/*.js'],
+  future: { hoverOnlyWhenSupported: true }, // los hover: y group-hover: solo aplican con mouse (en táctil quedaban pegados tras tocar)
   theme: {
     extend: {
       colors: {
