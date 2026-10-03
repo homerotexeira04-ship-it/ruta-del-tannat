@@ -400,6 +400,29 @@
     .tannat-pin { display: flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); background: #4A101D; border: 2px solid #C29D62; box-shadow: 0 2px 6px rgba(0,0,0,0.35); }
     .tannat-pin span { transform: rotate(45deg); color: #D9B47A; font-family: "Playfair Display", serif; font-weight: 700; font-size: 13px; }
     .tannat-pin.thermal-pin { background: #9A7B38; }
+    /* Recorrido de las 4 estaciones (#estaciones): pines numerados unidos por una línea de un tramo por elemento. Cada tramo se rellena cuando
+       el scroll lo lleva a la "línea de lectura" (mitad de la pantalla): empieza al llegar su borde de arriba y termina al llegar el de abajo,
+       así los tramos se encadenan sin solaparse. Solo CSS (animation-timeline: view()): no usa JS ni toma el control del scroll. Sin soporte o con
+       "reducir movimiento", la línea queda dibujada entera. */
+    .route { --pin: 2.25rem; position: relative; margin: 0; padding: 0; list-style: none; }
+    @media (min-width: 768px) { .route { --pin: 2.5rem; } }
+    .route-stop, .route-leg { position: relative; padding-left: calc(var(--pin) + 1rem); }
+    .route-leg { display: flex; align-items: center; min-height: 3.75rem; }
+    .route-pin { position: absolute; left: 0; top: 1.25rem; z-index: 2; display: grid; place-items: center; width: var(--pin); height: var(--pin); border-radius: 9999px; background: #721B28; border: 2px solid #721B28; color: #F3E2B3; font: 700 1rem/1 "Playfair Display", serif; font-variant-numeric: lining-nums; }
+    .route-stop::before, .route-stop::after, .route-leg::before, .route-leg::after { content: ""; position: absolute; left: calc(var(--pin) / 2 - 1px); width: 2px; }
+    .route-stop::before, .route-stop::after { top: calc(1.25rem + var(--pin) / 2); bottom: 0; }
+    .route-leg::before, .route-leg::after { top: 0; bottom: calc(-1.25rem - var(--pin) / 2); }
+    .route-stop::before, .route-leg::before { background: rgba(114, 27, 40, .18); }
+    .route-stop::after, .route-leg::after { background: #721B28; transform-origin: top; }
+    .route-stop:last-child::before, .route-stop:last-child::after { display: none; }
+    @keyframes routeFill { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+    @keyframes routePinOn { from { background: #fff; color: #721B28; border-color: rgba(114, 27, 40, .35); } to { background: #721B28; color: #F3E2B3; border-color: #721B28; } }
+    @supports (animation-timeline: view()) {
+      @media (prefers-reduced-motion: no-preference) {
+        .route-stop::after, .route-leg::after { transform: scaleY(0); animation: routeFill linear both; animation-timeline: view(); animation-range: cover 50vh cover calc(100% - 50vh); }
+        .route-pin { animation: routePinOn linear both; animation-timeline: view(); animation-range: cover calc(50vh + 12px) cover calc(50vh + 28px); }
+      }
+    }
     /* Pines de la tarjeta de ruta del inicio: mismas posiciones que en el mapa real (calculadas al sacar la imagen); solo desde lg, donde la imagen se ve entera */
     .hero-pin { position: absolute; display: none; align-items: center; justify-content: center; width: 24px; height: 24px; margin: -29px 0 0 -12px; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); background: #4A101D; border: 2px solid #C29D62; box-shadow: 0 2px 6px rgba(0,0,0,0.35); }
     .hero-pin span { transform: rotate(45deg); color: #D9B47A; font: 700 11px/1 "Playfair Display", serif; font-variant-numeric: lining-nums; }
@@ -942,6 +965,7 @@
       <a href="#pionero" class="block text-gray-200 hover:text-gold py-2 font-medium" data-i18n="nav.pioneer">El Pionero</a>
       <a href="#copa" class="block text-gray-200 hover:text-gold py-2 font-medium" data-i18n="nav.cup">La Copa de Tannat</a>
       <a href="#estaciones" class="block text-gray-200 hover:text-gold py-2 font-medium" data-i18n="nav.stations">Estaciones</a>
+      <a href="#mapa" class="block text-gray-200 hover:text-gold py-2 font-medium" data-i18n="nav.map">Mapa Interactivo</a>
       <a href="#sostenibilidad" class="block text-gray-200 hover:text-gold py-2 font-medium" data-i18n="nav.sustain">Turismo Sostenible</a>
       <a href="#temporadas" class="block text-gray-200 hover:text-gold py-2 font-medium" data-i18n="nav.seasons">¿Cuándo viajar?</a>
       <a href="#termas" class="block text-gray-200 hover:text-gold py-2 font-medium" data-i18n="nav.thermal">Termas</a>
@@ -952,7 +976,6 @@
       <a href="#inavi" class="block text-gray-200 hover:text-gold py-2 font-medium" data-i18n="nav.inavi">INAVI</a>
       <a href="#galeria" class="block text-gray-200 hover:text-gold py-2 font-medium" data-i18n="nav.gallery">Galería</a>
       <a href="#vinos" class="block text-gray-200 hover:text-gold py-2 font-medium" data-i18n="nav.wines">Vinos</a>
-      <a href="#mapa" class="block text-gray-200 hover:text-gold py-2 font-medium" data-i18n="nav.map">Mapa Interactivo</a>
       <a href="#faq" class="block text-gray-200 hover:text-gold py-2 font-medium" data-i18n="nav.faq">Preguntas Frecuentes</a>
       <a href="#nosotros" class="block text-gray-200 hover:text-gold py-2 font-medium" data-i18n="nav.team">Nosotros</a>
 
@@ -1384,11 +1407,11 @@
       <p class="cup-static-cta"><a href="#paquetes" class="inline-flex items-center gap-2 px-5 py-3 rounded-full border border-gold/60 text-gold-light font-bold text-sm hover:bg-white/10 transition-colors" data-i18n="cup.cta">Probalo en la Ruta →</a></p>
     </section>
 
-    <!-- ==================== SECTION 3: LAS 4 ESTACIONES ==================== -->
-    <section id="estaciones" class="py-20 lg:py-28 bg-white text-basalt">
+    <!-- ==================== SECTION 3: LAS 4 ESTACIONES (recorrido) ==================== -->
+    <section id="estaciones" class="py-20 lg:py-28 bg-crema text-basalt">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        <div class="text-center max-w-3xl mx-auto mb-16">
+
+        <div class="max-w-3xl mb-12 lg:mb-16">
           <h2 class="font-serif text-3xl sm:text-5xl font-bold tracking-tight text-tannat-dark mb-4 text-balance" data-i18n="stations.title">
             Las 4 Estaciones de la Ruta
           </h2>
@@ -1397,124 +1420,99 @@
           </p>
         </div>
 
-        <!-- Cards Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          
-          <!-- Station 1: Bodega Harriague -->
-          <div role="button" tabindex="0" onclick="openStationModal(1)" onkeydown="if(event.key===&#39;Enter&#39;||event.key===&#39; &#39;){event.preventDefault();openStationModal(1);}" class="group bg-crema rounded-2xl overflow-hidden border border-tannat-100 shadow-editorial shadow-editorial-hover hover:-translate-y-1.5 transition-all flex flex-col focus:outline-none focus:ring-2 focus:ring-gold" aria-labelledby="stc1-b stc1-t">
-            <div class="aspect-[4/3] relative overflow-hidden bg-tannat-900">
-              <img src="./LaRutadelTannat_files/8254D59E-F679-48CA-94EB-EC6CFB40EC77.webp" width="700" height="525" alt="Espacio Cultural Bodega Harriague" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy">
-              <div id="stc1-b" class="absolute top-3 left-3 bg-tannat text-gold-light text-xs font-bold px-3 py-1 rounded-full shadow-md" data-i18n="st1.badge">
-                Estación 01
-              </div>
+        <!-- Recorrido: los kilómetros y minutos entre paradas son los de la matriz real de #mapa (OpenStreetMap, en auto, sin contar paradas) -->
+        <ol class="route" role="list" aria-label="Recorrido de las 4 estaciones" data-i18n-aria="stations.routeAria">
+        <li class="route-stop">
+          <span class="route-pin" aria-hidden="true">1</span>
+          <div role="button" tabindex="0" onclick="openStationModal(1)" onkeydown="if(event.key===&#39;Enter&#39;||event.key===&#39; &#39;){event.preventDefault();openStationModal(1);}" class="group grid md:grid-cols-[19rem_1fr] lg:grid-cols-[22rem_1fr] bg-white rounded-2xl overflow-hidden border border-tannat-100 shadow-editorial shadow-editorial-hover hover:-translate-y-1 transition-all focus:outline-none focus:ring-2 focus:ring-gold" aria-labelledby="stc1-b stc1-t">
+            <div class="relative overflow-hidden bg-tannat-900 aspect-[16/10] md:aspect-auto md:min-h-[15rem]">
+              <img src="./LaRutadelTannat_files/8254D59E-F679-48CA-94EB-EC6CFB40EC77.webp" width="700" height="525" alt="Espacio Cultural Bodega Harriague" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy">
             </div>
-            <div class="p-6 flex-1 flex flex-col justify-between">
-              <div>
-                <span class="text-xs font-bold text-gold-dark block mb-1" data-i18n="st1.tag">Punto Cero del Tannat</span>
-                <h3 id="stc1-t" class="font-serif text-xl font-bold text-tannat-dark mb-2 group-hover:text-gold-dark transition-colors" data-i18n="st1.title">Espacio Cultural Bodega Harriague</h3>
-                <p class="text-base text-terroir line-clamp-3 mb-4" data-i18n="st1.desc">
-                  Recinto arqueológico e industrial. Cuna donde se implantaron los primeros cuadros de Tannat en 1874. Proyecto patrimonial U-riharri.
-                </p>
-                <p class="flex items-center gap-1.5 text-xs text-terroir/80 mb-4" data-i18n="st1.note">
-                  <span class="w-1.5 h-1.5 rounded-full bg-gold flex-shrink-0"></span>Espacio cultural · sin producción propia de vino
-                </p>
+            <div class="p-5 sm:p-6 flex flex-col">
+              <p class="text-sm font-semibold text-gold-dark"><span id="stc1-b" data-i18n="st1.badge">Estación 01</span><span aria-hidden="true"> · </span><span data-i18n="st1.tag">Punto Cero del Tannat</span></p>
+              <h3 id="stc1-t" class="font-serif text-2xl font-bold text-tannat-dark mt-1 mb-2 group-hover:text-gold-dark transition-colors" data-i18n="st1.title">Espacio Cultural Bodega Harriague</h3>
+              <p class="text-base text-terroir mb-4" data-i18n="st1.desc">Recinto arqueológico e industrial. Cuna donde se implantaron los primeros cuadros de Tannat en 1874. Proyecto patrimonial U-riharri.</p>
+              <div class="flex flex-wrap gap-x-4 gap-y-1 text-xs text-terroir/80 mb-4">
+                <span class="inline-flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-gold flex-shrink-0" aria-hidden="true"></span><span data-i18n="st1.note">Espacio cultural · sin producción propia de vino</span></span>
               </div>
-              <div class="pt-4 border-t border-tannat-100 flex items-center justify-between text-xs font-semibold text-tannat">
+              <div class="mt-auto pt-4 border-t border-tannat-100 flex items-center justify-between gap-3 text-xs font-semibold text-tannat">
                 <span data-i18n="st1.loc">Av. Harriague y Etcheverry</span>
-                <span class="text-gold-dark group-hover:translate-x-1 transition-transform inline-flex items-center gap-1" data-i18n="btn.viewSheet">
-                  Ver Ficha →
-                </span>
+                <span class="text-gold-dark group-hover:translate-x-1 transition-transform inline-flex items-center gap-1" data-i18n="btn.viewSheet">Ver Ficha →</span>
               </div>
             </div>
           </div>
-
-          <!-- Station 2: Salto Chico -->
-          <div role="button" tabindex="0" onclick="openStationModal(2)" onkeydown="if(event.key===&#39;Enter&#39;||event.key===&#39; &#39;){event.preventDefault();openStationModal(2);}" class="group bg-crema rounded-2xl overflow-hidden border border-tannat-100 shadow-editorial shadow-editorial-hover hover:-translate-y-1.5 transition-all flex flex-col focus:outline-none focus:ring-2 focus:ring-gold" aria-labelledby="stc2-b stc2-t">
-            <div class="aspect-[4/3] relative overflow-hidden bg-tannat-900">
-              <img src="./LaRutadelTannat_files/salto-chico-cartel-inavi.webp" width="498" height="280" alt="Cartel de entrada de Viñas y Bodega del Salto Chico" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy">
-              <div id="stc2-b" class="absolute top-3 left-3 bg-tannat text-gold-light text-xs font-bold px-3 py-1 rounded-full shadow-md" data-i18n="st2.badge">
-                Estación 02
-              </div>
+        </li>
+        <li class="route-leg"><span class="inline-flex items-center px-3 py-1 rounded-full bg-tannat-50 border border-tannat-100 text-xs font-semibold text-tannat-dark"><span class="sr-only" data-i18n="stations.legPrefix">En auto hasta la siguiente estación:</span>3 km · 5 min</span></li>
+        <li class="route-stop">
+          <span class="route-pin" aria-hidden="true">2</span>
+          <div role="button" tabindex="0" onclick="openStationModal(2)" onkeydown="if(event.key===&#39;Enter&#39;||event.key===&#39; &#39;){event.preventDefault();openStationModal(2);}" class="group grid md:grid-cols-[19rem_1fr] lg:grid-cols-[22rem_1fr] bg-white rounded-2xl overflow-hidden border border-tannat-100 shadow-editorial shadow-editorial-hover hover:-translate-y-1 transition-all focus:outline-none focus:ring-2 focus:ring-gold" aria-labelledby="stc2-b stc2-t">
+            <div class="relative overflow-hidden bg-tannat-900 aspect-[16/10] md:aspect-auto md:min-h-[15rem]">
+              <img src="./LaRutadelTannat_files/salto-chico-cartel-inavi.webp" width="498" height="280" alt="Cartel de entrada de Viñas y Bodega del Salto Chico" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy">
             </div>
-            <div class="p-6 flex-1 flex flex-col justify-between">
-              <div>
-                <span class="text-xs font-bold text-gold-dark block mb-1" data-i18n="st2.tag">Ribera del Río Uruguay</span>
-                <h3 id="stc2-t" class="font-serif text-xl font-bold text-tannat-dark mb-2 group-hover:text-gold-dark transition-colors" data-i18n="st2.title">Bodega Salto Chico</h3>
-                <p class="text-base text-terroir line-clamp-3 mb-4" data-i18n="st2.desc">
-                  Viñedos sobre cascadas basálticas. 6 hectáreas de cepas europeas y moderna tecnología de vinificación artesanal.
-                </p>
-                <div class="flex flex-wrap gap-x-4 gap-y-1 text-xs text-terroir/80 mb-4">
-                  <span class="inline-flex items-center gap-1.5" data-i18n="st2.soil"><span class="w-1.5 h-1.5 rounded-full bg-gold flex-shrink-0"></span>Suelo basáltico y arenas aluviales</span>
-                  <span class="inline-flex items-center gap-1.5" data-i18n="st2.wine"><span class="w-1.5 h-1.5 rounded-full bg-tannat flex-shrink-0"></span>Gran Reserva Tannat</span>
-                </div>
+            <div class="p-5 sm:p-6 flex flex-col">
+              <p class="text-sm font-semibold text-gold-dark"><span id="stc2-b" data-i18n="st2.badge">Estación 02</span><span aria-hidden="true"> · </span><span data-i18n="st2.tag">Ribera del Río Uruguay</span></p>
+              <h3 id="stc2-t" class="font-serif text-2xl font-bold text-tannat-dark mt-1 mb-2 group-hover:text-gold-dark transition-colors" data-i18n="st2.title">Bodega Salto Chico</h3>
+              <p class="text-base text-terroir mb-4" data-i18n="st2.desc">Viñedos sobre cascadas basálticas. 6 hectáreas de cepas europeas y moderna tecnología de vinificación artesanal.</p>
+              <div class="flex flex-wrap gap-x-4 gap-y-1 text-xs text-terroir/80 mb-4">
+                <span class="inline-flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-gold flex-shrink-0" aria-hidden="true"></span><span data-i18n="st2.soil">Suelo basáltico y arenas aluviales</span></span>
+                <span class="inline-flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-tannat flex-shrink-0" aria-hidden="true"></span><span data-i18n="st2.wine">Gran Reserva Tannat</span></span>
               </div>
-              <div class="pt-4 border-t border-tannat-100 flex items-center justify-between text-xs font-semibold text-tannat">
+              <div class="mt-auto pt-4 border-t border-tannat-100 flex items-center justify-between gap-3 text-xs font-semibold text-tannat">
                 <span data-i18n="st2.loc">Colonia Osimani, Salto</span>
-                <span class="text-gold-dark group-hover:translate-x-1 transition-transform inline-flex items-center gap-1" data-i18n="btn.viewSheet">
-                  Ver Ficha →
-                </span>
+                <span class="text-gold-dark group-hover:translate-x-1 transition-transform inline-flex items-center gap-1" data-i18n="btn.viewSheet">Ver Ficha →</span>
               </div>
             </div>
           </div>
-
-          <!-- Station 3: Bertolini & Broglio -->
-          <div role="button" tabindex="0" onclick="openStationModal(3)" onkeydown="if(event.key===&#39;Enter&#39;||event.key===&#39; &#39;){event.preventDefault();openStationModal(3);}" class="group bg-crema rounded-2xl overflow-hidden border border-tannat-100 shadow-editorial shadow-editorial-hover hover:-translate-y-1.5 transition-all flex flex-col focus:outline-none focus:ring-2 focus:ring-gold" aria-labelledby="stc3-b stc3-t">
-            <div class="aspect-[4/3] relative overflow-hidden bg-tannat-900">
-              <img src="./LaRutadelTannat_files/bertolini-broglio-inavi.jpg" width="960" height="720" alt="Fachada real de Bodega Bertolini &amp; Broglio, Ruta 3, Salto" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy">
-              <div id="stc3-b" class="absolute top-3 left-3 bg-tannat text-gold-light text-xs font-bold px-3 py-1 rounded-full shadow-md" data-i18n="st3.badge">
-                Estación 03
-              </div>
+        </li>
+        <li class="route-leg"><span class="inline-flex items-center px-3 py-1 rounded-full bg-tannat-50 border border-tannat-100 text-xs font-semibold text-tannat-dark"><span class="sr-only" data-i18n="stations.legPrefix">En auto hasta la siguiente estación:</span>21 km · 20 min</span></li>
+        <li class="route-stop">
+          <span class="route-pin" aria-hidden="true">3</span>
+          <div role="button" tabindex="0" onclick="openStationModal(3)" onkeydown="if(event.key===&#39;Enter&#39;||event.key===&#39; &#39;){event.preventDefault();openStationModal(3);}" class="group grid md:grid-cols-[19rem_1fr] lg:grid-cols-[22rem_1fr] bg-white rounded-2xl overflow-hidden border border-tannat-100 shadow-editorial shadow-editorial-hover hover:-translate-y-1 transition-all focus:outline-none focus:ring-2 focus:ring-gold" aria-labelledby="stc3-b stc3-t">
+            <div class="relative overflow-hidden bg-tannat-900 aspect-[16/10] md:aspect-auto md:min-h-[15rem]">
+              <img src="./LaRutadelTannat_files/bertolini-broglio-inavi.jpg" width="960" height="720" alt="Fachada real de Bodega Bertolini &amp; Broglio, Ruta 3, Salto" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy">
             </div>
-            <div class="p-6 flex-1 flex flex-col justify-between">
-              <div>
-                <span class="text-xs font-bold text-gold-dark block mb-1" data-i18n="st3.tag">Bodega Boutique &amp; Terroir</span>
-                <h3 id="stc3-t" class="font-serif text-xl font-bold text-tannat-dark mb-2 group-hover:text-gold-dark transition-colors" data-i18n="st3.title">Bodega Bertolini &amp; Broglio</h3>
-                <p class="text-base text-terroir line-clamp-3 mb-4" data-i18n="st3.desc">
-                  19 hectáreas de viñedos conducidos en parrales. Pioneros en vinificación por gravedad y creadores del premiado Tannat Exotic.
-                </p>
-                <div class="flex flex-wrap gap-x-4 gap-y-1 text-xs text-terroir/80 mb-4">
-                  <span class="inline-flex items-center gap-1.5" data-i18n="st3.soil"><span class="w-1.5 h-1.5 rounded-full bg-gold flex-shrink-0"></span>Suelo basáltico, Parada Daymán</span>
-                  <span class="inline-flex items-center gap-1.5" data-i18n="st3.wine"><span class="w-1.5 h-1.5 rounded-full bg-tannat flex-shrink-0"></span>Tannat Exotic Senza Crianza</span>
-                </div>
+            <div class="p-5 sm:p-6 flex flex-col">
+              <p class="text-sm font-semibold text-gold-dark"><span id="stc3-b" data-i18n="st3.badge">Estación 03</span><span aria-hidden="true"> · </span><span data-i18n="st3.tag">Bodega Boutique &amp; Terroir</span></p>
+              <h3 id="stc3-t" class="font-serif text-2xl font-bold text-tannat-dark mt-1 mb-2 group-hover:text-gold-dark transition-colors" data-i18n="st3.title">Bodega Bertolini &amp; Broglio</h3>
+              <p class="text-base text-terroir mb-4" data-i18n="st3.desc">19 hectáreas de viñedos conducidos en parrales. Pioneros en vinificación por gravedad y creadores del premiado Tannat Exotic.</p>
+              <div class="flex flex-wrap gap-x-4 gap-y-1 text-xs text-terroir/80 mb-4">
+                <span class="inline-flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-gold flex-shrink-0" aria-hidden="true"></span><span data-i18n="st3.soil">Suelo basáltico, Parada Daymán</span></span>
+                <span class="inline-flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-tannat flex-shrink-0" aria-hidden="true"></span><span data-i18n="st3.wine">Tannat Exotic Senza Crianza</span></span>
               </div>
-              <div class="pt-4 border-t border-tannat-100 flex items-center justify-between text-xs font-semibold text-tannat">
+              <div class="mt-auto pt-4 border-t border-tannat-100 flex items-center justify-between gap-3 text-xs font-semibold text-tannat">
                 <span data-i18n="st3.loc">Ruta 3 Km 468.5, Daymán</span>
-                <span class="text-gold-dark group-hover:translate-x-1 transition-transform inline-flex items-center gap-1" data-i18n="btn.viewSheet">
-                  Ver Ficha →
-                </span>
+                <span class="text-gold-dark group-hover:translate-x-1 transition-transform inline-flex items-center gap-1" data-i18n="btn.viewSheet">Ver Ficha →</span>
               </div>
             </div>
           </div>
-
-          <!-- Station 4: Mori Maglio Wines -->
-          <div role="button" tabindex="0" onclick="openStationModal(4)" onkeydown="if(event.key===&#39;Enter&#39;||event.key===&#39; &#39;){event.preventDefault();openStationModal(4);}" class="group bg-crema rounded-2xl overflow-hidden border border-tannat-100 shadow-editorial shadow-editorial-hover hover:-translate-y-1.5 transition-all flex flex-col focus:outline-none focus:ring-2 focus:ring-gold" aria-labelledby="stc4-b stc4-t">
-            <div class="aspect-[4/3] relative overflow-hidden bg-tannat-900">
-              <img src="./LaRutadelTannat_files/138db8c89a626f5efc0f940f343ad390bf0ec8ca.jpg" width="1024" height="768" alt="Mori Maglio Wines" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy">
-              <div id="stc4-b" class="absolute top-3 left-3 bg-tannat text-gold-light text-xs font-bold px-3 py-1 rounded-full shadow-md" data-i18n="st4.badge">
-                Estación 04
-              </div>
+        </li>
+        <li class="route-leg"><span class="inline-flex items-center px-3 py-1 rounded-full bg-tannat-50 border border-tannat-100 text-xs font-semibold text-tannat-dark"><span class="sr-only" data-i18n="stations.legPrefix">En auto hasta la siguiente estación:</span>9 km · 7 min</span></li>
+        <li class="route-stop">
+          <span class="route-pin" aria-hidden="true">4</span>
+          <div role="button" tabindex="0" onclick="openStationModal(4)" onkeydown="if(event.key===&#39;Enter&#39;||event.key===&#39; &#39;){event.preventDefault();openStationModal(4);}" class="group grid md:grid-cols-[19rem_1fr] lg:grid-cols-[22rem_1fr] bg-white rounded-2xl overflow-hidden border border-tannat-100 shadow-editorial shadow-editorial-hover hover:-translate-y-1 transition-all focus:outline-none focus:ring-2 focus:ring-gold" aria-labelledby="stc4-b stc4-t">
+            <div class="relative overflow-hidden bg-tannat-900 aspect-[16/10] md:aspect-auto md:min-h-[15rem]">
+              <img src="./LaRutadelTannat_files/138db8c89a626f5efc0f940f343ad390bf0ec8ca.jpg" width="1024" height="768" alt="Mori Maglio Wines" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy">
             </div>
-            <div class="p-6 flex-1 flex flex-col justify-between">
-              <div>
-                <span class="text-xs font-bold text-gold-dark block mb-1" data-i18n="st4.tag">Viñedo El Asombrado</span>
-                <h3 id="stc4-t" class="font-serif text-xl font-bold text-tannat-dark mb-2 group-hover:text-gold-dark transition-colors" data-i18n="st4.title">Mori Maglio Wines</h3>
-                <p class="text-base text-terroir line-clamp-3 mb-4" data-i18n="st4.desc">
-                  Tradición vitivinícola viva en Parada Daymán. Vinos de autor con identidad territorial y maridajes gourmet de cordero y cítricos salteños.
-                </p>
-                <div class="flex flex-wrap gap-x-4 gap-y-1 text-xs text-terroir/80 mb-4">
-                  <span class="inline-flex items-center gap-1.5" data-i18n="st4.soil"><span class="w-1.5 h-1.5 rounded-full bg-gold flex-shrink-0"></span>Suelo basáltico, Parada Daymán</span>
-                  <span class="inline-flex items-center gap-1.5" data-i18n="st4.wine"><span class="w-1.5 h-1.5 rounded-full bg-tannat flex-shrink-0"></span>Tannat Reserva</span>
-                </div>
+            <div class="p-5 sm:p-6 flex flex-col">
+              <p class="text-sm font-semibold text-gold-dark"><span id="stc4-b" data-i18n="st4.badge">Estación 04</span><span aria-hidden="true"> · </span><span data-i18n="st4.tag">Viñedo El Asombrado</span></p>
+              <h3 id="stc4-t" class="font-serif text-2xl font-bold text-tannat-dark mt-1 mb-2 group-hover:text-gold-dark transition-colors" data-i18n="st4.title">Mori Maglio Wines</h3>
+              <p class="text-base text-terroir mb-4" data-i18n="st4.desc">Tradición vitivinícola viva en Parada Daymán. Vinos de autor con identidad territorial y maridajes gourmet de cordero y cítricos salteños.</p>
+              <div class="flex flex-wrap gap-x-4 gap-y-1 text-xs text-terroir/80 mb-4">
+                <span class="inline-flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-gold flex-shrink-0" aria-hidden="true"></span><span data-i18n="st4.soil">Suelo basáltico, Parada Daymán</span></span>
+                <span class="inline-flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-tannat flex-shrink-0" aria-hidden="true"></span><span data-i18n="st4.wine">Tannat Reserva</span></span>
               </div>
-              <div class="pt-4 border-t border-tannat-100 flex items-center justify-between text-xs font-semibold text-tannat">
+              <div class="mt-auto pt-4 border-t border-tannat-100 flex items-center justify-between gap-3 text-xs font-semibold text-tannat">
                 <span data-i18n="st4.loc">Parada Daymán, Salto</span>
-                <span class="text-gold-dark group-hover:translate-x-1 transition-transform inline-flex items-center gap-1" data-i18n="btn.viewSheet">
-                  Ver Ficha →
-                </span>
+                <span class="text-gold-dark group-hover:translate-x-1 transition-transform inline-flex items-center gap-1" data-i18n="btn.viewSheet">Ver Ficha →</span>
               </div>
             </div>
           </div>
+        </li>
+        </ol>
 
+        <div class="mt-8 pl-12 md:pl-14 text-sm text-terroir">
+          <p class="font-semibold text-tannat-dark" data-i18n="map.matrixTotal">Recorriendo las 4 estaciones en orden (01→02→03→04): 33 km y unos 32 min de manejo neto.</p>
+          <p class="text-xs text-terroir/80 mt-1" data-i18n="map.matrixSource">Calculado con datos reales de OpenStreetMap (ruta en auto, sin contar paradas).</p>
         </div>
 
         <!-- Itinerario imprimible (ver #printItinerary) -->
@@ -1529,8 +1527,115 @@
       </div>
     </section>
 
+    <!-- ==================== SECTION 6: MAPA INTERACTIVO & GEOLOCALIZACIÓN ==================== -->
+    <section id="mapa" class="py-20 lg:py-28 bg-white text-basalt">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center max-w-3xl mx-auto mb-16">
+          <h2 class="font-serif text-3xl sm:text-5xl font-bold tracking-tight text-tannat-dark mb-4 text-balance" data-i18n="map.title">
+            Mapa del Circuito Enoturístico
+          </h2>
+          <p class="text-lg text-terroir font-light" data-i18n="map.subtitle">
+            Haz clic en los puntos del mapa para ubicar cada estación a lo largo de Salto y la Ruta 3 hacia Parada Daymán.
+          </p>
+        </div>
+
+        <!-- Filtros rápidos: muestran/ocultan marcadores reales del mapa (no recortan contenido, solo la vista) -->
+        <div class="flex justify-center mb-6">
+          <div class="inline-flex items-center gap-1 bg-crema rounded-full p-1 border border-tannat-100 shadow-sm">
+            <button type="button" id="mapFilterAll" onclick="filterMapMarkers('all')" aria-pressed="true" class="px-3.5 py-1.5 rounded-full font-semibold transition-all bg-tannat text-white shadow-sm" data-i18n="map.filterAll">Ruta Completa</button>
+            <button type="button" id="mapFilterWineries" onclick="filterMapMarkers('wineries')" aria-pressed="false" class="px-3.5 py-1.5 rounded-full font-semibold transition-all text-tannat hover:bg-tannat/10" data-i18n="map.filterWineries">Solo Bodegas</button>
+            <button type="button" id="mapFilterThermal" onclick="filterMapMarkers('thermal')" aria-pressed="false" class="px-3.5 py-1.5 rounded-full font-semibold transition-all text-tannat hover:bg-tannat/10" data-i18n="map.filterThermal">Termas</button>
+          </div>
+        </div>
+
+        <!-- Interactive Map Visual: marco premium con filo dorado -->
+        <div class="bg-crema rounded-3xl p-6 sm:p-10 border border-gold/30 shadow-editorial">
+          <div class="relative aspect-square sm:aspect-[16/9] w-full bg-[#EFECE6] rounded-2xl overflow-hidden border-2 border-gold/40">
+            <div id="leafletMap" class="absolute inset-0 w-full h-full" aria-label="Mapa interactivo real de La Ruta del Tannat en Salto, Uruguay" data-i18n-aria="a11y.map">
+              <p class="w-full h-full flex items-center justify-center text-sm text-terroir px-6 text-center" data-i18n="map.loading">Cargando mapa interactivo…</p>
+            </div>
+          </div>
+
+          <!-- Accesos rápidos: ruta completa (Google Maps soporta varias paradas; Waze no, así que va a la primera) -->
+          <div class="mt-8 flex flex-wrap justify-center gap-3">
+            <a href="https://www.google.com/maps/dir/?api=1&amp;destination=-31.4550,-57.9050&amp;waypoints=-31.3998,-57.9846%7C-31.3799,-57.9740%7C-31.527946170700144,-57.91004803293071&amp;travelmode=driving" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-5 py-2.5 min-h-[44px] rounded-full bg-tannat text-white text-sm font-bold hover:bg-tannat-dark transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-tannat focus-visible:ring-offset-2" data-i18n="map.openRouteGoogle">
+              Abrir ruta completa en Google Maps
+            </a>
+            <a href="https://waze.com/ul?ll=-31.3998,-57.9846&amp;navigate=yes" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-5 py-2.5 min-h-[44px] rounded-full border border-tannat/30 text-tannat text-sm font-bold hover:bg-tannat hover:text-white transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-tannat focus-visible:ring-offset-2" data-i18n="map.openRouteWaze">
+              Abrir primera parada en Waze
+            </a>
+          </div>
+
+          <!-- Quick Navigation Links: GPS, Waze y foco en el mapa por estación -->
+          <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
+            <div class="p-3 bg-white rounded-xl border border-tannat-100">
+              <span class="font-semibold block mb-2" data-i18n="st1.title">01. Bodega Harriague</span>
+              <div class="flex items-center gap-3 flex-wrap">
+                <button type="button" onclick="focusStationOnMap(1)" class="text-tannat hover:underline font-semibold" data-i18n="map.focus">Ver en el mapa</button>
+                <a href="https://maps.google.com/?q=Bodega+Harriague+Salto+Uruguay" target="_blank" rel="noopener noreferrer" class="text-gold-dark hover:underline inline-flex items-center gap-1" data-i18n="map.gps">GPS ↗</a>
+                <a href="https://waze.com/ul?ll=-31.3998,-57.9846&amp;navigate=yes" target="_blank" rel="noopener noreferrer" class="text-tannat hover:underline inline-flex items-center gap-1" data-i18n="map.waze">Waze ↗</a>
+              </div>
+            </div>
+            <div class="p-3 bg-white rounded-xl border border-tannat-100">
+              <span class="font-semibold block mb-2" data-i18n="st2.title">02. Bodega Salto Chico</span>
+              <div class="flex items-center gap-3 flex-wrap">
+                <button type="button" onclick="focusStationOnMap(2)" class="text-tannat hover:underline font-semibold" data-i18n="map.focus">Ver en el mapa</button>
+                <a href="https://maps.google.com/?q=Bodega+Salto+Chico+Salto+Uruguay" target="_blank" rel="noopener noreferrer" class="text-gold-dark hover:underline inline-flex items-center gap-1" data-i18n="map.gps">GPS ↗</a>
+                <a href="https://waze.com/ul?ll=-31.3799,-57.9740&amp;navigate=yes" target="_blank" rel="noopener noreferrer" class="text-tannat hover:underline inline-flex items-center gap-1" data-i18n="map.waze">Waze ↗</a>
+              </div>
+            </div>
+            <div class="p-3 bg-white rounded-xl border border-tannat-100">
+              <span class="font-semibold block mb-2" data-i18n="st3.title">03. Bertolini &amp; Broglio</span>
+              <div class="flex items-center gap-3 flex-wrap">
+                <button type="button" onclick="focusStationOnMap(3)" class="text-tannat hover:underline font-semibold" data-i18n="map.focus">Ver en el mapa</button>
+                <a href="https://maps.google.com/?q=Bertolini+%26+Broglio+Salto+Uruguay" target="_blank" rel="noopener noreferrer" class="text-gold-dark hover:underline inline-flex items-center gap-1" data-i18n="map.gps">GPS ↗</a>
+                <a href="https://waze.com/ul?ll=-31.527946170700144,-57.91004803293071&amp;navigate=yes" target="_blank" rel="noopener noreferrer" class="text-tannat hover:underline inline-flex items-center gap-1" data-i18n="map.waze">Waze ↗</a>
+              </div>
+            </div>
+            <div class="p-3 bg-white rounded-xl border border-tannat-100">
+              <span class="font-semibold block mb-2" data-i18n="st4.title">04. Mori Maglio Wines</span>
+              <div class="flex items-center gap-3 flex-wrap">
+                <button type="button" onclick="focusStationOnMap(4)" class="text-tannat hover:underline font-semibold" data-i18n="map.focus">Ver en el mapa</button>
+                <a href="https://maps.google.com/?q=Mori+Maglio+Dayman+Salto+Uruguay" target="_blank" rel="noopener noreferrer" class="text-gold-dark hover:underline inline-flex items-center gap-1" data-i18n="map.gps">GPS ↗</a>
+                <a href="https://waze.com/ul?ll=-31.4550,-57.9050&amp;navigate=yes" target="_blank" rel="noopener noreferrer" class="text-tannat hover:underline inline-flex items-center gap-1" data-i18n="map.waze">Waze ↗</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Matriz de distancias: datos reales de ruteo OpenStreetMap/OSRM entre las 4 estaciones, no estimaciones -->
+          <div class="mt-8 pt-6 border-t border-tannat-100">
+            <p class="text-xs font-bold text-terroir mb-1" data-i18n="map.matrixTitle">Distancias y tiempos de manejo entre estaciones</p>
+            <p class="text-[11px] text-terroir/70 mb-4" data-i18n="map.matrixSource">Calculado con datos reales de OpenStreetMap (ruta en auto, sin contar paradas).</p>
+            <div class="overflow-x-auto">
+              <table class="w-full text-xs border-collapse min-w-[420px]">
+                <thead>
+                  <tr>
+                    <th class="p-2"></th>
+                    <th class="p-2 text-center font-semibold">01</th>
+                    <th class="p-2 text-center font-semibold">02</th>
+                    <th class="p-2 text-center font-semibold">03</th>
+                    <th class="p-2 text-center font-semibold">04</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="border-t border-tannat-100"><th class="p-2 text-left font-semibold">01</th><td class="p-2 text-center text-terroir/40">-</td><td class="p-2 text-center">3 km · 5 min</td><td class="p-2 text-center">19 km · 19 min</td><td class="p-2 text-center">11 km · 13 min</td></tr>
+                  <tr class="border-t border-tannat-100"><th class="p-2 text-left font-semibold">02</th><td class="p-2 text-center">3 km · 5 min</td><td class="p-2 text-center text-terroir/40">-</td><td class="p-2 text-center">21 km · 20 min</td><td class="p-2 text-center">12 km · 14 min</td></tr>
+                  <tr class="border-t border-tannat-100"><th class="p-2 text-left font-semibold">03</th><td class="p-2 text-center">19 km · 19 min</td><td class="p-2 text-center">21 km · 20 min</td><td class="p-2 text-center text-terroir/40">-</td><td class="p-2 text-center">9 km · 7 min</td></tr>
+                  <tr class="border-t border-tannat-100"><th class="p-2 text-left font-semibold">04</th><td class="p-2 text-center">11 km · 13 min</td><td class="p-2 text-center">12 km · 14 min</td><td class="p-2 text-center">9 km · 7 min</td><td class="p-2 text-center text-terroir/40">-</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="text-[11px] text-terroir/70 mt-3" data-i18n="map.matrixTotal">Recorriendo las 4 estaciones en orden (01→02→03→04): 33 km y unos 32 min de manejo neto.</p>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
     <!-- ==================== SECTION: TURISMO SOSTENIBLE ==================== -->
-    <section id="sostenibilidad" class="py-20 bg-white text-basalt border-t border-tannat-100">
+    <section id="sostenibilidad" class="py-20 bg-crema text-basalt border-t border-tannat-100">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         <div class="text-center max-w-3xl mx-auto mb-16">
@@ -2676,113 +2781,6 @@
       </div>
     </section>
 
-    <!-- ==================== SECTION 6: MAPA INTERACTIVO & GEOLOCALIZACIÓN ==================== -->
-    <section id="mapa" class="py-20 lg:py-28 bg-white text-basalt">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        <div class="text-center max-w-3xl mx-auto mb-16">
-          <h2 class="font-serif text-3xl sm:text-5xl font-bold tracking-tight text-tannat-dark mb-4 text-balance" data-i18n="map.title">
-            Mapa del Circuito Enoturístico
-          </h2>
-          <p class="text-lg text-terroir font-light" data-i18n="map.subtitle">
-            Haz clic en los puntos del mapa para ubicar cada estación a lo largo de Salto y la Ruta 3 hacia Parada Daymán.
-          </p>
-        </div>
-
-        <!-- Filtros rápidos: muestran/ocultan marcadores reales del mapa (no recortan contenido, solo la vista) -->
-        <div class="flex justify-center mb-6">
-          <div class="inline-flex items-center gap-1 bg-crema rounded-full p-1 border border-tannat-100 shadow-sm">
-            <button type="button" id="mapFilterAll" onclick="filterMapMarkers('all')" aria-pressed="true" class="px-3.5 py-1.5 rounded-full font-semibold transition-all bg-tannat text-white shadow-sm" data-i18n="map.filterAll">Ruta Completa</button>
-            <button type="button" id="mapFilterWineries" onclick="filterMapMarkers('wineries')" aria-pressed="false" class="px-3.5 py-1.5 rounded-full font-semibold transition-all text-tannat hover:bg-tannat/10" data-i18n="map.filterWineries">Solo Bodegas</button>
-            <button type="button" id="mapFilterThermal" onclick="filterMapMarkers('thermal')" aria-pressed="false" class="px-3.5 py-1.5 rounded-full font-semibold transition-all text-tannat hover:bg-tannat/10" data-i18n="map.filterThermal">Termas</button>
-          </div>
-        </div>
-
-        <!-- Interactive Map Visual: marco premium con filo dorado -->
-        <div class="bg-crema rounded-3xl p-6 sm:p-10 border border-gold/30 shadow-editorial">
-          <div class="relative aspect-square sm:aspect-[16/9] w-full bg-[#EFECE6] rounded-2xl overflow-hidden border-2 border-gold/40">
-            <div id="leafletMap" class="absolute inset-0 w-full h-full" aria-label="Mapa interactivo real de La Ruta del Tannat en Salto, Uruguay" data-i18n-aria="a11y.map">
-              <p class="w-full h-full flex items-center justify-center text-sm text-terroir px-6 text-center" data-i18n="map.loading">Cargando mapa interactivo…</p>
-            </div>
-          </div>
-
-          <!-- Accesos rápidos: ruta completa (Google Maps soporta varias paradas; Waze no, así que va a la primera) -->
-          <div class="mt-8 flex flex-wrap justify-center gap-3">
-            <a href="https://www.google.com/maps/dir/?api=1&amp;destination=-31.4550,-57.9050&amp;waypoints=-31.3998,-57.9846%7C-31.3799,-57.9740%7C-31.527946170700144,-57.91004803293071&amp;travelmode=driving" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-5 py-2.5 min-h-[44px] rounded-full bg-tannat text-white text-sm font-bold hover:bg-tannat-dark transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-tannat focus-visible:ring-offset-2" data-i18n="map.openRouteGoogle">
-              Abrir ruta completa en Google Maps
-            </a>
-            <a href="https://waze.com/ul?ll=-31.3998,-57.9846&amp;navigate=yes" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-5 py-2.5 min-h-[44px] rounded-full border border-tannat/30 text-tannat text-sm font-bold hover:bg-tannat hover:text-white transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-tannat focus-visible:ring-offset-2" data-i18n="map.openRouteWaze">
-              Abrir primera parada en Waze
-            </a>
-          </div>
-
-          <!-- Quick Navigation Links: GPS, Waze y foco en el mapa por estación -->
-          <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
-            <div class="p-3 bg-white rounded-xl border border-tannat-100">
-              <span class="font-semibold block mb-2" data-i18n="st1.title">01. Bodega Harriague</span>
-              <div class="flex items-center gap-3 flex-wrap">
-                <button type="button" onclick="focusStationOnMap(1)" class="text-tannat hover:underline font-semibold" data-i18n="map.focus">Ver en el mapa</button>
-                <a href="https://maps.google.com/?q=Bodega+Harriague+Salto+Uruguay" target="_blank" rel="noopener noreferrer" class="text-gold-dark hover:underline inline-flex items-center gap-1" data-i18n="map.gps">GPS ↗</a>
-                <a href="https://waze.com/ul?ll=-31.3998,-57.9846&amp;navigate=yes" target="_blank" rel="noopener noreferrer" class="text-tannat hover:underline inline-flex items-center gap-1" data-i18n="map.waze">Waze ↗</a>
-              </div>
-            </div>
-            <div class="p-3 bg-white rounded-xl border border-tannat-100">
-              <span class="font-semibold block mb-2" data-i18n="st2.title">02. Bodega Salto Chico</span>
-              <div class="flex items-center gap-3 flex-wrap">
-                <button type="button" onclick="focusStationOnMap(2)" class="text-tannat hover:underline font-semibold" data-i18n="map.focus">Ver en el mapa</button>
-                <a href="https://maps.google.com/?q=Bodega+Salto+Chico+Salto+Uruguay" target="_blank" rel="noopener noreferrer" class="text-gold-dark hover:underline inline-flex items-center gap-1" data-i18n="map.gps">GPS ↗</a>
-                <a href="https://waze.com/ul?ll=-31.3799,-57.9740&amp;navigate=yes" target="_blank" rel="noopener noreferrer" class="text-tannat hover:underline inline-flex items-center gap-1" data-i18n="map.waze">Waze ↗</a>
-              </div>
-            </div>
-            <div class="p-3 bg-white rounded-xl border border-tannat-100">
-              <span class="font-semibold block mb-2" data-i18n="st3.title">03. Bertolini &amp; Broglio</span>
-              <div class="flex items-center gap-3 flex-wrap">
-                <button type="button" onclick="focusStationOnMap(3)" class="text-tannat hover:underline font-semibold" data-i18n="map.focus">Ver en el mapa</button>
-                <a href="https://maps.google.com/?q=Bertolini+%26+Broglio+Salto+Uruguay" target="_blank" rel="noopener noreferrer" class="text-gold-dark hover:underline inline-flex items-center gap-1" data-i18n="map.gps">GPS ↗</a>
-                <a href="https://waze.com/ul?ll=-31.527946170700144,-57.91004803293071&amp;navigate=yes" target="_blank" rel="noopener noreferrer" class="text-tannat hover:underline inline-flex items-center gap-1" data-i18n="map.waze">Waze ↗</a>
-              </div>
-            </div>
-            <div class="p-3 bg-white rounded-xl border border-tannat-100">
-              <span class="font-semibold block mb-2" data-i18n="st4.title">04. Mori Maglio Wines</span>
-              <div class="flex items-center gap-3 flex-wrap">
-                <button type="button" onclick="focusStationOnMap(4)" class="text-tannat hover:underline font-semibold" data-i18n="map.focus">Ver en el mapa</button>
-                <a href="https://maps.google.com/?q=Mori+Maglio+Dayman+Salto+Uruguay" target="_blank" rel="noopener noreferrer" class="text-gold-dark hover:underline inline-flex items-center gap-1" data-i18n="map.gps">GPS ↗</a>
-                <a href="https://waze.com/ul?ll=-31.4550,-57.9050&amp;navigate=yes" target="_blank" rel="noopener noreferrer" class="text-tannat hover:underline inline-flex items-center gap-1" data-i18n="map.waze">Waze ↗</a>
-              </div>
-            </div>
-          </div>
-
-          <!-- Matriz de distancias: datos reales de ruteo OpenStreetMap/OSRM entre las 4 estaciones, no estimaciones -->
-          <div class="mt-8 pt-6 border-t border-tannat-100">
-            <p class="text-xs font-bold text-terroir mb-1" data-i18n="map.matrixTitle">Distancias y tiempos de manejo entre estaciones</p>
-            <p class="text-[11px] text-terroir/70 mb-4" data-i18n="map.matrixSource">Calculado con datos reales de OpenStreetMap (ruta en auto, sin contar paradas).</p>
-            <div class="overflow-x-auto">
-              <table class="w-full text-xs border-collapse min-w-[420px]">
-                <thead>
-                  <tr>
-                    <th class="p-2"></th>
-                    <th class="p-2 text-center font-semibold">01</th>
-                    <th class="p-2 text-center font-semibold">02</th>
-                    <th class="p-2 text-center font-semibold">03</th>
-                    <th class="p-2 text-center font-semibold">04</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr class="border-t border-tannat-100"><th class="p-2 text-left font-semibold">01</th><td class="p-2 text-center text-terroir/40">-</td><td class="p-2 text-center">3 km · 5 min</td><td class="p-2 text-center">19 km · 19 min</td><td class="p-2 text-center">11 km · 13 min</td></tr>
-                  <tr class="border-t border-tannat-100"><th class="p-2 text-left font-semibold">02</th><td class="p-2 text-center">3 km · 5 min</td><td class="p-2 text-center text-terroir/40">-</td><td class="p-2 text-center">21 km · 20 min</td><td class="p-2 text-center">12 km · 14 min</td></tr>
-                  <tr class="border-t border-tannat-100"><th class="p-2 text-left font-semibold">03</th><td class="p-2 text-center">19 km · 19 min</td><td class="p-2 text-center">21 km · 20 min</td><td class="p-2 text-center text-terroir/40">-</td><td class="p-2 text-center">9 km · 7 min</td></tr>
-                  <tr class="border-t border-tannat-100"><th class="p-2 text-left font-semibold">04</th><td class="p-2 text-center">11 km · 13 min</td><td class="p-2 text-center">12 km · 14 min</td><td class="p-2 text-center">9 km · 7 min</td><td class="p-2 text-center text-terroir/40">-</td></tr>
-                </tbody>
-              </table>
-            </div>
-            <p class="text-[11px] text-terroir/70 mt-3" data-i18n="map.matrixTotal">Recorriendo las 4 estaciones en orden (01→02→03→04): 33 km y unos 32 min de manejo neto.</p>
-          </div>
-
-        </div>
-
-      </div>
-    </section>
-
     <!-- ==================== SECTION 7: FAQ (ACCORDION) ==================== -->
     <section id="faq" class="py-20 bg-crema text-basalt">
       <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -3707,6 +3705,8 @@
         
         "stations.title": "Las 4 Estaciones de la Ruta",
         "stations.subtitle": "Cada parada representa un capítulo vivo: desde el rescate patrimonial en el casco histórico hasta viñedos boutique con tecnología de vanguardia sobre las costas del Río Uruguay y Parada Daymán.",
+        "stations.routeAria": "Recorrido de las 4 estaciones",
+        "stations.legPrefix": "En auto hasta la siguiente estación:",
         
         "st1.badge": "Estación 01",
         "st1.tag": "Punto Cero del Tannat",
@@ -4252,6 +4252,8 @@
         
         "stations.title": "As 4 Estações da Rota",
         "stations.subtitle": "Do resgate histórico no centro urbano até as vinícolas boutique às margens do Rio Uruguai e Parada Daymán.",
+        "stations.routeAria": "Percurso das 4 estações",
+        "stations.legPrefix": "De carro até a próxima estação:",
         
         "st1.badge": "Estação 01",
         "st1.tag": "Ponto Zero do Tannat",
@@ -4797,6 +4799,8 @@
         
         "stations.title": "The 4 Route Stations",
         "stations.subtitle": "From the heritage site in the historic city center to boutique wineries on the banks of the Uruguay River and in Parada Daymán.",
+        "stations.routeAria": "Route through the 4 stations",
+        "stations.legPrefix": "By car to the next station:",
         
         "st1.badge": "Station 01",
         "st1.tag": "Ground Zero of Tannat",
