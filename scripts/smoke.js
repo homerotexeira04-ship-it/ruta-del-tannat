@@ -126,6 +126,14 @@ function servidor() {
     const pasos = await page.evaluate(() => window.__pasos.size);
     check('el hover de las tarjetas anima en vez de saltar (' + pasos + ' pasos)', pasos >= 4, 'transition-property=' + c.prop + ', pasos=' + pasos); await page.close(); }
 
+  // 11. al apretar, los botones se achican un poco (confirma que el toque se registró): se mide la propiedad scale con el botón presionado
+  { const page = await abrir(1280, 800, false);
+    const c = await page.evaluate(() => { const r = document.querySelector('#mainHeader .hdr-row > button').getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2 }; });
+    await page.mouse.move(c.x, c.y); await sleep(300); await page.mouse.down(); await sleep(350);
+    const esc = await page.evaluate(() => getComputedStyle(document.querySelector('#mainHeader .hdr-row > button')).scale);
+    await page.mouse.move(2, 600); await page.mouse.up(); // se suelta afuera: no dispara el clic ni abre la reserva
+    check('los botones se achican al apretarlos (scale ' + esc + ')', parseFloat(esc) > 0.9 && parseFloat(esc) < 1, 'scale=' + esc); await page.close(); }
+
   await browser.close(); srv.cerrar();
   if (failures.length) { console.log('\n' + failures.length + ' prueba(s) fallaron:\n - ' + failures.join('\n - ')); process.exit(1); }
   console.log('\nTodas las pruebas de humo pasaron');
