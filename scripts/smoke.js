@@ -1,4 +1,4 @@
-// Pruebas de humo en un Chrome real (puppeteer-core): errores, desbordes, idiomas, botón de WhatsApp, La Copa e itinerario impreso.
+// Pruebas de humo en un Chrome real (puppeteer-core): errores, desbordes, idiomas, botón de WhatsApp, La Copa, itinerario impreso y menú del encabezado.
 // Uso: node scripts/smoke.js      (levanta su propio servidor; o usa SITE_URL=http://... si ya hay uno)
 //      CHROME_PATH=/ruta/a/chrome si Chrome no está en un lugar conocido.
 const puppeteer = require('puppeteer-core'); const http = require('http'); const fs = require('fs'); const path = require('path');
@@ -87,6 +87,17 @@ function servidor() {
       await page.emulateMediaType('screen'); if (hojas !== 1 || visibles.join() !== 'printItinerary') res.push(l + ': ' + hojas + ' hoja(s), visibles=' + visibles.join());
     }
     check('el itinerario imprime en 1 hoja A4 (es/pt/en) y oculta el resto [ocupa ' + ocupa.join(', ') + ' del alto útil]', res.length === 0, res.join(' | ')); await page.close(); }
+
+  // 8. el menú del escritorio cabe en una línea de 1280 a 1920 px, y "Más" abre con clic y cierra con Esc y con clic afuera
+  { const page = await abrir(1440, 900, false); const malos = [];
+    const partidos = () => page.evaluate(() => { const n = (el) => { const r = document.createRange(); r.selectNodeContents(el); return new Set([...r.getClientRects()].map((x) => Math.round(x.top))).size; }; return [...document.querySelectorAll('#mainHeader nav > a, #navMoreBtn span, #mainHeader button.xl\\:inline-flex span')].filter((e) => e.offsetParent).map((e) => e.textContent.trim() + ':' + n(e)).filter((s) => !/:1$/.test(s)); });
+    for (const W of [1280, 1440, 1920]) { await page.setViewport({ width: W, height: 900 }); await sleep(250); const m = await partidos(); if (m.length) malos.push(W + 'px (' + m.join(', ') + ')'); }
+    const abierto = () => page.evaluate(() => !document.getElementById('navMoreMenu').classList.contains('hidden'));
+    await page.click('#navMoreBtn'); const a1 = await abierto();
+    await page.keyboard.press('Escape'); const a2 = !(await abierto()) && await page.evaluate(() => document.activeElement.id === 'navMoreBtn');
+    await page.click('#navMoreBtn'); await page.mouse.click(20, 500); const a3 = !(await abierto());
+    check('el menú del encabezado cabe en una línea (1280 a 1920 px)', malos.length === 0, malos.join(' | '));
+    check('el menú "Más" abre con clic y cierra con Esc y con clic afuera', a1 && a2 && a3, [a1, a2, a3].join('/')); await page.close(); }
 
   await browser.close(); srv.cerrar();
   if (failures.length) { console.log('\n' + failures.length + ' prueba(s) fallaron:\n - ' + failures.join('\n - ')); process.exit(1); }
