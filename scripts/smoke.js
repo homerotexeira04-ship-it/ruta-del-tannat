@@ -162,12 +162,12 @@ function servidor() {
     if (!await page.$('#galPause')) check('la galería corre sola, se pausa con el botón, se reanuda y se queda quieta fuera de pantalla', false, 'no existe #galPause');
     else {
       const estado = () => page.evaluate(() => getComputedStyle(document.querySelector('.gallery-track')).animationPlayState);
-      await page.evaluate(() => document.getElementById('galPause').scrollIntoView({ block: 'start', behavior: 'instant' })); await page.mouse.move(2, 2); await sleep(500);
+      await page.evaluate(() => document.getElementById('galPause').scrollIntoView({ block: 'start', behavior: 'instant' })); await page.mouse.move(2, 2); await sleep(900); // el IntersectionObserver tarda un par de cuadros: más margen para un equipo lento
       const corre = await estado();
       const rotulo = () => page.evaluate(() => document.getElementById('galPause').innerText.trim());
       const r1 = await rotulo(); await page.click('#galPause'); await page.mouse.move(2, 2); await sleep(150); const pausada = await estado(), r2 = await rotulo();
       await page.click('#galPause'); await page.mouse.move(2, 2); await sleep(150); const reanuda = await estado();
-      await page.evaluate(() => window.scrollTo(0, 0)); await sleep(400); const fuera = await estado();
+      await page.evaluate(() => window.scrollTo(0, 0)); await sleep(800); const fuera = await estado();
       check('la galería corre sola, se pausa con el botón, se reanuda y se queda quieta fuera de pantalla', corre === 'running' && pausada === 'paused' && reanuda === 'running' && fuera === 'paused' && r1 !== r2, [corre, pausada, reanuda, fuera, r1 + ' → ' + r2].join(' / '));
     } await page.close(); }
 
