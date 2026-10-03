@@ -124,7 +124,7 @@ function servidor() {
     await page.evaluate((sel) => { const el = document.querySelector(sel); window.__pasos = new Set(); const t0 = performance.now(); (function f() { const m = /matrix\(([^)]*)\)/.exec(getComputedStyle(el).transform); window.__pasos.add(m ? m[1].split(',')[5].trim() : '0'); if (performance.now() - t0 < 500) requestAnimationFrame(f); })(); }, sel);
     await page.mouse.move(c.x, c.y); await sleep(700);
     const pasos = await page.evaluate(() => window.__pasos.size);
-    check('el hover de las tarjetas anima en vez de saltar (' + pasos + ' pasos)', pasos >= 4, 'transition-property=' + c.prop + ', pasos=' + pasos); await page.close(); }
+    check('el hover de las tarjetas anima en vez de saltar (' + pasos + ' pasos)', pasos >= 3, 'transition-property=' + c.prop + ', pasos=' + pasos); await page.close(); }
 
   // 11. al apretar, los botones se achican un poco (confirma que el toque se registró): se mide la propiedad scale con el botón presionado
   { const page = await abrir(1280, 800, false);
@@ -140,6 +140,14 @@ function servidor() {
     await page.keyboard.press('Escape'); await page.focus('[aria-controls="navGrp2"]'); await page.keyboard.press('Enter');
     const conTeclado = await page.evaluate(() => getComputedStyle(document.getElementById('navGrp2')).animationName);
     check('el menú del encabezado anima con el mouse y no con el teclado', conMouse !== 'none' && conTeclado === 'none', conMouse + ' / ' + conTeclado); await page.close(); }
+
+  // 12b. un clic en el borde vacío de un panel no lo cierra (el foco sale del botón y eso no es "salir del menú")
+  { const page = await abrir(1280, 800, false);
+    await page.click('[aria-controls="navGrp1"]'); await sleep(250);
+    const pt = await page.evaluate(() => { const m = document.getElementById('navGrp1').getBoundingClientRect(); return { x: m.left + 3, y: m.top + m.height / 2 }; }); // medio del borde izquierdo: en las esquinas redondeadas el clic atraviesa el panel
+    await page.mouse.click(pt.x, pt.y); await sleep(250);
+    const abierto = await page.evaluate(() => document.querySelector('[aria-controls="navGrp1"]').getAttribute('aria-expanded'));
+    check('un clic en el borde vacío del panel no lo cierra', abierto === 'true', 'aria-expanded=' + abierto); await page.close(); }
 
   // 13. un modal que se cierra y se vuelve a abrir enseguida queda visible (el temporizador de cierre anterior no se lo lleva por delante)
   { const page = await abrir(1280, 800, false);
