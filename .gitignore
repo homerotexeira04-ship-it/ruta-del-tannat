@@ -1,6 +1,12 @@
-.claude/
+.claude/*
+!.claude/settings.json
+!.claude/hooks/
+!.claude/mcp/
+!.claude/skills/
 .agents/
-skills-lock.json
 node_modules/
 # Fotos y logos originales pesados (copia local; el sitio usa las versiones WebP optimizadas)
 originales/
+
+# Snapshots y logs que genera el MCP de Playwright
+.playwright-mcp/
