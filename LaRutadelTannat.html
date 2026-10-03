@@ -2720,47 +2720,44 @@
 
 
     <!-- ==================== VINOS Y FICHAS TÉCNICAS ==================== -->
-    <section id="vinos" class="py-20 lg:py-28 bg-white text-basalt">
+    <section id="vinos" class="py-20 lg:py-28 bg-white text-basalt border-t border-tannat-100">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center max-w-3xl mx-auto mb-16">
-          <h2 class="font-serif text-3xl sm:text-5xl font-bold tracking-tight text-tannat-dark mb-4 text-balance" data-i18n="vinos.title">
-            Vinos del Circuito
-          </h2>
-          <p class="text-lg text-terroir font-light" data-i18n="vinos.subtitle">
-            Tannat real de las bodegas de la Ruta, con datos verificados de cada etiqueta y sus premios. Bodega Harriague es hoy un espacio cultural en recuperación, sin producción propia de vino.
-          </p>
-        </div>
+        <div class="grid lg:grid-cols-12 gap-10 lg:gap-14 items-start">
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div class="bg-crema rounded-2xl border border-tannat-100 p-6 flex flex-col">
-            <span class="inline-block self-start px-3 py-1 rounded-full bg-tannat/10 text-tannat text-xs font-bold mb-4" data-i18n="vinos.w1Style">Gran Reserva</span>
-            <h3 class="font-serif text-xl font-bold text-tannat-dark" data-i18n="vinos.w1Name">Salto Chico: Tannat Reserva</h3>
-            <p class="text-xs text-terroir/70 mb-3" data-i18n="st2.title">Bodega Salto Chico</p>
-            <p class="text-sm text-terroir leading-relaxed flex-1" data-i18n="vinos.w1Desc">
-              100% Tannat, sobre suelos arenosos y de canto rodado en la costa del río Uruguay. Crianza en barricas de roble francés y americano: redondo en boca, con gran cuerpo y persistencia.
-            </p>
-            <p class="text-xs text-gold-dark font-semibold mt-4 pt-4 border-t border-tannat-100" data-i18n="vinos.w1Award">Medalla de Oro, Vinalies Internationales (París, 2011) y Tannat al Mundo 2022.</p>
+          <div class="lg:col-span-5">
+            <h2 class="font-serif text-3xl sm:text-5xl font-bold tracking-tight text-tannat-dark mb-4 text-balance" data-i18n="vinos.title">Vinos del Circuito</h2>
+            <p class="text-lg text-terroir font-light mb-8" data-i18n="vinos.subtitle">Tannat real de las bodegas de la Ruta, con datos verificados de cada etiqueta y sus premios. Bodega Harriague es hoy un espacio cultural en recuperación, sin producción propia de vino.</p>
+            <figure>
+              <div class="aspect-[4/3] lg:aspect-[3/4] rounded-3xl overflow-hidden bg-tannat-900 shadow-editorial">
+                <img src="./LaRutadelTannat_files/cata-vinos-bodega-harriague.webp" width="1200" height="1600" alt="Copa de vino durante una cata en Bodega Harriague" data-i18n-alt="vinos.photoAlt" class="w-full h-full object-cover object-[50%_68%] lg:object-center" loading="lazy">
+              </div>
+              <figcaption class="mt-3 text-sm text-terroir"><span data-i18n="gallery.cap16">Cata de vinos en Bodega Harriague</span><span class="block text-[11px] text-terroir/80 mt-0.5" data-i18n="vinos.photoCredit">Foto: archivo del proyecto (Homero Texeira)</span></figcaption>
+            </figure>
           </div>
-          <div class="bg-crema rounded-2xl border border-tannat-100 p-6 flex flex-col">
-            <span class="inline-block self-start px-3 py-1 rounded-full bg-tannat/10 text-tannat text-xs font-bold mb-4" data-i18n="vinos.w2Style">Parcela Única</span>
-            <h3 class="font-serif text-xl font-bold text-tannat-dark" data-i18n="vinos.w2Name">Bertolini &amp; Broglio: Tannat Exotic Senza Crianza</h3>
-            <p class="text-xs text-terroir/70 mb-3" data-i18n="st3.title">Bodega Bertolini &amp; Broglio</p>
-            <p class="text-sm text-terroir leading-relaxed flex-1" data-i18n="vinos.w2Desc">
-              100% Tannat clon 717, de una única parcela y sin paso por barrica (14,7% vol.). Muy oscuro y denso, con notas a frutas negras maduras, chocolate y tabaco; en boca es untuoso, con taninos dulces y una larga persistencia.
-            </p>
-            <p class="text-xs text-gold-dark font-semibold mt-4 pt-4 border-t border-tannat-100" data-i18n="vinos.w2Award">Medalla de Oro y mejor puntaje del certamen, Tannat al Mundo (6ª edición).</p>
-          </div>
-          <div class="bg-crema rounded-2xl border border-tannat-100 p-6 flex flex-col">
-            <span class="inline-block self-start px-3 py-1 rounded-full bg-tannat/10 text-tannat text-xs font-bold mb-4" data-i18n="vinos.w3Style">Reserva</span>
-            <h3 class="font-serif text-xl font-bold text-tannat-dark" data-i18n="vinos.w3Name">Mori Maglio: Tannat Reserva</h3>
-            <p class="text-xs text-terroir/70 mb-3" data-i18n="st4.title">Mori Maglio Wines</p>
-            <p class="text-sm text-terroir leading-relaxed flex-1" data-i18n="vinos.w3Desc">
-              Tannat del Viñedo El Asombrado, en Parada Daymán, implantado desde 1999. Vino de autor de la familia Mori Maglio, en partidas limitadas.
-            </p>
-            <p class="text-xs text-gold-dark font-semibold mt-4 pt-4 border-t border-tannat-100" data-i18n="vinos.w3Award">Medalla, Tannat al Mundo 2022 (cosecha 2021).</p>
-          </div>
+
+          <ul class="lg:col-span-7 divide-y divide-tannat-100">
+            <li class="py-8 first:pt-0 last:pb-0">
+              <p class="text-sm font-semibold text-gold-dark"><span data-i18n="vinos.w1Style">Gran Reserva</span><span aria-hidden="true"> · </span><span data-i18n="st2.title">Bodega Salto Chico</span></p>
+              <h3 class="font-serif text-2xl font-bold text-tannat-dark mt-1 mb-3" data-i18n="vinos.w1Name">Salto Chico: Tannat Reserva</h3>
+              <p class="text-base text-terroir leading-relaxed" data-i18n="vinos.w1Desc">100% Tannat, sobre suelos arenosos y de canto rodado en la costa del río Uruguay. Crianza en barricas de roble francés y americano: redondo en boca, con gran cuerpo y persistencia.</p>
+              <p class="mt-4 text-sm font-semibold text-tannat" data-i18n="vinos.w1Award">Medalla de Oro, Vinalies Internationales (París, 2011) y Tannat al Mundo 2022.</p>
+            </li>
+            <li class="py-8 first:pt-0 last:pb-0">
+              <p class="text-sm font-semibold text-gold-dark"><span data-i18n="vinos.w2Style">Parcela Única</span><span aria-hidden="true"> · </span><span data-i18n="st3.title">Bodega Bertolini &amp; Broglio</span></p>
+              <h3 class="font-serif text-2xl font-bold text-tannat-dark mt-1 mb-3" data-i18n="vinos.w2Name">Bertolini &amp; Broglio: Tannat Exotic Senza Crianza</h3>
+              <p class="text-base text-terroir leading-relaxed" data-i18n="vinos.w2Desc">100% Tannat clon 717, de una única parcela y sin paso por barrica (14,7% vol.). Muy oscuro y denso, con notas a frutas negras maduras, chocolate y tabaco; en boca es untuoso, con taninos dulces y una larga persistencia.</p>
+              <p class="mt-4 text-sm font-semibold text-tannat" data-i18n="vinos.w2Award">Medalla de Oro y mejor puntaje del certamen, Tannat al Mundo (6ª edición).</p>
+            </li>
+            <li class="py-8 first:pt-0 last:pb-0">
+              <p class="text-sm font-semibold text-gold-dark"><span data-i18n="vinos.w3Style">Reserva</span><span aria-hidden="true"> · </span><span data-i18n="st4.title">Mori Maglio Wines</span></p>
+              <h3 class="font-serif text-2xl font-bold text-tannat-dark mt-1 mb-3" data-i18n="vinos.w3Name">Mori Maglio: Tannat Reserva</h3>
+              <p class="text-base text-terroir leading-relaxed" data-i18n="vinos.w3Desc">Tannat del Viñedo El Asombrado, en Parada Daymán, implantado desde 1999. Vino de autor de la familia Mori Maglio, en partidas limitadas.</p>
+              <p class="mt-4 text-sm font-semibold text-tannat" data-i18n="vinos.w3Award">Medalla, Tannat al Mundo 2022 (cosecha 2021).</p>
+            </li>
+          </ul>
+
         </div>
-        <p class="text-xs text-terroir/60 text-center mt-8" data-i18n="vinos.source">Datos verificados en los sitios oficiales de cada bodega, INAVI y coberturas de prensa especializada (Tannat al Mundo, Vinalies Internationales).</p>
+        <p class="text-xs text-terroir/80 mt-10 max-w-3xl" data-i18n="vinos.source">Datos verificados en los sitios oficiales de cada bodega, INAVI y coberturas de prensa especializada (Tannat al Mundo, Vinalies Internationales).</p>
       </div>
     </section>
 
@@ -3972,6 +3969,8 @@
         "vinos.w3Desc": "Tannat del Viñedo El Asombrado, en Parada Daymán, implantado desde 1999. Vino de autor de la familia Mori Maglio, en partidas limitadas.",
         "vinos.w3Award": "Medalla, Tannat al Mundo 2022 (cosecha 2021).",
         "vinos.source": "Datos verificados en los sitios oficiales de cada bodega, INAVI y coberturas de prensa especializada (Tannat al Mundo, Vinalies Internationales).",
+        "vinos.photoAlt": "Copa de vino durante una cata en Bodega Harriague",
+        "vinos.photoCredit": "Foto: archivo del proyecto (Homero Texeira)",
         "map.subtitle": "Haz clic en los puntos del mapa para ubicar cada estación a lo largo de Salto y la Ruta 3 hacia Parada Daymán.",
         "map.gps": "GPS &nearr;",
         "map.waze": "Waze &nearr;",
@@ -4520,6 +4519,8 @@
         "vinos.w3Desc": "Tannat do Vinhedo El Asombrado, em Parada Daymán, implantado desde 1999. Vinho de autor da família Mori Maglio, em lotes limitados.",
         "vinos.w3Award": "Medalha, Tannat al Mundo 2022 (safra 2021).",
         "vinos.source": "Dados verificados nos sites oficiais de cada vinícola, no INAVI e em coberturas de imprensa especializada (Tannat al Mundo, Vinalies Internationales).",
+        "vinos.photoAlt": "Taça de vinho durante uma degustação na Vinícola Harriague",
+        "vinos.photoCredit": "Foto: arquivo do projeto (Homero Texeira)",
         "map.subtitle": "Clique nos pontos do mapa para localizar cada vinícola ao longo de Salto e da Rota 3 rumo a Parada Daymán.",
         "map.gps": "GPS &nearr;",
         "map.waze": "Waze &nearr;",
@@ -5068,6 +5069,8 @@
         "vinos.w3Desc": "Tannat from the El Asombrado Vineyard in Parada Daymán, planted since 1999. A family label from Mori Maglio, produced in limited batches.",
         "vinos.w3Award": "Medal, Tannat al Mundo 2022 (2021 vintage).",
         "vinos.source": "Data verified on each winery's official site, INAVI, and specialized press coverage (Tannat al Mundo, Vinalies Internationales).",
+        "vinos.photoAlt": "Wine glass during a tasting at Harriague Winery",
+        "vinos.photoCredit": "Photo: project archive (Homero Texeira)",
         "map.subtitle": "Click on map markers to locate each historic winery along Salto and Route 3.",
         "map.gps": "GPS &nearr;",
         "map.waze": "Waze &nearr;",
