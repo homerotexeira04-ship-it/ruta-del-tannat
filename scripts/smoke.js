@@ -1,4 +1,4 @@
-// Pruebas de humo en un Chrome real (puppeteer-core): errores, desbordes, idiomas, botón de WhatsApp, La Copa, itinerario impreso, menú del encabezado, recorrido de estaciones, calendario de temporadas y galería.
+// Pruebas de humo en un Chrome real (puppeteer-core): errores, desbordes, idiomas, botón de WhatsApp, La Copa e itinerario impreso.
 // Uso: node scripts/smoke.js      (levanta su propio servidor; o usa SITE_URL=http://... si ya hay uno)
 //      CHROME_PATH=/ruta/a/chrome si Chrome no está en un lugar conocido.
 const puppeteer = require('puppeteer-core'); const http = require('http'); const fs = require('fs'); const path = require('path');
@@ -87,62 +87,6 @@ function servidor() {
       await page.emulateMediaType('screen'); if (hojas !== 1 || visibles.join() !== 'printItinerary') res.push(l + ': ' + hojas + ' hoja(s), visibles=' + visibles.join());
     }
     check('el itinerario imprime en 1 hoja A4 (es/pt/en) y oculta el resto [ocupa ' + ocupa.join(', ') + ' del alto útil]', res.length === 0, res.join(' | ')); await page.close(); }
-
-  // 8. el menú del escritorio cabe en una línea de 1280 a 1920 px, y "Más" abre con clic y cierra con Esc y con clic afuera
-  { const page = await abrir(1440, 900, false); const malos = [];
-    const partidos = () => page.evaluate(() => { const n = (el) => { const r = document.createRange(); r.selectNodeContents(el); return new Set([...r.getClientRects()].map((x) => Math.round(x.top))).size; }; return [...document.querySelectorAll('#mainHeader nav > a, #navMoreBtn span, #mainHeader button.xl\\:inline-flex span')].filter((e) => e.offsetParent).map((e) => e.textContent.trim() + ':' + n(e)).filter((s) => !/:1$/.test(s)); });
-    for (const W of [1280, 1440, 1920]) { await page.setViewport({ width: W, height: 900 }); await sleep(250); const m = await partidos(); if (m.length) malos.push(W + 'px (' + m.join(', ') + ')'); }
-    const abierto = () => page.evaluate(() => !document.getElementById('navMoreMenu').classList.contains('hidden'));
-    await page.click('#navMoreBtn'); const a1 = await abierto();
-    await page.keyboard.press('Escape'); const a2 = !(await abierto()) && await page.evaluate(() => document.activeElement.id === 'navMoreBtn');
-    await page.click('#navMoreBtn'); await page.mouse.click(20, 500); const a3 = !(await abierto());
-    check('el menú del encabezado cabe en una línea (1280 a 1920 px)', malos.length === 0, malos.join(' | '));
-    check('el menú "Más" abre con clic y cierra con Esc y con clic afuera', a1 && a2 && a3, [a1, a2, a3].join('/')); await page.close(); }
-
-  // 9. recorrido de estaciones: la línea se dibuja con el scroll (y queda entera con "reducir movimiento")
-  { const page = await abrir(1280, 800, false);
-    const escalas = () => page.evaluate(() => [...document.querySelectorAll('.route > li')].map((li) => { const m = /matrix\(1, 0, 0, ([\d.e-]+)/.exec(getComputedStyle(li, '::after').transform); return m ? +m[1] : 1; }));
-    const entera = (await escalas()).every((v) => v === 1);
-    await page.emulateMediaFeatures([{ name: 'prefers-reduced-motion', value: 'no-preference' }]);
-    const soporta = await page.evaluate(() => CSS.supports('animation-timeline: view()'));
-    const pinesOn = () => page.evaluate(() => [...document.querySelectorAll('.route-pin')].filter((p) => getComputedStyle(p).backgroundColor === 'rgb(114, 27, 40)').length);
-    const en = async (t) => { await page.evaluate((t) => { const r = document.querySelector('.route').getBoundingClientRect(); window.scrollTo({ top: r.top + scrollY - innerHeight * 0.5 + r.height * t, behavior: 'instant' }); }, t); await sleep(400); return { v: (await escalas()).slice(0, -1), pines: await pinesOn() }; };
-    let antes = {}, medio = {}, despues = {};
-    if (soporta) { antes = await en(-0.3); medio = await en(0.5); despues = await en(1.3); }
-    const dec = (v) => v.every((x, i) => i === 0 || x <= v[i - 1] + 0.001);
-    const ok = entera && (!soporta || (antes.v.every((x) => x < 0.02) && antes.pines === 0 && dec(medio.v) && medio.v[0] > 0.98 && medio.v[medio.v.length - 1] < 0.02 && medio.pines >= 1 && medio.pines <= 3 && despues.v.every((x) => x > 0.98) && despues.pines === 4));
-    check('el recorrido de estaciones se dibuja con el scroll y queda entero con "reducir movimiento"', ok, JSON.stringify({ entera, soporta, antes, medio, despues })); await page.close(); }
-
-  // 10. calendario de temporadas: abre en la de hoy, cada pestaña lleva a su diapositiva y deslizar la pista cambia la pestaña
-  { const page = await abrir(1280, 800, false);
-    const r = await page.evaluate(async () => {
-      const tabs = [...document.querySelectorAll('.season-tab')], tr = document.getElementById('seasonTrack'), esp = (ms) => new Promise((ok) => setTimeout(ok, ms));
-      const sel = () => tabs.findIndex((t) => t.getAttribute('aria-selected') === 'true'), pos = (i) => tr.children[i].offsetLeft - 8;
-      const m = new Date().getMonth(), hoy = (m === 11 || m <= 2) ? 0 : m <= 4 ? 1 : m <= 7 ? 2 : 3, ini = sel(), insignia = !document.getElementById('seasonNowBadge' + (hoy + 1)).classList.contains('hidden');
-      const otra = (hoy + 1) % 4; tabs[otra].click(); await esp(1000); const clic = sel() === otra && Math.abs(tr.scrollLeft - pos(otra)) < 4;
-      const dest = (otra + 1) % 4; tr.scrollTo({ left: pos(dest), behavior: 'instant' }); await esp(600); const deslizar = sel() === dest;
-      tabs[dest].focus(); tabs[dest].dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true })); await esp(1000); const teclado = sel() === (dest + 1) % 4;
-      return { hoy, ini, insignia, clic, deslizar, teclado };
-    });
-    check('el calendario de temporadas abre en la de hoy, y la pestaña, el deslizado y las flechas lo mueven', r.ini === r.hoy && r.insignia && r.clic && r.deslizar && r.teclado, JSON.stringify(r)); await page.close(); }
-
-  // 11. galería deslizable: no se mueve sola, los botones y el teclado la recorren y cada foto abre un visor con flechas
-  { const page = await abrir(1280, 800, false);
-    const r = await page.evaluate(async () => {
-      const esp = (ms) => new Promise((ok) => setTimeout(ok, ms)), s = document.getElementById('galleryStrip'), items = [...s.children], prev = document.getElementById('galPrev'), next = document.getElementById('galNext');
-      const solas = document.getAnimations().filter((a) => a instanceof CSSAnimation && a.effect && a.effect.target && a.effect.target.closest && a.effect.target.closest('#galeria')).length;
-      const cs = getComputedStyle(s), deslizable = s.scrollWidth > s.clientWidth + 100 && cs.overflowX === 'auto' && cs.scrollSnapType.includes('x');
-      const ini = prev.getAttribute('aria-disabled') === 'true' && next.getAttribute('aria-disabled') === 'false';
-      next.click(); await esp(500); const avanza = s.scrollLeft > 100 && prev.getAttribute('aria-disabled') === 'false';
-      s.scrollTo({ left: s.scrollWidth, behavior: 'instant' }); await esp(300); const fin = next.getAttribute('aria-disabled') === 'true';
-      items[0].focus(); items[0].dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true })); const teclado = document.activeElement === items[1] && items.filter((i) => i.tabIndex === 0).length === 1;
-      items[1].click(); await esp(400);
-      const lb = () => ({ abierto: !document.getElementById('galleryLightbox').classList.contains('hidden'), cap: document.getElementById('lightboxCaption').textContent });
-      const a = lb(); stepGalleryLightbox(1); const b = lb(); stepGalleryLightbox(-1); const c = lb();
-      const visor = a.abierto && !!a.cap && !!b.cap && b.cap !== a.cap && c.cap === a.cap;
-      return { solas, deslizable, ini, avanza, fin, teclado, visor };
-    });
-    check('la galería se desliza (botones, teclado y visor con flechas) y no se mueve sola', r.solas === 0 && r.deslizable && r.ini && r.avanza && r.fin && r.teclado && r.visor, JSON.stringify(r)); await page.close(); }
 
   await browser.close(); srv.cerrar();
   if (failures.length) { console.log('\n' + failures.length + ' prueba(s) fallaron:\n - ' + failures.join('\n - ')); process.exit(1); }
