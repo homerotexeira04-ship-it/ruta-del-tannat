@@ -171,6 +171,11 @@ function servidor() {
       check('la galería corre sola, se pausa con el botón, se reanuda y se queda quieta fuera de pantalla', corre === 'running' && pausada === 'paused' && reanuda === 'running' && fuera === 'paused' && r1 !== r2, [corre, pausada, reanuda, fuera, r1 + ' → ' + r2].join(' / '));
     } await page.close(); }
 
+  // 15. formulario de reserva en el celular: campos de 16 px o más (con menos, iOS agranda la página al enfocar y no la devuelve)
+  { const page = await abrir(390, 844, true);
+    const chicos = await page.evaluate(() => [...document.querySelectorAll('#bookingForm input:not([type=hidden]):not([type=checkbox]):not([type=radio]), #bookingForm select, #bookingForm textarea')].map((e) => (e.id || e.name) + ':' + parseFloat(getComputedStyle(e).fontSize)).filter((x) => parseFloat(x.split(':')[1]) < 16));
+    check('los campos del formulario de reserva tienen 16 px o más en el celular', chicos.length === 0, chicos.join(', ')); await page.close(); }
+
   await browser.close(); srv.cerrar();
   if (failures.length) { console.log('\n' + failures.length + ' prueba(s) fallaron:\n - ' + failures.join('\n - ')); process.exit(1); }
   console.log('\nTodas las pruebas de humo pasaron');
