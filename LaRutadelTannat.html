@@ -435,6 +435,8 @@
     .modal-overlay:not(.modal-open), .modal-overlay:not(.modal-open) .modal-card { transition-duration: .18s; } /* al cerrar sale más rápido de lo que entró */
     @media (prefers-reduced-motion: reduce) { .modal-card { transform: none; } } /* sin escala ni desplazamiento: queda el fundido */
     .modal-card:focus { outline: none; } /* el foco entra a la tarjeta al abrir (showModal); no es un control */
+    /* iOS agranda la página al enfocar un campo con letra menor a 16 px y no la devuelve: en pantallas táctiles el formulario de reserva va en 16 px (en escritorio queda en 14) */
+    @media (pointer: coarse) { #bookingForm input, #bookingForm select, #bookingForm textarea { font-size: 16px; } }
 
     /* Galería — muro fotográfico con desplazamiento vertical automático */
     .gallery-columns { display: flex; gap: 1rem; }
