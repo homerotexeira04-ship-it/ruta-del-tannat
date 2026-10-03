@@ -10,12 +10,12 @@ Publicado con GitHub Pages: https://homerotexeira04-ship-it.github.io/ruta-del-t
 |---|---|
 | `LaRutadelTannat.html` | Página completa (contenido, estilos propios, textos ES/PT/EN y lógica) |
 | `LaRutadelTannat_files/tailwind.css` | CSS de Tailwind **compilado** (no editar a mano) |
-| `LaRutadelTannat_files/estilo-apple.css` | Capa de estilo "híbrido Apple" (tipografía del sistema, superficies neutras, encabezado y barra móvil de vidrio). Se carga después de todo lo demás y se edita a mano; al cambiarla, subir `CACHE_VERSION` en `sw.js` |
+| `LaRutadelTannat_files/mapa-ruta-circuito.webp` | Captura del mapa de OpenStreetMap que usa la tarjeta de ruta del inicio (los pines van en el HTML). Se regenera con `node scripts/mapa-hero.js`, que también imprime dónde van los pines; hace falta si cambian las coordenadas de las estaciones |
 | `LaRutadelTannat_files/copa-tannat-*.js` | La Copa de Tannat (render en canvas + interfaz), se carga al acercarse a la sección |
 | `sw.js`, `manifest.json` | Instalación como app y uso sin conexión |
 | `index.html` | Solo redirige a la página principal |
 | `apps-script/` | Opiniones reales de visitantes (planilla de Google + Apps Script). Guía de instalación y moderación en su README; sin instalar, el sitio no muestra el formulario |
-| `scripts/` | Chequeos del sitio: `check.js` (estático), `smoke.js` (en Chrome real) y `lh-assert.js` (mínimos de Lighthouse) |
+| `scripts/` | Chequeos del sitio: `check.js` (estático), `smoke.js` (en Chrome real) y `lh-assert.js` (mínimos de Lighthouse); y `mapa-hero.js`, que regenera la imagen del mapa del inicio |
 | `.github/workflows/checks.yml` | Los mismos chequeos, automáticos en GitHub Actions |
 | `404.html`, `robots.txt`, `sitemap.xml`, `favicon.ico`, `apple-touch-icon.png` | Archivos públicos de SEO y navegación |
 
@@ -40,9 +40,9 @@ En GitHub Actions (`.github/workflows/checks.yml`) corren solos en cada cambio a
 
 ```bash
 npm install           # solo la primera vez
-npm run check         # archivos citados, anclas, ids, JSON-LD, idiomas ES/PT/EN y FAQ al día
+npm run check         # archivos citados, anclas, ids, JSON-LD, idiomas ES/PT/EN, FAQ al día y sin rayas largas (—) en el texto visible
 npm test              # backend de opiniones y contador de uso, con una planilla simulada
-npm run smoke         # en Chrome real: errores, desbordes, WhatsApp, La Copa e itinerario (CHROME_PATH si no lo encuentra)
+npm run smoke         # en Chrome real: errores, desbordes, WhatsApp, La Copa, itinerario, menú del encabezado, recorrido de estaciones y calendario de temporadas (CHROME_PATH si no lo encuentra)
 npm run check:links   # enlaces externos (más lento)
 ```
 
