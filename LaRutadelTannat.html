@@ -400,6 +400,10 @@
     .tannat-pin { display: flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); background: #4A101D; border: 2px solid #C29D62; box-shadow: 0 2px 6px rgba(0,0,0,0.35); }
     .tannat-pin span { transform: rotate(45deg); color: #D9B47A; font-family: "Playfair Display", serif; font-weight: 700; font-size: 13px; }
     .tannat-pin.thermal-pin { background: #9A7B38; }
+    /* Pines de la tarjeta de ruta del inicio: mismas posiciones que en el mapa real (calculadas al sacar la imagen); solo desde lg, donde la imagen se ve entera */
+    .hero-pin { position: absolute; display: none; align-items: center; justify-content: center; width: 24px; height: 24px; margin: -29px 0 0 -12px; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); background: #4A101D; border: 2px solid #C29D62; box-shadow: 0 2px 6px rgba(0,0,0,0.35); }
+    .hero-pin span { transform: rotate(45deg); color: #D9B47A; font: 700 11px/1 "Playfair Display", serif; font-variant-numeric: lining-nums; }
+    @media (min-width: 1024px) { .hero-pin { display: flex; } }
     .leaflet-popup-content-wrapper { border-radius: 14px; padding: 0; overflow: hidden; }
     .leaflet-popup-content { margin: 0; width: 230px !important; }
     .tannat-popup img { width: 100%; height: 110px; object-fit: cover; display: block; }
@@ -981,62 +985,71 @@
         <img src="./LaRutadelTannat_files/hero-vinedo-uruguay.webp" width="1920" height="1440" srcset="./LaRutadelTannat_files/hero-vinedo-uruguay-960.webp 960w, ./LaRutadelTannat_files/hero-vinedo-uruguay.webp 1920w" sizes="100vw" alt="Viñedo real en Canelones, Uruguay, con luz dorada de otoño entre las hileras" class="w-full h-full object-cover object-center transform scale-105 transition-transform duration-1000" loading="eager" fetchpriority="high">
         <div class="absolute inset-0 bg-gradient-to-r from-tannat-900/95 via-tannat-900/80 to-transparent"></div>
         <div class="absolute inset-0 bg-gradient-to-t from-crema via-transparent to-black/60"></div>
-        <a href="https://commons.wikimedia.org/wiki/File:Vi%C3%B1a_en_Oto%C3%B1o.jpg" target="_blank" rel="noopener noreferrer" class="absolute bottom-2 right-3 z-10 text-[11px] text-white/70 hover:text-white transition-colors after:content-[''] after:absolute after:-inset-x-2 after:-inset-y-3.5" data-i18n="hero.photoCredit">Foto: Viña Varela Zarranz (CC BY-SA)</a>
+        <a href="https://commons.wikimedia.org/wiki/File:Vi%C3%B1a_en_Oto%C3%B1o.jpg" target="_blank" rel="noopener noreferrer" class="absolute bottom-2 right-3 z-10 px-2 py-0.5 rounded bg-tannat-900/70 text-[11px] text-white/90 hover:text-white transition-colors after:content-[''] after:absolute after:-inset-x-2 after:-inset-y-3.5" data-i18n="hero.photoCredit">Foto: Viña Varela Zarranz (CC BY-SA)</a>
       </div>
+      <div class="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-14">
+        <div class="grid lg:grid-cols-12 gap-10 lg:gap-12 items-center">
 
-      <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-14">
-        <div class="max-w-3xl">
-          
-          <!-- Heritage Micro-pill -->
-          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gold/20 border border-gold/40 backdrop-blur-md mb-5 animate-pulse">
-            <span class="w-2 h-2 rounded-full bg-gold"></span>
-            <span class="text-xs font-semibold text-gold-light" data-i18n="hero.badge">Cuna del Tannat en Uruguay · 1874</span>
+          <div class="lg:col-span-7">
+
+            <!-- Una sola etiqueta: el dato de origen -->
+            <p class="inline-block px-3.5 py-1.5 rounded-full bg-tannat-900/60 border border-gold/40 text-sm font-semibold tracking-wide text-gold-light mb-5" data-i18n="hero.badge">Cuna del Tannat en Uruguay · 1874</p>
+
+            <!-- Main Title -->
+            <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.1] mb-5 text-shadow">
+              <span class="block text-white" data-i18n="hero.title1">La Ruta del Tannat</span>
+              <span class="block italic font-normal text-gold-light text-3xl sm:text-4xl lg:text-5xl mt-2" data-i18n="hero.title2">Cepa, origen e identidad</span>
+            </h1>
+
+            <!-- Value Proposition -->
+            <p class="text-base sm:text-xl text-gray-200 leading-relaxed mb-6 sm:mb-8 max-w-xl font-light" data-i18n="hero.description">Cuatro bodegas, la historia de Pascual Harriague y las aguas termales de Salto, en un solo circuito.</p>
+
+            <!-- CTAs -->
+            <div class="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-4">
+              <a href="#estaciones" class="inline-flex items-center justify-center gap-2 bg-gold hover:bg-gold-light text-tannat-900 font-bold px-6 xl:px-8 py-4 whitespace-nowrap rounded-full shadow-xl hover:shadow-gold/30 hover:-translate-y-0.5 active:scale-[0.98] transition-all text-base focus:outline-none focus:ring-2 focus:ring-gold">
+                <span data-i18n="hero.btnExplore">Explorar las 4 Estaciones</span>
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+              </a>
+
+              <button onclick="openBookingModal(&#39;General&#39;)" class="inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white border border-white/30 font-semibold px-6 xl:px-8 py-4 whitespace-nowrap rounded-full hover:shadow-lg hover:shadow-gold/10 active:scale-[0.98] transition-all text-base focus:outline-none focus:ring-2 focus:ring-white">
+                <svg class="w-5 h-5 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                <span data-i18n="hero.btnBook">Ver Paquetes y Tarifas</span>
+              </button>
+            </div>
           </div>
 
-          <!-- Main Title -->
-          <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.1] mb-5 text-shadow">
-            <span class="block text-white" data-i18n="hero.title1">La Ruta del Tannat</span>
-            <span class="block italic font-normal text-gold-light text-3xl sm:text-4xl lg:text-5xl mt-2" data-i18n="hero.title2">Cepa, origen e identidad</span>
-          </h1>
-
-          <!-- Value Proposition -->
-          <p class="text-base sm:text-xl text-gray-200 leading-relaxed mb-6 max-w-2xl font-light" data-i18n="hero.description">
-            Recorre el circuito enoturístico que custodia la génesis del vino uruguayo. Una experiencia que entrelaza la epopeya de Pascual Harriague, 4 bodegas de excepción, viñedos en suelos basálticos y el bienestar de las aguas termales de Salto.
-          </p>
-
-          <!-- CTAs & Micro-Proof Points -->
-          <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 mb-8">
-            <a href="#estaciones" class="inline-flex items-center justify-center gap-2 bg-gold hover:bg-gold-light text-tannat-900 font-bold px-8 py-4 rounded-full shadow-xl hover:shadow-gold/30 hover:-translate-y-0.5 active:scale-[0.98] transition-all text-base focus:outline-none focus:ring-2 focus:ring-gold" data-i18n="hero.btnExplore">
-              <span>Explorar las 4 Estaciones</span>
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-            </a>
-            
-            <button onclick="openBookingModal(&#39;General&#39;)" class="inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white border border-white/30 backdrop-blur-md font-semibold px-8 py-4 rounded-full hover:shadow-lg hover:shadow-gold/10 active:scale-[0.98] transition-all text-base focus:outline-none focus:ring-2 focus:ring-white" data-i18n="hero.btnBook">
-              <svg class="w-5 h-5 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-              <span>Ver Paquetes y Tarifas</span>
-            </button>
-          </div>
-
-          <!-- Trust & Authenticity Pills: panel oscuro propio para asegurar contraste
-               sobre la foto de fondo, sin depender de qué tan clara quede esa zona. -->
-          <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 p-4 sm:p-5 rounded-2xl bg-tannat-900/70 backdrop-blur-sm border border-white/10 shadow-lg text-sm text-gray-100">
-            <div class="flex items-center gap-2">
-              <svg class="w-5 h-5 text-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-              <span data-i18n="hero.proof1">4 Bodegas del Circuito</span>
+          <!-- Tarjeta de ruta: el mapa real y la cifra que el sitio ya calcula (es la misma de la matriz de distancias de #mapa). La imagen es una captura del mapa; el interactivo carga al entrar en esa sección. -->
+          <div class="lg:col-span-5 relative flex items-center gap-4 lg:block p-3 sm:p-4 rounded-2xl bg-tannat-900/85 border border-white/15 shadow-2xl lg:max-w-md lg:ml-auto lg:w-full">
+            <div class="relative shrink-0 w-28 sm:w-48 lg:w-full aspect-[16/10] rounded-xl overflow-hidden bg-[#EFECE6]">
+              <img src="./LaRutadelTannat_files/mapa-ruta-circuito.webp" width="720" height="450" alt="Mapa de Salto con las 4 estaciones del circuito marcadas del 01 al 04" data-i18n-alt="hero.routeAlt" class="absolute inset-0 w-full h-full object-cover" decoding="async">
+              <span class="hero-pin" style="left:41.9%;top:29.6%" aria-hidden="true"><span>01</span></span>
+              <span class="hero-pin" style="left:44%;top:22%" aria-hidden="true"><span>02</span></span>
+              <span class="hero-pin" style="left:56.9%;top:78.2%" aria-hidden="true"><span>03</span></span>
+              <span class="hero-pin" style="left:58.1%;top:50.4%" aria-hidden="true"><span>04</span></span>
             </div>
-            <div class="flex items-center gap-2">
-              <svg class="w-5 h-5 text-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-              <span data-i18n="hero.proof2">Guías enoturísticos UTU</span>
-            </div>
-            <div class="flex items-center gap-2 col-span-2 sm:col-span-1">
-              <svg class="w-5 h-5 text-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-              <span data-i18n="hero.proof3">Sostenible &amp; Certificado</span>
+            <div class="min-w-0 lg:mt-4 lg:px-1">
+              <p class="text-xs font-semibold text-gold-light" data-i18n="hero.routeLabel">Las 4 estaciones, en orden</p>
+              <p class="font-serif text-2xl sm:text-4xl font-bold leading-tight text-white mt-0.5 whitespace-nowrap">33 km · 32 min</p>
+              <p class="text-xs sm:text-sm text-gray-300 leading-snug mt-1" data-i18n="hero.routeCaption">de manejo neto, con datos reales de OpenStreetMap</p>
+              <div class="mt-3 flex flex-wrap items-center justify-between gap-x-4 gap-y-1">
+                <a href="#mapa" class="text-sm font-semibold text-gold-light hover:text-white transition-colors after:content-[''] after:absolute after:inset-0 after:rounded-2xl focus:outline-none focus-visible:after:ring-2 focus-visible:after:ring-gold" data-i18n="hero.routeLink">Ver el mapa interactivo →</a>
+                <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer" class="relative z-10 text-[11px] text-gray-400 hover:text-white hover:underline">© OpenStreetMap</a>
+              </div>
             </div>
           </div>
 
         </div>
       </div>
     </section>
+
+    <!-- Franja de confianza: sale del hero para que el hero diga una sola cosa -->
+    <div class="bg-crema border-b border-tannat-100">
+      <ul class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-5 grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-0 text-sm font-semibold text-tannat-dark">
+        <li class="flex items-center justify-center gap-2 sm:px-4"><svg class="w-5 h-5 text-gold-dark flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span data-i18n="hero.proof1">4 Bodegas del Circuito</span></li>
+        <li class="flex items-center justify-center gap-2 sm:px-4 sm:border-l sm:border-tannat-100"><svg class="w-5 h-5 text-gold-dark flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span data-i18n="hero.proof2">Guías enoturísticos UTU</span></li>
+        <li class="flex items-center justify-center gap-2 sm:px-4 sm:border-l sm:border-tannat-100"><svg class="w-5 h-5 text-gold-dark flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span data-i18n="hero.proof3">Sostenible &amp; Certificado</span></li>
+      </ul>
+    </div>
 
     <!-- ==================== SECTION 2: MANIFIESTO HISTÓRICO ==================== -->
     <section id="historia" class="py-20 lg:py-28 bg-crema text-basalt relative">
@@ -3578,12 +3591,16 @@
         "hero.badge": "Cuna del Tannat en Uruguay · 1874",
         "hero.title1": "La Ruta del Tannat",
         "hero.title2": "Cepa, origen e identidad",
-        "hero.description": "Recorre el circuito enoturístico que custodia la génesis del vino uruguayo. Una experiencia que entrelaza la epopeya de Pascual Harriague, 4 bodegas de excepción, viñedos en suelos basálticos y el bienestar de las aguas termales de Salto.",
+        "hero.description": "Cuatro bodegas, la historia de Pascual Harriague y las aguas termales de Salto, en un solo circuito.",
         "hero.btnExplore": "Explorar las 4 Estaciones",
         "hero.btnBook": "Ver Paquetes y Tarifas",
         "hero.proof1": "4 Bodegas del Circuito",
         "hero.proof2": "Guías enoturísticos UTU",
         "hero.proof3": "Sostenible & Certificado",
+        "hero.routeLabel": "Las 4 estaciones, en orden",
+        "hero.routeCaption": "de manejo neto, con datos reales de OpenStreetMap",
+        "hero.routeLink": "Ver el mapa interactivo →",
+        "hero.routeAlt": "Mapa de Salto con las 4 estaciones del circuito marcadas del 01 al 04",
         
         "history.title": "Don Pascual Harriague y la Cepa que Conquistó el Mundo",
         "history.p1": "En el último tercio del siglo XIX, el inmigrante vasco-francés Don Pascual Harriague transformó la geografía productiva de Salto. Tras minuciosos ensayos con cepas traídas de los Pirineos, logró aclimatar en el suelo basáltico y el clima subtropical salteño la uva Tannat (entonces denominada Harriague).",
@@ -4119,12 +4136,16 @@
         "hero.badge": "Berço do Tannat no Uruguai · 1874",
         "hero.title1": "A Rota do Tannat",
         "hero.title2": "Uva, origem e identidade",
-        "hero.description": "Percorra o circuito enoturístico que guarda a gênese do vinho uruguaio. Uma experiência que une a epopeia de Pascual Harriague, 4 vinícolas de exceção, vinhedos em solo basáltico e o relaxamento das águas termais de Salto.",
+        "hero.description": "Quatro vinícolas, a história de Pascual Harriague e as águas termais de Salto, em um só circuito.",
         "hero.btnExplore": "Explorar as 4 Estações",
         "hero.btnBook": "Ver Pacotes e Tarifas",
         "hero.proof1": "4 Vinícolas do Circuito",
         "hero.proof2": "Guias enoturísticos UTU",
         "hero.proof3": "Sustentável & Certificado",
+        "hero.routeLabel": "As 4 estações, em ordem",
+        "hero.routeCaption": "de condução líquida, com dados reais do OpenStreetMap",
+        "hero.routeLink": "Ver o mapa interativo →",
+        "hero.routeAlt": "Mapa de Salto com as 4 estações do circuito marcadas de 01 a 04",
         
         "history.title": "Don Pascual Harriague e a Uva que Conquistou o Mundo",
         "history.p1": "No último terço do século XIX, o imigrante basco-francês Pascual Harriague transformou Salto ao aclimatar a uva Tannat nas terras basálticas do norte uruguaio após rigorosos testes com mudas dos Pireneus.",
@@ -4660,12 +4681,16 @@
         "hero.badge": "Cradle of Tannat in Uruguay · 1874",
         "hero.title1": "The Tannat Route",
         "hero.title2": "Heritage, origin & identity",
-        "hero.description": "Journey through the wine circuit preserving the genesis of Uruguayan wine. An experience blending the epic of Pascual Harriague, 4 boutique wineries, basaltic soils and Salto's thermal hot springs.",
+        "hero.description": "Four wineries, the story of Pascual Harriague and the hot springs of Salto, in one circuit.",
         "hero.btnExplore": "Explore the 4 Stations",
         "hero.btnBook": "View Packages & Rates",
         "hero.proof1": "4 Wineries on the Circuit",
         "hero.proof2": "UTU Wine-Tourism Guides",
         "hero.proof3": "Sustainable Heritage",
+        "hero.routeLabel": "The 4 stations, in order",
+        "hero.routeCaption": "of net driving, with real OpenStreetMap data",
+        "hero.routeLink": "See the interactive map →",
+        "hero.routeAlt": "Map of Salto with the circuit\'s 4 stations marked 01 to 04",
         
         "history.title": "Don Pascual Harriague & The Grape That Defined a Nation",
         "history.p1": "In the late 19th century, Basque-French pioneer Pascual Harriague acclimatized the Tannat grape in Salto's rich basaltic soils, giving birth to Uruguay's flagship wine industry.",
