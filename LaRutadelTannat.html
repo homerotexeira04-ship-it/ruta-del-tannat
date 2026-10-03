@@ -5549,10 +5549,16 @@
       if (!('IntersectionObserver' in window)) return;
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
+      // Revela y, cuando termina la transición (700 ms + el escalonado), suelta las clases del reveal: así la tarjeta recupera su propia
+      // transición (el hover de elevación y sombra, que el `transition: opacity` del reveal le pisaba) y suelta el will-change.
+      const reveal = (el) => {
+        el.classList.add('reveal-in');
+        setTimeout(() => { el.classList.remove('reveal-init', 'reveal-fade-only', 'reveal-in'); el.style.transitionDelay = ''; }, 700 + (parseFloat(el.style.transitionDelay) || 0) + 60);
+      };
       const io = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
-            entry.target.classList.add('reveal-in');
+            reveal(entry.target);
             io.unobserve(entry.target);
           }
         });
@@ -5583,7 +5589,7 @@
       // Red de seguridad: si por algún motivo un elemento nunca entra en viewport
       // (o el observer falla), se revela igual a los pocos segundos.
       setTimeout(() => {
-        document.querySelectorAll('.reveal-init:not(.reveal-in)').forEach(el => el.classList.add('reveal-in'));
+        document.querySelectorAll('.reveal-init:not(.reveal-in), .reveal-fade-only:not(.reveal-in)').forEach(reveal);
       }, 4000);
     }
     initScrollReveal();
