@@ -308,6 +308,8 @@
     .text-shadow {
       text-shadow: 0 2px 12px rgba(0,0,0,0.7);
     }
+    /* Playfair trae cifras "colgadas" (old-style) por defecto: en años, kilómetros y pines se leen desparejas. Se pasan a cifras alineadas. */
+    .font-serif, .tannat-pin span, .tannat-popup-title, .cup-toast, .cup-summary, .cup-card-title, #printItinerary h1, #printItinerary h2, #printItinerary .pi-num { font-variant-numeric: lining-nums; }
     
     /* Preloader Animations */
     #preloader {
@@ -968,7 +970,7 @@
           <!-- Heritage Micro-pill -->
           <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gold/20 border border-gold/40 backdrop-blur-md mb-5 animate-pulse">
             <span class="w-2 h-2 rounded-full bg-gold"></span>
-            <span class="text-xs font-semibold uppercase tracking-wider text-gold-light" data-i18n="hero.badge">Cuna del Tannat en Uruguay · 1874</span>
+            <span class="text-xs font-semibold text-gold-light" data-i18n="hero.badge">Cuna del Tannat en Uruguay · 1874</span>
           </div>
 
           <!-- Main Title -->
@@ -1025,7 +1027,7 @@
           <!-- Narrative Content -->
           <div class="lg:col-span-7 space-y-6">
             
-            <h2 class="font-serif text-3xl sm:text-5xl font-bold tracking-tight text-tannat-dark leading-tight uppercase" data-i18n="history.title">
+            <h2 class="font-serif text-3xl sm:text-5xl font-bold tracking-tight text-tannat-dark leading-tight text-balance" data-i18n="history.title">
               Don Pascual Harriague y la Cepa que Conquistó el Mundo
             </h2>
             
@@ -1067,7 +1069,7 @@
                   <img src="./LaRutadelTannat_files/semana-harriague-lanz-ppal4-jpg.webp" width="645" height="350" alt="Fotografía histórica del establecimiento La Caballada fundado por Pascual Harriague" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 opacity-90" loading="lazy">
                 </div>
                 <div class="p-4 bg-white">
-                  <p class="text-xs text-terroir uppercase tracking-widest font-semibold" data-i18n="history.captionTag">Archivo Histórico Municipal</p>
+                  <p class="text-xs text-terroir font-semibold" data-i18n="history.captionTag">Archivo Histórico Municipal</p>
                   <p class="font-serif text-sm font-bold text-tannat-dark" data-i18n="history.captionText">Ruinas de Bodega Harriague · Salto, Uruguay</p>
                 </div>
               </div>
@@ -1084,10 +1086,7 @@
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         <div class="text-center max-w-3xl mx-auto mb-14">
-          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-tannat-50 border border-tannat-100 text-tannat font-semibold text-xs uppercase tracking-wider" data-i18n="pioneer.pre">
-            1819 – 1894
-          </div>
-          <h2 class="mt-4 font-serif text-3xl sm:text-5xl font-bold tracking-tight text-tannat-dark uppercase" data-i18n="pioneer.title">
+          <h2 class="font-serif text-3xl sm:text-5xl font-bold tracking-tight text-tannat-dark text-balance" data-i18n="pioneer.title">
             El Pionero
           </h2>
           <p class="mt-4 text-base sm:text-lg text-terroir leading-relaxed" data-i18n="pioneer.subtitle">
@@ -1107,7 +1106,7 @@
                 </div>
                 <div class="p-4 bg-white">
                   <p class="font-serif text-lg font-bold text-tannat-dark">Don Pascual Harriague</p>
-                  <p class="text-xs text-terroir uppercase tracking-widest font-semibold" data-i18n="pioneer.captionTag">Hasparren, Francia · 1819 — París, 1894</p>
+                  <p class="text-xs text-terroir font-semibold" data-i18n="pioneer.captionTag">Hasparren, Francia · 1819 — París, 1894</p>
                 </div>
               </div>
             </div>
@@ -1124,12 +1123,12 @@
                     <div id="fc-1819-f" class="flip-card-face flip-card-front flex flex-col p-4 sm:p-5 rounded-2xl bg-white border border-tannat-100 shadow-editorial shadow-editorial-hover transition-shadow">
                       <span class="font-serif text-2xl font-bold text-tannat">1819</span>
                       <p class="mt-1 text-terroir leading-relaxed" data-i18n="pioneer.y1819">Nace el 14 de abril en Hasparren, en el País Vasco francés (Bajos Pirineos).</p>
-                      <span class="mt-auto pt-3 text-[11px] font-semibold uppercase tracking-wider text-tannat/60" data-i18n="pioneer.flipHint">Descubrí más →</span>
+                      <span class="mt-auto pt-3 text-[11px] font-semibold text-tannat/60" data-i18n="pioneer.flipHint">Descubrí más →</span>
                     </div>
                     <div id="fc-1819-b" class="flip-card-face flip-card-back flex flex-col p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-tannat-900 to-tannat-dark border border-gold/20 shadow-sm">
-                      <span class="font-serif text-xs font-bold uppercase tracking-widest text-gold">1819 · Curiosidad</span>
+                      <span class="font-serif text-xs font-bold text-gold">1819 · Curiosidad</span>
                       <p class="mt-2 text-base text-gray-100 leading-relaxed" data-i18n="pioneer.y1819Extra">Hasparren, su pueblo natal, vivió como gran parte del País Vasco francés del siglo XIX una fuerte emigración hacia el Río de la Plata: miles de vascos cruzaron el Atlántico en busca de oportunidades en Uruguay y Argentina.</p>
-                      <span class="mt-auto pt-3 text-[11px] font-semibold uppercase tracking-wider text-gold/70" data-i18n="pioneer.flipBack">← Volver</span>
+                      <span class="mt-auto pt-3 text-[11px] font-semibold text-gold/70" data-i18n="pioneer.flipBack">← Volver</span>
                     </div>
                   </div>
                 </div>
@@ -1142,12 +1141,12 @@
                     <div id="fc-1838-f" class="flip-card-face flip-card-front flex flex-col p-4 sm:p-5 rounded-2xl bg-white border border-tannat-100 shadow-editorial shadow-editorial-hover transition-shadow">
                       <span class="font-serif text-2xl font-bold text-tannat">1838</span>
                       <p class="mt-1 text-terroir leading-relaxed" data-i18n="pioneer.y1838">Llega a Montevideo desde Francia y comienza a trabajar en un saladero en la zona del Cerro.</p>
-                      <span class="mt-auto pt-3 text-[11px] font-semibold uppercase tracking-wider text-tannat/60" data-i18n="pioneer.flipHint">Descubrí más →</span>
+                      <span class="mt-auto pt-3 text-[11px] font-semibold text-tannat/60" data-i18n="pioneer.flipHint">Descubrí más →</span>
                     </div>
                     <div id="fc-1838-b" class="flip-card-face flip-card-back flex flex-col p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-tannat-900 to-tannat-dark border border-gold/20 shadow-sm">
-                      <span class="font-serif text-xs font-bold uppercase tracking-widest text-gold">1838 · Curiosidad</span>
+                      <span class="font-serif text-xs font-bold text-gold">1838 · Curiosidad</span>
                       <p class="mt-2 text-base text-gray-100 leading-relaxed" data-i18n="pioneer.y1838Extra">Los saladeros, como aquel del Cerro de Montevideo donde empezó a trabajar, eran el motor exportador de la economía uruguaya del siglo XIX: allí se salaba carne vacuna para enviarla a Brasil, Cuba y Europa.</p>
-                      <span class="mt-auto pt-3 text-[11px] font-semibold uppercase tracking-wider text-gold/70" data-i18n="pioneer.flipBack">← Volver</span>
+                      <span class="mt-auto pt-3 text-[11px] font-semibold text-gold/70" data-i18n="pioneer.flipBack">← Volver</span>
                     </div>
                   </div>
                 </div>
@@ -1160,12 +1159,12 @@
                     <div id="fc-1860-f" class="flip-card-face flip-card-front flex flex-col p-4 sm:p-5 rounded-2xl bg-white border border-tannat-100 shadow-editorial shadow-editorial-hover transition-shadow">
                       <span class="font-serif text-2xl font-bold text-tannat">1860</span>
                       <p class="mt-1 text-terroir leading-relaxed" data-i18n="pioneer.y1860">Se instala en Salto y funda el saladero La Caballada, a orillas del río Uruguay.</p>
-                      <span class="mt-auto pt-3 text-[11px] font-semibold uppercase tracking-wider text-tannat/60" data-i18n="pioneer.flipHint">Descubrí más →</span>
+                      <span class="mt-auto pt-3 text-[11px] font-semibold text-tannat/60" data-i18n="pioneer.flipHint">Descubrí más →</span>
                     </div>
                     <div id="fc-1860-b" class="flip-card-face flip-card-back flex flex-col p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-tannat-900 to-tannat-dark border border-gold/20 shadow-sm">
-                      <span class="font-serif text-xs font-bold uppercase tracking-widest text-gold">1860 · Curiosidad</span>
+                      <span class="font-serif text-xs font-bold text-gold">1860 · Curiosidad</span>
                       <p class="mt-2 text-base text-gray-100 leading-relaxed" data-i18n="pioneer.y1860Extra">Antes del vino, Harriague ya era un empresario del rubro cárnico-ganadero con un gran saladero propio sobre la costa del río Uruguay: la misma tenacidad comercial que después aplicaría a la vid.</p>
-                      <span class="mt-auto pt-3 text-[11px] font-semibold uppercase tracking-wider text-gold/70" data-i18n="pioneer.flipBack">← Volver</span>
+                      <span class="mt-auto pt-3 text-[11px] font-semibold text-gold/70" data-i18n="pioneer.flipBack">← Volver</span>
                     </div>
                   </div>
                 </div>
@@ -1178,12 +1177,12 @@
                     <div id="fc-1874-f" class="flip-card-face flip-card-front flex flex-col p-4 sm:p-5 rounded-2xl bg-white border border-tannat-100 shadow-editorial shadow-editorial-hover transition-shadow">
                       <span class="font-serif text-2xl font-bold text-tannat">1874</span>
                       <p class="mt-1 text-terroir leading-relaxed" data-i18n="pioneer.y1874">Planta en sus tierras las primeras cepas de Tannat, traídas desde Concordia (Argentina). El viñedo llegaría a cubrir cerca de 200 hectáreas y el vino se popularizó con su propio apellido: "Harriague".</p>
-                      <span class="mt-auto pt-3 text-[11px] font-semibold uppercase tracking-wider text-tannat/60" data-i18n="pioneer.flipHint">Descubrí más →</span>
+                      <span class="mt-auto pt-3 text-[11px] font-semibold text-tannat/60" data-i18n="pioneer.flipHint">Descubrí más →</span>
                     </div>
                     <div id="fc-1874-b" class="flip-card-face flip-card-back flex flex-col p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-tannat-900 to-tannat-dark border border-gold/20 shadow-sm">
-                      <span class="font-serif text-xs font-bold uppercase tracking-widest text-gold">1874 · Curiosidad</span>
+                      <span class="font-serif text-xs font-bold text-gold">1874 · Curiosidad</span>
                       <p class="mt-2 text-base text-gray-100 leading-relaxed" data-i18n="pioneer.y1874Extra">Las primeras plantas no vinieron directo de Francia: se las compró a otro vasco, de apellido Lorda, que las cultivaba en Concordia (Argentina). Por eso, del otro lado del río, esa misma cepa se conoce como "Lorda".</p>
-                      <span class="mt-auto pt-3 text-[11px] font-semibold uppercase tracking-wider text-gold/70" data-i18n="pioneer.flipBack">← Volver</span>
+                      <span class="mt-auto pt-3 text-[11px] font-semibold text-gold/70" data-i18n="pioneer.flipBack">← Volver</span>
                     </div>
                   </div>
                 </div>
@@ -1196,12 +1195,12 @@
                     <div id="fc-1894-f" class="flip-card-face flip-card-front flex flex-col p-4 sm:p-5 rounded-2xl bg-white border border-tannat-100 shadow-editorial shadow-editorial-hover transition-shadow">
                       <span class="font-serif text-2xl font-bold text-tannat">1894</span>
                       <p class="mt-1 text-terroir leading-relaxed" data-i18n="pioneer.y1894">Fallece el 12 de enero en París. Su nombre queda para siempre unido a la cepa que aclimató en Salto.</p>
-                      <span class="mt-auto pt-3 text-[11px] font-semibold uppercase tracking-wider text-tannat/60" data-i18n="pioneer.flipHint">Descubrí más →</span>
+                      <span class="mt-auto pt-3 text-[11px] font-semibold text-tannat/60" data-i18n="pioneer.flipHint">Descubrí más →</span>
                     </div>
                     <div id="fc-1894-b" class="flip-card-face flip-card-back flex flex-col p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-tannat-900 to-tannat-dark border border-gold/20 shadow-sm">
-                      <span class="font-serif text-xs font-bold uppercase tracking-widest text-gold">1894 · Curiosidad</span>
+                      <span class="font-serif text-xs font-bold text-gold">1894 · Curiosidad</span>
                       <p class="mt-2 text-base text-gray-100 leading-relaxed" data-i18n="pioneer.y1894Extra">Durante décadas circularon datos imprecisos sobre su muerte. Recién en 2017 se halló en París su partida de defunción real, lo que permitió corregir los registros históricos sobre el pionero del Tannat.</p>
-                      <span class="mt-auto pt-3 text-[11px] font-semibold uppercase tracking-wider text-gold/70" data-i18n="pioneer.flipBack">← Volver</span>
+                      <span class="mt-auto pt-3 text-[11px] font-semibold text-gold/70" data-i18n="pioneer.flipBack">← Volver</span>
                     </div>
                   </div>
                 </div>
@@ -1214,12 +1213,12 @@
                     <div id="fc-2016-f" class="flip-card-face flip-card-front flex flex-col p-4 sm:p-5 rounded-2xl bg-white border border-tannat-100 shadow-editorial shadow-editorial-hover transition-shadow">
                       <span class="font-serif text-2xl font-bold text-tannat">2016</span>
                       <p class="mt-1 text-terroir leading-relaxed" data-i18n="pioneer.y2016">El INAVI declara el 14 de abril — su fecha de nacimiento — Día Nacional del Tannat en su homenaje.</p>
-                      <span class="mt-auto pt-3 text-[11px] font-semibold uppercase tracking-wider text-tannat/60" data-i18n="pioneer.flipHint">Descubrí más →</span>
+                      <span class="mt-auto pt-3 text-[11px] font-semibold text-tannat/60" data-i18n="pioneer.flipHint">Descubrí más →</span>
                     </div>
                     <div id="fc-2016-b" class="flip-card-face flip-card-back flex flex-col p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-tannat-900 to-tannat-dark border border-gold/20 shadow-sm">
-                      <span class="font-serif text-xs font-bold uppercase tracking-widest text-gold">2016 · Curiosidad</span>
+                      <span class="font-serif text-xs font-bold text-gold">2016 · Curiosidad</span>
                       <p class="mt-2 text-base text-gray-100 leading-relaxed" data-i18n="pioneer.y2016Extra">En 2019, al cumplirse 200 años de su nacimiento, Salto y Hasparren —su pueblo natal en el País Vasco francés— celebraron juntas el bicentenario de Harriague con festejos binacionales.</p>
-                      <span class="mt-auto pt-3 text-[11px] font-semibold uppercase tracking-wider text-gold/70" data-i18n="pioneer.flipBack">← Volver</span>
+                      <span class="mt-auto pt-3 text-[11px] font-semibold text-gold/70" data-i18n="pioneer.flipBack">← Volver</span>
                     </div>
                   </div>
                 </div>
@@ -1259,7 +1258,7 @@
 
           <header class="cup-head">
             <div class="cup-chip items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-gold/40 text-gold-light font-semibold text-xs uppercase tracking-wider" data-i18n="cup.pre">Experiencia interactiva</div>
-            <h2 id="cupTitle" class="cup-h2 font-serif font-bold tracking-tight text-white uppercase" data-i18n="cup.title">La Copa de Tannat</h2>
+            <h2 id="cupTitle" class="cup-h2 font-serif font-bold tracking-tight text-white" data-i18n="cup.title">La Copa de Tannat</h2>
             <p class="cup-sub text-gray-200 leading-snug" data-i18n="cup.subtitle">Girá la copa, liberá sus aromas y descubrí con qué disfrutarla en Salto.</p>
           </header>
 
@@ -1357,7 +1356,7 @@
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <div class="text-center max-w-3xl mx-auto mb-16">
-          <h2 class="font-serif text-3xl sm:text-5xl font-bold tracking-tight text-tannat-dark mb-4 uppercase" data-i18n="stations.title">
+          <h2 class="font-serif text-3xl sm:text-5xl font-bold tracking-tight text-tannat-dark mb-4 text-balance" data-i18n="stations.title">
             Las 4 Estaciones de la Ruta
           </h2>
           <p class="text-lg text-terroir font-light" data-i18n="stations.subtitle">
@@ -1378,7 +1377,7 @@
             </div>
             <div class="p-6 flex-1 flex flex-col justify-between">
               <div>
-                <span class="text-xs font-bold text-gold-dark tracking-wider uppercase block mb-1" data-i18n="st1.tag">Punto Cero del Tannat</span>
+                <span class="text-xs font-bold text-gold-dark block mb-1" data-i18n="st1.tag">Punto Cero del Tannat</span>
                 <h3 id="stc1-t" class="font-serif text-xl font-bold text-tannat-dark mb-2 group-hover:text-gold-dark transition-colors" data-i18n="st1.title">Espacio Cultural Bodega Harriague</h3>
                 <p class="text-base text-terroir line-clamp-3 mb-4" data-i18n="st1.desc">
                   Recinto arqueológico e industrial. Cuna donde se implantaron los primeros cuadros de Tannat en 1874. Proyecto patrimonial U-riharri.
@@ -1406,7 +1405,7 @@
             </div>
             <div class="p-6 flex-1 flex flex-col justify-between">
               <div>
-                <span class="text-xs font-bold text-gold-dark tracking-wider uppercase block mb-1" data-i18n="st2.tag">Ribera del Río Uruguay</span>
+                <span class="text-xs font-bold text-gold-dark block mb-1" data-i18n="st2.tag">Ribera del Río Uruguay</span>
                 <h3 id="stc2-t" class="font-serif text-xl font-bold text-tannat-dark mb-2 group-hover:text-gold-dark transition-colors" data-i18n="st2.title">Bodega Salto Chico</h3>
                 <p class="text-base text-terroir line-clamp-3 mb-4" data-i18n="st2.desc">
                   Viñedos sobre cascadas basálticas. 6 hectáreas de cepas europeas y moderna tecnología de vinificación artesanal.
@@ -1435,7 +1434,7 @@
             </div>
             <div class="p-6 flex-1 flex flex-col justify-between">
               <div>
-                <span class="text-xs font-bold text-gold-dark tracking-wider uppercase block mb-1" data-i18n="st3.tag">Bodega Boutique &amp; Terroir</span>
+                <span class="text-xs font-bold text-gold-dark block mb-1" data-i18n="st3.tag">Bodega Boutique &amp; Terroir</span>
                 <h3 id="stc3-t" class="font-serif text-xl font-bold text-tannat-dark mb-2 group-hover:text-gold-dark transition-colors" data-i18n="st3.title">Bodega Bertolini &amp; Broglio</h3>
                 <p class="text-base text-terroir line-clamp-3 mb-4" data-i18n="st3.desc">
                   19 hectáreas de viñedos conducidos en parrales. Pioneros en vinificación por gravedad y creadores del premiado Tannat Exotic.
@@ -1464,7 +1463,7 @@
             </div>
             <div class="p-6 flex-1 flex flex-col justify-between">
               <div>
-                <span class="text-xs font-bold text-gold-dark tracking-wider uppercase block mb-1" data-i18n="st4.tag">Viñedo El Asombrado</span>
+                <span class="text-xs font-bold text-gold-dark block mb-1" data-i18n="st4.tag">Viñedo El Asombrado</span>
                 <h3 id="stc4-t" class="font-serif text-xl font-bold text-tannat-dark mb-2 group-hover:text-gold-dark transition-colors" data-i18n="st4.title">Mori Maglio Wines</h3>
                 <p class="text-base text-terroir line-clamp-3 mb-4" data-i18n="st4.desc">
                   Tradición vitivinícola viva en Parada Daymán. Vinos de autor con identidad territorial y maridajes gourmet de cordero y cítricos salteños.
@@ -1502,7 +1501,7 @@
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         <div class="text-center max-w-3xl mx-auto mb-16">
-          <h2 class="font-serif text-3xl sm:text-5xl font-bold tracking-tight text-tannat-dark mb-4 uppercase" data-i18n="sustain.title">
+          <h2 class="font-serif text-3xl sm:text-5xl font-bold tracking-tight text-tannat-dark mb-4 text-balance" data-i18n="sustain.title">
             Un Circuito Pensado para Perdurar
           </h2>
           <p class="text-lg text-terroir font-light" data-i18n="sustain.subtitle">
@@ -1554,7 +1553,7 @@
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         <div class="text-center max-w-3xl mx-auto mb-16">
-          <h2 class="font-serif text-3xl sm:text-5xl font-bold tracking-tight text-tannat-dark mb-4 uppercase" data-i18n="seasons.title">
+          <h2 class="font-serif text-3xl sm:text-5xl font-bold tracking-tight text-tannat-dark mb-4 text-balance" data-i18n="seasons.title">
             ¿Cuándo Vivir la Experiencia?
           </h2>
           <p class="text-lg text-terroir font-light" data-i18n="seasons.subtitle">
@@ -1580,7 +1579,7 @@
                     <path d="M11 5V3c0-1 1-1.5 2-1.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
                   </svg>
                 </div>
-                <span class="text-xs font-bold uppercase tracking-wider text-gold-dark block mb-1" data-i18n="season.s1Time">Dic — Mar · Verano</span>
+                <span class="text-xs font-bold text-gold-dark block mb-1" data-i18n="season.s1Time">Dic — Mar · Verano</span>
                 <h3 class="font-serif text-xl font-bold text-tannat-dark mb-2" data-i18n="season.s1Title">Temporada de Vendimia</h3>
                 <p class="text-sm text-terroir leading-relaxed mb-4" data-i18n="season.s1Desc">
                   El momento cumbre del año: cosecha manual al amanecer, degustación de uvas directas del racimo, visitas crepusculares y pisada tradicional en lagares.
@@ -1611,7 +1610,7 @@
                     <path d="M12 21V9" fill="none" stroke="#FCF9F2" stroke-width="1.2" stroke-linecap="round"/>
                   </svg>
                 </div>
-                <span class="text-xs font-bold uppercase tracking-wider text-gold-dark block mb-1" data-i18n="season.s2Time">Abr — May · Otoño</span>
+                <span class="text-xs font-bold text-gold-dark block mb-1" data-i18n="season.s2Time">Abr — May · Otoño</span>
                 <h3 class="font-serif text-xl font-bold text-tannat-dark mb-2" data-i18n="season.s2Title">Semana de Harriague</h3>
                 <p class="text-sm text-terroir leading-relaxed mb-4" data-i18n="season.s2Desc">
                   14 de Abril: Día Nacional del Tannat en homenaje al natalicio de Don Pascual Harriague. Viñedos en tonos dorados, festivales vascos y cata de varietales jóvenes.
@@ -1639,7 +1638,7 @@
                     <path d="M12 3c1 3-1 4-2 6-1 2 0 4 2 4s3-2 2-4c2 1 3 3 3 5a5 5 0 01-10 0c0-4 2-7 5-11z"/>
                   </svg>
                 </div>
-                <span class="text-xs font-bold uppercase tracking-wider text-gold-dark block mb-1" data-i18n="season.s3Time">Jun — Ago · Invierno</span>
+                <span class="text-xs font-bold text-gold-dark block mb-1" data-i18n="season.s3Time">Jun — Ago · Invierno</span>
                 <h3 class="font-serif text-xl font-bold text-tannat-dark mb-2" data-i18n="season.s3Title">Poda, Cavas & Fogones</h3>
                 <p class="text-sm text-terroir leading-relaxed mb-4" data-i18n="season.s3Desc">
                   Cata de vinos Gran Reserva y tintos de guarda junto a la chimenea en bodegas boutique, con maridajes de cordero salteño al asador y guisados criollos.
@@ -1668,7 +1667,7 @@
                     <path d="M12 11c0-3 2-5 5-5 0 3-2 5-5 5z"/>
                   </svg>
                 </div>
-                <span class="text-xs font-bold uppercase tracking-wider text-gold-dark block mb-1" data-i18n="season.s4Time">Sep — Nov · Primavera</span>
+                <span class="text-xs font-bold text-gold-dark block mb-1" data-i18n="season.s4Time">Sep — Nov · Primavera</span>
                 <h3 class="font-serif text-xl font-bold text-tannat-dark mb-2" data-i18n="season.s4Title">Brotación & Envero</h3>
                 <p class="text-sm text-terroir leading-relaxed mb-4" data-i18n="season.s4Desc">
                   Renacimiento del viñedo con el brote de los primeros pámpanos. Clima templado ideal para paseos en bicicleta costaneros, picnics campestres y copas de vino al aire libre.
@@ -1688,7 +1687,7 @@
              con las temporadas de arriba y los Paquetes de más abajo) ==== -->
         <div class="mt-16 pt-12 border-t border-tannat-100" data-reveal-stagger>
           <div class="text-center max-w-2xl mx-auto mb-10" data-reveal-item>
-            <h3 class="font-serif text-2xl sm:text-3xl font-bold text-tannat-dark mb-3 uppercase" data-i18n="plan.title">Cómo Llegar y Cuánto Quedarte</h3>
+            <h3 class="font-serif text-2xl sm:text-3xl font-bold text-tannat-dark mb-3" data-i18n="plan.title">Cómo Llegar y Cuánto Quedarte</h3>
             <p class="text-terroir font-light" data-i18n="plan.subtitle">Salto está más cerca de lo que pensás, y el circuito se adapta al tiempo que tengas disponible.</p>
           </div>
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
@@ -1729,7 +1728,7 @@
 
           <div class="lg:col-span-6 space-y-6">
 
-            <h2 class="font-serif text-3xl sm:text-5xl font-bold tracking-tight text-white leading-tight uppercase" data-i18n="thermal.title">
+            <h2 class="font-serif text-3xl sm:text-5xl font-bold tracking-tight text-white leading-tight text-balance" data-i18n="thermal.title">
               Vino &amp; Aguas Termales: La Alianza Salteña de Bienestar
             </h2>
 
@@ -1772,7 +1771,7 @@
                   <img src="./LaRutadelTannat_files/termas-dayman.webp" width="720" height="563" alt="Piscinas termales circulares de Termas del Daymán, Salto, Uruguay" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy">
                 </div>
                 <div class="p-4 bg-white">
-                  <p class="text-xs text-terroir uppercase tracking-widest font-semibold" data-i18n="thermal.captionTag">Termas del Daymán</p>
+                  <p class="text-xs text-terroir font-semibold" data-i18n="thermal.captionTag">Termas del Daymán</p>
                   <p class="font-serif text-sm font-bold text-tannat-dark" data-i18n="thermal.captionText">A pocos minutos de las bodegas del circuito</p>
                 </div>
               </div>
@@ -1788,7 +1787,7 @@
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         <div class="text-center max-w-2xl mx-auto mb-12">
-          <h2 class="font-serif text-3xl sm:text-4xl font-bold tracking-tight text-tannat-dark mb-4 uppercase" data-i18n="stay.title">
+          <h2 class="font-serif text-3xl sm:text-4xl font-bold tracking-tight text-tannat-dark mb-4 text-balance" data-i18n="stay.title">
             Dónde Alojarse
           </h2>
           <p class="text-terroir font-light" data-i18n="stay.subtitle">
@@ -1799,7 +1798,7 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
 
           <div class="p-6 bg-white rounded-2xl border border-tannat-100">
-            <span class="text-xs font-bold uppercase tracking-wider text-gold-dark" data-i18n="stay.z1Tag">A 0 km · Punto de Partida</span>
+            <span class="text-xs font-bold text-gold-dark" data-i18n="stay.z1Tag">A 0 km · Punto de Partida</span>
             <h3 class="font-serif text-lg font-bold text-tannat-dark mt-1 mb-3" data-i18n="stay.z1Title">Centro de Salto</h3>
             <p class="text-base text-terroir leading-relaxed" data-i18n="stay.z1Desc">
               Hoteles urbanos clásicos, ideales para moverse desde el centro. Entre las opciones conocidas: <a href="https://www.hoteluruguay.com/" target="_blank" rel="noopener noreferrer" class="text-gold-dark hover:underline font-semibold">Gran Hotel Uruguay</a>, <a href="https://www.hotelespanolsalto.com/" target="_blank" rel="noopener noreferrer" class="text-gold-dark hover:underline font-semibold">Hotel Español</a> y <a href="https://eldoradosalto.com/" target="_blank" rel="noopener noreferrer" class="text-gold-dark hover:underline font-semibold">Hotel El Dorado</a>.
@@ -1807,7 +1806,7 @@
           </div>
 
           <div class="p-6 bg-white rounded-2xl border border-tannat-100">
-            <span class="text-xs font-bold uppercase tracking-wider text-gold-dark" data-i18n="stay.z2Tag">A 10 km · Zona Termal</span>
+            <span class="text-xs font-bold text-gold-dark" data-i18n="stay.z2Tag">A 10 km · Zona Termal</span>
             <h3 class="font-serif text-lg font-bold text-tannat-dark mt-1 mb-3" data-i18n="stay.z2Title">Termas del Daymán</h3>
             <p class="text-base text-terroir leading-relaxed" data-i18n="stay.z2Desc">
               A minutos de Bertolini &amp; Broglio y Mori Maglio Wines. Complejos con piscina termal propia como <a href="https://termaldayman.com.uy/" target="_blank" rel="noopener noreferrer" class="text-gold-dark hover:underline font-semibold">Hotel Termal Daymán</a>, <a href="https://www.miradordeldayman.com.uy/" target="_blank" rel="noopener noreferrer" class="text-gold-dark hover:underline font-semibold">Hotel Mirador del Daymán</a> y <a href="https://www.posadasigloxix.com/" target="_blank" rel="noopener noreferrer" class="text-gold-dark hover:underline font-semibold">Posada del Siglo XIX</a>, además de cabañas y camping.
@@ -1825,7 +1824,7 @@
                 <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-black/5 to-transparent"></div>
               </div>
               <div class="p-6">
-                <span class="text-xs font-bold uppercase tracking-wider text-gold-dark" data-i18n="stay.z3Tag">A 80 km · Para Extender el Viaje</span>
+                <span class="text-xs font-bold text-gold-dark" data-i18n="stay.z3Tag">A 80 km · Para Extender el Viaje</span>
                 <h3 class="font-serif text-lg font-bold text-tannat-dark mt-1 mb-3" data-i18n="stay.z3Title">Termas del Arapey</h3>
                 <p class="text-base text-terroir leading-relaxed" data-i18n="stay.z3Desc">
                   La zona termal de mayor escala, sobre el río Arapey Grande. Resorts como <a href="https://www.arapeythermal.com.uy/es/" target="_blank" rel="noopener noreferrer" class="text-gold-dark hover:underline font-semibold">Arapey Thermal Resort &amp; Spa</a> y <a href="https://altosdelarapey.com/" target="_blank" rel="noopener noreferrer" class="text-gold-dark hover:underline font-semibold">Altos del Arapey</a>, ideales para sumar un día de descanso después del circuito.
@@ -1848,10 +1847,7 @@
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <div class="text-center max-w-3xl mx-auto mb-16">
-          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gold/20 border border-gold/40 text-gold-light font-semibold text-xs uppercase tracking-wider mb-4" data-i18n="packages.badge">
-            Experiencias Curadas
-          </div>
-          <h2 class="font-serif text-3xl sm:text-5xl font-bold tracking-tight text-white mb-4 uppercase" data-i18n="packages.title">
+          <h2 class="font-serif text-3xl sm:text-5xl font-bold tracking-tight text-white mb-4 text-balance" data-i18n="packages.title">
             Paquetes &amp; Visitas Guiadas
           </h2>
           <p class="text-lg text-gray-300 font-light" data-i18n="packages.subtitle">
@@ -2028,7 +2024,7 @@
           <!-- Left: copy + features + trust -->
           <div class="lg:col-span-7 space-y-6">
 
-            <h2 class="font-serif text-3xl sm:text-5xl font-bold tracking-tight text-tannat-dark leading-tight uppercase" data-i18n="payment.title">
+            <h2 class="font-serif text-3xl sm:text-5xl font-bold tracking-tight text-tannat-dark leading-tight text-balance" data-i18n="payment.title">
               Pagá tu Experiencia desde Cualquier Parte del Mundo
             </h2>
 
@@ -2056,7 +2052,7 @@
             </ul>
 
             <div class="pt-2">
-              <span class="block text-xs font-bold uppercase tracking-wider text-terroir mb-2" data-i18n="payment.currenciesLabel">Monedas aceptadas</span>
+              <span class="block text-xs font-bold text-terroir mb-2" data-i18n="payment.currenciesLabel">Monedas aceptadas</span>
               <div class="flex flex-wrap gap-2">
                 <span class="px-3 py-1.5 rounded-full bg-white border border-tannat-100 text-xs font-bold text-tannat-dark shadow-sm">USD</span>
                 <span class="px-3 py-1.5 rounded-full bg-white border border-tannat-100 text-xs font-bold text-tannat-dark shadow-sm">UYU</span>
@@ -2114,7 +2110,7 @@
             </div>
 
             <div class="mt-6">
-              <span class="block text-xs font-bold uppercase tracking-wider text-terroir mb-3 text-center lg:text-left" data-i18n="payment.methodsLabel">Métodos de pago aceptados</span>
+              <span class="block text-xs font-bold text-terroir mb-3 text-center lg:text-left" data-i18n="payment.methodsLabel">Métodos de pago aceptados</span>
               <div class="grid grid-cols-3 sm:grid-cols-6 gap-3">
                 <div class="h-9 rounded-lg bg-white border border-gray-200 shadow-sm flex items-center justify-center" title="Visa">
                   <span class="italic font-black text-[#1A1F71] text-sm tracking-tight">VISA</span>
@@ -2150,10 +2146,7 @@
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         <div class="text-center max-w-2xl mx-auto mb-12">
-          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gold/15 border border-gold/30 text-gold-dark font-semibold text-xs uppercase tracking-wider mb-4" data-i18n="voices.badge">
-            Confianza &amp; Respaldo
-          </div>
-          <h2 class="font-serif text-3xl sm:text-4xl font-bold tracking-tight text-tannat-dark mb-4 uppercase" data-i18n="voices.title">
+          <h2 class="font-serif text-3xl sm:text-4xl font-bold tracking-tight text-tannat-dark mb-4 text-balance" data-i18n="voices.title">
             Voces del Circuito
           </h2>
           <p class="text-terroir font-light" data-i18n="voices.subtitle">
@@ -2276,7 +2269,7 @@
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         <div class="text-center max-w-2xl mx-auto mb-12">
-          <h2 class="font-serif text-3xl sm:text-4xl font-bold tracking-tight text-tannat-dark mb-4 uppercase" data-i18n="sust.title">
+          <h2 class="font-serif text-3xl sm:text-4xl font-bold tracking-tight text-tannat-dark mb-4 text-balance" data-i18n="sust.title">
             Nuestra Misión y Visión
           </h2>
           <p class="text-terroir font-light" data-i18n="sust.subtitle">
@@ -2299,7 +2292,7 @@
                 Los guías del circuito se forman en la Tecnicatura en Diseño de Itinerarios Turísticos Sostenibles de la propia UTU (DGETP), que capacita por niveles —Guía Turístico Básico, Técnico en Itinerarios Turísticos y Tecnólogo— dentro del mismo Polo Educativo Tecnológico Salto que sostiene este proyecto.
               </p>
             </div>
-            <span class="info-label mt-3 inline-flex items-center gap-1 text-[11px] font-bold text-gold-dark uppercase tracking-wide transition-opacity" data-i18n="sust.moreInfo">
+            <span class="info-label mt-3 inline-flex items-center gap-1 text-[11px] font-bold text-gold-dark transition-opacity" data-i18n="sust.moreInfo">
               Más información
               <svg class="info-chevron w-3 h-3 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
             </span>
@@ -2318,7 +2311,7 @@
                 A nivel nacional, INAVI impulsa el Programa de Viticultura Sostenible: una certificación voluntaria auditada por LSQA y alineada con la OIV. Los viñedos certificados reciben el sello "Uruguay Sustainable Winegrowing" — en 2023 ya sumaba 162 viñedos, el 31% de la superficie vitícola del país.
               </p>
             </div>
-            <span class="info-label mt-3 inline-flex items-center gap-1 text-[11px] font-bold text-gold-dark uppercase tracking-wide transition-opacity" data-i18n="sust.moreInfo">
+            <span class="info-label mt-3 inline-flex items-center gap-1 text-[11px] font-bold text-gold-dark transition-opacity" data-i18n="sust.moreInfo">
               Más información
               <svg class="info-chevron w-3 h-3 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
             </span>
@@ -2337,7 +2330,7 @@
                 El rescate cuenta con el respaldo de la Comisión Honoraria del Patrimonio Histórico de Salto, que puso en valor el sitio y la figura de Harriague desde la década de 1980, y con la participación de la Comisión del Patrimonio Cultural de la Nación en el proyecto de recuperación — además del acompañamiento internacional de la Universidad del País Vasco a través de U-riharri.
               </p>
             </div>
-            <span class="info-label mt-3 inline-flex items-center gap-1 text-[11px] font-bold text-gold-dark uppercase tracking-wide transition-opacity" data-i18n="sust.moreInfo">
+            <span class="info-label mt-3 inline-flex items-center gap-1 text-[11px] font-bold text-gold-dark transition-opacity" data-i18n="sust.moreInfo">
               Más información
               <svg class="info-chevron w-3 h-3 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
             </span>
@@ -2357,10 +2350,7 @@
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         <div class="text-center max-w-2xl mx-auto mb-16">
-          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-tannat-50 border border-tannat-100 text-tannat font-semibold text-xs uppercase tracking-wider mb-4" data-i18n="inavi.badge">
-            Respaldo Institucional
-          </div>
-          <h2 class="font-serif text-3xl sm:text-4xl font-bold tracking-tight text-tannat-dark mb-4 uppercase" data-i18n="inavi.title">
+          <h2 class="font-serif text-3xl sm:text-4xl font-bold tracking-tight text-tannat-dark mb-4 text-balance" data-i18n="inavi.title">
             INAVI y la Vitivinicultura Uruguaya
           </h2>
           <p class="text-terroir font-light" data-i18n="inavi.subtitle">
@@ -2418,10 +2408,7 @@
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         <div class="text-center max-w-2xl mx-auto mb-12">
-          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gold/15 border border-gold/30 text-gold-dark font-semibold text-xs uppercase tracking-wider mb-4" data-i18n="gallery.badge">
-            Postales del Circuito
-          </div>
-          <h2 class="font-serif text-3xl sm:text-4xl font-bold tracking-tight text-tannat-dark mb-4 uppercase" data-i18n="gallery.title">
+          <h2 class="font-serif text-3xl sm:text-4xl font-bold tracking-tight text-tannat-dark mb-4 text-balance" data-i18n="gallery.title">
             Galería
           </h2>
           <p class="text-terroir font-light" data-i18n="gallery.subtitle">
@@ -2615,10 +2602,7 @@
     <section id="vinos" class="py-20 lg:py-28 bg-white text-basalt">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center max-w-3xl mx-auto mb-16">
-          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gold/15 border border-gold/30 text-gold-dark font-semibold text-xs uppercase tracking-wider mb-4" data-i18n="vinos.badge">
-            Fichas Técnicas
-          </div>
-          <h2 class="font-serif text-3xl sm:text-5xl font-bold tracking-tight text-tannat-dark mb-4 uppercase" data-i18n="vinos.title">
+          <h2 class="font-serif text-3xl sm:text-5xl font-bold tracking-tight text-tannat-dark mb-4 text-balance" data-i18n="vinos.title">
             Vinos del Circuito
           </h2>
           <p class="text-lg text-terroir font-light" data-i18n="vinos.subtitle">
@@ -2628,27 +2612,27 @@
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div class="bg-crema rounded-2xl border border-tannat-100 p-6 flex flex-col">
-            <span class="inline-block self-start px-3 py-1 rounded-full bg-tannat/10 text-tannat text-xs font-bold uppercase tracking-wider mb-4" data-i18n="vinos.w1Style">Gran Reserva</span>
+            <span class="inline-block self-start px-3 py-1 rounded-full bg-tannat/10 text-tannat text-xs font-bold mb-4" data-i18n="vinos.w1Style">Gran Reserva</span>
             <h3 class="font-serif text-xl font-bold text-tannat-dark" data-i18n="vinos.w1Name">Salto Chico — Tannat Reserva</h3>
-            <p class="text-xs text-terroir/70 uppercase tracking-wide mb-3" data-i18n="st2.title">Bodega Salto Chico</p>
+            <p class="text-xs text-terroir/70 mb-3" data-i18n="st2.title">Bodega Salto Chico</p>
             <p class="text-sm text-terroir leading-relaxed flex-1" data-i18n="vinos.w1Desc">
               100% Tannat, sobre suelos arenosos y de canto rodado en la costa del río Uruguay. Crianza en barricas de roble francés y americano: redondo en boca, con gran cuerpo y persistencia.
             </p>
             <p class="text-xs text-gold-dark font-semibold mt-4 pt-4 border-t border-tannat-100" data-i18n="vinos.w1Award">Medalla de Oro, Vinalies Internationales (París, 2011) y Tannat al Mundo 2022.</p>
           </div>
           <div class="bg-crema rounded-2xl border border-tannat-100 p-6 flex flex-col">
-            <span class="inline-block self-start px-3 py-1 rounded-full bg-tannat/10 text-tannat text-xs font-bold uppercase tracking-wider mb-4" data-i18n="vinos.w2Style">Parcela Única</span>
+            <span class="inline-block self-start px-3 py-1 rounded-full bg-tannat/10 text-tannat text-xs font-bold mb-4" data-i18n="vinos.w2Style">Parcela Única</span>
             <h3 class="font-serif text-xl font-bold text-tannat-dark" data-i18n="vinos.w2Name">Bertolini &amp; Broglio — Tannat Exotic Senza Crianza</h3>
-            <p class="text-xs text-terroir/70 uppercase tracking-wide mb-3" data-i18n="st3.title">Bodega Bertolini &amp; Broglio</p>
+            <p class="text-xs text-terroir/70 mb-3" data-i18n="st3.title">Bodega Bertolini &amp; Broglio</p>
             <p class="text-sm text-terroir leading-relaxed flex-1" data-i18n="vinos.w2Desc">
               100% Tannat clon 717, de una única parcela y sin paso por barrica (14,7% vol.). Muy oscuro y denso, con notas a frutas negras maduras, chocolate y tabaco; en boca es untuoso, con taninos dulces y una larga persistencia.
             </p>
             <p class="text-xs text-gold-dark font-semibold mt-4 pt-4 border-t border-tannat-100" data-i18n="vinos.w2Award">Medalla de Oro y mejor puntaje del certamen, Tannat al Mundo (6ª edición).</p>
           </div>
           <div class="bg-crema rounded-2xl border border-tannat-100 p-6 flex flex-col">
-            <span class="inline-block self-start px-3 py-1 rounded-full bg-tannat/10 text-tannat text-xs font-bold uppercase tracking-wider mb-4" data-i18n="vinos.w3Style">Reserva</span>
+            <span class="inline-block self-start px-3 py-1 rounded-full bg-tannat/10 text-tannat text-xs font-bold mb-4" data-i18n="vinos.w3Style">Reserva</span>
             <h3 class="font-serif text-xl font-bold text-tannat-dark" data-i18n="vinos.w3Name">Mori Maglio — Tannat Reserva</h3>
-            <p class="text-xs text-terroir/70 uppercase tracking-wide mb-3" data-i18n="st4.title">Mori Maglio Wines</p>
+            <p class="text-xs text-terroir/70 mb-3" data-i18n="st4.title">Mori Maglio Wines</p>
             <p class="text-sm text-terroir leading-relaxed flex-1" data-i18n="vinos.w3Desc">
               Tannat del Viñedo El Asombrado, en Parada Daymán, implantado desde 1999. Vino de autor de la familia Mori Maglio, en partidas limitadas.
             </p>
@@ -2664,7 +2648,7 @@
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <div class="text-center max-w-3xl mx-auto mb-16">
-          <h2 class="font-serif text-3xl sm:text-5xl font-bold tracking-tight text-tannat-dark mb-4 uppercase" data-i18n="map.title">
+          <h2 class="font-serif text-3xl sm:text-5xl font-bold tracking-tight text-tannat-dark mb-4 text-balance" data-i18n="map.title">
             Mapa del Circuito Enoturístico
           </h2>
           <p class="text-lg text-terroir font-light" data-i18n="map.subtitle">
@@ -2737,7 +2721,7 @@
 
           <!-- Matriz de distancias: datos reales de ruteo OpenStreetMap/OSRM entre las 4 estaciones, no estimaciones -->
           <div class="mt-8 pt-6 border-t border-tannat-100">
-            <p class="text-xs font-bold uppercase tracking-wider text-terroir mb-1" data-i18n="map.matrixTitle">Distancias y tiempos de manejo entre estaciones</p>
+            <p class="text-xs font-bold text-terroir mb-1" data-i18n="map.matrixTitle">Distancias y tiempos de manejo entre estaciones</p>
             <p class="text-[11px] text-terroir/70 mb-4" data-i18n="map.matrixSource">Calculado con datos reales de OpenStreetMap (ruta en auto, sin contar paradas).</p>
             <div class="overflow-x-auto">
               <table class="w-full text-xs border-collapse min-w-[420px]">
@@ -2771,7 +2755,7 @@
       <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <div class="text-center mb-16">
-          <h2 class="font-serif text-3xl sm:text-4xl font-bold tracking-tight text-tannat-dark mb-4 uppercase" data-i18n="faq.title">
+          <h2 class="font-serif text-3xl sm:text-4xl font-bold tracking-tight text-tannat-dark mb-4 text-balance" data-i18n="faq.title">
             Preguntas Frecuentes
           </h2>
           <p class="text-terroir font-light" data-i18n="faq.subtitle">
@@ -3018,7 +3002,7 @@
                   <img src="./LaRutadelTannat_files/equipo-fundadores.jpg" width="900" height="721" alt="Federico Camara, Homero Texeira y Anthony Moreira, autores de La Ruta del Tannat" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy">
                 </div>
                 <div class="p-4 bg-white">
-                  <p class="text-xs text-terroir uppercase tracking-widest font-semibold" data-i18n="team.captionTag">Federico · Homero · Anthony</p>
+                  <p class="text-xs text-terroir font-semibold" data-i18n="team.captionTag">Federico · Homero · Anthony</p>
                   <p class="font-serif text-sm font-bold text-tannat-dark" data-i18n="team.captionText">Estudiantes de la Tecnicatura en Diseño de Itinerarios Turísticos Sostenibles</p>
                 </div>
               </div>
@@ -3026,10 +3010,7 @@
           </div>
 
           <div class="lg:col-span-7">
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gold/15 border border-gold/30 text-gold-dark font-semibold text-xs uppercase tracking-wider mb-4" data-i18n="team.badge">
-              El Equipo
-            </div>
-            <h2 class="font-serif text-3xl sm:text-4xl font-bold tracking-tight text-tannat-dark mb-5 uppercase" data-i18n="team.title">
+            <h2 class="font-serif text-3xl sm:text-4xl font-bold tracking-tight text-tannat-dark mb-5 text-balance" data-i18n="team.title">
               Quiénes Sostienen este Proyecto
             </h2>
             <p class="text-terroir leading-relaxed mb-4" data-i18n="team.p1">
@@ -3172,7 +3153,7 @@
         <img src="./LaRutadelTannat_files/galeria-brindis-cavas.webp" width="850" height="555" alt="Brindis con vino en las cavas históricas de Bodega Harriague" class="w-full h-full object-cover">
         <div class="absolute inset-0 bg-gradient-to-t from-tannat-900 via-tannat-900/50 to-black/10"></div>
         <div class="absolute bottom-3 left-6 right-14">
-          <span class="text-[10px] font-bold uppercase tracking-wider text-gold-light block mb-0.5" data-i18n="modal.step">Paso Directo · WhatsApp Salto</span>
+          <span class="text-[10px] font-bold text-gold-light block mb-0.5" data-i18n="modal.step">Paso Directo · WhatsApp Salto</span>
           <h3 id="modalTitle" class="font-serif text-lg sm:text-xl font-bold text-white leading-tight" data-i18n="modal.title">Solicitar Reserva de Circuito</h3>
         </div>
       </div>
@@ -3186,17 +3167,17 @@
             <!-- Left: datos del visitante -->
             <div class="sm:col-span-3 space-y-4">
               <div>
-                <label for="bookName" class="block text-xs font-bold uppercase tracking-wider text-terroir mb-1" data-i18n="form.name">Nombre Completo *</label>
+                <label for="bookName" class="block text-xs font-bold text-terroir mb-1" data-i18n="form.name">Nombre Completo *</label>
                 <input type="text" id="bookName" name="name" autocomplete="name" required="" placeholder="Ej. Carlos Martínez" data-i18n-ph="form.namePh" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-gold focus:border-gold text-sm bg-white">
               </div>
 
               <div class="grid grid-cols-2 gap-3">
                 <div>
-                  <label for="bookDate" class="block text-xs font-bold uppercase tracking-wider text-terroir mb-1" data-i18n="form.date">Fecha Deseada *</label>
+                  <label for="bookDate" class="block text-xs font-bold text-terroir mb-1" data-i18n="form.date">Fecha Deseada *</label>
                   <input type="date" id="bookDate" autocomplete="off" required="" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-gold focus:border-gold text-sm bg-white">
                 </div>
                 <div>
-                  <label for="bookGuests" class="block text-xs font-bold uppercase tracking-wider text-terroir mb-1" data-i18n="form.guests">Pasajeros *</label>
+                  <label for="bookGuests" class="block text-xs font-bold text-terroir mb-1" data-i18n="form.guests">Pasajeros *</label>
                   <select id="bookGuests" autocomplete="off" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-gold focus:border-gold text-sm bg-white">
                     <option value="1" data-i18n="form.guest1">1 Pasajero</option>
                     <option value="2" selected="" data-i18n="form.guest2">2 Pasajeros</option>
@@ -3207,17 +3188,17 @@
               </div>
 
               <details class="group">
-                <summary class="cursor-pointer select-none list-none flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-gold-dark">
+                <summary class="cursor-pointer select-none list-none flex items-center gap-1.5 text-xs font-bold text-gold-dark">
                   <svg class="w-3.5 h-3.5 flex-shrink-0 transition-transform group-open:rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
                   <span data-i18n="form.moreDetails">Agregar hotel o comentarios (opcional)</span>
                 </summary>
                 <div class="mt-3 space-y-4">
                   <div>
-                    <label for="bookHotel" class="block text-xs font-bold uppercase tracking-wider text-terroir mb-1" data-i18n="form.hotel">Lugar de Salida / Hotel en Salto</label>
+                    <label for="bookHotel" class="block text-xs font-bold text-terroir mb-1" data-i18n="form.hotel">Lugar de Salida / Hotel en Salto</label>
                     <input type="text" id="bookHotel" autocomplete="off" placeholder="Ej. Hotel Altos del Arapey / Termas Daymán / Centro" data-i18n-ph="form.hotelPh" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-gold focus:border-gold text-sm bg-white">
                   </div>
                   <div>
-                    <label for="bookNotes" class="block text-xs font-bold uppercase tracking-wider text-terroir mb-1" data-i18n="form.notes">Comentarios o Restricciones Dietarias</label>
+                    <label for="bookNotes" class="block text-xs font-bold text-terroir mb-1" data-i18n="form.notes">Comentarios o Restricciones Dietarias</label>
                     <textarea id="bookNotes" rows="2" autocomplete="off" placeholder="Opciones vegetarianas, intolerancias, etc." data-i18n-ph="form.notesPh" class="w-full px-4 py-2 rounded-xl border border-gray-300 focus:ring-2 focus:ring-gold focus:border-gold text-sm bg-white"></textarea>
                   </div>
                 </div>
@@ -3226,7 +3207,7 @@
 
             <!-- Right: experiencia -->
             <div class="sm:col-span-2">
-              <span class="block text-xs font-bold uppercase tracking-wider text-terroir mb-2" data-i18n="form.pkg">Experiencia Seleccionada *</span>
+              <span class="block text-xs font-bold text-terroir mb-2" data-i18n="form.pkg">Experiencia Seleccionada *</span>
               <div class="space-y-1.5">
                 <label class="flex items-center justify-between gap-2 p-2.5 rounded-xl border-2 border-gray-200 cursor-pointer transition-all hover:border-gold/50 has-[:checked]:border-gold has-[:checked]:bg-gold-50 focus-within:ring-2 focus-within:ring-gold">
                   <input type="radio" name="bookPackage" value="El Legado del Tannat (Día Completo - USD 95 / $U 3.900)" data-match="95" class="sr-only" checked>
@@ -3594,7 +3575,6 @@
 
         "nav.pioneer": "El Pionero",
         "pioneer.historyLink": "Conocé la vida de Don Pascual Harriague →",
-        "pioneer.pre": "1819 – 1894",
         "pioneer.title": "El Pionero",
         "pioneer.subtitle": "La historia de Don Pascual Harriague, el inmigrante vasco-francés que convirtió una cepa desconocida en la identidad vitivinícola de todo un país.",
         "pioneer.captionTag": "Hasparren, Francia · 1819 — París, 1894",
@@ -3790,7 +3770,6 @@
         "stay.premiumBadge": "Nivel Superior",
         "stay.disclaimer": "Alojamientos mencionados a modo informativo; no son partners comerciales de este proyecto. Coordiná tu reserva directamente con cada establecimiento.",
 
-        "packages.badge": "Experiencias Curadas",
         "packages.title": "Paquetes & Visitas Guiadas",
         "packages.subtitle": "Diseñados por técnicos en turismo con traslados inclusivos, degustación guiada por sommeliers y acceso prioritario.",
         "packages.p1Tag": "Medio Día · 4 Horas",
@@ -3843,7 +3822,6 @@
         "payment.methodsLabel": "Métodos de pago aceptados",
         "payment.disclaimer": "Pasarela de pago ilustrativa, desarrollada como parte del proyecto académico. La confirmación final de cada reserva se coordina de forma directa por WhatsApp.",
 
-        "voices.badge": "Confianza &amp; Respaldo",
         "voices.title": "Voces del Circuito",
         "voices.subtitle": "Un proyecto recién nacido: así lo viven quienes ya recorrieron el circuito.",
         "voices.ctaTitle": "¿Ya hiciste el circuito?",
@@ -3892,7 +3870,6 @@
         "sust.inaviLink": "Conocé más sobre INAVI y lo que certifica →",
         "sust.d3Extra": "El rescate cuenta con el respaldo de la Comisión Honoraria del Patrimonio Histórico de Salto, que puso en valor el sitio y la figura de Harriague desde la década de 1980, y con la participación de la Comisión del Patrimonio Cultural de la Nación en el proyecto de recuperación — además del acompañamiento internacional de la Universidad del País Vasco a través de U-riharri.",
 
-        "inavi.badge": "Respaldo Institucional",
         "inavi.title": "INAVI y la Vitivinicultura Uruguaya",
         "inavi.subtitle": "Desde 1903 el Estado regula la actividad vitivinícola; desde 1987, el Instituto Nacional de Vitivinicultura (INAVI) es quien la conduce. Así se traduce ese respaldo en esta ruta.",
         "inavi.t1": "Control Estatal",
@@ -3908,14 +3885,12 @@
         "inavi.calloutBody": "Cuando una bodega de este circuito exhibe ese sello, no es una promesa del sitio: es una certificación externa, auditada de forma independiente bajo el programa que INAVI impulsa a nivel nacional.",
         "inavi.link": "Conocé más en inavi.com.uy",
         
-        "team.badge": "El Equipo",
         "team.title": "Quiénes Sostienen este Proyecto",
         "team.p1": "La Ruta del Tannat nace como proyecto de egreso de tres estudiantes de la Tecnicatura en Diseño de Itinerarios Turísticos Sostenibles del Polo Educativo Tecnológico Salto (DGETP-UTU): Federico Camara, Homero Texeira y Anthony Moreira.",
         "team.p2": "Durante su formación relevaron de primera mano la historia de Pascual Harriague, el estado de las bodegas boutique de Salto y el potencial del circuito enoturístico junto a las termas del litoral norte — y decidieron convertir ese trabajo académico en una herramienta real para dar a conocer el departamento.",
         "team.captionTag": "Federico · Homero · Anthony",
         "team.captionText": "Estudiantes de la Tecnicatura en Diseño de Itinerarios Turísticos Sostenibles",
 
-        "gallery.badge": "Postales del Circuito",
         "gallery.title": "Galería",
         "gallery.subtitle": "Imágenes reales de las bodegas, los viñedos, las termas y el patrimonio que forman parte del circuito.",
         "gallery.cap1": "Viñedo uruguayo al amanecer",
@@ -3960,7 +3935,6 @@
 
         "map.title": "Mapa del Circuito Enoturístico",
         "nav.wines": "Vinos",
-        "vinos.badge": "Fichas Técnicas",
         "vinos.title": "Vinos del Circuito",
         "vinos.subtitle": "Tannat real de las bodegas de la Ruta, con datos verificados de cada etiqueta y sus premios. Bodega Harriague es hoy un espacio cultural en recuperación, sin producción propia de vino.",
         "vinos.w1Style": "Gran Reserva",
@@ -4141,7 +4115,6 @@
 
         "nav.pioneer": "O Pioneiro",
         "pioneer.historyLink": "Conheça a vida de Don Pascual Harriague →",
-        "pioneer.pre": "1819 – 1894",
         "pioneer.title": "O Pioneiro",
         "pioneer.subtitle": "A história de Pascual Harriague, o imigrante basco-francês que transformou uma casta desconhecida na identidade vitivinícola de todo um país.",
         "pioneer.captionTag": "Hasparren, França · 1819 — Paris, 1894",
@@ -4337,7 +4310,6 @@
         "stay.premiumBadge": "Nível Superior",
         "stay.disclaimer": "Hospedagens mencionadas a título informativo; não são parceiras comerciais deste projeto. Combine sua reserva diretamente com cada estabelecimento.",
 
-        "packages.badge": "Experiências Selecionadas",
         "packages.title": "Pacotes & Visitas Guiadas",
         "packages.subtitle": "Desenhados por técnicos em turismo, com traslados incluídos, degustação guiada por sommeliers e acesso prioritário.",
         "packages.p1Tag": "Meio Dia · 4 Horas",
@@ -4390,7 +4362,6 @@
         "payment.methodsLabel": "Métodos de pagamento aceitos",
         "payment.disclaimer": "Passarela de pagamento ilustrativa, desenvolvida como parte do projeto acadêmico. A confirmação final de cada reserva é coordenada diretamente pelo WhatsApp.",
 
-        "voices.badge": "Confiança &amp; Respaldo",
         "voices.title": "Vozes do Circuito",
         "voices.subtitle": "Um projeto que está começando: é assim que o vivem quem já percorreu o circuito.",
         "voices.ctaTitle": "Você já fez o circuito?",
@@ -4439,7 +4410,6 @@
         "sust.inaviLink": "Conheça mais sobre o INAVI e o que ele certifica →",
         "sust.d3Extra": "O resgate conta com o apoio da Comissão Honorária do Patrimônio Histórico de Salto, que valorizou o local e a figura de Harriague desde a década de 1980, e com a participação da Comissão do Patrimônio Cultural da Nação no projeto de recuperação — além do acompanhamento internacional da Universidade do País Basco através do U-riharri.",
 
-        "inavi.badge": "Respaldo Institucional",
         "inavi.title": "O INAVI e a Vitivinicultura Uruguaia",
         "inavi.subtitle": "Desde 1903 o Estado regula a atividade vitivinícola; desde 1987, o Instituto Nacional de Vitivinicultura (INAVI) é quem a conduz. É assim que esse respaldo se traduz nesta rota.",
         "inavi.t1": "Controle Estatal",
@@ -4455,14 +4425,12 @@
         "inavi.calloutBody": "Quando uma vinícola deste roteiro exibe esse selo, não é uma promessa do site: é uma certificação externa, auditada de forma independente pelo programa que o INAVI promove em nível nacional.",
         "inavi.link": "Saiba mais em inavi.com.uy",
         
-        "team.badge": "A Equipe",
         "team.title": "Quem Sustenta este Projeto",
         "team.p1": "A Rota do Tannat nasce como projeto de conclusão de três estudantes da Tecnicatura em Design de Roteiros Turísticos Sustentáveis do Polo Educativo Tecnológico Salto (DGETP-UTU): Federico Camara, Homero Texeira e Anthony Moreira.",
         "team.p2": "Durante sua formação, levantaram em primeira mão a história de Pascual Harriague, a situação das vinícolas boutique de Salto e o potencial do circuito enoturístico junto às termas do litoral norte — e decidiram transformar esse trabalho acadêmico em uma ferramenta real para divulgar o departamento.",
         "team.captionTag": "Federico · Homero · Anthony",
         "team.captionText": "Estudantes da Tecnicatura em Design de Roteiros Turísticos Sustentáveis",
 
-        "gallery.badge": "Postais do Circuito",
         "gallery.title": "Galeria",
         "gallery.subtitle": "Imagens reais das vinícolas, dos vinhedos, das termas e do patrimônio que fazem parte do circuito.",
         "gallery.cap1": "Vinhedo uruguaio ao amanhecer",
@@ -4507,7 +4475,6 @@
 
         "map.title": "Mapa do Circuito Enoturístico",
         "nav.wines": "Vinhos",
-        "vinos.badge": "Fichas Técnicas",
         "vinos.title": "Vinhos do Circuito",
         "vinos.subtitle": "Tannat real das vinícolas da Rota, com dados verificados de cada rótulo e seus prêmios. A Vinícola Harriague é hoje um espaço cultural em recuperação, sem produção própria de vinho.",
         "vinos.w1Style": "Gran Reserva",
@@ -4688,7 +4655,6 @@
 
         "nav.pioneer": "The Pioneer",
         "pioneer.historyLink": "Discover the life of Don Pascual Harriague →",
-        "pioneer.pre": "1819 – 1894",
         "pioneer.title": "The Pioneer",
         "pioneer.subtitle": "The story of Pascual Harriague, the Basque-French immigrant who turned an unknown grape variety into the wine identity of an entire country.",
         "pioneer.captionTag": "Hasparren, France · 1819 — Paris, 1894",
@@ -4884,7 +4850,6 @@
         "stay.premiumBadge": "Premium Tier",
         "stay.disclaimer": "Lodging mentioned for informational purposes only; these are not commercial partners of this project. Coordinate your booking directly with each property.",
 
-        "packages.badge": "Curated Experiences",
         "packages.title": "Guided Tours & Packages",
         "packages.subtitle": "Designed by tourism technicians, with transfers included, sommelier-guided tastings and priority access.",
         "packages.p1Tag": "Half Day · 4 Hours",
@@ -4937,7 +4902,6 @@
         "payment.methodsLabel": "Accepted payment methods",
         "payment.disclaimer": "Illustrative payment gateway, built as part of the academic project. Final booking confirmation is coordinated directly via WhatsApp.",
 
-        "voices.badge": "Trust &amp; Backing",
         "voices.title": "Voices of the Circuit",
         "voices.subtitle": "A project taking its first steps: here's what those who've already done the circuit have to say.",
         "voices.ctaTitle": "Already done the circuit?",
@@ -4986,7 +4950,6 @@
         "sust.inaviLink": "Learn more about INAVI and what it certifies →",
         "sust.d3Extra": "The restoration is backed by Salto's Honorary Historical Heritage Commission, which has championed the site and Harriague's legacy since the 1980s, along with the participation of the National Cultural Heritage Commission in the recovery project — plus international support from the University of the Basque Country through U-riharri.",
 
-        "inavi.badge": "Institutional Backing",
         "inavi.title": "INAVI and Uruguayan Winegrowing",
         "inavi.subtitle": "Uruguay has regulated winegrowing since 1903; since 1987, the National Institute of Viticulture (INAVI) has led the sector. Here's what that backing means for this route.",
         "inavi.t1": "State Oversight",
@@ -5002,14 +4965,12 @@
         "inavi.calloutBody": "When a winery on this route displays that seal, it isn't a promise from this site — it's an independently audited certification under the program INAVI runs nationwide.",
         "inavi.link": "Learn more at inavi.com.uy",
         
-        "team.badge": "The Team",
         "team.title": "Who's Behind this Project",
         "team.p1": "La Ruta del Tannat began as the graduation project of three students from the Sustainable Tourism Itinerary Design program at Polo Educativo Tecnológico Salto (DGETP-UTU): Federico Camara, Homero Texeira, and Anthony Moreira.",
         "team.p2": "During their studies they researched firsthand the history of Pascual Harriague, the state of Salto's boutique wineries, and the potential of a wine-tourism circuit alongside the region's hot springs — and decided to turn that academic work into a real tool to showcase the department.",
         "team.captionTag": "Federico · Homero · Anthony",
         "team.captionText": "Students of the Sustainable Tourism Itinerary Design program",
 
-        "gallery.badge": "Postcards from the Circuit",
         "gallery.title": "Gallery",
         "gallery.subtitle": "Real images of the wineries, vineyards, hot springs, and heritage that make up the circuit.",
         "gallery.cap1": "Uruguayan vineyard at sunrise",
@@ -5054,7 +5015,6 @@
 
         "map.title": "Interactive Wine Route Map",
         "nav.wines": "Wines",
-        "vinos.badge": "Technical Sheets",
         "vinos.title": "Wines of the Route",
         "vinos.subtitle": "Real Tannat from the Route's wineries, with verified data on each label and its awards. Bodega Harriague is today a cultural space under restoration, with no wine production of its own.",
         "vinos.w1Style": "Gran Reserva",
