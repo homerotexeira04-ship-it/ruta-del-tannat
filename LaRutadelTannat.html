@@ -869,19 +869,39 @@
         </a>
 
         <!-- Desktop Navigation -->
-        <nav class="hidden xl:flex items-center gap-7" aria-label="Navegación principal" data-i18n-aria="a11y.nav">
+        <nav class="hidden xl:flex items-center gap-6 whitespace-nowrap" aria-label="Navegación principal" data-i18n-aria="a11y.nav">
           <a href="#historia" class="text-sm font-medium italic text-gray-200 hover:text-gold transition-colors" data-i18n="nav.history">Historia</a>
           <a href="#estaciones" class="text-sm font-medium italic text-gray-200 hover:text-gold transition-colors" data-i18n="nav.stations">Estaciones</a>
           <a href="#temporadas" class="text-sm font-medium italic text-gray-200 hover:text-gold transition-colors" data-i18n="nav.seasons">¿Cuándo viajar?</a>
           <a href="#termas" class="text-sm font-medium italic text-gray-200 hover:text-gold transition-colors" data-i18n="nav.thermal">Termas</a>
           <a href="#paquetes" class="text-sm font-medium italic text-gray-200 hover:text-gold transition-colors" data-i18n="nav.experiences">Experiencias</a>
-          <a href="#galeria" class="text-sm font-medium italic text-gray-200 hover:text-gold transition-colors" data-i18n="nav.gallery">Galería</a>
           <a href="#mapa" class="text-sm font-medium italic text-gray-200 hover:text-gold transition-colors" data-i18n="nav.map">Mapa Interactivo</a>
-          <a href="#faq" class="text-sm font-medium italic text-gray-200 hover:text-gold transition-colors" data-i18n="nav.faq">Preguntas</a>
+          <!-- "Más": el resto de las secciones (en el escritorio no tenían acceso desde el menú). Se abre con clic; Esc, clic afuera o Tab afuera lo cierran. -->
+          <div class="relative" id="navMore">
+            <button type="button" id="navMoreBtn" class="inline-flex items-center gap-1 text-sm font-medium italic text-gray-200 hover:text-gold transition-colors rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-gold" aria-expanded="false" aria-controls="navMoreMenu">
+              <span data-i18n="nav.more">Más</span>
+              <svg class="w-3.5 h-3.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+            </button>
+            <div id="navMoreMenu" class="hidden op-in absolute right-0 top-full mt-4 w-[34rem] p-3 rounded-2xl bg-tannat-900 border border-white/10 shadow-2xl">
+              <div class="grid grid-flow-col grid-rows-6 gap-x-2">
+                <a href="#pionero" class="block px-3 py-2 rounded-lg text-sm text-gray-200 hover:text-gold hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold transition-colors" data-i18n="nav.pioneer">El Pionero</a>
+                <a href="#copa" class="block px-3 py-2 rounded-lg text-sm text-gray-200 hover:text-gold hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold transition-colors" data-i18n="nav.cup">La Copa de Tannat</a>
+                <a href="#sostenibilidad" class="block px-3 py-2 rounded-lg text-sm text-gray-200 hover:text-gold hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold transition-colors" data-i18n="nav.sustain">Turismo Sostenible</a>
+                <a href="#alojamiento" class="block px-3 py-2 rounded-lg text-sm text-gray-200 hover:text-gold hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold transition-colors" data-i18n="nav.stay">Dónde Alojarse</a>
+                <a href="#pagos" class="block px-3 py-2 rounded-lg text-sm text-gray-200 hover:text-gold hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold transition-colors" data-i18n="nav.payments">Pagos Internacionales</a>
+                <a href="#testimonios" class="block px-3 py-2 rounded-lg text-sm text-gray-200 hover:text-gold hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold transition-colors" data-i18n="nav.voices">Voces del Circuito</a>
+                <a href="#inavi" class="block px-3 py-2 rounded-lg text-sm text-gray-200 hover:text-gold hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold transition-colors" data-i18n="nav.inavi">INAVI</a>
+                <a href="#galeria" class="block px-3 py-2 rounded-lg text-sm text-gray-200 hover:text-gold hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold transition-colors" data-i18n="nav.gallery">Galería</a>
+                <a href="#vinos" class="block px-3 py-2 rounded-lg text-sm text-gray-200 hover:text-gold hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold transition-colors" data-i18n="nav.wines">Vinos</a>
+                <a href="#faq" class="block px-3 py-2 rounded-lg text-sm text-gray-200 hover:text-gold hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold transition-colors" data-i18n="nav.faq">Preguntas</a>
+                <a href="#nosotros" class="block px-3 py-2 rounded-lg text-sm text-gray-200 hover:text-gold hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold transition-colors" data-i18n="nav.team">Nosotros</a>
+              </div>
+            </div>
+          </div>
         </nav>
 
         <!-- Primary CTA Button -->
-        <button onclick="openBookingModal(&#39;General&#39;)" class="hidden xl:inline-flex items-center gap-2 bg-gradient-to-r from-gold to-gold-dark text-tannat-900 font-semibold text-sm px-5 py-2.5 rounded-full shadow-lg hover:shadow-gold/20 hover:scale-105 active:scale-95 transition-all focus:outline-none focus:ring-2 focus:ring-gold">
+        <button onclick="openBookingModal(&#39;General&#39;)" class="hidden xl:inline-flex items-center gap-2 whitespace-nowrap bg-gradient-to-r from-gold to-gold-dark text-tannat-900 font-semibold text-sm px-5 py-2.5 rounded-full shadow-lg hover:shadow-gold/20 hover:scale-105 active:scale-95 transition-all focus:outline-none focus:ring-2 focus:ring-gold">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
           <span data-i18n="btn.bookNow">Reservar Visita</span>
         </button>
@@ -3552,6 +3572,7 @@
         "nav.map": "Mapa Interactivo",
         "nav.faq": "Preguntas",
         "nav.team": "Nosotros",
+        "nav.more": "Más",
         "btn.bookNow": "Reservar Visita",
         
         "hero.badge": "Cuna del Tannat en Uruguay · 1874",
@@ -4092,6 +4113,7 @@
         "nav.map": "Mapa Interativo",
         "nav.faq": "Perguntas",
         "nav.team": "A Equipe",
+        "nav.more": "Mais",
         "btn.bookNow": "Reservar Visita",
         
         "hero.badge": "Berço do Tannat no Uruguai · 1874",
@@ -4632,6 +4654,7 @@
         "nav.map": "Interactive Map",
         "nav.faq": "FAQ",
         "nav.team": "The Team",
+        "nav.more": "More",
         "btn.bookNow": "Book a Tour",
         
         "hero.badge": "Cradle of Tannat in Uruguay · 1874",
@@ -5710,6 +5733,23 @@
         mobileMenu.classList.add('hidden');
       });
     });
+
+    // Menú "Más" del escritorio: se abre con clic (sin hover, para no pelearse con el clic) y se cierra con Esc, clic afuera, Tab afuera o al elegir un destino
+    (function initNavMore() {
+      const box = document.getElementById('navMore'), btn = document.getElementById('navMoreBtn'), menu = document.getElementById('navMoreMenu');
+      if (!box || !btn || !menu) return;
+      const set = (open, refocus) => {
+        menu.classList.toggle('hidden', !open);
+        btn.setAttribute('aria-expanded', String(open));
+        btn.querySelector('svg').classList.toggle('rotate-180', open);
+        if (!open && refocus) btn.focus();
+      };
+      btn.addEventListener('click', () => set(menu.classList.contains('hidden')));
+      box.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !menu.classList.contains('hidden')) set(false, true); });
+      box.addEventListener('focusout', (e) => { if (!menu.classList.contains('hidden') && !box.contains(e.relatedTarget)) set(false); });
+      menu.addEventListener('click', (e) => { if (e.target.closest('a')) set(false); });
+      document.addEventListener('pointerdown', (e) => { if (!menu.classList.contains('hidden') && !box.contains(e.target)) set(false); });
+    })();
 
     // Station Details Modal with 100% Translation Support
     function renderStationModalContent(id) {
