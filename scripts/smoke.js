@@ -178,6 +178,24 @@ function servidor() {
     const chicos = await page.evaluate(() => [...document.querySelectorAll('#bookingForm input:not([type=hidden]):not([type=checkbox]):not([type=radio]), #bookingForm select, #bookingForm textarea')].map((e) => (e.id || e.name) + ':' + parseFloat(getComputedStyle(e).fontSize)).filter((x) => parseFloat(x.split(':')[1]) < 16));
     check('los campos del formulario de reserva tienen 16 px o más en el celular', chicos.length === 0, chicos.join(', ')); await page.close(); }
 
+  // 16. detalles visuales que no deben volver atrás: letra de 12 px o más, botón principal del celular de 44 px, tabla de distancias completa, temporada actual con contorno y titulares del mismo tamaño
+  { const page = await abrir(390, 844, true); await recorrer(page, 844); await sleep(600);
+    const chicos = await page.evaluate(() => { // La Copa tiene su propio ajuste de una sola pantalla y las marcas de pago son ilustración dibujada: quedan afuera
+      const out = [], w = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT); let n;
+      while ((n = w.nextNode())) { const t = n.textContent.trim(), e = n.parentElement; if (!t || !e || e.closest('script,style,noscript,#pagos,.cup-section')) continue;
+        const cs = getComputedStyle(e), r = e.getBoundingClientRect(); if (cs.display === 'none' || cs.visibility === 'hidden' || r.width < 1 || r.height < 1) continue;
+        const oculto = e.closest('.hidden,[hidden]'); if (oculto && getComputedStyle(oculto).display === 'none') continue;
+        if (parseFloat(cs.fontSize) < 12) out.push(cs.fontSize + ' "' + t.slice(0, 28) + '"'); }
+      return [...new Set(out)]; });
+    check('ningún texto visible baja de 12 px (salvo La Copa y las marcas de pago dibujadas)', chicos.length === 0, chicos.slice(0, 4).join(' | '));
+    const m = await page.evaluate(() => { const b = document.querySelector('div.mbar button'), c = document.querySelector('#mapa .overflow-x-auto'); return { boton: Math.round(b.getBoundingClientRect().height), tabla: c.scrollWidth - c.clientWidth }; });
+    check('el botón "Reservar Ahora" de la barra mide 44 px o más y la tabla de distancias entra sin deslizar', m.boton >= 44 && m.tabla <= 0, JSON.stringify(m));
+    const t = await page.evaluate(() => { const c = [1, 2, 3, 4].map((n) => document.getElementById('seasonCard' + n)).find((e) => e && e.classList.contains('outline')); if (!c) return null; const s = getComputedStyle(c); return s.outlineStyle + ' ' + s.outlineWidth; });
+    check('la temporada actual se marca con un contorno visible', t === 'solid 2px', String(t)); await page.close(); }
+  { const page = await abrir(1280, 800, false);
+    const tam = await page.evaluate(() => [...new Set([...document.querySelectorAll('main h2')].filter((h) => !h.closest('.cup-section') && h.getBoundingClientRect().height > 0).map((h) => getComputedStyle(h).fontSize))]);
+    check('los titulares de sección tienen todos el mismo tamaño en escritorio', tam.length === 1, tam.join(' / ')); await page.close(); }
+
   await browser.close(); srv.cerrar();
   if (failures.length) { console.log('\n' + failures.length + ' prueba(s) fallaron:\n - ' + failures.join('\n - ')); process.exit(1); }
   console.log('\nTodas las pruebas de humo pasaron');
