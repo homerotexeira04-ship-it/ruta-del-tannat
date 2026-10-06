@@ -55,7 +55,7 @@ El repositorio trae la configuración lista para trabajar con Claude Code, en la
 |---|---|---|
 | Skills de Emil Kowalski (`emil-design-eng`, `animate`, `apple-design`, `break-ui`, `mobile-native`…) | `.claude/skills/`, `skills-lock.json` | Las 10 que aplican a un sitio estático. Para actualizarlas: `npx skills update`. Para sumar otra del mismo pack: `npx skills add emilkowalski/skills -a claude-code --copy -s <nombre>` |
 | MCP de Playwright (Claude maneja un navegador) | `.mcp.json`, `.claude/mcp/playwright-mcp.js` | Usa el Chromium de la nube o el Chrome de la máquina. Bloquea `file:`, así que hay que servir el sitio (`python3 -m http.server`). Deja snapshots en `.playwright-mcp/` (ignorada por git) |
-| MCP de Figma | `.mcp.json` | Hay que autenticarse una vez: `/mcp` → figma → Authenticate. En la web de Claude Code se conecta en [claude.ai/customize/connectors](https://claude.ai/customize/connectors) |
+| MCP de Figma | Conector de la cuenta de claude.ai (no está en `.mcp.json`) | Se conecta una vez en [claude.ai/customize/connectors](https://claude.ai/customize/connectors) y queda disponible en la computadora y en la web de Claude Code. Quien clone el repo con otra cuenta debe conectar el suyo. Con un plan Starter o asiento "View", Figma limita las herramientas de lectura a unas 20 llamadas por mes |
 | Preparación de cada sesión en la web | `.claude/hooks/session-start.sh`, `.claude/settings.json` | Corre `npm install` y define `CHROME_PATH` para que `npm run smoke` funcione. En la computadora local no hace nada |
 
 La primera vez que se abre el proyecto en una computadora, Claude Code pide aprobar los servidores de `.mcp.json`.
