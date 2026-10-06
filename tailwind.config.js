@@ -12,6 +12,8 @@ module.exports = {
         terroir: { DEFAULT: '#5A4D41', light: '#8E7F72', dark: '#3A3027' },
         basalt: { DEFAULT: '#242424', surface: '#181818', card: '#2A2A2A' },
         crema: '#FAF8F5',
+        // Grises cálidos: misma luminosidad relativa que los grises azulados de Tailwind (contraste idéntico), tono de la paleta
+        gray: { 50: '#faf9f9', 100: '#f5f3f2', 200: '#eae7e3', 300: '#dad3ce', 400: '#aba198', 500: '#7b6f65', 600: '#5b524b', 700: '#46403a', 800: '#2c2824', 900: '#1a1815' },
       },
       fontFamily: {
         serif: ['"Playfair Display"', 'Georgia', 'serif'],
