@@ -215,6 +215,18 @@ function servidor() {
     check('el descorche aparece al hacer clic con mouse, no frena el clic y se borra solo', con.hay === 1 && con.funciona && con.quedan === 0, JSON.stringify(con));
     check('con "reducir movimiento" el descorche no corre y el clic igual funciona', sin.hay === 0 && sin.funciona, JSON.stringify(sin)); await page.close(); }
 
+  // 19. sonido de descorche: suena una sola vez al reservar (mouse y teclado) y no en otros botones (audio simulado que solo cuenta cada "pop")
+  { const page = await browser.newPage(); await page.setViewport({ width: 1280, height: 800 });
+    await page.evaluateOnNewDocument(() => { window.__plays = 0; const mk = () => ({ connect(t) { if (t === 'DEST') window.__plays++; return t; }, start() {}, stop() {}, gain: { value: 0, setValueAtTime() {}, exponentialRampToValueAtTime() {} }, frequency: { value: 0, setValueAtTime() {}, exponentialRampToValueAtTime() {} }, Q: { value: 0 } });
+      window.AudioContext = class { constructor() { this.state = 'running'; this.currentTime = 0; this.sampleRate = 44100; this.destination = 'DEST'; } resume() { return Promise.resolve(); } createGain() { return mk(); } createOscillator() { return mk(); } createBufferSource() { return mk(); } createBiquadFilter() { return mk(); } createBuffer(c, n) { const d = new Float32Array(n); return { getChannelData() { return d; } }; } }; });
+    await page.goto(srv.url, { waitUntil: 'load' }); await page.evaluate(() => document.fonts.ready); await page.addStyleTag({ content: 'html{scroll-behavior:auto!important}' }); await sleep(600);
+    const RES = '#paquetes button[onclick*="openBookingModal"]', suenan = () => page.evaluate(() => window.__plays);
+    const centro = async (sel) => { await page.evaluate((s) => document.querySelector(s).scrollIntoView({ block: 'center' }), sel); await sleep(300); return page.evaluate((s) => { const r = document.querySelector(s).getBoundingClientRect(); return { x: r.left + r.width * 0.4, y: r.top + r.height / 2 }; }, sel); };
+    let c = await centro(RES); await page.mouse.click(c.x, c.y); await sleep(300); const conMouse = await suenan(); await page.evaluate(() => closeBookingModal()); await sleep(450);
+    c = await centro('#faqBtn5'); await page.mouse.click(c.x, c.y); await sleep(300); const otro = await suenan();
+    await centro(RES); await page.focus(RES); await page.keyboard.press('Enter'); await sleep(300); const conTeclado = await suenan();
+    check('el sonido de descorche suena una vez al reservar con mouse y con teclado, y no en otros botones', conMouse === 1 && otro === 1 && conTeclado === 2, JSON.stringify({ mouse: conMouse, otroBoton: otro, teclado: conTeclado })); await page.close(); }
+
   await browser.close(); srv.cerrar();
   if (failures.length) { console.log('\n' + failures.length + ' prueba(s) fallaron:\n - ' + failures.join('\n - ')); process.exit(1); }
   console.log('\nTodas las pruebas de humo pasaron');
