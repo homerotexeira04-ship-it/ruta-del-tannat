@@ -45,7 +45,7 @@ En GitHub Actions (`.github/workflows/checks.yml`) corren solos en cada cambio a
 npm install           # solo la primera vez
 npm run check         # archivos citados, anclas, ids, JSON-LD, idiomas ES/PT/EN y FAQ al día
 npm test              # backend de opiniones y contador de uso, con una planilla simulada
-npm run smoke         # en Chrome real: errores, desbordes, WhatsApp, La Copa, itinerario, menú del encabezado, movimiento (hover, presión, galería y modales) y detalles visuales (letra mínima, zonas táctiles, cursor de botella, descorche y su sonido, tipografías propias, foto del inicio según la pantalla, tarjetas de Estaciones y retrato de El Pionero) (CHROME_PATH si no lo encuentra)
+npm run smoke         # en Chrome real: errores, desbordes, WhatsApp, La Copa, itinerario, menú del encabezado, movimiento (hover, presión, galería y modales) y detalles visuales (letra mínima, zonas táctiles, cursor de botella, descorche y su sonido, tipografías propias, foto del inicio según la pantalla, tarjetas de Estaciones, retrato de El Pionero y reintento de la lista de opiniones si Google falla) (CHROME_PATH si no lo encuentra)
 npm run check:links   # enlaces externos (más lento)
 ```
 
