@@ -890,15 +890,15 @@
           <!-- Currency + Language -->
           <div class="flex items-center gap-3">
             <div class="flex items-center bg-black/40 rounded-full p-1 border border-white/10 text-xs">
-              <button onclick="setCurrency(&#39;USD&#39;)" id="btnCurUSD" class="px-2.5 py-1 rounded-full font-semibold transition-all bg-gold text-tannat-900 shadow-sm" aria-pressed="true" aria-label="Ver precios en Dólares" data-i18n-aria="a11y.curUSD">USD</button>
-              <button onclick="setCurrency(&#39;UYU&#39;)" id="btnCurUYU" class="px-2.5 py-1 rounded-full font-semibold text-gray-300 hover:text-white transition-all" aria-pressed="false" aria-label="Ver precios en Pesos Uruguayos" data-i18n-aria="a11y.curUYU">UYU</button>
-              <button onclick="setCurrency(&#39;BRL&#39;)" id="btnCurBRL" class="px-2.5 py-1 rounded-full font-semibold text-gray-300 hover:text-white transition-all" aria-pressed="false" aria-label="Ver precios en Reales" data-i18n-aria="a11y.curBRL">BRL</button>
+              <button onclick="setCurrency(&#39;USD&#39;)" id="btnCurUSD" class="px-2.5 py-1 rounded-full font-semibold transition-all bg-gold text-tannat-900 shadow-sm" aria-pressed="true" aria-label="USD: ver precios en Dólares" data-i18n-aria="a11y.curUSD">USD</button>
+              <button onclick="setCurrency(&#39;UYU&#39;)" id="btnCurUYU" class="px-2.5 py-1 rounded-full font-semibold text-gray-300 hover:text-white transition-all" aria-pressed="false" aria-label="UYU: ver precios en Pesos Uruguayos" data-i18n-aria="a11y.curUYU">UYU</button>
+              <button onclick="setCurrency(&#39;BRL&#39;)" id="btnCurBRL" class="px-2.5 py-1 rounded-full font-semibold text-gray-300 hover:text-white transition-all" aria-pressed="false" aria-label="BRL: ver precios en Reales" data-i18n-aria="a11y.curBRL">BRL</button>
             </div>
             <div class="w-px h-4 bg-white/10"></div>
             <div class="flex items-center bg-black/40 rounded-full p-1 border border-white/10 text-xs">
-              <button onclick="setLanguage(&#39;es&#39;)" id="btnLangES" class="px-2.5 py-1 rounded-full font-semibold transition-all bg-gold text-tannat-900 shadow-sm" aria-pressed="true" aria-label="Idioma Español">ES</button>
-              <button onclick="setLanguage(&#39;pt&#39;)" id="btnLangPT" class="px-2.5 py-1 rounded-full font-semibold text-gray-300 hover:text-white transition-all" aria-pressed="false" aria-label="Idioma Português">PT</button>
-              <button onclick="setLanguage(&#39;en&#39;)" id="btnLangEN" class="px-2.5 py-1 rounded-full font-semibold text-gray-300 hover:text-white transition-all" aria-pressed="false" aria-label="English Language">EN</button>
+              <button onclick="setLanguage(&#39;es&#39;)" id="btnLangES" class="px-2.5 py-1 rounded-full font-semibold transition-all bg-gold text-tannat-900 shadow-sm" aria-pressed="true" aria-label="ES: Español">ES</button>
+              <button onclick="setLanguage(&#39;pt&#39;)" id="btnLangPT" class="px-2.5 py-1 rounded-full font-semibold text-gray-300 hover:text-white transition-all" aria-pressed="false" aria-label="PT: Português">PT</button>
+              <button onclick="setLanguage(&#39;en&#39;)" id="btnLangEN" class="px-2.5 py-1 rounded-full font-semibold text-gray-300 hover:text-white transition-all" aria-pressed="false" aria-label="EN: English">EN</button>
             </div>
           </div>
 
@@ -2095,7 +2095,7 @@
           <h3 class="text-center font-serif text-xl sm:text-2xl font-bold text-white mb-6" data-i18n="packages.compareTitle">¿Cuál elijo?</h3>
           <p class="sm:hidden text-center text-xs text-gold-light/80 mb-2" data-i18n="packages.compareScrollHint">Deslizá hacia el costado para ver la comparación completa →</p>
           <div class="relative rounded-2xl border border-white/10">
-            <div class="overflow-x-auto rounded-2xl">
+            <div class="overflow-x-auto rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-gold" tabindex="0" role="region" aria-label="Tabla comparativa de paquetes (se desplaza hacia los costados)" data-i18n-aria="a11y.compareTable">
             <table class="w-full text-sm text-left border-collapse min-w-[640px]">
               <thead>
                 <tr class="bg-white/5 text-gray-300 text-xs uppercase tracking-wider">
@@ -2873,7 +2873,7 @@
               <table class="w-full text-xs border-collapse table-fixed sm:table-auto sm:min-w-[420px]">
                 <thead>
                   <tr>
-                    <th class="w-9 p-1 sm:w-auto sm:p-2"></th>
+                    <td class="w-9 p-1 sm:w-auto sm:p-2"></td>
                     <th class="p-1 sm:p-2 text-center font-semibold">01</th>
                     <th class="p-1 sm:p-2 text-center font-semibold">02</th>
                     <th class="p-1 sm:p-2 text-center font-semibold">03</th>
@@ -3271,14 +3271,16 @@
   <!-- ==================== FLOATING QUICK WIDGETS ==================== -->
   
   <!-- WhatsApp Floating Action Button -->
+  <div role="region" aria-label="WhatsApp">
   <a href="https://wa.me/59892614800?text=Hola!%20Deseo%20informaci%C3%B3n%20para%20realizar%20el%20circuito%20de%20La%20Ruta%20del%20Tannat%20en%20Salto." target="_blank" rel="noopener noreferrer" class="fixed bottom-6 right-6 z-40 bg-[#25D366] hover:bg-[#20ba59] text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-all flex items-center justify-center focus:outline-none focus:ring-4 focus:ring-green-400" aria-label="Contactar por WhatsApp al +598 92 614 800" data-i18n-aria="a11y.whatsapp" id="btnFloatingWhatsApp">
-    <svg class="w-7 h-7 fill-current" viewBox="0 0 24 24">
-      <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"></path>
-    </svg>
-  </a>
+      <svg class="w-7 h-7 fill-current" viewBox="0 0 24 24">
+        <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"></path>
+      </svg>
+    </a>
+  </div>
 
   <!-- Floating Sticky Bottom Bar for Mobile Booking -->
-  <div class="xl:hidden fixed bottom-0 left-0 right-0 z-30 bg-tannat-900/95 border-t border-gold/30 p-3 pr-[5.5rem] backdrop-blur-lg flex items-center justify-between gap-2 mbar">
+  <div role="region" aria-label="Reserva rápida" data-i18n-aria="a11y.quickBook" class="xl:hidden fixed bottom-0 left-0 right-0 z-30 bg-tannat-900/95 border-t border-gold/30 p-3 pr-[5.5rem] backdrop-blur-lg flex items-center justify-between gap-2 mbar">
     <div>
       <span class="block text-xs uppercase text-gold font-bold" data-i18n="mobileBar.from">Desde Salto</span>
       <span id="mbarPrice" class="text-white font-bold text-sm price-val" data-usd="45" data-uyu="1850" data-brl="260">USD 45 / persona</span>
@@ -3685,9 +3687,9 @@
         "nav.voices": "Voces del Circuito",
         "modal.close": "Cerrar",
         "a11y.weather": "Clima actual en Salto, Uruguay",
-        "a11y.curUSD": "Ver precios en Dólares",
-        "a11y.curUYU": "Ver precios en Pesos Uruguayos",
-        "a11y.curBRL": "Ver precios en Reales",
+        "a11y.curUSD": "USD: ver precios en Dólares",
+        "a11y.curUYU": "UYU: ver precios en Pesos Uruguayos",
+        "a11y.curBRL": "BRL: ver precios en Reales",
         "a11y.home": "Inicio La Ruta del Tannat",
         "a11y.nav": "Navegación principal",
         "a11y.menu": "Abrir menú de navegación",
@@ -3695,6 +3697,8 @@
         "a11y.gallery": "Galería de fotografías del circuito, con desplazamiento automático",
         "a11y.map": "Mapa interactivo real de La Ruta del Tannat en Salto, Uruguay",
         "a11y.whatsapp": "Contactar por WhatsApp al +598 92 614 800",
+        "a11y.compareTable": "Tabla comparativa de paquetes (se desplaza hacia los costados)",
+        "a11y.quickBook": "Reserva rápida",
         "hero.photoCredit": "Foto: Viña Varela Zarranz (CC BY-SA)",
         "nav.inavi": "INAVI",
         "nav.gallery": "Galería",
@@ -4179,6 +4183,7 @@
         
         "mobileBar.from": "Desde Salto",
         "mobileBar.btn": "Reservar Ahora",
+        "mobileBar.per": "persona",
         
         "modal.step": "Paso Directo · WhatsApp Salto",
         "modal.title": "Solicitar Reserva de Circuito",
@@ -4240,9 +4245,9 @@
         "nav.voices": "Vozes do Circuito",
         "modal.close": "Fechar",
         "a11y.weather": "Clima atual em Salto, Uruguai",
-        "a11y.curUSD": "Ver preços em Dólares",
-        "a11y.curUYU": "Ver preços em Pesos Uruguaios",
-        "a11y.curBRL": "Ver preços em Reais",
+        "a11y.curUSD": "USD: ver preços em Dólares",
+        "a11y.curUYU": "UYU: ver preços em Pesos Uruguaios",
+        "a11y.curBRL": "BRL: ver preços em Reais",
         "a11y.home": "Início A Rota do Tannat",
         "a11y.nav": "Navegação principal",
         "a11y.menu": "Abrir menu de navegação",
@@ -4250,6 +4255,8 @@
         "a11y.gallery": "Galeria de fotografias do circuito, com rolagem automática",
         "a11y.map": "Mapa interativo real da Rota do Tannat em Salto, Uruguai",
         "a11y.whatsapp": "Falar pelo WhatsApp: +598 92 614 800",
+        "a11y.compareTable": "Tabela comparativa de pacotes (rola para os lados)",
+        "a11y.quickBook": "Reserva rápida",
         "hero.photoCredit": "Foto: Viña Varela Zarranz (CC BY-SA)",
         "nav.inavi": "INAVI",
         "nav.gallery": "Galeria",
@@ -4734,6 +4741,7 @@
         
         "mobileBar.from": "A partir de Salto",
         "mobileBar.btn": "Reservar Agora",
+        "mobileBar.per": "pessoa",
         
         "modal.step": "Passo Direto · WhatsApp Salto",
         "modal.title": "Solicitar Reserva do Circuito",
@@ -4795,9 +4803,9 @@
         "nav.voices": "Voices of the Circuit",
         "modal.close": "Close",
         "a11y.weather": "Current weather in Salto, Uruguay",
-        "a11y.curUSD": "Show prices in US dollars",
-        "a11y.curUYU": "Show prices in Uruguayan pesos",
-        "a11y.curBRL": "Show prices in Brazilian reais",
+        "a11y.curUSD": "USD: show prices in US dollars",
+        "a11y.curUYU": "UYU: show prices in Uruguayan pesos",
+        "a11y.curBRL": "BRL: show prices in Brazilian reais",
         "a11y.home": "The Tannat Route home",
         "a11y.nav": "Main navigation",
         "a11y.menu": "Open navigation menu",
@@ -4805,6 +4813,8 @@
         "a11y.gallery": "Photo gallery of the circuit, with automatic scrolling",
         "a11y.map": "Interactive map of The Tannat Route in Salto, Uruguay",
         "a11y.whatsapp": "Contact us on WhatsApp: +598 92 614 800",
+        "a11y.compareTable": "Package comparison table (scrolls sideways)",
+        "a11y.quickBook": "Quick booking",
         "hero.photoCredit": "Photo: Viña Varela Zarranz (CC BY-SA)",
         "nav.inavi": "INAVI",
         "nav.gallery": "Gallery",
@@ -5289,6 +5299,7 @@
         
         "mobileBar.from": "From Salto",
         "mobileBar.btn": "Book Now",
+        "mobileBar.per": "person",
         
         "modal.step": "Direct Contact · WhatsApp Salto",
         "modal.title": "Request Tour Reservation",
@@ -5726,7 +5737,7 @@
     function setCurrency(cur) {
       currentCurrency = cur;
       try { localStorage.setItem('tannat_currency', cur); } catch (e) {}
-      const perPerson = (translations[currentLang] || translations.es)['packages.perPerson'] || '';
+      const perPerson = (translations[currentLang] || translations.es)['mobileBar.per'] || '';
       document.querySelectorAll('.price-val').forEach(el => {
         const usd = el.getAttribute('data-usd');
         const uyu = el.getAttribute('data-uyu');
