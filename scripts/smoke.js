@@ -227,6 +227,14 @@ function servidor() {
     await centro(RES); await page.focus(RES); await page.keyboard.press('Enter'); await sleep(300); const conTeclado = await suenan();
     check('el sonido de descorche suena una vez al reservar con mouse y con teclado, y no en otros botones', conMouse === 1 && otro === 1 && conTeclado === 2, JSON.stringify({ mouse: conMouse, otroBoton: otro, teclado: conTeclado })); await page.close(); }
 
+  // 20. accesibilidad: el nombre accesible de los botones de idioma y moneda contiene su texto visible (quien maneja la página por voz dice "USD" o "PT"), y la tabla comparativa que se desliza en el celular se alcanza con el teclado
+  { const page = await abrir(1280, 800, false); const malos = [];
+    for (const l of ['es', 'pt', 'en']) { await page.evaluate((l) => setLanguage(l), l); await sleep(250);
+      const sin = await page.evaluate(() => ['btnLangES', 'btnLangPT', 'btnLangEN', 'btnCurUSD', 'btnCurUYU', 'btnCurBRL'].filter((id) => { const b = document.getElementById(id); return !b.getAttribute('aria-label').toLowerCase().includes(b.textContent.trim().toLowerCase()); }));
+      if (sin.length) malos.push(l + ': ' + sin.join(',')); }
+    const tabla = await page.evaluate(() => { const e = document.querySelector('[data-i18n-aria="a11y.compareTable"]'); return !!e && e.tabIndex === 0 && e.getAttribute('role') === 'region' && !!e.getAttribute('aria-label'); });
+    check('los botones de idioma y moneda nombran su texto visible (ES/PT/EN) y la tabla comparativa que se desliza se alcanza con el teclado', malos.length === 0 && tabla, malos.join(' | ') + (tabla ? '' : ' (tabla sin teclado)')); await page.close(); }
+
   await browser.close(); srv.cerrar();
   if (failures.length) { console.log('\n' + failures.length + ' prueba(s) fallaron:\n - ' + failures.join('\n - ')); process.exit(1); }
   console.log('\nTodas las pruebas de humo pasaron');
