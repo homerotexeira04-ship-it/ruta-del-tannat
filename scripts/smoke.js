@@ -203,6 +203,18 @@ function servidor() {
     check(conMouse ? 'el cursor propio aparece con mouse y la copa y los campos de texto conservan el suyo' : 'el cursor propio no aparece en el celular táctil',
       conMouse ? propio(c.cuerpo) && propio(c.enlace) && c.copa === 'grab' && c.campo === 'text' : !propio(c.cuerpo) && !propio(c.enlace), JSON.stringify(c).replace(/data:[^"]*/g, 'data:…')); await page.close(); }
 
+  // 18. descorche: al hacer clic con mouse sobre algo clicable sale un corcho (~0,6 s), el clic igual funciona y el efecto se borra solo; con "reducir movimiento" no corre
+  { const page = await abrir(1280, 800, false);
+    const probar = async (reducir) => { await page.emulateMediaFeatures([{ name: 'prefers-reduced-motion', value: reducir ? 'reduce' : 'no-preference' }]); await page.reload({ waitUntil: 'load' }); await page.evaluate(() => document.fonts.ready); await page.addStyleTag({ content: 'html{scroll-behavior:auto!important}' }); await sleep(500);
+      await page.evaluate(() => document.querySelector('#faq button').scrollIntoView({ block: 'center' })); await sleep(300);
+      const r = await (await page.$('#faq button')).boundingBox(), antes = await page.evaluate(() => document.querySelector('#faq button').getAttribute('aria-expanded'));
+      await page.mouse.click(r.x + r.width * 0.4, r.y + r.height / 2); await sleep(90);
+      const hay = await page.evaluate(() => document.querySelectorAll('.pop-corcho').length), despues = await page.evaluate(() => document.querySelector('#faq button').getAttribute('aria-expanded')); await sleep(1300);
+      return { hay, funciona: antes !== despues, quedan: await page.evaluate(() => document.querySelectorAll('.pop-corcho').length) }; };
+    const con = await probar(false), sin = await probar(true);
+    check('el descorche aparece al hacer clic con mouse, no frena el clic y se borra solo', con.hay === 1 && con.funciona && con.quedan === 0, JSON.stringify(con));
+    check('con "reducir movimiento" el descorche no corre y el clic igual funciona', sin.hay === 0 && sin.funciona, JSON.stringify(sin)); await page.close(); }
+
   await browser.close(); srv.cerrar();
   if (failures.length) { console.log('\n' + failures.length + ' prueba(s) fallaron:\n - ' + failures.join('\n - ')); process.exit(1); }
   console.log('\nTodas las pruebas de humo pasaron');
