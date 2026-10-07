@@ -466,6 +466,12 @@
     main p, main li, main dd, footer p, footer li { text-wrap: pretty; } main h3, main h4 { text-wrap: balance; }
     /* El cartel "SALTO CHICO" es una foto muy ancha: el recorte centrado le comía la "S" */
     img[src*="salto-chico-cartel"] { object-position: 6% 50%; } #galeria img[src*="salto-chico-cartel"] { object-position: 12% 50%; }
+    /* Cursor propio con mouse: punto vino con aro dorado (borde blanco para que se vea sobre crema y sobre vino); sobre enlaces y botones el aro se rellena.
+       Solo con mouse y sin modo de alto contraste: en celular y tableta no hay cursor. Los campos de texto, el mapa y la copa arrastrable conservan el suyo. */
+    @media (hover: hover) and (pointer: fine) and (forced-colors: none) {
+      html { cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28'%3E%3Ccircle cx='14' cy='14' r='11' fill='none' stroke='white' stroke-width='3.6'/%3E%3Ccircle cx='14' cy='14' r='11' fill='none' stroke='%23C29D62' stroke-width='1.6'/%3E%3Ccircle cx='14' cy='14' r='4' fill='%23721B28' stroke='white' stroke-width='1.2'/%3E%3C/svg%3E") 14 14, auto; }
+      html :is(a[href], button:not(:disabled), summary, select, [role="button"], .cursor-pointer, .gallery-item, .cup-orb, .cup-tab, .cup-range) { cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28'%3E%3Ccircle cx='14' cy='14' r='11' fill='%23C29D62' fill-opacity='.35' stroke='white' stroke-width='3.6'/%3E%3Ccircle cx='14' cy='14' r='11' fill='none' stroke='%23C29D62' stroke-width='1.6'/%3E%3Ccircle cx='14' cy='14' r='4' fill='%23721B28' stroke='white' stroke-width='1.2'/%3E%3C/svg%3E") 14 14, pointer; }
+    }
     .gallery-caption span { color: #fff; font-size: 0.75rem; font-weight: 600; line-height: 1.25; }
     .gallery-item::after {
       content: "";

@@ -196,6 +196,13 @@ function servidor() {
     const tam = await page.evaluate(() => [...new Set([...document.querySelectorAll('main h2')].filter((h) => !h.closest('.cup-section') && h.getBoundingClientRect().height > 0).map((h) => getComputedStyle(h).fontSize))]);
     check('los titulares de sección tienen todos el mismo tamaño en escritorio', tam.length === 1, tam.join(' / ')); await page.close(); }
 
+  // 17. cursor propio: solo con mouse (en celular no hay cursor) y sin pisar el de la copa arrastrable ni el de los campos de texto
+  for (const [W, H, m, conMouse] of [[1280, 800, false, true], [390, 844, true, false]]) { const page = await abrir(W, H, m);
+    const c = await page.evaluate(() => { const g = (s) => { const e = document.querySelector(s); return e ? getComputedStyle(e).cursor : ''; }; return { cuerpo: g('#historia p'), enlace: g('#mainHeader a[href^="#"]'), copa: g('#cupCanvas'), campo: g('#bookingForm input[name]') }; });
+    const propio = (v) => /url\("data:image\/svg\+xml/.test(v);
+    check(conMouse ? 'el cursor propio aparece con mouse y la copa y los campos de texto conservan el suyo' : 'el cursor propio no aparece en el celular táctil',
+      conMouse ? propio(c.cuerpo) && propio(c.enlace) && c.copa === 'grab' && c.campo === 'text' : !propio(c.cuerpo) && !propio(c.enlace), JSON.stringify(c).replace(/data:[^"]*/g, 'data:…')); await page.close(); }
+
   await browser.close(); srv.cerrar();
   if (failures.length) { console.log('\n' + failures.length + ' prueba(s) fallaron:\n - ' + failures.join('\n - ')); process.exit(1); }
   console.log('\nTodas las pruebas de humo pasaron');
