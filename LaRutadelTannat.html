@@ -267,13 +267,20 @@
   </script>
 
   <!-- Tailwind CSS compilado (ver README: npm run build:css) -->
-  <link rel="preload" as="image" href="./LaRutadelTannat_files/hero-vinedo-uruguay-960.webp" imagesrcset="./LaRutadelTannat_files/hero-vinedo-uruguay-960.webp 960w, ./LaRutadelTannat_files/hero-vinedo-uruguay.webp 1920w" imagesizes="100vw" fetchpriority="high">
-  <link rel="stylesheet" href="./LaRutadelTannat_files/tailwind.css?v=20">
+  <!-- Foto del inicio: 720 px para celulares (va recortada y bajo un velo oscuro, por eso "sizes" la pide a media pantalla: alcanza aun con pantallas de alta densidad), 1280 y 1920 para el resto. Debe decir lo mismo que la imagen del hero (más abajo). -->
+  <link rel="preload" as="image" href="./LaRutadelTannat_files/hero-vinedo-uruguay-1280.webp" imagesrcset="./LaRutadelTannat_files/hero-vinedo-uruguay-720.webp 720w, ./LaRutadelTannat_files/hero-vinedo-uruguay-1280.webp 1280w, ./LaRutadelTannat_files/hero-vinedo-uruguay.webp 1920w" imagesizes="(max-width: 767px) 50vw, 100vw" fetchpriority="high">
+  <link rel="stylesheet" href="./LaRutadelTannat_files/tailwind.css?v=21">
 
-  <!-- Tipografía editorial: Playfair Display (titulares) + Plus Jakarta Sans (cuerpo/UI), vía Google Fonts. -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+  <!-- Tipografía editorial alojada en el sitio (sin pedidos a Google): Playfair Display (titulares) + Plus Jakarta Sans (cuerpo/UI).
+       Fuentes variables, solo el subconjunto latin (cubre es/pt/en; otro alfabeto cae a la fuente del sistema). Licencia OFL.
+       Los rangos de peso son los mismos que pedía Google (500-700, cursiva 500-600 y 400-800): un peso fuera del rango usa el más cercano, como antes. -->
+  <link rel="preload" as="font" type="font/woff2" href="./LaRutadelTannat_files/plus-jakarta-sans-latin.woff2" crossorigin>
+  <link rel="preload" as="font" type="font/woff2" href="./LaRutadelTannat_files/playfair-display-latin.woff2" crossorigin>
+  <style>
+    @font-face { font-family: 'Playfair Display'; font-style: normal; font-weight: 500 700; font-display: swap; src: url("./LaRutadelTannat_files/playfair-display-latin.woff2") format('woff2'); }
+    @font-face { font-family: 'Playfair Display'; font-style: italic; font-weight: 500 600; font-display: swap; src: url("./LaRutadelTannat_files/playfair-display-italic-latin.woff2") format('woff2'); }
+    @font-face { font-family: 'Plus Jakarta Sans'; font-style: normal; font-weight: 400 800; font-display: swap; src: url("./LaRutadelTannat_files/plus-jakarta-sans-latin.woff2") format('woff2'); }
+  </style>
 
   <style>
     /* Desplazamiento suave al saltar a una sección (clic en el menú, "Ver más", etc.) */
@@ -1080,7 +1087,7 @@
     <section id="hero" class="relative min-h-[75svh] flex items-center justify-center bg-tannat-900 text-white pt-28 sm:pt-32 xl:pt-40 overflow-hidden">
       <!-- Background Image with Overlay -->
       <div class="absolute inset-0 z-0">
-        <img src="./LaRutadelTannat_files/hero-vinedo-uruguay.webp" width="1920" height="1440" srcset="./LaRutadelTannat_files/hero-vinedo-uruguay-960.webp 960w, ./LaRutadelTannat_files/hero-vinedo-uruguay.webp 1920w" sizes="100vw" alt="Viñedo real en Canelones, Uruguay, con luz dorada de otoño entre las hileras" class="w-full h-full object-cover object-center transform scale-105 transition-transform duration-1000" loading="eager" fetchpriority="high">
+        <img src="./LaRutadelTannat_files/hero-vinedo-uruguay.webp" width="1920" height="1440" srcset="./LaRutadelTannat_files/hero-vinedo-uruguay-720.webp 720w, ./LaRutadelTannat_files/hero-vinedo-uruguay-1280.webp 1280w, ./LaRutadelTannat_files/hero-vinedo-uruguay.webp 1920w" sizes="(max-width: 767px) 50vw, 100vw" alt="Viñedo real en Canelones, Uruguay, con luz dorada de otoño entre las hileras" class="w-full h-full object-cover object-center transform scale-105 transition-transform duration-1000" loading="eager" fetchpriority="high">
         <div class="absolute inset-0 bg-gradient-to-r from-tannat-900/95 via-tannat-900/80 to-transparent"></div>
         <div class="absolute inset-0 bg-gradient-to-t from-crema via-transparent to-black/60"></div>
         <a href="https://commons.wikimedia.org/wiki/File:Vi%C3%B1a_en_Oto%C3%B1o.jpg" target="_blank" rel="noopener noreferrer" class="absolute bottom-2 right-3 z-10 text-xs font-semibold text-tannat-dark bg-white/85 hover:bg-white px-2.5 py-1 rounded-full transition-colors after:content-[''] after:absolute after:-inset-x-2 after:-inset-y-3.5" data-i18n="hero.photoCredit">Foto: Viña Varela Zarranz (CC BY-SA)</a>
@@ -1204,7 +1211,7 @@
     </section>
 
     <!-- ==================== SECTION 2B: EL PIONERO ==================== -->
-    <section id="pionero" class="py-20 lg:py-28 bg-white text-basalt relative overflow-hidden">
+    <section id="pionero" class="py-20 lg:py-28 bg-white text-basalt relative overflow-clip">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         <div class="text-center max-w-3xl mx-auto mb-14">
@@ -1221,9 +1228,9 @@
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
 
-          <!-- Portrait -->
-          <div class="lg:col-span-4">
-            <div class="relative group">
+          <!-- Portrait: en escritorio acompaña la lectura de la línea de tiempo (sticky) en vez de dejar un hueco debajo; la columna se estira a todo el alto para que tenga por dónde correr -->
+          <div class="lg:col-span-4 lg:self-stretch">
+            <div class="relative group lg:sticky lg:top-[calc(var(--hdr-h,6rem)+1.5rem)]">
               <div class="absolute -inset-2 bg-gradient-to-r from-gold to-tannat rounded-3xl blur-lg opacity-25"></div>
               <div class="relative bg-white p-3 rounded-3xl shadow-xl border border-tannat-100 overflow-hidden">
                 <div class="aspect-[4/5] rounded-2xl overflow-hidden bg-tannat-900">
@@ -1489,8 +1496,8 @@
           </p>
         </div>
 
-        <!-- Cards Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <!-- Cards Grid: 4 columnas desde 1280 px; con menos ancho el texto completo no entra cómodo en tarjetas de 215 px -->
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
           
           <!-- Station 1: Bodega Harriague -->
           <div role="button" tabindex="0" onclick="openStationModal(1)" onkeydown="if(event.key===&#39;Enter&#39;||event.key===&#39; &#39;){event.preventDefault();openStationModal(1);}" class="group bg-white rounded-2xl overflow-hidden border border-tannat-100 shadow-editorial shadow-editorial-hover hover:-translate-y-1.5 transition-all flex flex-col focus:outline-none focus:ring-2 focus:ring-gold" aria-labelledby="stc1-b stc1-t">
@@ -1504,14 +1511,14 @@
               <div>
                 <span class="text-xs font-bold text-gold-dark tracking-wider uppercase block mb-1" data-i18n="st1.tag">Punto Cero del Tannat</span>
                 <h3 id="stc1-t" class="font-serif text-xl font-bold text-tannat-dark mb-2 group-hover:text-gold-dark transition-colors" data-i18n="st1.title">Espacio Cultural Bodega Harriague</h3>
-                <p class="text-base text-terroir line-clamp-3 mb-4" data-i18n="st1.desc">
+                <p class="text-base text-terroir mb-4" data-i18n="st1.desc">
                   Recinto arqueológico e industrial. Cuna donde se implantaron los primeros cuadros de Tannat en 1874. Proyecto patrimonial U-riharri.
                 </p>
                 <p class="flex items-center gap-1.5 text-xs text-terroir/80 mb-4" data-i18n="st1.note">
                   <span class="w-1.5 h-1.5 rounded-full bg-gold flex-shrink-0"></span>Espacio cultural · sin producción propia de vino
                 </p>
               </div>
-              <div class="pt-4 border-t border-tannat-100 flex items-center justify-between text-xs font-semibold text-tannat">
+              <div class="mt-2 pt-4 border-t border-tannat-100 flex items-center justify-between text-xs font-semibold text-tannat">
                 <span data-i18n="st1.loc">Av. Harriague y Etcheverry</span>
                 <span class="text-gold-dark group-hover:translate-x-1 transition-transform inline-flex items-center gap-1" data-i18n="btn.viewSheet">
                   Ver Ficha →
@@ -1532,7 +1539,7 @@
               <div>
                 <span class="text-xs font-bold text-gold-dark tracking-wider uppercase block mb-1" data-i18n="st2.tag">Ribera del Río Uruguay</span>
                 <h3 id="stc2-t" class="font-serif text-xl font-bold text-tannat-dark mb-2 group-hover:text-gold-dark transition-colors" data-i18n="st2.title">Bodega Salto Chico</h3>
-                <p class="text-base text-terroir line-clamp-3 mb-4" data-i18n="st2.desc">
+                <p class="text-base text-terroir mb-4" data-i18n="st2.desc">
                   Viñedos sobre cascadas basálticas. 6 hectáreas de cepas europeas y moderna tecnología de vinificación artesanal.
                 </p>
                 <div class="flex flex-wrap gap-x-4 gap-y-1 text-xs text-terroir/80 mb-4">
@@ -1540,7 +1547,7 @@
                   <span class="inline-flex items-center gap-1.5" data-i18n="st2.wine"><span class="w-1.5 h-1.5 rounded-full bg-tannat flex-shrink-0"></span>Gran Reserva Tannat</span>
                 </div>
               </div>
-              <div class="pt-4 border-t border-tannat-100 flex items-center justify-between text-xs font-semibold text-tannat">
+              <div class="mt-2 pt-4 border-t border-tannat-100 flex items-center justify-between text-xs font-semibold text-tannat">
                 <span data-i18n="st2.loc">Colonia Osimani, Salto</span>
                 <span class="text-gold-dark group-hover:translate-x-1 transition-transform inline-flex items-center gap-1" data-i18n="btn.viewSheet">
                   Ver Ficha →
@@ -1561,7 +1568,7 @@
               <div>
                 <span class="text-xs font-bold text-gold-dark tracking-wider uppercase block mb-1" data-i18n="st3.tag">Bodega Boutique &amp; Terroir</span>
                 <h3 id="stc3-t" class="font-serif text-xl font-bold text-tannat-dark mb-2 group-hover:text-gold-dark transition-colors" data-i18n="st3.title">Bodega Bertolini &amp; Broglio</h3>
-                <p class="text-base text-terroir line-clamp-3 mb-4" data-i18n="st3.desc">
+                <p class="text-base text-terroir mb-4" data-i18n="st3.desc">
                   19 hectáreas de viñedos conducidos en parrales. Pioneros en vinificación por gravedad y creadores del premiado Tannat Exotic.
                 </p>
                 <div class="flex flex-wrap gap-x-4 gap-y-1 text-xs text-terroir/80 mb-4">
@@ -1569,7 +1576,7 @@
                   <span class="inline-flex items-center gap-1.5" data-i18n="st3.wine"><span class="w-1.5 h-1.5 rounded-full bg-tannat flex-shrink-0"></span>Tannat Exotic Senza Crianza</span>
                 </div>
               </div>
-              <div class="pt-4 border-t border-tannat-100 flex items-center justify-between text-xs font-semibold text-tannat">
+              <div class="mt-2 pt-4 border-t border-tannat-100 flex items-center justify-between text-xs font-semibold text-tannat">
                 <span data-i18n="st3.loc">Ruta 3 Km 468.5, Daymán</span>
                 <span class="text-gold-dark group-hover:translate-x-1 transition-transform inline-flex items-center gap-1" data-i18n="btn.viewSheet">
                   Ver Ficha →
@@ -1590,7 +1597,7 @@
               <div>
                 <span class="text-xs font-bold text-gold-dark tracking-wider uppercase block mb-1" data-i18n="st4.tag">Viñedo El Asombrado</span>
                 <h3 id="stc4-t" class="font-serif text-xl font-bold text-tannat-dark mb-2 group-hover:text-gold-dark transition-colors" data-i18n="st4.title">Mori Maglio Wines</h3>
-                <p class="text-base text-terroir line-clamp-3 mb-4" data-i18n="st4.desc">
+                <p class="text-base text-terroir mb-4" data-i18n="st4.desc">
                   Tradición vitivinícola viva en Parada Daymán. Vinos de autor con identidad territorial y maridajes gourmet de cordero y cítricos salteños.
                 </p>
                 <div class="flex flex-wrap gap-x-4 gap-y-1 text-xs text-terroir/80 mb-4">
@@ -1598,7 +1605,7 @@
                   <span class="inline-flex items-center gap-1.5" data-i18n="st4.wine"><span class="w-1.5 h-1.5 rounded-full bg-tannat flex-shrink-0"></span>Tannat Reserva</span>
                 </div>
               </div>
-              <div class="pt-4 border-t border-tannat-100 flex items-center justify-between text-xs font-semibold text-tannat">
+              <div class="mt-2 pt-4 border-t border-tannat-100 flex items-center justify-between text-xs font-semibold text-tannat">
                 <span data-i18n="st4.loc">Parada Daymán, Salto</span>
                 <span class="text-gold-dark group-hover:translate-x-1 transition-transform inline-flex items-center gap-1" data-i18n="btn.viewSheet">
                   Ver Ficha →
@@ -1922,6 +1929,8 @@
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
 
+          <!-- Las dos zonas simples van en una grilla propia para que midan lo mismo; la tarjeta destacada queda aparte, más alta y levantada -->
+          <div class="md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
           <div class="p-6 bg-white rounded-2xl border border-tannat-100">
             <span class="text-xs font-bold uppercase tracking-wider text-gold-dark" data-i18n="stay.z1Tag">A 0 km · Punto de Partida</span>
             <h3 class="font-serif text-lg font-bold text-tannat-dark mt-1 mb-3" data-i18n="stay.z1Title">Centro de Salto</h3>
@@ -1936,6 +1945,7 @@
             <p class="text-base text-terroir leading-relaxed" data-i18n="stay.z2Desc">
               A minutos de Bertolini &amp; Broglio y Mori Maglio Wines. Complejos con piscina termal propia como <a href="https://termaldayman.com.uy/" target="_blank" rel="noopener noreferrer" class="text-gold-dark hover:underline font-semibold">Hotel Termal Daymán</a>, <a href="https://www.miradordeldayman.com.uy/" target="_blank" rel="noopener noreferrer" class="text-gold-dark hover:underline font-semibold">Hotel Mirador del Daymán</a> y <a href="https://www.posadasigloxix.com/" target="_blank" rel="noopener noreferrer" class="text-gold-dark hover:underline font-semibold">Posada del Siglo XIX</a>, además de cabañas y camping.
             </p>
+          </div>
           </div>
 
           <div class="relative md:-translate-y-3">
@@ -6045,7 +6055,7 @@
           title: "Política de Privacidad",
           sections: [
             { h: "1. Qué datos recopilamos", b: "Este sitio no tiene base de datos ni servidor propio: es un sitio estático. Los únicos datos personales que se generan son los que vos mismo escribís de forma voluntaria en el formulario de reserva (nombre, fecha, cantidad de pasajeros, paquete elegido, hotel de referencia y comentarios), y se usan exclusivamente para armar un mensaje de WhatsApp prellenado dirigido a los organizadores del circuito. Ese mensaje se envía directamente desde tu propio teléfono: nosotros no almacenamos esa información en ningún servidor." },
-            { h: "2. Servicios de terceros", b: "Para funcionar, el sitio carga recursos de Google Fonts (tipografías), OpenStreetMap / Leaflet (mapa interactivo), Open-Meteo (clima en tiempo real de Salto), WhatsApp / Meta (coordinación de reservas) y Google Maps (indicaciones de cómo llegar). Cada uno de estos servicios puede recibir automáticamente datos técnicos básicos de tu navegador (como la dirección IP) al cargar sus recursos, de acuerdo con sus propias políticas de privacidad. No compartimos activamente ningún dato tuyo con ellos: son consecuencia de cómo funciona la web en general." },
+            { h: "2. Servicios de terceros", b: "Para funcionar, el sitio carga recursos de OpenStreetMap / Leaflet (mapa interactivo), Open-Meteo (clima en tiempo real de Salto), WhatsApp / Meta (coordinación de reservas) y Google Maps (indicaciones de cómo llegar). Cada uno de estos servicios puede recibir automáticamente datos técnicos básicos de tu navegador (como la dirección IP) al cargar sus recursos, de acuerdo con sus propias políticas de privacidad. No compartimos activamente ningún dato tuyo con ellos: son consecuencia de cómo funciona la web en general." },
             { h: "3. Cookies", b: "Este sitio no utiliza cookies propias de seguimiento ni analíticas. Si el sitio se aloja en un proveedor externo, ese proveedor podría generar cookies técnicas necesarias para su funcionamiento (por ejemplo, de hosting)." },
             { h: "4. Marco legal", b: "Este proyecto es desarrollado en Uruguay y toma como referencia la Ley N.° 18.331 de Protección de Datos Personales. Si tenés dudas sobre tus datos, podés escribirnos por WhatsApp al +598 92 614 800." },
             { h: "5. Menores de edad", b: "El formulario de reserva no está dirigido a menores de edad sin supervisión de un adulto, en línea con nuestra política de consumo responsable." }
@@ -6055,7 +6065,7 @@
           title: "Política de Privacidade",
           sections: [
             { h: "1. Que dados coletamos", b: "Este site não tem banco de dados nem servidor próprio: é um site estático. Os únicos dados pessoais gerados são os que você mesmo digita voluntariamente no formulário de reserva (nome, data, quantidade de passageiros, pacote escolhido, hotel de referência e comentários), usados exclusivamente para montar uma mensagem de WhatsApp pré-preenchida direcionada aos organizadores do circuito. Essa mensagem é enviada diretamente do seu próprio telefone: nós não armazenamos essa informação em nenhum servidor." },
-            { h: "2. Serviços de terceiros", b: "Para funcionar, o site carrega recursos de Google Fonts (tipografia), OpenStreetMap / Leaflet (mapa interativo), Open-Meteo (clima em tempo real de Salto), WhatsApp / Meta (coordenação de reservas) e Google Maps (indicações de como chegar). Cada um desses serviços pode receber automaticamente dados técnicos básicos do seu navegador (como o endereço IP) ao carregar seus recursos, de acordo com suas próprias políticas de privacidade. Não compartilhamos ativamente nenhum dado seu com eles: são consequência de como a web funciona em geral." },
+            { h: "2. Serviços de terceiros", b: "Para funcionar, o site carrega recursos de OpenStreetMap / Leaflet (mapa interativo), Open-Meteo (clima em tempo real de Salto), WhatsApp / Meta (coordenação de reservas) e Google Maps (indicações de como chegar). Cada um desses serviços pode receber automaticamente dados técnicos básicos do seu navegador (como o endereço IP) ao carregar seus recursos, de acordo com suas próprias políticas de privacidade. Não compartilhamos ativamente nenhum dado seu com eles: são consequência de como a web funciona em geral." },
             { h: "3. Cookies", b: "Este site não utiliza cookies próprios de rastreamento nem análise. Se o site for hospedado em um provedor externo, esse provedor pode gerar cookies técnicos necessários para seu funcionamento (por exemplo, de hospedagem)." },
             { h: "4. Marco legal", b: "Este projeto é desenvolvido no Uruguai e toma como referência a Lei N.° 18.331 de Proteção de Dados Pessoais. Se tiver dúvidas sobre seus dados, pode nos escrever pelo WhatsApp no +598 92 614 800." },
             { h: "5. Menores de idade", b: "O formulário de reserva não é destinado a menores de idade sem supervisão de um adulto, em linha com nossa política de consumo responsável." }
@@ -6065,7 +6075,7 @@
           title: "Privacy Policy",
           sections: [
             { h: "1. What data we collect", b: "This site has no database or backend server of its own: it's a static site. The only personal data generated is what you voluntarily type into the booking form (name, date, number of guests, chosen package, reference hotel, and comments), used solely to build a pre-filled WhatsApp message addressed to the circuit's organizers. That message is sent directly from your own phone — we do not store that information on any server." },
-            { h: "2. Third-party services", b: "To function, this site loads resources from Google Fonts (typography), OpenStreetMap / Leaflet (interactive map), Open-Meteo (Salto's real-time weather), WhatsApp / Meta (booking coordination), and Google Maps (directions). Each of these services may automatically receive basic technical data from your browser (such as your IP address) when loading their resources, per their own privacy policies. We do not actively share any of your data with them — this is simply a consequence of how the web works." },
+            { h: "2. Third-party services", b: "To function, this site loads resources from OpenStreetMap / Leaflet (interactive map), Open-Meteo (Salto's real-time weather), WhatsApp / Meta (booking coordination), and Google Maps (directions). Each of these services may automatically receive basic technical data from your browser (such as your IP address) when loading their resources, per their own privacy policies. We do not actively share any of your data with them — this is simply a consequence of how the web works." },
             { h: "3. Cookies", b: "This site does not use its own tracking or analytics cookies. If the site is hosted by an external provider, that provider may set technical cookies necessary for its operation (e.g., hosting-related cookies)." },
             { h: "4. Legal framework", b: "This project is developed in Uruguay and references Law No. 18.331 on Personal Data Protection. If you have questions about your data, you can reach us via WhatsApp at +598 92 614 800." },
             { h: "5. Minors", b: "The booking form is not intended for use by minors without adult supervision, in line with our responsible-consumption policy." }

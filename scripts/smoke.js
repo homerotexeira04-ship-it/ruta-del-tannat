@@ -235,6 +235,38 @@ function servidor() {
     const tabla = await page.evaluate(() => { const e = document.querySelector('[data-i18n-aria="a11y.compareTable"]'); return !!e && e.tabIndex === 0 && e.getAttribute('role') === 'region' && !!e.getAttribute('aria-label'); });
     check('los botones de idioma y moneda nombran su texto visible (ES/PT/EN) y la tabla comparativa que se desliza se alcanza con el teclado', malos.length === 0 && tabla, malos.join(' | ') + (tabla ? '' : ' (tabla sin teclado)')); await page.close(); }
 
+  // 21. tipografías propias: las caras se cargan desde el sitio, no se pide nada a Google Fonts y el service worker las guarda para usar sin conexión
+  { const page = await browser.newPage(); const gf = []; page.on('request', (r) => { if (/fonts\.(googleapis|gstatic)\.com/.test(r.url())) gf.push(r.url().slice(0, 70)); });
+    await page.setViewport({ width: 1280, height: 800 }); await page.goto(srv.url, { waitUntil: 'load' }); await page.evaluate(() => document.fonts.ready); await sleep(400);
+    const f = await page.evaluate(async () => { await Promise.race([navigator.serviceWorker.ready, new Promise((r) => setTimeout(r, 6000))]); await new Promise((r) => setTimeout(r, 1200));
+      const guardadas = []; for (const n of ['plus-jakarta-sans-latin', 'playfair-display-latin', 'playfair-display-italic-latin']) if (await caches.match('./LaRutadelTannat_files/' + n + '.woff2')) guardadas.push(n);
+      return { cargadas: [...document.fonts].filter((c) => c.status === 'loaded').map((c) => c.family.replace(/["']/g, '') + ' ' + c.style), guardadas: guardadas.length }; });
+    check('las tipografías son propias: se cargan desde el sitio, no se pide nada a Google Fonts y el service worker las guarda', gf.length === 0 && f.cargadas.includes('Playfair Display normal') && f.cargadas.includes('Plus Jakarta Sans normal') && f.guardadas === 3, JSON.stringify({ googleFonts: gf.length, ...f })); await page.close(); }
+
+  // 22. foto del inicio: un celular de alta densidad usa la de 720 px, una pantalla chica de escritorio la de 1280 px y una grande la de 1920 px, y se baja una sola vez (la precarga del <head> coincide con el <img>)
+  for (const [W, H, dpr, mobile, esperada] of [[390, 844, 3, true, 'hero-vinedo-uruguay-720.webp'], [1024, 768, 1, false, 'hero-vinedo-uruguay-1280.webp'], [1440, 900, 1, false, 'hero-vinedo-uruguay.webp']]) {
+    const page = await browser.newPage(); const bajadas = []; page.on('request', (r) => { if (/hero-vinedo-uruguay[^/]*\.webp$/.test(r.url())) bajadas.push(r.url().split('/').pop()); });
+    await page.setViewport({ width: W, height: H, deviceScaleFactor: dpr, isMobile: mobile, hasTouch: mobile }); await page.goto(srv.url, { waitUntil: 'load' }); await page.evaluate(() => document.fonts.ready); await sleep(500);
+    const usada = await page.evaluate(() => document.querySelector('#hero img').currentSrc.split('/').pop());
+    check('la foto del inicio a ' + W + ' px (x' + dpr + ') es ' + esperada + ' y se baja una sola vez', usada === esperada && bajadas.length === 1, usada + ' | bajadas: ' + bajadas.join(',')); await page.close(); }
+
+  // 23. Estaciones: las descripciones se leen completas (sin recorte) en es/pt/en y las 4 tarjetas miden lo mismo
+  { const page = await abrir(1280, 800, false); const malos = [];
+    for (const l of ['es', 'pt', 'en']) { await page.evaluate((l) => setLanguage(l), l); await sleep(250);
+      const r = await page.evaluate(() => { const hs = [...document.querySelectorAll('#estaciones [role="button"]')].map((c) => Math.round(c.getBoundingClientRect().height));
+        return { cortadas: [...document.querySelectorAll('#estaciones p[data-i18n$=".desc"]')].filter((p) => p.scrollHeight > p.clientHeight + 1 || getComputedStyle(p).webkitLineClamp !== 'none').length, desparejas: Math.max(...hs) - Math.min(...hs) }; });
+      if (r.cortadas || r.desparejas > 1) malos.push(l + ': ' + JSON.stringify(r)); }
+    check('las descripciones de las estaciones se leen completas en es/pt/en y las 4 tarjetas miden lo mismo', malos.length === 0, malos.join(' | ')); await page.close(); }
+
+  // 24. El Pionero: en escritorio el retrato acompaña la línea de tiempo (a la vista, bajo el encabezado y dentro de su sección); en el celular no se pega
+  { const page = await abrir(1440, 900, false); await page.addStyleTag({ content: 'html{scroll-behavior:auto!important}' });
+    const g = await page.evaluate(() => { const s = document.getElementById('pionero'), tl = s.querySelector('[class*="lg:col-span-8"]').getBoundingClientRect(); return { top: tl.top + scrollY, h: tl.height, hb: document.getElementById('mainHeader').getBoundingClientRect().bottom, pos: getComputedStyle(s.querySelector('.group')).position }; });
+    const malos = []; for (const f of [0.1, 0.5, 0.95]) { await page.evaluate((y) => window.scrollTo(0, y), Math.round(g.top - g.hb + f * (g.h - 500))); await sleep(150);
+      const ok = await page.evaluate(() => { const s = document.getElementById('pionero'), r = s.querySelector('.group').getBoundingClientRect(), hb = document.getElementById('mainHeader').getBoundingClientRect().bottom; return r.top >= hb - 1 && r.bottom <= innerHeight + 1 && r.bottom <= s.getBoundingClientRect().bottom + 1; }); if (!ok) malos.push(Math.round(f * 100) + '%'); }
+    check('en escritorio el retrato de El Pionero acompaña la línea de tiempo (a la vista, bajo el encabezado y dentro de su sección)', g.pos === 'sticky' && malos.length === 0, g.pos + ' ' + malos.join(',')); await page.close(); }
+  { const page = await abrir(390, 844, true); const pos = await page.evaluate(() => getComputedStyle(document.querySelector('#pionero .group')).position);
+    check('en el celular el retrato de El Pionero no queda pegado (va arriba de la línea de tiempo)', pos !== 'sticky', pos); await page.close(); }
+
   await browser.close(); srv.cerrar();
   if (failures.length) { console.log('\n' + failures.length + ' prueba(s) fallaron:\n - ' + failures.join('\n - ')); process.exit(1); }
   console.log('\nTodas las pruebas de humo pasaron');
