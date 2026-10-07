@@ -267,6 +267,19 @@ function servidor() {
   { const page = await abrir(390, 844, true); const pos = await page.evaluate(() => getComputedStyle(document.querySelector('#pionero .group')).position);
     check('en el celular el retrato de El Pionero no queda pegado (va arriba de la línea de tiempo)', pos !== 'sticky', pos); await page.close(); }
 
+  // 25. opiniones: si Google falla una vez (a veces responde 404 en su segunda dirección) la lista se recupera sola; si falla siempre, se pide 3 veces y se deja de insistir sin errores (el servidor de Google se simula)
+  for (const [falla, caso] of [[1, 'recupera'], [99, 'se rinde']]) {
+    const page = await browser.newPage(); let gets = 0; const errs = []; page.on('pageerror', (e) => errs.push(e.message));
+    await page.setBypassServiceWorker(true); await page.setRequestInterception(true);
+    const cors = { 'Access-Control-Allow-Origin': '*' };
+    page.on('request', (r) => { if (!/^https:\/\/script\.google\.com\/macros\//.test(r.url())) return r.continue(); if (r.method() !== 'GET') return r.respond({ status: 200, contentType: 'application/json', headers: cors, body: '{"ok":true}' });
+      gets++; if (gets <= falla) return r.respond({ status: 404, contentType: 'text/html', headers: cors, body: 'Not Found' });
+      return r.respond({ status: 200, contentType: 'application/json', headers: cors, body: JSON.stringify({ ok: true, opiniones: [{ nombre: 'Ana', origen: 'Salto', experiencia: 'circuito', puntaje: 5, opinion: 'Una experiencia hermosa, muy bien organizada.', visita: '2026-09' }] }) }); });
+    await page.setViewport({ width: 1280, height: 800 }); await page.goto(srv.url, { waitUntil: 'load' }); await page.evaluate(() => document.fonts.ready); await page.addStyleTag({ content: 'html{scroll-behavior:auto!important}' });
+    await page.evaluate(() => document.getElementById('testimonios').scrollIntoView()); await sleep(caso === 'recupera' ? 5000 : 11000);
+    const n = await page.evaluate(() => document.querySelectorAll('#opinionsList figure').length);
+    check(caso === 'recupera' ? 'las opiniones se recuperan solas si Google falla una vez (reintento)' : 'si Google falla siempre, la lista se pide 3 veces y se deja de insistir, sin errores', caso === 'recupera' ? n === 1 && gets === 2 : n === 0 && gets === 3 && errs.length === 0, JSON.stringify({ tarjetas: n, pedidos: gets, errores: errs.length })); await page.close(); }
+
   await browser.close(); srv.cerrar();
   if (failures.length) { console.log('\n' + failures.length + ' prueba(s) fallaron:\n - ' + failures.join('\n - ')); process.exit(1); }
   console.log('\nTodas las pruebas de humo pasaron');

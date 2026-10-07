@@ -6260,7 +6260,8 @@
       });
 
       // la lista se pide recién cuando la sección se acerca a la pantalla; sin conexión, la sección sigue funcionando sin ella
-      const load = () => call({}).then((j) => { if (j.ok) { data = j.opiniones; render(); } }).catch(() => {});
+      // Apps Script a veces responde 404 en su segunda dirección (macros/echo) y al volver a pedir anda: se reintenta hasta dos veces (leer no duplica nada; el envío del formulario nunca se reintenta solo)
+      const load = (n = 0) => call({}).then((j) => { if (!j.ok) throw j; data = j.opiniones; render(); }).catch(() => { if (n < 2) setTimeout(() => load(n + 1), 2500 * (n + 1)); });
       if ('IntersectionObserver' in window) {
         new IntersectionObserver((es, io) => { if (es[0].isIntersecting) { io.disconnect(); load(); } }, { rootMargin: '600px 0px' }).observe($('testimonios'));
       } else load();
