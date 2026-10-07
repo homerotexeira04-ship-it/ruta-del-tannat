@@ -31,7 +31,11 @@ Después de cambiar cualquier archivo que use el service worker (`sw.js`), subir
 
 ## Imágenes
 
-Las fotos van en WebP. Los originales pesados (JPG/PNG, incluido el logo maestro) no se suben al repositorio: viven en la carpeta local `originales/`, que git ignora. Toda `<img>` lleva `width` y `height` para evitar saltos de diseño y `loading="lazy"`, salvo la imagen principal del inicio.
+Las fotos van en WebP. Los originales pesados (JPG/PNG, incluido el logo maestro) no se suben al repositorio: viven en la carpeta local `originales/`, que git ignora. Toda `<img>` lleva `width` y `height` para evitar saltos de diseño y `loading="lazy"`, salvo la imagen principal del inicio. Esa foto se ofrece en 720, 1280 y 1920 px (`srcset` + `sizes`; la precarga del `<head>` debe decir lo mismo que el `<img>`, si no se baja dos veces): los celulares bajan la de 720 px, que va recortada y bajo un velo oscuro.
+
+## Tipografías
+
+Playfair Display (titulares) y Plus Jakarta Sans (texto) están alojadas en el sitio, sin pedidos a Google: tres archivos `.woff2` variables en `LaRutadelTannat_files/`, solo el subconjunto latin (alcanza para español, portugués e inglés; otro alfabeto cae a la fuente del sistema), declarados con `@font-face` en el `<head>` del HTML, precargados y guardados por el service worker. Licencia OFL. Los rangos de peso declarados (500–700, cursiva 500–600 y 400–800) son los mismos que pedía Google, para que nada cambie de aspecto; los archivos traen el rango completo si hiciera falta ampliarlo.
 
 ## Chequeos automáticos
 
@@ -41,7 +45,7 @@ En GitHub Actions (`.github/workflows/checks.yml`) corren solos en cada cambio a
 npm install           # solo la primera vez
 npm run check         # archivos citados, anclas, ids, JSON-LD, idiomas ES/PT/EN y FAQ al día
 npm test              # backend de opiniones y contador de uso, con una planilla simulada
-npm run smoke         # en Chrome real: errores, desbordes, WhatsApp, La Copa, itinerario, menú del encabezado, movimiento (hover, presión, galería y modales) y detalles visuales (letra mínima, zonas táctiles, cursor de botella, descorche y su sonido) (CHROME_PATH si no lo encuentra)
+npm run smoke         # en Chrome real: errores, desbordes, WhatsApp, La Copa, itinerario, menú del encabezado, movimiento (hover, presión, galería y modales) y detalles visuales (letra mínima, zonas táctiles, cursor de botella, descorche y su sonido, tipografías propias, foto del inicio según la pantalla, tarjetas de Estaciones y retrato de El Pionero) (CHROME_PATH si no lo encuentra)
 npm run check:links   # enlaces externos (más lento)
 ```
 
