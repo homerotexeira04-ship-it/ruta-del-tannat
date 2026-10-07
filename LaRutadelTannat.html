@@ -6557,6 +6557,37 @@
       }, true);
     })();
 
+    // Sonido de descorche al reservar: un "pop" sintetizado con Web Audio (sin archivos, como el brindis de La Copa) cuando se aprieta un botón que abre el formulario de reserva.
+    // Con mouse suena junto con el corcho (al apretar); con teclado o toque, al activar el botón. Corto (~0,3 s), volumen bajo y solo después de un gesto del usuario.
+    (function sonidoDescorche() {
+      const RESERVAR = '[onclick*="openBookingModal"]';
+      let ac = null, aire = null, ultimo = -1000, conMouse = false;
+      function pop() {
+        const ahora = performance.now(); if (ahora - ultimo < 250) return; ultimo = ahora;
+        try {
+          const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return;
+          ac = ac || new AC(); if (ac.state === 'suspended') ac.resume().catch(() => {});
+          const t = ac.currentTime, out = ac.createGain(); out.gain.value = 0.4; out.connect(ac.destination);
+          if (!aire) { aire = ac.createBuffer(1, Math.round(ac.sampleRate * 0.3), ac.sampleRate); const d = aire.getChannelData(0); for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1; }
+          const tono = (f0, f1, dur, vol) => { // golpe hueco del corcho al salir del cuello: un tono que baja rápido
+            const o = ac.createOscillator(), g = ac.createGain(); o.type = 'sine'; o.frequency.setValueAtTime(f0, t); o.frequency.exponentialRampToValueAtTime(f1, t + dur * 0.6);
+            g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(vol, t + 0.003); g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+            o.connect(g); g.connect(out); o.start(t); o.stop(t + dur + 0.02);
+          };
+          const soplo = (freq, q, dur, vol) => { // ruido filtrado: el chasquido y el aire que se escapa
+            const r = ac.createBufferSource(), f = ac.createBiquadFilter(), g = ac.createGain(); r.buffer = aire; f.type = 'bandpass'; f.frequency.value = freq; f.Q.value = q;
+            g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(vol, t + 0.002); g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+            r.connect(f); f.connect(g); g.connect(out); r.start(t); r.stop(t + dur + 0.02);
+          };
+          tono(520, 150, 0.22, 0.9); tono(330, 250, 0.18, 0.35); soplo(1800, 0.8, 0.014, 0.6); soplo(3300, 1.2, 0.26, 0.22);
+        } catch (e) { /* audio no disponible */ }
+      }
+      const reserva = (e) => e.target.closest && e.target.closest(RESERVAR);
+      document.addEventListener('pointerdown', (e) => { if (e.pointerType === 'mouse' && e.button === 0 && reserva(e)) { conMouse = true; pop(); } }, true);
+      document.addEventListener('pointerup', () => { setTimeout(() => { conMouse = false; }, 0); }, true); // el clic llega justo después de soltar: ya sonó al apretar
+      document.addEventListener('click', (e) => { if (!conMouse && reserva(e)) pop(); }, true);
+    })();
+
     // PWA: registra el service worker (app shell offline + instalación)
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
