@@ -269,7 +269,7 @@
   <!-- Tailwind CSS compilado (ver README: npm run build:css) -->
   <!-- Foto del inicio: 720 px para celulares (va recortada y bajo un velo oscuro, por eso "sizes" la pide a media pantalla: alcanza aun con pantallas de alta densidad), 1280 y 1920 para el resto. Debe decir lo mismo que la imagen del hero (más abajo). -->
   <link rel="preload" as="image" href="./LaRutadelTannat_files/hero-vinedo-uruguay-1280.webp" imagesrcset="./LaRutadelTannat_files/hero-vinedo-uruguay-720.webp 720w, ./LaRutadelTannat_files/hero-vinedo-uruguay-1280.webp 1280w, ./LaRutadelTannat_files/hero-vinedo-uruguay.webp 1920w" imagesizes="(max-width: 767px) 50vw, 100vw" fetchpriority="high">
-  <link rel="stylesheet" href="./LaRutadelTannat_files/tailwind.css?v=21">
+  <link rel="stylesheet" href="./LaRutadelTannat_files/tailwind.css?v=22">
 
   <!-- Tipografía editorial alojada en el sitio (sin pedidos a Google): Playfair Display (titulares) + Plus Jakarta Sans (cuerpo/UI).
        Fuentes variables, solo el subconjunto latin (cubre es/pt/en; otro alfabeto cae a la fuente del sistema). Licencia OFL.
@@ -289,6 +289,12 @@
     }
     /* Encabezado fijo: las anclas y el foco por teclado dejan libre su alto (--hdr-h lo escribe initCopaLoader) */
     html { scroll-padding-top: var(--hdr-h, 6rem); }
+    /* Vista 360°: pines sobre el panorama (Pannellum les pone la clase tour-pin-base; el resto es nuestro) */
+    .tour-pin { margin: -19px 0 0 -19px; width: 38px; height: 38px; border-radius: 9999px; background: #721B28; border: 2px solid #C29D62; color: #D9B47A; display: flex; align-items: center; justify-content: center; font: 700 15px/1 'Plus Jakarta Sans', sans-serif; box-shadow: 0 4px 14px rgba(0, 0, 0, .45); cursor: pointer; transition: transform .2s ease, background-color .2s ease; }
+    .tour-pin:hover, .tour-pin:focus-visible { transform: scale(1.12); background: #8F2636; outline: none; box-shadow: 0 0 0 3px rgba(194, 157, 98, .55), 0 4px 14px rgba(0, 0, 0, .45); }
+    .tour-pin-t { position: absolute; left: 46px; top: 50%; transform: translateY(-50%); white-space: nowrap; background: rgba(250, 248, 245, .94); color: #4A101D; padding: 4px 10px; border-radius: 9999px; font: 600 12px/1.2 'Plus Jakarta Sans', sans-serif; pointer-events: none; box-shadow: 0 2px 8px rgba(0, 0, 0, .3); }
+    #tourViewer.pnlm-container { background: #2B0A14; font-family: 'Plus Jakarta Sans', sans-serif; }
+    @media (prefers-reduced-motion: reduce) { .tour-pin { transition: none; } }
     .glass-nav {
       background: rgba(43, 10, 20, 0.9);
       backdrop-filter: saturate(160%) blur(16px);
@@ -946,6 +952,7 @@
             </button>
             <div id="navGrp2" tabindex="-1" class="hidden nav-panel focus:outline-none absolute left-0 top-full mt-6 w-64 p-2 rounded-2xl border border-white/10 shadow-2xl">
               <a href="#estaciones" class="block px-3 py-2 rounded-lg text-sm text-gray-200 hover:text-gold hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold transition-colors" data-i18n="nav.stations">Estaciones</a>
+              <a href="#recorrido360" class="block px-3 py-2 rounded-lg text-sm text-gray-200 hover:text-gold hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold transition-colors" data-i18n="nav.tour">Vista 360°</a>
               <a href="#termas" class="block px-3 py-2 rounded-lg text-sm text-gray-200 hover:text-gold hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold transition-colors" data-i18n="nav.thermal">Termas</a>
               <a href="#galeria" class="block px-3 py-2 rounded-lg text-sm text-gray-200 hover:text-gold hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold transition-colors" data-i18n="nav.gallery">Galería</a>
               <a href="#mapa" class="block px-3 py-2 rounded-lg text-sm text-gray-200 hover:text-gold hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold transition-colors" data-i18n="nav.map">Mapa Interactivo</a>
@@ -1031,6 +1038,7 @@
         </summary>
         <div class="pb-2 pl-3 ml-1 mb-2 border-l border-gold/30">
           <a href="#estaciones" class="block text-gray-200 hover:text-gold py-2 font-medium" data-i18n="nav.stations">Estaciones</a>
+          <a href="#recorrido360" class="block text-gray-200 hover:text-gold py-2 font-medium" data-i18n="nav.tour">Vista 360°</a>
           <a href="#termas" class="block text-gray-200 hover:text-gold py-2 font-medium" data-i18n="nav.thermal">Termas</a>
           <a href="#galeria" class="block text-gray-200 hover:text-gold py-2 font-medium" data-i18n="nav.gallery">Galería</a>
           <a href="#mapa" class="block text-gray-200 hover:text-gold py-2 font-medium" data-i18n="nav.map">Mapa Interactivo</a>
@@ -1624,6 +1632,43 @@
           </button>
           <p class="mt-3 text-sm text-terroir" data-i18n="print.hint">Se abre el cuadro de impresión: elegí «Guardar como PDF» para llevarlo en el celular.</p>
         </div>
+
+      </div>
+    </section>
+
+    <!-- ==================== SECTION: VISTA 360° (recreación ilustrada del circuito) ==================== -->
+    <section id="recorrido360" class="py-20 lg:py-28 bg-tannat-900 text-white relative">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div class="text-center max-w-3xl mx-auto mb-10">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gold/15 border border-gold/30 text-gold font-semibold text-xs uppercase tracking-wider mb-4" data-i18n="tour.pill">Vista 360°</div>
+          <h2 class="font-serif text-3xl sm:text-5xl sm:leading-[1.15] font-bold tracking-[0.012em] text-balance text-white mb-4 uppercase" data-i18n="tour.title">El circuito, a tu alrededor</h2>
+          <p class="text-lg text-gray-300 font-light max-w-[40rem] mx-auto text-balance" data-i18n="tour.subtitle">Parate en medio del viñedo al atardecer y mirá alrededor: tocá una estación para ir hasta ella.</p>
+        </div>
+
+        <!-- El panorama y la librería (Pannellum) se piden recién al tocar "Explorar" o una estación: nada de esto se descarga con la página. -->
+        <div id="tourStage" class="relative rounded-3xl overflow-hidden border border-gold/25 shadow-2xl bg-tannat-dark aspect-square sm:aspect-[16/9] max-h-[78svh] mx-auto">
+          <img id="tourPoster" src="./LaRutadelTannat_files/recorrido-360-poster.webp" width="1280" height="720" alt="Ilustración del circuito: un viñedo al atardecer con las estaciones alrededor" data-i18n-alt="tour.posterAlt" class="absolute inset-0 w-full h-full object-cover" loading="lazy">
+          <div id="tourViewer" class="absolute inset-0 hidden" role="region" aria-label="Vista panorámica de 360° ilustrada del circuito. Arrastrá o usá las flechas del teclado para girar; + y − para acercar." data-i18n-aria="tour.aria"></div>
+          <div id="tourCta" class="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-black/25">
+            <button id="tourStart" type="button" class="inline-flex items-center justify-center gap-2 min-h-[48px] bg-gold hover:bg-gold-light text-tannat-900 font-bold px-7 py-3 rounded-full shadow-xl transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18"/></svg>
+              <span data-i18n="tour.start">Explorar en 360°</span>
+            </button>
+            <span class="text-xs text-gray-200" data-i18n="tour.hint">Arrastrá para mirar alrededor</span>
+          </div>
+        </div>
+
+        <div class="mt-6 flex flex-wrap justify-center gap-2" role="group" aria-label="Ir a una estación" data-i18n-aria="tour.chips">
+          <button type="button" data-tour="s1" class="inline-flex items-center gap-2 min-h-[44px] pl-2 pr-4 rounded-full border border-gold/40 bg-white/5 text-sm font-semibold text-gray-100 hover:bg-gold hover:text-tannat-900 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-gold"><span class="w-7 h-7 rounded-full bg-tannat text-gold-light text-xs font-bold flex items-center justify-center" aria-hidden="true">1</span><span data-i18n="tour.s1">Harriague</span></button>
+          <button type="button" data-tour="s2" class="inline-flex items-center gap-2 min-h-[44px] pl-2 pr-4 rounded-full border border-gold/40 bg-white/5 text-sm font-semibold text-gray-100 hover:bg-gold hover:text-tannat-900 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-gold"><span class="w-7 h-7 rounded-full bg-tannat text-gold-light text-xs font-bold flex items-center justify-center" aria-hidden="true">2</span><span data-i18n="tour.s2">Salto Chico</span></button>
+          <button type="button" data-tour="s3" class="inline-flex items-center gap-2 min-h-[44px] pl-2 pr-4 rounded-full border border-gold/40 bg-white/5 text-sm font-semibold text-gray-100 hover:bg-gold hover:text-tannat-900 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-gold"><span class="w-7 h-7 rounded-full bg-tannat text-gold-light text-xs font-bold flex items-center justify-center" aria-hidden="true">3</span><span data-i18n="tour.s3">Bertolini &amp; Broglio</span></button>
+          <button type="button" data-tour="s4" class="inline-flex items-center gap-2 min-h-[44px] pl-2 pr-4 rounded-full border border-gold/40 bg-white/5 text-sm font-semibold text-gray-100 hover:bg-gold hover:text-tannat-900 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-gold"><span class="w-7 h-7 rounded-full bg-tannat text-gold-light text-xs font-bold flex items-center justify-center" aria-hidden="true">4</span><span data-i18n="tour.s4">Mori Maglio</span></button>
+          <button type="button" data-tour="s5" class="inline-flex items-center gap-2 min-h-[44px] pl-2 pr-4 rounded-full border border-gold/40 bg-white/5 text-sm font-semibold text-gray-100 hover:bg-gold hover:text-tannat-900 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-gold"><span class="w-7 h-7 rounded-full bg-tannat text-gold-light flex items-center justify-center" aria-hidden="true"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" viewBox="0 0 24 24"><path d="M3 9c2-2 4-2 6 0s4 2 6 0 4-2 6 0M3 15c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/></svg></span><span data-i18n="tour.s5">Termas del Daymán</span></button>
+        </div>
+
+        <p id="tourStatus" role="status" class="hidden mt-4 text-center text-sm text-gold-light"></p>
+        <p class="mt-4 text-center text-xs text-gray-300 max-w-2xl mx-auto text-balance" data-i18n="tour.note">Recreación ilustrada del circuito: no son fotografías ni reproduce fielmente cada lugar. Las fotos reales están en cada estación y en la galería.</p>
 
       </div>
     </section>
@@ -3688,6 +3733,24 @@
         "nav.brandSub": "Salto · Cuna del Vino Uruguayo",
         "nav.history": "Historia",
         "nav.stations": "Estaciones",
+        "nav.tour": "Vista 360°",
+        "tour.pill": "Vista 360°",
+        "tour.title": "El circuito, a tu alrededor",
+        "tour.subtitle": "Parate en medio del viñedo al atardecer y mirá alrededor: tocá una estación para ir hasta ella.",
+        "tour.start": "Explorar en 360°",
+        "tour.hint": "Arrastrá para mirar alrededor",
+        "tour.note": "Recreación ilustrada del circuito: no son fotografías ni reproduce fielmente cada lugar. Las fotos reales están en cada estación y en la galería.",
+        "tour.aria": "Vista panorámica de 360° ilustrada del circuito. Arrastrá o usá las flechas del teclado para girar; + y − para acercar.",
+        "tour.posterAlt": "Ilustración del circuito: un viñedo al atardecer con las estaciones alrededor",
+        "tour.chips": "Ir a una estación",
+        "tour.s1": "Harriague",
+        "tour.s2": "Salto Chico",
+        "tour.s3": "Bertolini & Broglio",
+        "tour.s4": "Mori Maglio",
+        "tour.s5": "Termas del Daymán",
+        "tour.pin": "{name}: ver más",
+        "tour.loading": "Cargando la vista 360°…",
+        "tour.error": "No pudimos abrir la vista 360° en este navegador. Mirá las fotos de cada estación más arriba.",
         "nav.sustain": "Turismo Sostenible",
         "nav.seasons": "¿Cuándo viajar?",
         "nav.thermal": "Termas",
@@ -4246,6 +4309,24 @@
         "nav.brandSub": "Salto · Berço do Vinho Uruguaio",
         "nav.history": "História",
         "nav.stations": "Estações",
+        "nav.tour": "Vista 360°",
+        "tour.pill": "Vista 360°",
+        "tour.title": "O circuito, ao seu redor",
+        "tour.subtitle": "Fique no meio do vinhedo ao entardecer e olhe ao redor: toque em uma estação para ir até ela.",
+        "tour.start": "Explorar em 360°",
+        "tour.hint": "Arraste para olhar ao redor",
+        "tour.note": "Recriação ilustrada do circuito: não são fotografias nem reproduz fielmente cada lugar. As fotos reais estão em cada estação e na galeria.",
+        "tour.aria": "Vista panorâmica ilustrada em 360° do circuito. Arraste ou use as setas do teclado para girar; + e − para aproximar.",
+        "tour.posterAlt": "Ilustração do circuito: um vinhedo ao entardecer com as estações ao redor",
+        "tour.chips": "Ir para uma estação",
+        "tour.s1": "Harriague",
+        "tour.s2": "Salto Chico",
+        "tour.s3": "Bertolini & Broglio",
+        "tour.s4": "Mori Maglio",
+        "tour.s5": "Termas do Daymán",
+        "tour.pin": "{name}: ver mais",
+        "tour.loading": "Carregando a vista 360°…",
+        "tour.error": "Não foi possível abrir a vista 360° neste navegador. Veja as fotos de cada estação acima.",
         "nav.sustain": "Turismo Sustentável",
         "nav.seasons": "Quando viajar?",
         "nav.thermal": "Termas",
@@ -4804,6 +4885,24 @@
         "nav.brandSub": "Salto · Cradle of Uruguayan Wine",
         "nav.history": "History",
         "nav.stations": "Stations",
+        "nav.tour": "360° View",
+        "tour.pill": "360° view",
+        "tour.title": "The circuit, all around you",
+        "tour.subtitle": "Stand in the middle of the vineyard at sunset and look around: tap a station to go to it.",
+        "tour.start": "Explore in 360°",
+        "tour.hint": "Drag to look around",
+        "tour.note": "Illustrated recreation of the circuit: these are not photographs and it does not faithfully reproduce each place. The real photos are in each station and in the gallery.",
+        "tour.aria": "Illustrated 360° panoramic view of the circuit. Drag or use the arrow keys to turn; + and − to zoom.",
+        "tour.posterAlt": "Illustration of the circuit: a vineyard at sunset with the stations around it",
+        "tour.chips": "Go to a station",
+        "tour.s1": "Harriague",
+        "tour.s2": "Salto Chico",
+        "tour.s3": "Bertolini & Broglio",
+        "tour.s4": "Mori Maglio",
+        "tour.s5": "Daymán Hot Springs",
+        "tour.pin": "{name}: see more",
+        "tour.loading": "Loading the 360° view…",
+        "tour.error": "We couldn't open the 360° view in this browser. See each station's photos above.",
         "nav.sustain": "Sustainable Tourism",
         "nav.seasons": "When to travel?",
         "nav.thermal": "Hot Springs",
@@ -5865,6 +5964,9 @@
       // Opiniones de visitantes: etiquetas de las tarjetas en el idioma elegido
       if (window.opinionsOnLang) window.opinionsOnLang();
 
+      // Vista 360°: rótulos de los pines en el idioma elegido
+      if (window.tourOnLang) window.tourOnLang();
+
       // La barra fija inferior dice "USD 45 / persona": refrescarla para que "persona" también cambie de idioma
       setCurrency(currentCurrency);
 
@@ -6608,6 +6710,46 @@
       document.addEventListener('pointerdown', (e) => { if (e.pointerType === 'mouse' && e.button === 0 && reserva(e)) { conMouse = true; pop(); } }, true);
       document.addEventListener('pointerup', () => { setTimeout(() => { conMouse = false; }, 0); }, true); // el clic llega justo después de soltar: ya sonó al apretar
       document.addEventListener('click', (e) => { if (!conMouse && reserva(e)) pop(); }, true);
+    })();
+
+    // Vista 360° (recreación ilustrada): Pannellum (MIT, ~18 KB comprimido) y el panorama (~330 KB) se piden recién al tocar "Explorar" o una estación; con la página no baja nada.
+    (function initTour360() {
+      const stage = document.getElementById('tourStage'); if (!stage) return;
+      const host = document.getElementById('tourViewer'), poster = document.getElementById('tourPoster'), cta = document.getElementById('tourCta'), estado = document.getElementById('tourStatus');
+      const t = (k) => (translations[currentLang] || translations.es)[k] || translations.es[k] || '';
+      const CENTRO = 315, yawDe = (az) => ((az - CENTRO + 540) % 360) - 180; // el panorama está centrado hacia el noroeste (315°); los acimuts cuentan desde el norte
+      const PUNTOS = { s1: { n: 1, az: 0, pitch: 6 }, s2: { n: 2, az: 88, pitch: 2 }, s3: { n: 3, az: 180, pitch: 7 }, s4: { n: 4, az: 232, pitch: 4 }, s5: { n: 0, az: 312, pitch: 4 } };
+      const calmo = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+      let viewer = null, listo = false, libreria = null, pendiente = null;
+      const cargar = () => libreria || (libreria = new Promise((ok, no) => {
+        if (window.pannellum) return ok();
+        const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = './LaRutadelTannat_files/pannellum.css'; document.head.append(l);
+        const s = document.createElement('script'); s.src = './LaRutadelTannat_files/pannellum.js'; s.onload = ok; s.onerror = () => { libreria = null; no(new Error('pannellum')); }; document.head.append(s);
+      }));
+      const rotular = (div) => { const nombre = t('tour.' + div.dataset.k), n = PUNTOS[div.dataset.k].n; div.setAttribute('aria-label', (n ? n + ' ' : '') + t('tour.pin').replace('{name}', nombre)); const e = div.querySelector('.tour-pin-t'); if (e) e.textContent = nombre; };
+      const abrirPunto = (k) => { const p = PUNTOS[k]; if (p.n) openStationModal(p.n); else document.getElementById('termas').scrollIntoView({ behavior: calmo() ? 'auto' : 'smooth' }); };
+      const pin = (div, a) => { // el contenido de cada pin lo dibujamos nosotros (textContent: nada se interpreta como HTML)
+        div.dataset.k = a.k; div.setAttribute('role', 'button'); div.tabIndex = 0; const n = document.createElement('span'); n.setAttribute('aria-hidden', 'true'); n.textContent = a.etq; const e = document.createElement('span'); e.className = 'tour-pin-t'; e.setAttribute('aria-hidden', 'true'); div.append(n, document.createTextNode(' '), e); rotular(div);
+        div.addEventListener('keydown', (ev) => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); abrirPunto(a.k); } });
+      };
+      const ir = (k) => { if (!k) return; if (!(viewer && listo)) { pendiente = k; return; } const p = PUNTOS[k]; viewer.lookAt(p.pitch, yawDe(p.az), 85, calmo() ? false : 1100); }; // si el panorama aún no terminó de bajar, va a la estación apenas cargue
+      const fallo = () => { viewer = null; listo = false; pendiente = null; host.classList.add('hidden'); host.replaceChildren(); poster.classList.remove('hidden'); cta.classList.remove('hidden'); estado.textContent = t('tour.error'); estado.classList.remove('hidden'); };
+      const abrir = (destino) => {
+        estado.classList.add('hidden'); poster.classList.add('hidden'); cta.classList.add('hidden'); host.classList.remove('hidden');
+        return cargar().then(() => {
+          if (viewer) { ir(destino); return; } pendiente = destino || null;
+          const err = t('tour.error');
+          viewer = pannellum.viewer(host, { type: 'equirectangular', panorama: './LaRutadelTannat_files/recorrido-360-vinedo.webp', autoLoad: true, yaw: 0, pitch: 2, hfov: stage.clientWidth < 640 ? 85 : 100, minHfov: 55, maxHfov: 120, minPitch: -55, maxPitch: 65, mouseZoom: false, compass: false, keyboardZoom: true,
+            strings: { loadingLabel: t('tour.loading'), genericWebGLError: err, noPanoramaError: err, fileAccessError: err, textureSizeError: err, unknownError: err, iOS8WebGLError: err },
+            hotSpots: Object.entries(PUNTOS).map(([k, p]) => ({ pitch: p.pitch, yaw: yawDe(p.az), type: 'custom', cssClass: 'tour-pin', createTooltipFunc: pin, createTooltipArgs: { k, etq: p.n ? String(p.n) : '≈' }, clickHandlerFunc: () => abrirPunto(k) })) });
+          window.tourVisor = viewer; // las pruebas lo miran desde afuera
+          viewer.on('load', () => { listo = true; if (pendiente) { const k = pendiente; pendiente = null; ir(k); } });
+          viewer.on('error', fallo);
+        }).catch(fallo);
+      };
+      document.getElementById('tourStart').addEventListener('click', () => abrir());
+      document.querySelectorAll('[data-tour]').forEach((b) => b.addEventListener('click', () => (viewer ? ir(b.dataset.tour) : abrir(b.dataset.tour))));
+      window.tourOnLang = () => { host.querySelectorAll('.tour-pin').forEach(rotular); if (!estado.classList.contains('hidden')) estado.textContent = t('tour.error'); };
     })();
 
     // PWA: registra el service worker (app shell offline + instalación)

@@ -11,10 +11,11 @@ Publicado con GitHub Pages: https://homerotexeira04-ship-it.github.io/ruta-del-t
 | `LaRutadelTannat.html` | Página completa (contenido, estilos propios, textos ES/PT/EN y lógica) |
 | `LaRutadelTannat_files/tailwind.css` | CSS de Tailwind **compilado** (no editar a mano) |
 | `LaRutadelTannat_files/copa-tannat-*.js` | La Copa de Tannat (render en canvas + interfaz), se carga al acercarse a la sección |
+| `LaRutadelTannat_files/pannellum.js`, `pannellum.css` | Visor 360° [Pannellum](https://pannellum.org) 2.5.6 (licencia MIT en `pannellum-LICENSE.txt`); se carga solo al tocar "Explorar" |
 | `sw.js`, `manifest.json` | Instalación como app y uso sin conexión |
 | `index.html` | Solo redirige a la página principal |
 | `apps-script/` | Opiniones reales de visitantes (planilla de Google + Apps Script). Guía de instalación y moderación en su README; sin instalar, el sitio no muestra el formulario |
-| `scripts/` | Chequeos del sitio: `check.js` (estático), `smoke.js` (en Chrome real) y `lh-assert.js` (mínimos de Lighthouse) |
+| `scripts/` | Chequeos del sitio: `check.js` (estático), `smoke.js` (en Chrome real) y `lh-assert.js` (mínimos de Lighthouse); `panorama-360/` tiene el código que dibuja el panorama del visor 360° |
 | `.github/workflows/checks.yml` | Los mismos chequeos, automáticos en GitHub Actions |
 | `404.html`, `robots.txt`, `sitemap.xml`, `favicon.ico`, `apple-touch-icon.png` | Archivos públicos de SEO y navegación |
 
@@ -37,6 +38,10 @@ Las fotos van en WebP. Los originales pesados (JPG/PNG, incluido el logo maestro
 
 Playfair Display (titulares) y Plus Jakarta Sans (texto) están alojadas en el sitio, sin pedidos a Google: tres archivos `.woff2` variables en `LaRutadelTannat_files/`, solo el subconjunto latin (alcanza para español, portugués e inglés; otro alfabeto cae a la fuente del sistema), declarados con `@font-face` en el `<head>` del HTML, precargados y guardados por el service worker. Licencia OFL. Los rangos de peso declarados (500–700, cursiva 500–600 y 400–800) son los mismos que pedía Google, para que nada cambie de aspecto; los archivos traen el rango completo si hiciera falta ampliarlo.
 
+## Vista 360°
+
+La sección `#recorrido360` muestra una **recreación ilustrada** del circuito: no son fotos, y la propia sección lo avisa. Con la página no baja nada: el visor (Pannellum, unos 18 KB comprimidos) y el panorama (unos 330 KB) se piden recién al tocar «Explorar» o una estación. Los pines salen de `PUNTOS` en el script `initTour360` del HTML (acimut desde el norte; el panorama está centrado al noroeste, 315°) y abren la ficha de la estación. Sin WebGL o sin conexión, vuelve la ilustración con un aviso. El panorama se dibuja con código: ver `scripts/panorama-360/README.md`.
+
 ## Chequeos automáticos
 
 En GitHub Actions (`.github/workflows/checks.yml`) corren solos en cada cambio a `master` y en cada pull request, y los lunes revisan además los enlaces externos. Se pueden correr también en la computadora:
@@ -45,7 +50,7 @@ En GitHub Actions (`.github/workflows/checks.yml`) corren solos en cada cambio a
 npm install           # solo la primera vez
 npm run check         # archivos citados, anclas, ids, JSON-LD, idiomas ES/PT/EN y FAQ al día
 npm test              # backend de opiniones y contador de uso, con una planilla simulada
-npm run smoke         # en Chrome real: errores, desbordes, WhatsApp, La Copa, itinerario, menú del encabezado, movimiento (hover, presión, galería y modales) y detalles visuales (letra mínima, zonas táctiles, cursor de botella, descorche y su sonido, tipografías propias, foto del inicio según la pantalla, tarjetas de Estaciones, retrato de El Pionero y reintento de la lista de opiniones si Google falla) (CHROME_PATH si no lo encuentra)
+npm run smoke         # en Chrome real: errores, desbordes, WhatsApp, La Copa, itinerario, menú del encabezado, movimiento (hover, presión, galería y modales) y detalles visuales (letra mínima, zonas táctiles, cursor de botella, descorche y su sonido, tipografías propias, foto del inicio según la pantalla, tarjetas de Estaciones, retrato de El Pionero, reintento de la lista de opiniones si Google falla y visor 360°: abre, gira a cada estación y cae bien si no carga) (CHROME_PATH si no lo encuentra)
 npm run check:links   # enlaces externos (más lento)
 ```
 

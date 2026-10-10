@@ -2,7 +2,7 @@
 // reemplazan los tonos tannat; basalto profundo en tannat-900 para secciones oscuras;
 // crema pasa a pergamino cálido; dorado champán envejecido. terroir/basalt (texto) sin cambios.
 module.exports = {
-  content: ['./LaRutadelTannat.html', './LaRutadelTannat_files/*.js'],
+  content: ['./LaRutadelTannat.html', './LaRutadelTannat_files/copa-tannat-*.js'], // pannellum.js (de terceros, minificado) queda afuera: no usa clases de Tailwind
   future: { hoverOnlyWhenSupported: true }, // los hover: y group-hover: solo aplican con mouse (en táctil quedaban pegados tras tocar)
   theme: {
     extend: {

@@ -105,7 +105,7 @@ function servidor() {
     const sin = await page.evaluate(() => { const enMenu = new Set([...document.querySelectorAll('[data-nav-group] a')].map((a) => a.getAttribute('href').slice(1))); return [...document.querySelectorAll('main section[id]')].map((s) => s.id).filter((id) => id !== 'hero' && !enMenu.has(id)); });
     check('todas las secciones de la página son alcanzables desde el menú', sin.length === 0, 'sin acceso: ' + sin.join(', ')); await page.close(); }
 
-  // 9. menú del celular: 4 grupos en acordeón (se abre uno a la vez) con las 17 secciones, y abierto no pisa la barra fija de reserva
+  // 9. menú del celular: 4 grupos en acordeón (se abre uno a la vez) con las 18 secciones, y abierto no pisa la barra fija de reserva
   { const page = await abrir(360, 640, true); const r = await page.evaluate(async () => {
       const esp = (ms) => new Promise((ok) => setTimeout(ok, ms)), d = [...document.querySelectorAll('#mobileMenu details')], bar = document.querySelector('div.mbar');
       document.getElementById('mobileMenuBtn').click(); await esp(200);
@@ -114,7 +114,7 @@ function servidor() {
       d[2].querySelector('summary').click(); await esp(150);
       return { grupos: d.length, exclusivo, enlaces: document.querySelectorAll('#mobileMenu details a').length, solapa: Math.round(document.getElementById('mobileMenu').getBoundingClientRect().bottom - bar.getBoundingClientRect().top) };
     });
-    check('el menú del celular agrupa las 17 secciones en acordeón y no pisa la barra de reserva', r.grupos === 4 && r.exclusivo && r.enlaces === 17 && r.solapa <= 0, JSON.stringify(r)); await page.close(); }
+    check('el menú del celular agrupa las 18 secciones en acordeón y no pisa la barra de reserva', r.grupos === 4 && r.exclusivo && r.enlaces === 18 && r.solapa <= 0, JSON.stringify(r)); await page.close(); }
 
   // 10. el hover de las tarjetas anima (el reveal al hacer scroll no debe pisarles la transición): se mide cuadro por cuadro cuántos pasos distintos recorre la elevación
   { const page = await abrir(1280, 800, false);
@@ -280,7 +280,28 @@ function servidor() {
     const n = await page.evaluate(() => document.querySelectorAll('#opinionsList figure').length);
     check(caso === 'recupera' ? 'las opiniones se recuperan solas si Google falla una vez (reintento)' : 'si Google falla siempre, la lista se pide 3 veces y se deja de insistir, sin errores', caso === 'recupera' ? n === 1 && gets === 2 : n === 0 && gets === 3 && errs.length === 0, JSON.stringify({ tarjetas: n, pedidos: gets, errores: errs.length })); await page.close(); }
 
-  await browser.close(); srv.cerrar();
+  // El visor 360° necesita WebGL: un Chrome sin pantalla (como el de GitHub Actions) no siempre lo trae, así que se pide por software. Va en un navegador aparte porque ese modo es lento y haría inestables los chequeos de tiempos de arriba.
+  const navegadorGL = await puppeteer.launch({ executablePath: CHROME, headless: 'new', args: ['--no-sandbox', '--disable-dev-shm-usage', '--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'] });
+  // 27. Vista 360°: con la página no baja nada del visor; al tocar "Explorar" abre con sus 5 pines, los botones de estación giran la vista y el pin de una estación abre su ficha
+  { const page = await navegadorGL.newPage(); const bajadas = []; page.on('request', (r) => { if (/pannellum|recorrido-360-vinedo/.test(r.url())) bajadas.push(r.url().split('/').pop()); });
+    await page.setViewport({ width: 1280, height: 800 }); await page.emulateMediaFeatures([{ name: 'prefers-reduced-motion', value: 'reduce' }]);
+    await page.goto(srv.url, { waitUntil: 'load' }); await page.evaluate(() => document.fonts.ready); await page.addStyleTag({ content: 'html{scroll-behavior:auto!important}' }); await sleep(600);
+    await page.evaluate(() => document.getElementById('recorrido360').scrollIntoView()); await sleep(400); const antes = bajadas.length;
+    await page.click('#tourStart'); await page.waitForFunction('window.tourVisor && window.tourVisor.isLoaded && window.tourVisor.isLoaded()', { timeout: 60000 }).catch(() => {}); await sleep(500);
+    const r = await page.evaluate(async () => { const v = window.tourVisor; if (!v) return null; const pausa = () => new Promise((ok) => setTimeout(ok, 450)); const yaws = {};
+      for (const k of ['s1', 's3', 's5']) { document.querySelector('[data-tour="' + k + '"]').click(); await pausa(); yaws[k] = Math.round(v.getYaw()); }
+      const pines = document.querySelectorAll('#tourViewer .tour-pin').length; document.querySelector('#tourViewer .tour-pin[data-k="s2"]').click(); await pausa(); const m = document.getElementById('stationModal'); return { pines, yaws, ficha: !!m && !m.classList.contains('hidden') }; });
+    const cerca = (a, b) => Math.abs(((a - b + 540) % 360) - 180) <= 3;
+    check('Vista 360°: no baja nada con la página; al tocar "Explorar" abre con 5 pines, las estaciones giran la vista y un pin abre su ficha', antes === 0 && !!r && r.pines === 5 && cerca(r.yaws.s1, 45) && cerca(r.yaws.s3, -135) && cerca(r.yaws.s5, -3) && r.ficha, JSON.stringify({ antes, r })); await page.close(); }
+
+  // 28. Vista 360°: si la librería no se puede cargar, vuelve la ilustración con el botón y un aviso, sin errores
+  { const page = await navegadorGL.newPage(); const errs = []; page.on('pageerror', (e) => errs.push(e.message)); await page.setBypassServiceWorker(true); await page.setRequestInterception(true); page.on('request', (r) => (/pannellum\.js/.test(r.url()) ? r.abort() : r.continue()));
+    await page.setViewport({ width: 1280, height: 800 }); await page.goto(srv.url, { waitUntil: 'load' }); await page.evaluate(() => document.fonts.ready); await page.addStyleTag({ content: 'html{scroll-behavior:auto!important}' }); await page.evaluate(() => document.getElementById('recorrido360').scrollIntoView()); await sleep(400);
+    await page.click('#tourStart'); await sleep(1500);
+    const r = await page.evaluate(() => { const e = document.getElementById('tourStatus'); return { ilustracion: !document.getElementById('tourPoster').classList.contains('hidden'), boton: !document.getElementById('tourCta').classList.contains('hidden'), aviso: !e.classList.contains('hidden') && e.textContent.length > 10 }; });
+    check('si el visor 360° no se puede cargar, vuelve la ilustración con el botón y un aviso, sin errores', r.ilustracion && r.boton && r.aviso && errs.length === 0, JSON.stringify({ ...r, errores: errs.length })); await page.close(); }
+
+  await navegadorGL.close(); await browser.close(); srv.cerrar();
   if (failures.length) { console.log('\n' + failures.length + ' prueba(s) fallaron:\n - ' + failures.join('\n - ')); process.exit(1); }
   console.log('\nTodas las pruebas de humo pasaron');
 })().catch((e) => { console.error(e); process.exit(1); });
