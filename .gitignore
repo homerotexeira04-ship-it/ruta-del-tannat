@@ -10,5 +10,8 @@ node_modules/
 # Fotos y logos originales pesados (copia local; el sitio usa las versiones WebP optimizadas)
 originales/
 
+# Instalador de codebase-memory-mcp (otro proyecto): no es parte del sitio
+/install.ps1
+
 # Snapshots y logs que genera el MCP de Playwright
 .playwright-mcp/
