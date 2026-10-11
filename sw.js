@@ -1,10 +1,10 @@
 // Service Worker de La Ruta del Tannat: app shell cacheado para instalación PWA y uso sin conexión.
-const CACHE_VERSION = 'tannat-v21';
+const CACHE_VERSION = 'tannat-v22';
 const CORE_ASSETS = [
   './LaRutadelTannat.html',
   './index.html',
   './manifest.json',
-  './LaRutadelTannat_files/tailwind.css?v=21', // el ?v= sigue a CACHE_VERSION (npm run check avisa si no coinciden)
+  './LaRutadelTannat_files/tailwind.css?v=22', // el ?v= sigue a CACHE_VERSION (npm run check avisa si no coinciden)
   './LaRutadelTannat_files/plus-jakarta-sans-latin.woff2',
   './LaRutadelTannat_files/playfair-display-latin.woff2',
   './LaRutadelTannat_files/playfair-display-italic-latin.woff2',

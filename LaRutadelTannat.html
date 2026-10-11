@@ -269,7 +269,7 @@
   <!-- Tailwind CSS compilado (ver README: npm run build:css) -->
   <!-- Foto del inicio: 720 px para celulares (va recortada y bajo un velo oscuro, por eso "sizes" la pide a media pantalla: alcanza aun con pantallas de alta densidad), 1280 y 1920 para el resto. Debe decir lo mismo que la imagen del hero (más abajo). -->
   <link rel="preload" as="image" href="./LaRutadelTannat_files/hero-vinedo-uruguay-1280.webp" imagesrcset="./LaRutadelTannat_files/hero-vinedo-uruguay-720.webp 720w, ./LaRutadelTannat_files/hero-vinedo-uruguay-1280.webp 1280w, ./LaRutadelTannat_files/hero-vinedo-uruguay.webp 1920w" imagesizes="(max-width: 767px) 50vw, 100vw" fetchpriority="high">
-  <link rel="stylesheet" href="./LaRutadelTannat_files/tailwind.css?v=21">
+  <link rel="stylesheet" href="./LaRutadelTannat_files/tailwind.css?v=22">
 
   <!-- Tipografía editorial alojada en el sitio (sin pedidos a Google): Playfair Display (titulares) + Plus Jakarta Sans (cuerpo/UI).
        Fuentes variables, solo el subconjunto latin (cubre es/pt/en; otro alfabeto cae a la fuente del sistema). Licencia OFL.
@@ -948,6 +948,7 @@
               <a href="#estaciones" class="block px-3 py-2 rounded-lg text-sm text-gray-200 hover:text-gold hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold transition-colors" data-i18n="nav.stations">Estaciones</a>
               <a href="#termas" class="block px-3 py-2 rounded-lg text-sm text-gray-200 hover:text-gold hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold transition-colors" data-i18n="nav.thermal">Termas</a>
               <a href="#galeria" class="block px-3 py-2 rounded-lg text-sm text-gray-200 hover:text-gold hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold transition-colors" data-i18n="nav.gallery">Galería</a>
+              <a href="#postal" class="block px-3 py-2 rounded-lg text-sm text-gray-200 hover:text-gold hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold transition-colors" data-i18n="nav.postal">Postal de la Ruta</a>
               <a href="#mapa" class="block px-3 py-2 rounded-lg text-sm text-gray-200 hover:text-gold hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold transition-colors" data-i18n="nav.map">Mapa Interactivo</a>
             </div>
           </div>
@@ -1033,6 +1034,7 @@
           <a href="#estaciones" class="block text-gray-200 hover:text-gold py-2 font-medium" data-i18n="nav.stations">Estaciones</a>
           <a href="#termas" class="block text-gray-200 hover:text-gold py-2 font-medium" data-i18n="nav.thermal">Termas</a>
           <a href="#galeria" class="block text-gray-200 hover:text-gold py-2 font-medium" data-i18n="nav.gallery">Galería</a>
+          <a href="#postal" class="block text-gray-200 hover:text-gold py-2 font-medium" data-i18n="nav.postal">Postal de la Ruta</a>
           <a href="#mapa" class="block text-gray-200 hover:text-gold py-2 font-medium" data-i18n="nav.map">Mapa Interactivo</a>
         </div>
       </details>
@@ -2751,6 +2753,64 @@
     </section>
 
 
+    <!-- ==================== SECTION: POSTAL DE LA RUTA ==================== -->
+    <section id="postal" class="py-20 lg:py-28 bg-tannat-900 text-white relative" aria-labelledby="postalTitle">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div class="text-center max-w-3xl mx-auto mb-12">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gold/20 border border-gold/40 text-gold-light font-semibold text-xs uppercase tracking-wider mb-4" data-i18n="postal.badge">Para compartir</div>
+          <h2 id="postalTitle" class="font-serif text-3xl sm:text-5xl sm:leading-[1.15] font-bold tracking-[0.012em] text-balance text-white mb-4 uppercase" data-i18n="postal.title">Mandá una postal</h2>
+          <p class="text-lg text-gray-300 font-light text-balance" data-i18n="postal.subtitle">Elegí una foto, escribí unas líneas y mandásela a quien quieras. La postal se arma en tu dispositivo.</p>
+        </div>
+
+        <div class="grid lg:grid-cols-[minmax(0,25rem)_minmax(0,1fr)] gap-8 lg:gap-14 items-start max-w-5xl mx-auto">
+
+          <!-- Vista previa: se dibuja en un canvas y es lo mismo que se descarga o se comparte -->
+          <div class="w-full max-w-[24rem] mx-auto lg:max-w-none lg:sticky lg:top-[calc(var(--hdr-h,6rem)+1.5rem)]">
+            <canvas id="postalCanvas" width="1080" height="1350" role="img" aria-label="Vista previa de tu postal" class="block w-full h-auto rounded-md ring-1 ring-white/10 shadow-[0_28px_60px_-20px_rgba(0,0,0,.75)]"></canvas>
+          </div>
+
+          <div class="min-w-0">
+            <fieldset class="min-w-0">
+              <legend class="block text-sm font-semibold text-gold-light mb-3" data-i18n="postal.step1">1. Elegí una foto</legend>
+              <!-- Celular: dos filas que se deslizan de costado; escritorio: grilla de 4 columnas -->
+              <div id="postalPics" class="grid grid-rows-2 grid-flow-col auto-cols-[6.75rem] gap-2.5 overflow-x-auto snap-x snap-mandatory pb-3 -mx-1 px-1 sm:auto-cols-[7.5rem] lg:grid-rows-none lg:grid-flow-row lg:grid-cols-4 lg:auto-cols-auto lg:overflow-visible lg:pb-0 lg:mx-0 lg:px-0">
+                <label class="relative flex flex-col items-center justify-center gap-1.5 snap-start rounded-lg border-2 border-dashed border-gold/50 text-gold-light text-xs font-semibold text-center cursor-pointer hover:bg-white/5 focus-within:ring-2 focus-within:ring-white aspect-[244/200] px-1.5">
+                  <input type="file" accept="image/*" id="postalFile" class="sr-only">
+                  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                  <span data-i18n="postal.mine">Usar mi foto</span>
+                </label>
+              </div>
+            </fieldset>
+
+            <div class="mt-6">
+              <label for="postalMsg" class="block text-sm font-semibold text-gold-light mb-1.5" data-i18n="postal.step2">2. Escribí tu mensaje</label>
+              <textarea id="postalMsg" rows="3" maxlength="140" placeholder="Escribí unas líneas…" data-i18n-ph="postal.msgPh" class="w-full px-4 py-3 rounded-xl bg-white text-basalt text-base placeholder:text-gray-500 border border-transparent focus:outline-none focus:ring-2 focus:ring-gold"></textarea>
+              <p class="text-xs text-crema/60 mt-1.5 text-right"><span id="postalCount">0</span>/140</p>
+            </div>
+
+            <div class="mt-3">
+              <label for="postalName" class="block text-sm font-semibold text-gold-light mb-1.5" data-i18n="postal.nameLabel">Tu nombre (opcional, va en la firma)</label>
+              <input type="text" id="postalName" maxlength="30" autocomplete="given-name" class="w-full sm:max-w-xs px-4 py-3 rounded-xl bg-white text-basalt text-base placeholder:text-gray-500 border border-transparent focus:outline-none focus:ring-2 focus:ring-gold">
+            </div>
+
+            <div class="mt-6 flex flex-wrap items-center gap-3">
+              <button type="button" id="postalShare" class="hidden items-center justify-center gap-2 min-h-[48px] font-extrabold px-7 py-3 rounded-full transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-tannat-900 bg-gold hover:bg-gold-light text-tannat-900">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path></svg>
+                <span data-i18n="postal.share">Compartir</span>
+              </button>
+              <button type="button" id="postalDownload" class="inline-flex items-center justify-center gap-2 min-h-[48px] font-extrabold px-7 py-3 rounded-full transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-tannat-900 bg-gold hover:bg-gold-light text-tannat-900">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                <span data-i18n="postal.download">Descargar</span>
+              </button>
+            </div>
+            <p id="postalStatus" role="status" aria-live="polite" class="mt-3 text-sm text-crema/80 min-h-[1.25rem]"></p>
+            <p class="text-xs text-crema/60 mt-2 text-balance" data-i18n="postal.privacy">Todo se arma en tu dispositivo: ni tu foto ni tu mensaje se suben a ningún lado.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- ==================== VINOS Y FICHAS TÉCNICAS ==================== -->
     <section id="vinos" class="py-20 lg:py-28 bg-crema text-basalt">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -3688,6 +3748,38 @@
         "nav.brandSub": "Salto · Cuna del Vino Uruguayo",
         "nav.history": "Historia",
         "nav.stations": "Estaciones",
+        "nav.postal": "Postal de la Ruta",
+        "postal.badge": "Para compartir",
+        "postal.title": "Mandá una postal",
+        "postal.subtitle": "Elegí una foto, escribí unas líneas y mandásela a quien quieras. La postal se arma en tu dispositivo.",
+        "postal.step1": "1. Elegí una foto",
+        "postal.mine": "Usar mi foto",
+        "postal.ownCap": "Tu foto",
+        "postal.step2": "2. Escribí tu mensaje",
+        "postal.msgPh": "Escribí unas líneas…",
+        "postal.nameLabel": "Tu nombre (opcional, va en la firma)",
+        "postal.share": "Compartir",
+        "postal.download": "Descargar",
+        "postal.privacy": "Todo se arma en tu dispositivo: ni tu foto ni tu mensaje se suben a ningún lado.",
+        "postal.canvasLabel": "Vista previa de tu postal con la foto: {photo}",
+        "postal.greet": "Saludos desde la Ruta del Tannat",
+        "postal.defMsg": "¡Brindando con un Tannat en Salto! Ojalá estuvieras acá.",
+        "postal.photoBy": "Foto: {name}",
+        "postal.loading": "Cargando la foto…",
+        "postal.downloaded": "Listo: tu postal se descargó.",
+        "postal.shared": "¡Postal compartida!",
+        "postal.errPhoto": "No pude cargar esa foto. Probá con otra.",
+        "postal.err": "No se pudo armar la postal. Probá de nuevo.",
+        "postal.errFile": "Ese archivo no es una imagen.",
+        "postal.c.atardecer": "Atardecer sobre el viñedo",
+        "postal.c.paisaje": "Viñedos de Uruguay",
+        "postal.c.uvas": "Racimos de uva tinta",
+        "postal.c.manos": "Vendimia: uvas en la mano",
+        "postal.c.picnic": "Picnic con vino uruguayo",
+        "postal.c.brindis": "Un brindis",
+        "postal.c.cavas": "Entre barricas de roble",
+        "postal.c.daymanentra": "Entrada de Termas del Daymán",
+        "postal.c.represa": "Represa de Salto Grande",
         "nav.sustain": "Turismo Sostenible",
         "nav.seasons": "¿Cuándo viajar?",
         "nav.thermal": "Termas",
@@ -4246,6 +4338,38 @@
         "nav.brandSub": "Salto · Berço do Vinho Uruguaio",
         "nav.history": "História",
         "nav.stations": "Estações",
+        "nav.postal": "Cartão-postal da Rota",
+        "postal.badge": "Para compartilhar",
+        "postal.title": "Mande um cartão-postal",
+        "postal.subtitle": "Escolha uma foto, escreva algumas linhas e envie para quem quiser. O cartão-postal é montado no seu dispositivo.",
+        "postal.step1": "1. Escolha uma foto",
+        "postal.mine": "Usar minha foto",
+        "postal.ownCap": "Sua foto",
+        "postal.step2": "2. Escreva sua mensagem",
+        "postal.msgPh": "Escreva algumas linhas…",
+        "postal.nameLabel": "Seu nome (opcional, vai na assinatura)",
+        "postal.share": "Compartilhar",
+        "postal.download": "Baixar",
+        "postal.privacy": "Tudo é montado no seu dispositivo: nem a sua foto nem a sua mensagem são enviadas a lugar nenhum.",
+        "postal.canvasLabel": "Pré-visualização do seu cartão-postal com a foto: {photo}",
+        "postal.greet": "Saudações da Rota do Tannat",
+        "postal.defMsg": "Brindando com um Tannat em Salto! Queria que você estivesse aqui.",
+        "postal.photoBy": "Foto: {name}",
+        "postal.loading": "Carregando a foto…",
+        "postal.downloaded": "Pronto: seu cartão-postal foi baixado.",
+        "postal.shared": "Cartão-postal compartilhado!",
+        "postal.errPhoto": "Não consegui carregar essa foto. Tente outra.",
+        "postal.err": "Não foi possível montar o cartão-postal. Tente de novo.",
+        "postal.errFile": "Esse arquivo não é uma imagem.",
+        "postal.c.atardecer": "Pôr do sol sobre o vinhedo",
+        "postal.c.paisaje": "Vinhedos do Uruguai",
+        "postal.c.uvas": "Cachos de uva tinta",
+        "postal.c.manos": "Vindima: uvas na mão",
+        "postal.c.picnic": "Piquenique com vinho uruguaio",
+        "postal.c.brindis": "Um brinde",
+        "postal.c.cavas": "Entre barris de carvalho",
+        "postal.c.daymanentra": "Entrada das Termas do Daymán",
+        "postal.c.represa": "Represa de Salto Grande",
         "nav.sustain": "Turismo Sustentável",
         "nav.seasons": "Quando viajar?",
         "nav.thermal": "Termas",
@@ -4804,6 +4928,38 @@
         "nav.brandSub": "Salto · Cradle of Uruguayan Wine",
         "nav.history": "History",
         "nav.stations": "Stations",
+        "nav.postal": "Postcard from the Route",
+        "postal.badge": "To share",
+        "postal.title": "Send a postcard",
+        "postal.subtitle": "Pick a photo, write a few lines and send it to anyone. The postcard is built on your device.",
+        "postal.step1": "1. Pick a photo",
+        "postal.mine": "Use my photo",
+        "postal.ownCap": "Your photo",
+        "postal.step2": "2. Write your message",
+        "postal.msgPh": "Write a few lines…",
+        "postal.nameLabel": "Your name (optional, goes in the signature)",
+        "postal.share": "Share",
+        "postal.download": "Download",
+        "postal.privacy": "Everything is built on your device: neither your photo nor your message is uploaded anywhere.",
+        "postal.canvasLabel": "Preview of your postcard with the photo: {photo}",
+        "postal.greet": "Greetings from the Tannat Route",
+        "postal.defMsg": "Toasting with a Tannat in Salto! Wish you were here.",
+        "postal.photoBy": "Photo: {name}",
+        "postal.loading": "Loading the photo…",
+        "postal.downloaded": "Done: your postcard was downloaded.",
+        "postal.shared": "Postcard shared!",
+        "postal.errPhoto": "I couldn't load that photo. Try another one.",
+        "postal.err": "The postcard couldn't be built. Please try again.",
+        "postal.errFile": "That file isn't an image.",
+        "postal.c.atardecer": "Sunset over the vineyard",
+        "postal.c.paisaje": "Uruguayan vineyards",
+        "postal.c.uvas": "Red grape clusters",
+        "postal.c.manos": "Harvest: grapes in hand",
+        "postal.c.picnic": "Picnic with Uruguayan wine",
+        "postal.c.brindis": "A toast",
+        "postal.c.cavas": "Among oak barrels",
+        "postal.c.daymanentra": "Termas del Daymán entrance",
+        "postal.c.represa": "Salto Grande Dam",
         "nav.sustain": "Sustainable Tourism",
         "nav.seasons": "When to travel?",
         "nav.thermal": "Hot Springs",
@@ -5865,6 +6021,9 @@
       // Opiniones de visitantes: etiquetas de las tarjetas en el idioma elegido
       if (window.opinionsOnLang) window.opinionsOnLang();
 
+      // Postal: textos en el idioma elegido
+      if (window.postalOnLang) window.postalOnLang();
+
       // La barra fija inferior dice "USD 45 / persona": refrescarla para que "persona" también cambie de idioma
       setCurrency(currentCurrency);
 
@@ -6608,6 +6767,193 @@
       document.addEventListener('pointerdown', (e) => { if (e.pointerType === 'mouse' && e.button === 0 && reserva(e)) { conMouse = true; pop(); } }, true);
       document.addEventListener('pointerup', () => { setTimeout(() => { conMouse = false; }, 0); }, true); // el clic llega justo después de soltar: ya sonó al apretar
       document.addEventListener('click', (e) => { if (!conMouse && reserva(e)) pop(); }, true);
+    })();
+
+    // Postal de la Ruta: se dibuja en un <canvas> (todo en el dispositivo: la foto y el mensaje no se suben a ningún lado) y se comparte o se descarga como JPG de 1080×1350.
+    (function initPostal() {
+      const $ = (id) => document.getElementById(id);
+      const cv = $('postalCanvas'), pics = $('postalPics'), msg = $('postalMsg'), nom = $('postalName'), cuenta = $('postalCount'), info = $('postalStatus'), bShare = $('postalShare'), bDown = $('postalDownload'), file = $('postalFile');
+      if (!cv || !cv.getContext || !pics || !msg || !nom) return;
+      const ctx = cv.getContext('2d'), W = 1080, H = 1350, D = './LaRutadelTannat_files/';
+      const t = (k) => (translations[currentLang] || translations.es)[k] || translations.es[k] || '';
+      // id, archivo, leyenda (clave del diccionario), crédito y foco del recorte (0 = izquierda/arriba, 1 = derecha/abajo).
+      // Las miniaturas postal-th-<id>.webp vienen recortadas con el mismo foco (README: "Postal de la Ruta").
+      const FOTOS = [
+        { id: 'amanecer', f: 'hero-vinedo-uruguay.webp', c: 'gallery.cap1', cr: 'Viña Varela Zarranz · CC BY-SA', fx: 0.5, fy: 0.5 },
+        { id: 'atardecer', f: 'vip-vinedo-atardecer.webp', c: 'postal.c.atardecer', cr: 'Dennis G. Jarvis / Zach Dischner · CC', fx: 0.5, fy: 0.55 },
+        { id: 'paisaje', f: 'postal-paisaje.webp', c: 'postal.c.paisaje', cr: 'INAVI', fx: 0.42, fy: 0.5 },
+        { id: 'uvas', f: 'postal-uvas.webp', c: 'postal.c.uvas', cr: 'INAVI', fx: 0.45, fy: 0.5 },
+        { id: 'manos', f: 'postal-manos.webp', c: 'postal.c.manos', cr: 'INAVI', fx: 0.42, fy: 0.5 },
+        { id: 'picnic', f: 'postal-picnic.webp', c: 'postal.c.picnic', cr: 'INAVI', fx: 0.3, fy: 0.45 },
+        { id: 'brindis', f: 'postal-brindis.webp', c: 'postal.c.brindis', cr: 'INAVI', fx: 0.5, fy: 0.5 },
+        { id: 'copa', f: 'tannat-copa-vino.webp', c: 'gallery.cap13', cr: 'Wikimedia Commons · CC BY-SA', fx: 0.5, fy: 0.5 },
+        { id: 'morimaglio', f: '138db8c89a626f5efc0f940f343ad390bf0ec8ca.jpg', c: 'gallery.cap5', cr: 'INAVI', fx: 0.5, fy: 0.5 },
+        { id: 'bertolini', f: 'bertolini-broglio-inavi.jpg', c: 'gallery.cap4', cr: 'INAVI', fx: 0.5, fy: 0.4 },
+        { id: 'cartel', f: '8254D59E-F679-48CA-94EB-EC6CFB40EC77.webp', c: 'gallery.cap2', sg: 1, fx: 0.5, fy: 0.4 },
+        { id: 'pascual', f: 'pascual-harriague-retrato.webp', c: 'gallery.cap10', cr: 'INAVI', fx: 0.5, fy: 0.3 },
+        { id: 'cavas', f: 'vinos-historias-cava-guia.webp', c: 'postal.c.cavas', cr: 'Dennis G. Jarvis / Zach Dischner · CC', fx: 0.5, fy: 0.3 },
+        { id: 'vendimia85', f: 'vendimia-fiesta-1985.webp', c: 'gallery.cap14', cr: 'Wikimedia Commons · CC BY-SA/GFDL', fx: 0.5, fy: 0.4 },
+        { id: 'daymanentra', f: 'postal-daymanentra.webp', c: 'postal.c.daymanentra', cr: 'Ministerio de Turismo', fx: 0.5, fy: 0.5 },
+        { id: 'daymanpisc', f: 'termas-dayman.webp', c: 'gallery.cap9', fx: 0.5, fy: 0.5 },
+        { id: 'daymanaerea', f: 'termas-dayman-aerea.webp', c: 'gallery.cap8', fx: 0.5, fy: 0.5 },
+        { id: 'arapey', f: 'termas-arapey-piscina.webp', c: 'gallery.cap11', cr: 'Alejgon · CC BY-SA 4.0', fx: 0.5, fy: 0.5 },
+        { id: 'represa', f: 'represa-salto-grande.webp', c: 'postal.c.represa', fx: 0.05, fy: 0.5 },
+        { id: 'puerto', f: 'salto-costanera-puerto.webp', c: 'gallery.cap12', cr: 'Wikimedia Commons · CC BY-SA/GFDL', fx: 0.5, fy: 0.5 }
+      ];
+      const VINO = '#721B28', ORO = '#C29D62', ORO_OSC = '#7E6536', TINTA = '#3A1119', PAPEL = '#F6EEDF', GRIS = '#6B5D52';
+      const SERIF = '"Playfair Display", Georgia, serif', SANS = '"Plus Jakarta Sans", Arial, sans-serif';
+      const SITIO = (((document.querySelector('link[rel="canonical"]') || {}).href || location.href).replace(/^https?:\/\//, '').replace(/\/[^/]*\.html.*$/, '').replace(/\/$/, ''));
+      let sel = FOTOS[0], propia = null, editado = false, iniciado = false, logo = null, sello = null, ruido = null, raf = 0, fuentes = Promise.resolve();
+      const imgs = new Map();
+      const cargar = (src) => new Promise((ok, mal) => { const i = new Image(); i.onload = () => ok(i); i.onerror = mal; i.src = src; });
+      const leyenda = (f) => (f ? (f.c ? decodeHtmlEntities(t(f.c)) : t('postal.ownCap')) : '');
+
+      // ---- miniaturas: botones de radio que se ven como fotos (teclado y lector de pantalla andan solos) ----
+      const MARCA = '<span class="pointer-events-none absolute inset-0 rounded-lg ring-2 ring-inset ring-transparent peer-checked:ring-gold peer-focus-visible:ring-white"></span><span class="pointer-events-none absolute top-1.5 right-1.5 hidden peer-checked:flex w-6 h-6 rounded-full bg-gold text-tannat-900 items-center justify-center"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></span>';
+      pics.insertAdjacentHTML('beforeend', FOTOS.map((f, i) => '<label class="relative block snap-start rounded-lg overflow-hidden cursor-pointer"><input type="radio" name="postalFoto" value="' + f.id + '" class="peer sr-only"' + (i ? '' : ' checked') + '><img data-id="' + f.id + '" src="' + D + 'postal-th-' + f.id + '.webp" width="244" height="200" alt="" loading="lazy" decoding="async" class="block w-full h-auto">' + MARCA + '</label>').join(''));
+      const traducir = () => pics.querySelectorAll('img[data-id]').forEach((im) => { im.alt = leyenda(im.dataset.id === 'propia' ? propia : FOTOS.find((x) => x.id === im.dataset.id)); });
+      const tilePropia = (url) => {
+        let l = $('postalOwnTile');
+        if (!l) { l = document.createElement('label'); l.id = 'postalOwnTile'; l.className = 'relative block snap-start rounded-lg overflow-hidden cursor-pointer'; l.innerHTML = '<input type="radio" name="postalFoto" value="propia" class="peer sr-only"><img data-id="propia" width="244" height="200" alt="" class="block w-full h-auto aspect-[244/200] object-cover">' + MARCA; pics.firstElementChild.after(l); }
+        l.querySelector('img').src = url; traducir(); return l.querySelector('input');
+      };
+
+      // ---- dibujo ----
+      const papel = () => { const n = document.createElement('canvas'); n.width = n.height = 180; const g = n.getContext('2d'), d = g.createImageData(180, 180); for (let i = 0; i < d.data.length; i += 4) { d.data[i] = d.data[i + 1] = d.data[i + 2] = 190 + Math.random() * 60; d.data[i + 3] = Math.random() * 40; } g.putImageData(d, 0, 0); return n; };
+      const redondo = (x, y, w, h, r) => { ctx.beginPath(); ctx.moveTo(x + r, y); ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r); ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath(); };
+      // parte el texto en renglones del ancho dado (y corta las palabras más largas que el renglón)
+      const lineas = (txt, ancho, fuente) => {
+        ctx.font = fuente; const out = [];
+        txt.split('\n').forEach((p) => {
+          let l = '';
+          p.split(/\s+/).filter(Boolean).forEach((w) => {
+            while (ctx.measureText(w).width > ancho) { let k = w.length; while (k > 1 && ctx.measureText(w.slice(0, k)).width > ancho) k--; if (l) { out.push(l); l = ''; } out.push(w.slice(0, k)); w = w.slice(k); }
+            const c = l ? l + ' ' + w : w; if (l && ctx.measureText(c).width > ancho) { out.push(l); l = w; } else l = c;
+          });
+          out.push(l);
+        });
+        return out;
+      };
+      // texto siguiendo un arco (para el matasellos): arriba se lee de izquierda a derecha por la parte superior, abajo por la inferior
+      const arco = (txt, r, arriba) => {
+        const cs = [...txt], ws = cs.map((c) => ctx.measureText(c).width + 1.5), tot = ws.reduce((a, b) => a + b, 0);
+        let a = arriba ? -Math.PI / 2 - tot / r / 2 : Math.PI / 2 + tot / r / 2;
+        ctx.save(); ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        cs.forEach((c, i) => { const d = ws[i] / r; a += arriba ? d / 2 : -d / 2; ctx.save(); ctx.translate(r * Math.cos(a), r * Math.sin(a)); ctx.rotate(arriba ? a + Math.PI / 2 : a - Math.PI / 2); ctx.fillText(c, 0, 0); ctx.restore(); a += arriba ? d / 2 : -d / 2; });
+        ctx.restore();
+      };
+      const hacerSello = () => {
+        const w = 214, h = 266, c = document.createElement('canvas'); c.width = w; c.height = h; const g = c.getContext('2d');
+        g.fillStyle = '#FBF6EA'; g.fillRect(0, 0, w, h);
+        g.strokeStyle = VINO; g.lineWidth = 3; g.strokeRect(20, 20, w - 40, h - 40); g.strokeStyle = ORO; g.lineWidth = 1.5; g.strokeRect(26, 26, w - 52, h - 52);
+        if (logo) { const lw = w - 60, lh = lw * logo.naturalHeight / logo.naturalWidth; g.drawImage(logo, 30, 40, lw, lh); }
+        g.textAlign = 'center'; g.fillStyle = VINO; g.font = '700 27px ' + SERIF; g.fillText('URUGUAY', w / 2, h - 66); g.fillStyle = ORO_OSC; g.font = '800 15px ' + SANS; g.fillText('TANNAT · 1874', w / 2, h - 44);
+        g.globalCompositeOperation = 'destination-out'; const r = 8, p = 22; // el perforado: círculos que muerden el borde
+        for (let x = p / 2; x < w; x += p) [0, h].forEach((y) => { g.beginPath(); g.arc(x, y, r, 0, 6.2832); g.fill(); });
+        for (let y = p / 2; y < h; y += p) [0, w].forEach((x) => { g.beginPath(); g.arc(x, y, r, 0, 6.2832); g.fill(); });
+        return c;
+      };
+      const matasellos = () => {
+        const d = new Date(), dia = String(d.getDate()), mes = d.toLocaleDateString(currentLang, { month: 'short' }).replace('.', '').toUpperCase(), anio = String(d.getFullYear());
+        ctx.save(); ctx.globalCompositeOperation = 'multiply'; ctx.strokeStyle = ctx.fillStyle = 'rgba(48,20,30,.74)'; ctx.translate(792, 962); ctx.rotate(-0.22);
+        ctx.lineWidth = 4; ctx.beginPath(); ctx.arc(0, 0, 88, 0, 6.2832); ctx.stroke(); ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(0, 0, 58, 0, 6.2832); ctx.stroke();
+        ctx.font = '800 19px ' + SANS; arco('SALTO · URUGUAY', 73, true); arco('RUTA DEL TANNAT', 73, false);
+        ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.font = '800 34px ' + SANS; ctx.fillText(dia, 0, -10); ctx.font = '700 17px ' + SANS; ctx.fillText(mes + ' ' + anio, 0, 20);
+        ctx.lineWidth = 3.5; for (let k = 0; k < 5; k++) { ctx.beginPath(); for (let x = 90; x <= 250; x += 4) { const y = -54 + k * 27 + Math.sin(x / 8) * 5; if (x === 90) ctx.moveTo(x, y); else ctx.lineTo(x, y); } ctx.stroke(); } // las rayas onduladas que cruzan el sello
+        ctx.restore();
+      };
+      function dibujar() {
+        if (!iniciado) return;
+        const f = sel, img = f === propia ? propia.img : imgs.get(f.id), msj = msg.value.trim(), firma = nom.value.trim();
+        ctx.clearRect(0, 0, W, H); ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
+        // papel con grano, borde apenas tostado y un filete dorado
+        ctx.fillStyle = PAPEL; ctx.fillRect(0, 0, W, H);
+        ruido = ruido || papel(); ctx.fillStyle = ctx.createPattern(ruido, 'repeat'); ctx.fillRect(0, 0, W, H);
+        const vg = ctx.createRadialGradient(W / 2, H / 2, H * 0.38, W / 2, H / 2, H * 0.82); vg.addColorStop(0, 'rgba(140,100,40,0)'); vg.addColorStop(1, 'rgba(140,100,40,.14)'); ctx.fillStyle = vg; ctx.fillRect(0, 0, W, H);
+        ctx.strokeStyle = 'rgba(194,157,98,.75)'; ctx.lineWidth = 3; redondo(22, 22, W - 44, H - 44, 14); ctx.stroke();
+        // la foto, recortada con su foco
+        const X = 52, Y = 52, PW = W - 104, PH = 800;
+        ctx.save(); redondo(X, Y, PW, PH, 6); ctx.clip();
+        if (img) { const a = PW / PH; let sw = img.naturalWidth, sh = img.naturalHeight; if (sw / sh > a) sw = sh * a; else sh = sw / a; ctx.imageSmoothingQuality = 'high'; ctx.drawImage(img, (img.naturalWidth - sw) * f.fx, (img.naturalHeight - sh) * f.fy, sw, sh, X, Y, PW, PH); }
+        else { ctx.fillStyle = '#2B0A14'; ctx.fillRect(X, Y, PW, PH); }
+        if (!f.sg) { const gr = ctx.createLinearGradient(0, Y, 0, Y + 300); gr.addColorStop(0, 'rgba(22,6,10,.66)'); gr.addColorStop(1, 'rgba(22,6,10,0)'); ctx.fillStyle = gr; ctx.fillRect(X, Y, PW, 300); }
+        ctx.restore();
+        // saludo sobre la foto (salvo en las que ya traen letras, marcadas con sg) y leyenda abajo
+        if (!f.sg) { ctx.save(); ctx.fillStyle = '#fff'; ctx.shadowColor = 'rgba(0,0,0,.5)'; ctx.shadowBlur = 16; ctx.shadowOffsetY = 2;
+          lineas(t('postal.greet'), 640, 'italic 600 62px ' + SERIF).slice(0, 2).forEach((l, i) => ctx.fillText(l, X + 44, Y + 104 + i * 70)); ctx.restore(); }
+        const cap = leyenda(f);
+        if (f.c) { ctx.save(); ctx.font = '600 26px ' + SANS; const w = Math.min(ctx.measureText(cap).width, PW - 120) + 44; ctx.fillStyle = 'rgba(30,8,14,.66)'; redondo(X + 32, Y + PH - 84, w, 52, 26); ctx.fill(); ctx.fillStyle = '#fff'; ctx.textBaseline = 'middle'; ctx.fillText(cap, X + 54, Y + PH - 58, PW - 120); ctx.restore(); }
+        if (f.cr) { ctx.font = '600 21px ' + SANS; ctx.fillStyle = GRIS; ctx.fillText(t('postal.photoBy').replace('{name}', f.cr), 76, Y + PH + 36, 700); }
+        // el mensaje (se achica solo si es largo) y la firma
+        const texto = msj || t('postal.msgPh'), area = 322 - (firma ? 62 : 0); let tam = 58, L;
+        for (const s of [58, 52, 46, 42, 38, 34, 30]) { tam = s; L = lineas(texto, 590, 'italic 500 ' + s + 'px ' + SERIF); if ((L.length - 1) * s * 1.32 + s <= area) break; }
+        const alto = (L.length - 1) * tam * 1.32 + tam + (firma ? 62 : 0), y0 = 912 + Math.max(0, (322 - alto) / 2) + tam * 0.82; // el bloque queda centrado en el espacio libre
+        ctx.fillStyle = msj ? TINTA : 'rgba(58,17,25,.4)'; L.forEach((l, i) => ctx.fillText(l, 76, y0 + i * tam * 1.32));
+        if (firma) { ctx.font = 'italic 600 40px ' + SERIF; ctx.fillStyle = VINO; ctx.fillText('— ' + firma, 76, y0 + (L.length - 1) * tam * 1.32 + 62, 590); }
+        // pie
+        ctx.strokeStyle = 'rgba(194,157,98,.7)'; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(76, 1252); ctx.lineTo(W - 76, 1252); ctx.stroke();
+        ctx.fillStyle = VINO; ctx.font = '800 22px ' + SANS; if ('letterSpacing' in ctx) ctx.letterSpacing = '3px'; ctx.fillText('LA RUTA DEL TANNAT · SALTO, URUGUAY', 76, 1288); if ('letterSpacing' in ctx) ctx.letterSpacing = '0px';
+        ctx.fillStyle = GRIS; ctx.font = '600 20px ' + SANS; ctx.fillText(SITIO, 76, 1316);
+        // el sello pegado, apenas girado, y el matasellos con la fecha de hoy
+        sello = sello || hacerSello();
+        ctx.save(); ctx.translate(836, 764); ctx.rotate(0.05); ctx.shadowColor = 'rgba(0,0,0,.38)'; ctx.shadowBlur = 20; ctx.shadowOffsetY = 7; ctx.drawImage(sello, 0, 0); ctx.restore();
+        matasellos();
+        cv.setAttribute('aria-label', t('postal.canvasLabel').replace('{photo}', cap));
+      }
+      const pedir = () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(dibujar); };
+      const contar = () => { cuenta.textContent = msg.value.length; };
+
+      async function elegir(f) {
+        if (!f) return; sel = f;
+        if (f !== propia && !imgs.has(f.id)) {
+          info.textContent = t('postal.loading');
+          try { imgs.set(f.id, await cargar(D + f.f)); } catch (e) { if (sel === f) info.textContent = t('postal.errPhoto'); return; }
+          if (sel === f) info.textContent = '';
+        }
+        if (sel === f) dibujar();
+      }
+      pics.addEventListener('change', (e) => { const r = e.target; if (r && r.name === 'postalFoto') elegir(r.value === 'propia' ? propia : FOTOS.find((x) => x.id === r.value)); });
+      if (file) file.addEventListener('change', () => {
+        const fl = file.files && file.files[0]; if (!fl) return;
+        if (!/^image\//.test(fl.type)) { info.textContent = t('postal.errFile'); file.value = ''; return; }
+        const url = URL.createObjectURL(fl);
+        cargar(url).then((img) => { if (propia) URL.revokeObjectURL(propia.url); propia = { id: 'propia', img, url, c: null, cr: null, fx: 0.5, fy: 0.5 }; tilePropia(url).checked = true; info.textContent = ''; sel = propia; dibujar(); })
+          .catch(() => { URL.revokeObjectURL(url); info.textContent = t('postal.errPhoto'); }).finally(() => { file.value = ''; });
+      });
+      msg.addEventListener('input', () => { editado = true; contar(); pedir(); });
+      nom.addEventListener('input', pedir);
+
+      // ---- salida: JPG para descargar o para el menú de compartir del celular ----
+      const blob = async () => { await fuentes; await elegir(sel); dibujar(); return new Promise((ok) => cv.toBlob(ok, 'image/jpeg', 0.92)); };
+      const NOMBRE = 'postal-ruta-del-tannat.jpg';
+      bDown.addEventListener('click', async () => {
+        const b = await blob(); if (!b) { info.textContent = t('postal.err'); return; }
+        const url = URL.createObjectURL(b), a = document.createElement('a'); a.href = url; a.download = NOMBRE; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(url), 4000);
+        info.textContent = t('postal.downloaded');
+      });
+      const puedeCompartir = () => { try { return !!(navigator.share && navigator.canShare && navigator.canShare({ files: [new File([''], NOMBRE, { type: 'image/jpeg' })] })); } catch (e) { return false; } };
+      if (bShare && puedeCompartir()) {
+        bShare.classList.replace('hidden', 'inline-flex');
+        bDown.className = bDown.className.replace('bg-gold hover:bg-gold-light text-tannat-900', 'border border-gold/60 text-gold-light hover:bg-white/10');
+        bShare.addEventListener('click', async () => {
+          const b = await blob(); if (!b) { info.textContent = t('postal.err'); return; }
+          try { await navigator.share({ files: [new File([b], NOMBRE, { type: 'image/jpeg' })], title: t('postal.title'), text: (msg.value.trim() + ' ' + location.origin + location.pathname).trim() }); info.textContent = t('postal.shared'); }
+          catch (e) { if (!e || e.name !== 'AbortError') info.textContent = t('postal.err'); }
+        });
+      }
+
+      // ---- arranque: lo pesado (foto, logo, tipografías) espera a que la sección esté por verse ----
+      const iniciar = () => {
+        if (iniciado) return; iniciado = true;
+        fuentes = Promise.all(['italic 500 40px "Playfair Display"', 'italic 600 40px "Playfair Display"', '700 40px "Playfair Display"', '800 22px "Plus Jakarta Sans"', '600 22px "Plus Jakarta Sans"'].map((f) => document.fonts.load(f))).catch(() => {});
+        cargar(D + 'logo-ruta-del-tannat-450.webp').then((i) => { logo = i; sello = null; dibujar(); }).catch(() => {});
+        fuentes.then(dibujar); elegir(sel); dibujar();
+      };
+      msg.value = t('postal.defMsg'); contar(); traducir();
+      if ('IntersectionObserver' in window) { const io = new IntersectionObserver((es) => { if (es.some((e) => e.isIntersecting)) { io.disconnect(); iniciar(); } }, { rootMargin: '600px 0px' }); io.observe(cv); } else iniciar();
+      window.postalOnLang = () => { traducir(); if (!editado) { msg.value = t('postal.defMsg'); contar(); } dibujar(); };
+      // lo usa el Maridaje para dejar su sugerencia escrita en la postal
+      window.postalSetMessage = (txt) => { iniciar(); msg.value = String(txt).slice(0, 140); editado = true; contar(); dibujar(); $('postal').scrollIntoView(); msg.focus({ preventScroll: true }); };
     })();
 
     // PWA: registra el service worker (app shell offline + instalación)
