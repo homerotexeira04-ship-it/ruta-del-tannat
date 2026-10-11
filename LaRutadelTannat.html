@@ -937,6 +937,7 @@
               <a href="#copa" class="block px-3 py-2 rounded-lg text-sm text-gray-200 hover:text-gold hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold transition-colors" data-i18n="nav.cup">La Copa de Tannat</a>
               <a href="#inavi" class="block px-3 py-2 rounded-lg text-sm text-gray-200 hover:text-gold hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold transition-colors" data-i18n="nav.inavi">INAVI</a>
               <a href="#vinos" class="block px-3 py-2 rounded-lg text-sm text-gray-200 hover:text-gold hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold transition-colors" data-i18n="nav.wines">Vinos</a>
+              <a href="#maridaje" class="block px-3 py-2 rounded-lg text-sm text-gray-200 hover:text-gold hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold transition-colors" data-i18n="nav.pairing">Maridaje</a>
             </div>
           </div>
           <div class="relative" data-nav-group>
@@ -1023,6 +1024,7 @@
           <a href="#copa" class="block text-gray-200 hover:text-gold py-2 font-medium" data-i18n="nav.cup">La Copa de Tannat</a>
           <a href="#inavi" class="block text-gray-200 hover:text-gold py-2 font-medium" data-i18n="nav.inavi">INAVI</a>
           <a href="#vinos" class="block text-gray-200 hover:text-gold py-2 font-medium" data-i18n="nav.wines">Vinos</a>
+          <a href="#maridaje" class="block text-gray-200 hover:text-gold py-2 font-medium" data-i18n="nav.pairing">Maridaje</a>
         </div>
       </details>
       <details name="navgrp" class="nav-m-grp border-b border-white/10">
@@ -2859,6 +2861,44 @@
       </div>
     </section>
 
+    <!-- ==================== SECTION: MARIDAJE (DEL PLATO AL VINO) ==================== -->
+    <section id="maridaje" class="py-20 lg:py-28 bg-tannat-900 text-white relative" aria-labelledby="pairTitle">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div class="text-center max-w-3xl mx-auto mb-12">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gold/20 border border-gold/40 text-gold-light font-semibold text-xs uppercase tracking-wider mb-4" data-i18n="pair.badge">Del plato al vino</div>
+          <h2 id="pairTitle" class="font-serif text-3xl sm:text-5xl sm:leading-[1.15] font-bold tracking-[0.012em] text-balance text-white mb-4 uppercase" data-i18n="pair.title">¿Qué como con un Tannat?</h2>
+          <p class="text-lg text-gray-300 font-light text-balance" data-i18n="pair.subtitle">Elegí un plato y te decimos qué estilo de Tannat le queda mejor, a qué temperatura servirlo y qué evitar.</p>
+        </div>
+
+        <div class="grid lg:grid-cols-[minmax(0,20rem)_minmax(0,1fr)] gap-8 lg:gap-12 items-start max-w-5xl mx-auto">
+
+          <fieldset class="min-w-0">
+            <legend class="block text-sm font-semibold text-gold-light mb-3" data-i18n="pair.pick">Elegí tu plato</legend>
+            <!-- Celular: dos filas que se deslizan de costado (la tarjeta queda justo debajo, a la vista); escritorio: lista vertical -->
+            <div class="grid grid-rows-2 grid-flow-col auto-cols-max gap-2.5 overflow-x-auto snap-x pb-3 -mx-1 px-1 lg:grid-rows-none lg:grid-flow-row lg:auto-cols-auto lg:grid-cols-1 lg:overflow-visible lg:pb-0 lg:mx-0 lg:px-0">
+              <label class="relative block cursor-pointer snap-start"><input type="radio" name="maridajePlato" value="asado" class="peer sr-only" checked><span class="flex items-center min-h-[48px] px-4 py-3 rounded-xl whitespace-nowrap lg:whitespace-normal border border-white/15 bg-white/5 text-sm font-semibold text-gray-100 transition-colors hover:border-gold/60 peer-checked:bg-gold peer-checked:border-gold peer-checked:text-tannat-900 peer-focus-visible:ring-2 peer-focus-visible:ring-white peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-tannat-900" data-i18n="pair.d.asado">Asado y parrilla</span></label>
+              <label class="relative block cursor-pointer snap-start"><input type="radio" name="maridajePlato" value="cordero" class="peer sr-only"><span class="flex items-center min-h-[48px] px-4 py-3 rounded-xl whitespace-nowrap lg:whitespace-normal border border-white/15 bg-white/5 text-sm font-semibold text-gray-100 transition-colors hover:border-gold/60 peer-checked:bg-gold peer-checked:border-gold peer-checked:text-tannat-900 peer-focus-visible:ring-2 peer-focus-visible:ring-white peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-tannat-900" data-i18n="pair.d.cordero">Cordero al asador o al horno</span></label>
+              <label class="relative block cursor-pointer snap-start"><input type="radio" name="maridajePlato" value="cerdo" class="peer sr-only"><span class="flex items-center min-h-[48px] px-4 py-3 rounded-xl whitespace-nowrap lg:whitespace-normal border border-white/15 bg-white/5 text-sm font-semibold text-gray-100 transition-colors hover:border-gold/60 peer-checked:bg-gold peer-checked:border-gold peer-checked:text-tannat-900 peer-focus-visible:ring-2 peer-focus-visible:ring-white peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-tannat-900" data-i18n="pair.d.cerdo">Cerdo y costillas a la barbacoa</span></label>
+              <label class="relative block cursor-pointer snap-start"><input type="radio" name="maridajePlato" value="pastas" class="peer sr-only"><span class="flex items-center min-h-[48px] px-4 py-3 rounded-xl whitespace-nowrap lg:whitespace-normal border border-white/15 bg-white/5 text-sm font-semibold text-gray-100 transition-colors hover:border-gold/60 peer-checked:bg-gold peer-checked:border-gold peer-checked:text-tannat-900 peer-focus-visible:ring-2 peer-focus-visible:ring-white peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-tannat-900" data-i18n="pair.d.pastas">Pastas con salsa roja o ragú</span></label>
+              <label class="relative block cursor-pointer snap-start"><input type="radio" name="maridajePlato" value="quesos" class="peer sr-only"><span class="flex items-center min-h-[48px] px-4 py-3 rounded-xl whitespace-nowrap lg:whitespace-normal border border-white/15 bg-white/5 text-sm font-semibold text-gray-100 transition-colors hover:border-gold/60 peer-checked:bg-gold peer-checked:border-gold peer-checked:text-tannat-900 peer-focus-visible:ring-2 peer-focus-visible:ring-white peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-tannat-900" data-i18n="pair.d.quesos">Quesos curados y de pasta dura</span></label>
+              <label class="relative block cursor-pointer snap-start"><input type="radio" name="maridajePlato" value="chocolate" class="peer sr-only"><span class="flex items-center min-h-[48px] px-4 py-3 rounded-xl whitespace-nowrap lg:whitespace-normal border border-white/15 bg-white/5 text-sm font-semibold text-gray-100 transition-colors hover:border-gold/60 peer-checked:bg-gold peer-checked:border-gold peer-checked:text-tannat-900 peer-focus-visible:ring-2 peer-focus-visible:ring-white peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-tannat-900" data-i18n="pair.d.chocolate">Chocolate amargo (70&nbsp;% o más)</span></label>
+              <label class="relative block cursor-pointer snap-start"><input type="radio" name="maridajePlato" value="pescado" class="peer sr-only"><span class="flex items-center min-h-[48px] px-4 py-3 rounded-xl whitespace-nowrap lg:whitespace-normal border border-white/15 bg-white/5 text-sm font-semibold text-gray-100 transition-colors hover:border-gold/60 peer-checked:bg-gold peer-checked:border-gold peer-checked:text-tannat-900 peer-focus-visible:ring-2 peer-focus-visible:ring-white peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-tannat-900" data-i18n="pair.d.pescado">Pescado de río a la parrilla (dorado, surubí)</span></label>
+              <label class="relative block cursor-pointer snap-start"><input type="radio" name="maridajePlato" value="verduras" class="peer sr-only"><span class="flex items-center min-h-[48px] px-4 py-3 rounded-xl whitespace-nowrap lg:whitespace-normal border border-white/15 bg-white/5 text-sm font-semibold text-gray-100 transition-colors hover:border-gold/60 peer-checked:bg-gold peer-checked:border-gold peer-checked:text-tannat-900 peer-focus-visible:ring-2 peer-focus-visible:ring-white peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-tannat-900" data-i18n="pair.d.verduras">Verduras asadas y hongos</span></label>
+              <label class="relative block cursor-pointer snap-start"><input type="radio" name="maridajePlato" value="picante" class="peer sr-only"><span class="flex items-center min-h-[48px] px-4 py-3 rounded-xl whitespace-nowrap lg:whitespace-normal border border-white/15 bg-white/5 text-sm font-semibold text-gray-100 transition-colors hover:border-gold/60 peer-checked:bg-gold peer-checked:border-gold peer-checked:text-tannat-900 peer-focus-visible:ring-2 peer-focus-visible:ring-white peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-tannat-900" data-i18n="pair.d.picante">Platos picantes</span></label>
+            </div>
+          </fieldset>
+
+          <div class="min-w-0 rounded-3xl border border-gold/30 bg-tannat-dark/80 p-6 sm:p-8 shadow-2xl">
+            <div id="pairCard"></div>
+            <p id="pairLive" class="sr-only" role="status"></p>
+          </div>
+        </div>
+
+        <p class="text-xs text-crema/60 text-center mt-8 max-w-3xl mx-auto text-balance" data-i18n="pair.note">Sugerencias orientativas, basadas en criterios generales de maridaje (taninos, grasa y acidez). Cada bodega puede aconsejarte otra cosa para su vino.</p>
+      </div>
+    </section>
+
     <!-- ==================== SECTION 6: MAPA INTERACTIVO & GEOLOCALIZACIÓN ==================== -->
     <section id="mapa" class="py-20 lg:py-28 bg-white text-basalt">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -3748,6 +3788,66 @@
         "nav.brandSub": "Salto · Cuna del Vino Uruguayo",
         "nav.history": "Historia",
         "nav.stations": "Estaciones",
+        "nav.pairing": "Maridaje",
+        "pair.badge": "Del plato al vino",
+        "pair.title": "¿Qué como con un Tannat?",
+        "pair.subtitle": "Elegí un plato y te decimos qué estilo de Tannat le queda mejor, a qué temperatura servirlo y qué evitar.",
+        "pair.pick": "Elegí tu plato",
+        "pair.with": "Para {dish}",
+        "pair.temp": "Temperatura",
+        "pair.glass": "Copa",
+        "pair.air": "Aireación",
+        "pair.avoid": "Evitá:",
+        "pair.route": "En la Ruta:",
+        "pair.seeWines": "Ver los vinos →",
+        "pair.toPostcard": "Mandar este maridaje en una postal",
+        "pair.postalMsg": "Maridaje del día: {dish} con {wine}. ¡Salud desde Salto!",
+        "pair.scale": "{name}: {n} de 5",
+        "pair.summer": "Tip de verano salteño: con 30 °C de temperatura ambiente, enfriá el tinto unos 20 minutos en la heladera antes de servirlo.",
+        "pair.note": "Sugerencias orientativas, basadas en criterios generales de maridaje (taninos, grasa y acidez). Cada bodega puede aconsejarte otra cosa para su vino.",
+        "pair.live": "Maridaje para {dish}: {wine}",
+        "pair.d.asado": "Asado y parrilla",
+        "pair.d.asado.why": "La grasa y la proteína de la carne a la parrilla suavizan los taninos firmes del Tannat, y el humo acompaña sus notas tostadas.",
+        "pair.d.asado.avoid": "Los cortes muy magros y muy cocidos: el vino los hace sentir secos.",
+        "pair.d.cordero": "Cordero al asador o al horno",
+        "pair.d.cordero.why": "Su sabor intenso y las hierbas (romero, tomillo) hacen juego con la fruta negra y la pimienta del Tannat.",
+        "pair.d.cordero.avoid": "Los preparados muy especiados (curry, comino fuerte): conviene un Tannat más frutal y con menos barrica.",
+        "pair.d.cerdo": "Cerdo y costillas a la barbacoa",
+        "pair.d.cerdo.why": "La salsa dulce y ahumada pide un Tannat frutal: el tanino no domina y la fruta responde al dulzor.",
+        "pair.d.cerdo.avoid": "Un Reserva con mucha barrica: la madera y el dulzor de la salsa se pelean.",
+        "pair.d.pastas": "Pastas con salsa roja o ragú",
+        "pair.d.pastas.why": "La acidez del Tannat responde a la del tomate, y el ragú de carne atenúa el tanino.",
+        "pair.d.pastas.avoid": "Las salsas de tomate muy picantes: el picor resalta el tanino.",
+        "pair.d.quesos": "Quesos curados y de pasta dura",
+        "pair.d.quesos.why": "La sal y la grasa de los quesos duros curados redondean el tanino; con un Tannat de guarda quedan en equilibrio.",
+        "pair.d.quesos.avoid": "Los quesos azules y los muy cremosos: se imponen o se pierden frente al tanino.",
+        "pair.d.chocolate": "Chocolate amargo (70&nbsp;% o más)",
+        "pair.d.chocolate.why": "El cacao amargo y los taninos se parecen: un Tannat de guarda, más redondo, lo acompaña sin aspereza.",
+        "pair.d.chocolate.avoid": "Los Tannat jóvenes y ásperos: con el amargor del cacao se sienten más duros.",
+        "pair.d.pescado": "Pescado de río a la parrilla (dorado, surubí)",
+        "pair.d.pescado.why": "Un tinto potente tapa la carne delicada del pescado: un Tannat rosado, bien frío, acompaña la parrilla sin dominarla.",
+        "pair.d.pescado.avoid": "Los Reserva con barrica: el pescado queda en segundo plano.",
+        "pair.d.verduras": "Verduras asadas y hongos",
+        "pair.d.verduras.why": "El tostado de la parrilla y el umami de los hongos se llevan bien con un Tannat joven, frutal y de tanino amable.",
+        "pair.d.verduras.avoid": "Los vinos con mucha madera: tapan el sabor de las verduras.",
+        "pair.d.picante": "Platos picantes",
+        "pair.d.picante.why": "El picante resalta el tanino y el alcohol: un rosado o espumoso de Tannat, muy frío, refresca el paladar.",
+        "pair.d.picante.avoid": "Los Tannat potentes y con barrica: con el picante se sienten más duros y alcohólicos.",
+        "pair.s.A.name": "Tannat joven, sin barrica",
+        "pair.s.A.air": "Abrilo unos 20 minutos antes de servir",
+        "pair.s.A.glass": "Copa grande de boca amplia",
+        "pair.s.A.route": "El Tannat Exotic Senza Crianza de Bertolini &amp; Broglio (Estación 3) no pasa por barrica.",
+        "pair.s.B.name": "Tannat Reserva, con barrica",
+        "pair.s.B.air": "Abrilo de 30 a 60 minutos antes, o decantalo",
+        "pair.s.B.glass": "Copa grande de boca amplia",
+        "pair.s.B.route": "El Tannat Reserva de Salto Chico (Estación 2) tiene crianza en barricas de roble francés y americano.",
+        "pair.s.C.name": "Tannat de guarda",
+        "pair.s.C.air": "Decantalo con cuidado y servilo enseguida",
+        "pair.s.C.glass": "Copa grande de boca amplia",
+        "pair.s.C.route": "En invierno, las bodegas boutique ofrecen cata de Gran Reserva y tintos de guarda junto a la chimenea.",
+        "pair.s.D.name": "Tannat rosado o espumoso",
+        "pair.s.D.air": "Sin decantar: directo de la heladera",
+        "pair.s.D.glass": "Copa tipo tulipa",
         "nav.postal": "Postal de la Ruta",
         "postal.badge": "Para compartir",
         "postal.title": "Mandá una postal",
@@ -4338,6 +4438,66 @@
         "nav.brandSub": "Salto · Berço do Vinho Uruguaio",
         "nav.history": "História",
         "nav.stations": "Estações",
+        "nav.pairing": "Harmonização",
+        "pair.badge": "Do prato ao vinho",
+        "pair.title": "O que como com um Tannat?",
+        "pair.subtitle": "Escolha um prato e dizemos que estilo de Tannat combina melhor, a que temperatura servir e o que evitar.",
+        "pair.pick": "Escolha o seu prato",
+        "pair.with": "Para {dish}",
+        "pair.temp": "Temperatura",
+        "pair.glass": "Taça",
+        "pair.air": "Oxigenação",
+        "pair.avoid": "Evite:",
+        "pair.route": "Na Rota:",
+        "pair.seeWines": "Ver os vinhos →",
+        "pair.toPostcard": "Enviar esta harmonização em um cartão-postal",
+        "pair.postalMsg": "Harmonização do dia: {dish} com {wine}. Saúde de Salto!",
+        "pair.scale": "{name}: {n} de 5",
+        "pair.summer": "Dica de verão salteño: com 30 °C de temperatura ambiente, resfrie o tinto uns 20 minutos na geladeira antes de servir.",
+        "pair.note": "Sugestões orientativas, baseadas em critérios gerais de harmonização (taninos, gordura e acidez). Cada vinícola pode aconselhar outra coisa para o seu vinho.",
+        "pair.live": "Harmonização para {dish}: {wine}",
+        "pair.d.asado": "Asado e carnes na parrilla",
+        "pair.d.asado.why": "A gordura e a proteína da carne na parrilla suavizam os taninos firmes do Tannat, e a fumaça acompanha suas notas tostadas.",
+        "pair.d.asado.avoid": "Cortes muito magros e muito passados: o vinho os deixa secos.",
+        "pair.d.cordero": "Cordeiro no espeto ou ao forno",
+        "pair.d.cordero.why": "O sabor intenso e as ervas (alecrim, tomilho) combinam com a fruta negra e a pimenta do Tannat.",
+        "pair.d.cordero.avoid": "Preparos muito condimentados (curry, cominho forte): convém um Tannat mais frutado e com menos barrica.",
+        "pair.d.cerdo": "Porco e costelas ao barbecue",
+        "pair.d.cerdo.why": "O molho doce e defumado pede um Tannat frutado: o tanino não domina e a fruta responde ao doce.",
+        "pair.d.cerdo.avoid": "Um Reserva com muita barrica: a madeira e o doce do molho brigam.",
+        "pair.d.pastas": "Massas com molho vermelho ou ragu",
+        "pair.d.pastas.why": "A acidez do Tannat responde à do tomate, e o ragu de carne atenua o tanino.",
+        "pair.d.pastas.avoid": "Molhos de tomate muito picantes: a pimenta realça o tanino.",
+        "pair.d.quesos": "Queijos curados e de massa dura",
+        "pair.d.quesos.why": "O sal e a gordura dos queijos duros curados arredondam o tanino; com um Tannat de guarda ficam em equilíbrio.",
+        "pair.d.quesos.avoid": "Queijos azuis e os muito cremosos: dominam ou se perdem diante do tanino.",
+        "pair.d.chocolate": "Chocolate amargo (70&nbsp;% ou mais)",
+        "pair.d.chocolate.why": "O cacau amargo e os taninos se parecem: um Tannat de guarda, mais redondo, o acompanha sem aspereza.",
+        "pair.d.chocolate.avoid": "Tannat jovens e ásperos: com o amargor do cacau parecem mais duros.",
+        "pair.d.pescado": "Peixe de rio na parrilla (dourado, surubi)",
+        "pair.d.pescado.why": "Um tinto potente encobre a carne delicada do peixe: um Tannat rosado, bem gelado, acompanha a parrilla sem dominá-la.",
+        "pair.d.pescado.avoid": "Reservas com barrica: o peixe fica em segundo plano.",
+        "pair.d.verduras": "Legumes assados e cogumelos",
+        "pair.d.verduras.why": "O tostado da parrilla e o umami dos cogumelos combinam com um Tannat jovem, frutado e de tanino amável.",
+        "pair.d.verduras.avoid": "Vinhos com muita madeira: encobrem o sabor dos legumes.",
+        "pair.d.picante": "Pratos picantes",
+        "pair.d.picante.why": "O picante realça o tanino e o álcool: um rosado ou espumante de Tannat, muito gelado, refresca o paladar.",
+        "pair.d.picante.avoid": "Tannat potentes e com barrica: com o picante parecem mais duros e alcoólicos.",
+        "pair.s.A.name": "Tannat jovem, sem barrica",
+        "pair.s.A.air": "Abra uns 20 minutos antes de servir",
+        "pair.s.A.glass": "Taça grande de boca ampla",
+        "pair.s.A.route": "O Tannat Exotic Senza Crianza da Bertolini &amp; Broglio (Estação 3) não passa por barrica.",
+        "pair.s.B.name": "Tannat Reserva, com barrica",
+        "pair.s.B.air": "Abra de 30 a 60 minutos antes, ou decante",
+        "pair.s.B.glass": "Taça grande de boca ampla",
+        "pair.s.B.route": "O Tannat Reserva da Salto Chico (Estação 2) tem estágio em barricas de carvalho francês e americano.",
+        "pair.s.C.name": "Tannat de guarda",
+        "pair.s.C.air": "Decante com cuidado e sirva em seguida",
+        "pair.s.C.glass": "Taça grande de boca ampla",
+        "pair.s.C.route": "No inverno, as vinícolas boutique oferecem degustação de Gran Reserva e tintos de guarda junto à lareira.",
+        "pair.s.D.name": "Tannat rosado ou espumante",
+        "pair.s.D.air": "Sem decantar: direto da geladeira",
+        "pair.s.D.glass": "Taça tipo tulipa",
         "nav.postal": "Cartão-postal da Rota",
         "postal.badge": "Para compartilhar",
         "postal.title": "Mande um cartão-postal",
@@ -4928,6 +5088,66 @@
         "nav.brandSub": "Salto · Cradle of Uruguayan Wine",
         "nav.history": "History",
         "nav.stations": "Stations",
+        "nav.pairing": "Food pairing",
+        "pair.badge": "From dish to wine",
+        "pair.title": "What do I eat with a Tannat?",
+        "pair.subtitle": "Pick a dish and we tell you which style of Tannat suits it best, how to serve it and what to avoid.",
+        "pair.pick": "Pick your dish",
+        "pair.with": "For {dish}",
+        "pair.temp": "Temperature",
+        "pair.glass": "Glass",
+        "pair.air": "Breathing",
+        "pair.avoid": "Avoid:",
+        "pair.route": "On the Route:",
+        "pair.seeWines": "See the wines →",
+        "pair.toPostcard": "Send this pairing on a postcard",
+        "pair.postalMsg": "Pairing of the day: {dish} with {wine}. Cheers from Salto!",
+        "pair.scale": "{name}: {n} out of 5",
+        "pair.summer": "Salto summer tip: at 30 °C room temperature, chill the red in the fridge for about 20 minutes before serving.",
+        "pair.note": "Orientative suggestions based on general pairing criteria (tannins, fat and acidity). Each winery may advise something else for its own wine.",
+        "pair.live": "Pairing for {dish}: {wine}",
+        "pair.d.asado": "Asado and grilled meats",
+        "pair.d.asado.why": "The fat and protein of grilled meat soften Tannat's firm tannins, and the smoke echoes its toasty notes.",
+        "pair.d.asado.avoid": "Very lean, well-done cuts: the wine makes them taste dry.",
+        "pair.d.cordero": "Lamb, spit-roasted or baked",
+        "pair.d.cordero.why": "Its strong flavor and the herbs (rosemary, thyme) match Tannat's black fruit and pepper.",
+        "pair.d.cordero.avoid": "Heavily spiced preparations (curry, strong cumin): choose a fruitier Tannat with less oak.",
+        "pair.d.cerdo": "Pork and barbecue ribs",
+        "pair.d.cerdo.why": "The sweet, smoky sauce calls for a fruity Tannat: the tannin does not dominate and the fruit answers the sweetness.",
+        "pair.d.cerdo.avoid": "An oak-heavy Reserve: the wood and the sweetness of the sauce clash.",
+        "pair.d.pastas": "Pasta with tomato sauce or ragù",
+        "pair.d.pastas.why": "Tannat's acidity answers the tomato's, and a meat ragù tames the tannin.",
+        "pair.d.pastas.avoid": "Very spicy tomato sauces: the heat highlights the tannin.",
+        "pair.d.quesos": "Aged hard cheeses",
+        "pair.d.quesos.why": "The salt and fat of hard aged cheeses round off the tannin; with a cellar-aged Tannat they find balance.",
+        "pair.d.quesos.avoid": "Blue and very creamy cheeses: they either overpower the wine or get lost against the tannin.",
+        "pair.d.chocolate": "Dark chocolate (70&nbsp;% or more)",
+        "pair.d.chocolate.why": "Bitter cocoa and tannins are alike: a rounder, cellar-aged Tannat goes with it without harshness.",
+        "pair.d.chocolate.avoid": "Young, rough Tannats: next to the bitterness of cocoa they feel harder.",
+        "pair.d.pescado": "Grilled river fish (dorado, surubí)",
+        "pair.d.pescado.why": "A powerful red hides the delicate flesh of the fish: a well-chilled Tannat rosé goes with the grill without dominating it.",
+        "pair.d.pescado.avoid": "Oak-aged Reserves: the fish fades into the background.",
+        "pair.d.verduras": "Roasted vegetables and mushrooms",
+        "pair.d.verduras.why": "The char of the grill and the umami of mushrooms get along with a young, fruity Tannat with friendly tannin.",
+        "pair.d.verduras.avoid": "Very oaky wines: they hide the flavor of the vegetables.",
+        "pair.d.picante": "Spicy dishes",
+        "pair.d.picante.why": "Heat highlights tannin and alcohol: a very cold Tannat rosé or sparkling refreshes the palate.",
+        "pair.d.picante.avoid": "Powerful, oak-aged Tannats: with spice they feel harder and more alcoholic.",
+        "pair.s.A.name": "Young Tannat, no oak",
+        "pair.s.A.air": "Open it about 20 minutes before serving",
+        "pair.s.A.glass": "Large, wide-mouthed glass",
+        "pair.s.A.route": "The Tannat Exotic Senza Crianza from Bertolini &amp; Broglio (Station 3) does not go through oak.",
+        "pair.s.B.name": "Reserve Tannat, oak-aged",
+        "pair.s.B.air": "Open it 30 to 60 minutes ahead, or decant",
+        "pair.s.B.glass": "Large, wide-mouthed glass",
+        "pair.s.B.route": "The Tannat Reserva from Salto Chico (Station 2) is aged in French and American oak barrels.",
+        "pair.s.C.name": "Cellar-aged Tannat",
+        "pair.s.C.air": "Decant gently and serve right away",
+        "pair.s.C.glass": "Large, wide-mouthed glass",
+        "pair.s.C.route": "In winter, the boutique wineries offer Gran Reserva and cellar-aged red tastings by the fireplace.",
+        "pair.s.D.name": "Tannat rosé or sparkling",
+        "pair.s.D.air": "No decanting: straight from the fridge",
+        "pair.s.D.glass": "Tulip glass",
         "nav.postal": "Postcard from the Route",
         "postal.badge": "To share",
         "postal.title": "Send a postcard",
@@ -6021,6 +6241,9 @@
       // Opiniones de visitantes: etiquetas de las tarjetas en el idioma elegido
       if (window.opinionsOnLang) window.opinionsOnLang();
 
+      // Maridaje: textos en el idioma elegido
+      if (window.maridajeOnLang) window.maridajeOnLang();
+
       // Postal: textos en el idioma elegido
       if (window.postalOnLang) window.postalOnLang();
 
@@ -6954,6 +7177,39 @@
       window.postalOnLang = () => { traducir(); if (!editado) { msg.value = t('postal.defMsg'); contar(); } dibujar(); };
       // lo usa el Maridaje para dejar su sugerencia escrita en la postal
       window.postalSetMessage = (txt) => { iniciar(); msg.value = String(txt).slice(0, 140); editado = true; contar(); dibujar(); $('postal').scrollIntoView(); msg.focus({ preventScroll: true }); };
+    })();
+
+    // Maridaje: del plato al estilo de Tannat. Los textos están en el diccionario (pair.*); acá solo qué estilo va con cada plato y las medidas.
+    (function initMaridaje() {
+      const card = document.getElementById('pairCard'), live = document.getElementById('pairLive'), radios = document.querySelectorAll('#maridaje input[name="maridajePlato"]');
+      if (!card || !live) return;
+      const t = (k) => (translations[currentLang] || translations.es)[k] || translations.es[k] || '';
+      // plato → estilo (A joven sin barrica, B Reserva con barrica, C de guarda, D rosado o espumoso)
+      const PLATOS = { asado: 'B', cordero: 'B', cerdo: 'A', pastas: 'A', quesos: 'C', chocolate: 'C', pescado: 'D', verduras: 'A', picante: 'D' };
+      // de cada estilo: [tanino, cuerpo, acidez] de 1 a 5 y temperatura de servicio en °C
+      const ESTILOS = { A: { m: [3, 4, 4], temp: '16–17' }, B: { m: [4, 5, 3], temp: '16–18' }, C: { m: [3, 4, 3], temp: '16–18' }, D: { m: [1, 2, 4], temp: '6–10' } };
+      let plato = 'asado';
+      const puntos = (n) => '<i class="block w-3 h-3 rounded-full bg-gold"></i>'.repeat(n) + '<i class="block w-3 h-3 rounded-full bg-white/20"></i>'.repeat(5 - n);
+      const dato = (r, v) => '<div class="rounded-xl bg-white/5 border border-white/10 p-3"><dt class="text-xs uppercase tracking-wider text-gold-light mb-1">' + r + '</dt><dd class="text-white font-semibold text-sm leading-snug">' + v + '</dd></div>';
+      const BTN = 'inline-flex items-center justify-center min-h-[48px] px-6 py-3 rounded-full transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-tannat-dark';
+      function pintar() {
+        const k = PLATOS[plato], e = ESTILOS[k], dish = t('pair.d.' + plato), vino = t('pair.s.' + k + '.name'), ruta = t('pair.s.' + k + '.route');
+        const medidas = ['cup.tannin', 'cup.body', 'cup.acid'].map((c, i) => '<div class="flex items-center gap-3 text-sm"><span class="w-20 text-gray-300">' + t(c) + '</span><span class="flex gap-1.5" role="img" aria-label="' + t('pair.scale').replace('{name}', t(c)).replace('{n}', e.m[i]) + '">' + puntos(e.m[i]) + '</span></div>').join('');
+        card.innerHTML = '<p class="text-xs font-semibold uppercase tracking-wider text-gold-light mb-2">' + t('pair.with').replace('{dish}', dish) + '</p>'
+          + '<h3 class="font-serif text-2xl sm:text-3xl font-bold text-white leading-tight mb-3">' + vino + '</h3>'
+          + '<p class="text-gray-200 leading-relaxed mb-5">' + t('pair.d.' + plato + '.why') + '</p>'
+          + '<div class="space-y-2 mb-5">' + medidas + '</div>'
+          + '<dl class="grid sm:grid-cols-3 gap-3 mb-5">' + dato(t('pair.temp'), e.temp + ' °C') + dato(t('pair.glass'), t('pair.s.' + k + '.glass')) + dato(t('pair.air'), t('pair.s.' + k + '.air')) + '</dl>'
+          + '<p class="text-sm text-gray-300 mb-3"><strong class="text-gold-light">' + t('pair.avoid') + '</strong> ' + t('pair.d.' + plato + '.avoid') + '</p>'
+          + (ruta ? '<p class="text-sm text-gray-300 mb-3"><strong class="text-gold-light">' + t('pair.route') + '</strong> ' + ruta + ' <a href="#vinos" class="underline underline-offset-2 text-gold-light hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white rounded">' + t('pair.seeWines') + '</a></p>' : '')
+          + (k !== 'D' ? '<p class="text-sm text-gray-300 mb-3">' + t('pair.summer') + '</p>' : '')
+          + '<div class="flex flex-wrap items-center gap-3 mt-6"><a href="#paquetes" class="' + BTN + ' font-extrabold bg-gold hover:bg-gold-light text-tannat-900">' + t('cup.cta') + '</a><button type="button" data-pair-postal class="' + BTN + ' font-bold border border-gold/60 text-gold-light hover:bg-white/10">' + t('pair.toPostcard') + '</button></div>';
+        live.textContent = decodeHtmlEntities(t('pair.live').replace('{dish}', dish).replace('{wine}', vino));
+      }
+      radios.forEach((r) => r.addEventListener('change', () => { if (r.checked) { plato = r.value; pintar(); } }));
+      // deja la sugerencia escrita en la postal
+      card.addEventListener('click', (e) => { if (!e.target.closest('[data-pair-postal]') || !window.postalSetMessage) return; window.postalSetMessage(decodeHtmlEntities(t('pair.postalMsg').replace('{dish}', t('pair.d.' + plato)).replace('{wine}', t('pair.s.' + PLATOS[plato] + '.name')))); });
+      window.maridajeOnLang = pintar; pintar();
     })();
 
     // PWA: registra el service worker (app shell offline + instalación)
