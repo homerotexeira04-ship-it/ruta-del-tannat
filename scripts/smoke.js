@@ -57,7 +57,7 @@ function servidor() {
 
   // 4. ningún ancho produce scroll horizontal
   { const page = await abrir(390, 844, true); const malos = [];
-    for (const W of [320, 360, 375, 414, 768, 1024, 1280, 1920]) { await page.setViewport({ width: W, height: 800, isMobile: W < 800, hasTouch: W < 800 }); await sleep(250); const ex = await page.evaluate(() => document.documentElement.scrollWidth - innerWidth); if (ex > 0) malos.push(W + 'px(+' + ex + ')'); }
+    for (const W of [320, 360, 375, 414, 768, 1024, 1280, 1920]) { await page.setViewport({ width: W, height: 800, isMobile: W < 800, hasTouch: W < 800 }); await sleep(250); const ex = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth); if (ex > 0) malos.push(W + 'px(+' + ex + ')'); }
     check('sin scroll horizontal de 320 a 1920 px', malos.length === 0, malos.join(' ')); await page.close(); }
 
   // 5. el botón flotante de WhatsApp no tapa "Reservar" en celulares chicos
@@ -105,7 +105,7 @@ function servidor() {
     const sin = await page.evaluate(() => { const enMenu = new Set([...document.querySelectorAll('[data-nav-group] a')].map((a) => a.getAttribute('href').slice(1))); return [...document.querySelectorAll('main section[id]')].map((s) => s.id).filter((id) => id !== 'hero' && !enMenu.has(id)); });
     check('todas las secciones de la página son alcanzables desde el menú', sin.length === 0, 'sin acceso: ' + sin.join(', ')); await page.close(); }
 
-  // 9. menú del celular: 4 grupos en acordeón (se abre uno a la vez) con las 18 secciones, y abierto no pisa la barra fija de reserva
+  // 9. menú del celular: 4 grupos en acordeón (se abre uno a la vez) con las 19 secciones, y abierto no pisa la barra fija de reserva
   { const page = await abrir(360, 640, true); const r = await page.evaluate(async () => {
       const esp = (ms) => new Promise((ok) => setTimeout(ok, ms)), d = [...document.querySelectorAll('#mobileMenu details')], bar = document.querySelector('div.mbar');
       document.getElementById('mobileMenuBtn').click(); await esp(200);
@@ -114,7 +114,7 @@ function servidor() {
       d[2].querySelector('summary').click(); await esp(150);
       return { grupos: d.length, exclusivo, enlaces: document.querySelectorAll('#mobileMenu details a').length, solapa: Math.round(document.getElementById('mobileMenu').getBoundingClientRect().bottom - bar.getBoundingClientRect().top) };
     });
-    check('el menú del celular agrupa las 18 secciones en acordeón y no pisa la barra de reserva', r.grupos === 4 && r.exclusivo && r.enlaces === 18 && r.solapa <= 0, JSON.stringify(r)); await page.close(); }
+    check('el menú del celular agrupa las 19 secciones en acordeón y no pisa la barra de reserva', r.grupos === 4 && r.exclusivo && r.enlaces === 19 && r.solapa <= 0, JSON.stringify(r)); await page.close(); }
 
   // 10. el hover de las tarjetas anima (el reveal al hacer scroll no debe pisarles la transición): se mide cuadro por cuadro cuántos pasos distintos recorre la elevación
   { const page = await abrir(1280, 800, false);
@@ -308,6 +308,23 @@ function servidor() {
     await page.evaluate(() => document.getElementById('postalShare').click()); await sleep(1200);
     const s = await page.evaluate(() => window.__shared);
     check('«Compartir» entrega el JPG de la postal al menú de compartir del celular', visible && !!s && s.name === 'postal-ruta-del-tannat.jpg' && s.type === 'image/jpeg' && s.size > 60000, JSON.stringify({ visible, s })); await page.close(); }
+
+  // 27. maridaje: cada plato muestra su estilo de Tannat (con tanino, cuerpo y acidez, temperatura y qué evitar, sin marcadores {…} sin reemplazar), se maneja con las flechas del teclado, la tarjeta sigue el idioma y «Mandar este maridaje en una postal» deja el mensaje escrito
+  { const page = await abrir(1280, 800, false); await page.addStyleTag({ content: 'html{scroll-behavior:auto!important}' });
+    const platos = await page.evaluate(() => [...document.querySelectorAll('input[name=maridajePlato]')].map((r) => r.value)), malos = [], estilos = new Set();
+    for (const id of platos) { await page.evaluate((id) => document.querySelector('input[name=maridajePlato][value=' + id + ']').click(), id); await sleep(80);
+      const r = await page.evaluate(() => { const c = document.getElementById('pairCard'); return { h3: c.querySelector('h3').textContent, medidas: c.querySelectorAll('[role=img]').length, temp: (c.querySelector('dd') || {}).textContent || '', evita: /Evitá/.test(c.textContent), marcadores: /\{[a-z]+\}/.test(c.textContent) }; });
+      estilos.add(r.h3); if (r.medidas !== 3 || !/°C/.test(r.temp) || !r.evita || r.marcadores || !r.h3) malos.push(id + ' ' + JSON.stringify(r)); }
+    check('el maridaje responde a los 9 platos con estilo, 3 medidas, temperatura y qué evitar (con 4 estilos distintos)', platos.length === 9 && malos.length === 0 && estilos.size === 4, malos.join(' | ') + ' estilos=' + estilos.size);
+    await page.evaluate(() => document.querySelector('input[name=maridajePlato][value=asado]').click()); await page.focus('input[name=maridajePlato][value=asado]'); await page.keyboard.press('ArrowDown'); await sleep(150);
+    const flecha = await page.evaluate(() => ({ marcado: document.querySelector('input[name=maridajePlato]:checked').value, tarjeta: /Cordero/i.test(document.querySelector('#pairCard p').textContent) }));
+    check('el maridaje se maneja con las flechas del teclado', flecha.marcado === 'cordero' && flecha.tarjeta, JSON.stringify(flecha));
+    await page.evaluate(() => document.querySelector('input[name=maridajePlato][value=pescado]').click()); const e3 = {};
+    for (const l of ['pt', 'en', 'es']) { await page.evaluate((l) => setLanguage(l), l); await sleep(200); e3[l] = await page.evaluate(() => document.querySelector('#pairCard h3').textContent + ' | ' + document.querySelector('label span[data-i18n="pair.d.asado"]').textContent); }
+    check('el maridaje se traduce (tarjeta y platos) a portugués e inglés', e3.pt === 'Tannat rosado ou espumante | Asado e carnes na parrilla' && e3.en === 'Tannat rosé or sparkling | Asado and grilled meats' && e3.es === 'Tannat rosado o espumoso | Asado y parrilla', JSON.stringify(e3));
+    await page.evaluate(() => document.querySelector('input[name=maridajePlato][value=cordero]').click()); await page.evaluate(() => document.querySelector('[data-pair-postal]').click()); await sleep(1500);
+    const p = await page.evaluate(() => ({ msg: document.getElementById('postalMsg').value, foco: document.activeElement.id, cuenta: document.getElementById('postalCount').textContent }));
+    check('«Mandar este maridaje en una postal» deja el mensaje escrito en la postal y el foco en el campo', /Cordero/.test(p.msg) && /Tannat Reserva/.test(p.msg) && p.foco === 'postalMsg' && +p.cuenta === p.msg.length && p.msg.length <= 140, JSON.stringify(p)); await page.close(); }
 
   await browser.close(); srv.cerrar();
   if (failures.length) { console.log('\n' + failures.length + ' prueba(s) fallaron:\n - ' + failures.join('\n - ')); process.exit(1); }

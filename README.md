@@ -48,6 +48,10 @@ Fuentes de las fotos: banners y fotos de bodegas de INAVI, Ministerio de Turismo
 2. Sumar una línea a `FOTOS` en `initPostal` (`LaRutadelTannat.html`) con el mismo `id`, el archivo, la clave de la leyenda, el crédito y los mismos `fx`/`fy`.
 3. Escribir la leyenda en los tres idiomas (`postal.c.<id>` en `translations`) o reutilizar una de la Galería (`gallery.capN`). Si la foto ya trae letras, marcarla con `sg: 1` para que la postal no le ponga el saludo encima.
 
+## Maridaje
+
+La sección `#maridaje` va del plato al vino (La Copa va al revés: del perfil del vino a los platos). Cada uno de los 9 platos tiene asociado uno de 4 estilos de Tannat (joven sin barrica, Reserva con barrica, de guarda, rosado o espumoso) con sus medidas de tanino, cuerpo y acidez, temperatura de servicio, aireación, copa y qué evitar. Los textos están en `translations` (`pair.*`: así `npm run check` verifica que estén en los tres idiomas); en `initMaridaje` (`LaRutadelTannat.html`) solo quedan la tabla plato → estilo (`PLATOS`) y las medidas (`ESTILOS`). Las frases «En la Ruta» solo repiten datos que ya están en Vinos y en las temporadas (Bertolini & Broglio sin barrica, Salto Chico con barrica de roble francés y americano, cata de Gran Reserva en invierno): si cambian allá, cambiarlas acá. Son sugerencias generales de maridaje, no la recomendación de una bodega, y la sección lo dice. El botón «Mandar este maridaje en una postal» escribe la sugerencia en la Postal de la Ruta.
+
 ## Chequeos automáticos
 
 En GitHub Actions (`.github/workflows/checks.yml`) corren solos en cada cambio a `master` y en cada pull request, y los lunes revisan además los enlaces externos. Se pueden correr también en la computadora:
@@ -56,7 +60,7 @@ En GitHub Actions (`.github/workflows/checks.yml`) corren solos en cada cambio a
 npm install           # solo la primera vez
 npm run check         # archivos citados, anclas, ids, JSON-LD, idiomas ES/PT/EN y FAQ al día
 npm test              # backend de opiniones y contador de uso, con una planilla simulada
-npm run smoke         # en Chrome real: errores, desbordes, WhatsApp, La Copa, itinerario, menú del encabezado, movimiento (hover, presión, galería y modales) y detalles visuales (letra mínima, zonas táctiles, cursor de botella, descorche y su sonido, tipografías propias, foto del inicio según la pantalla, tarjetas de Estaciones, retrato de El Pionero reintento de la lista de opiniones si Google falla y la postal: se dibuja, descarga un JPG de 1080×1350 y comparte) (CHROME_PATH si no lo encuentra)
+npm run smoke         # en Chrome real: errores, desbordes, WhatsApp, La Copa, itinerario, menú del encabezado, movimiento (hover, presión, galería y modales) y detalles visuales (letra mínima, zonas táctiles, cursor de botella, descorche y su sonido, tipografías propias, foto del inicio según la pantalla, tarjetas de Estaciones, retrato de El Pionero reintento de la lista de opiniones si Google falla la postal (se dibuja, descarga un JPG de 1080×1350 y comparte) y el maridaje (9 platos, teclado, idiomas y pase a la postal)) (CHROME_PATH si no lo encuentra)
 npm run check:links   # enlaces externos (más lento)
 ```
 
