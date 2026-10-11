@@ -77,6 +77,24 @@ let T;
   console.log('idiomas:', langs.join('/'), '| claves por idioma:', langs.map((l) => Object.keys(T[l]).length).join('/'));
 }
 
+// ---------- 4a. Postal de la Ruta: cada foto de FOTOS existe (grande y miniatura) y su leyenda está en los tres idiomas ----------
+// (las fotos se arman en el script con "postal-th-" + id, así que el chequeo de archivos citados de arriba no las ve)
+{
+  const bloque = (/const FOTOS = \[([\s\S]*?)\n      \];/.exec(html) || [])[1];
+  if (!bloque) fail('no encuentro la lista FOTOS de la postal');
+  else {
+    const fotos = [...bloque.matchAll(/\{ id: '([a-z0-9]+)', f: '([^']+)', c: '([^']+)'/g)];
+    if (fotos.length < 20) fail('la postal tiene solo ' + fotos.length + ' fotos');
+    for (const [, id, f, c] of fotos) {
+      if (!exists(DIR + '/' + f)) fail('postal: falta la foto ' + f);
+      if (!exists(DIR + '/postal-th-' + id + '.webp')) fail('postal: falta la miniatura postal-th-' + id + '.webp');
+      for (const l of Object.keys(T)) if (!T[l][c]) fail('postal: falta la leyenda ' + c + ' en ' + l);
+    }
+    const ids = fotos.map((m) => m[1]); if (new Set(ids).size !== ids.length) fail('postal: ids de foto repetidos');
+    console.log('fotos de la postal verificadas:', fotos.length);
+  }
+}
+
 // ---------- 4b. FAQ: lo visible y el dato estructurado (JSON-LD FAQPage) dicen lo mismo ----------
 {
   const botones = (markup.match(/id="faqBtn\d+"/g) || []).length;

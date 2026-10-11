@@ -41,7 +41,7 @@ Playfair Display (titulares) y Plus Jakarta Sans (texto) están alojadas en el s
 
 La sección `#postal` arma una postal de 1080×1350 en un `<canvas>`: el visitante elige una foto (o sube la suya), escribe un mensaje y la descarga como JPG o la comparte con el menú de compartir del celular. Todo ocurre en su dispositivo: ni su foto ni su mensaje se suben a ningún lado. Las miniaturas (`postal-th-*.webp`, 244×200, ya recortadas como saldrán) cargan perezosas, y la foto grande, el logo y las tipografías se piden recién cuando la sección está por verse. El crédito de cada foto sale impreso bajo la foto.
 
-Fuentes de las fotos: banners y fotos de bodegas de INAVI, Ministerio de Turismo (entrada de Termas del Daymán), archivo del proyecto y las de la Galería (sus créditos están arriba de esa sección y en `FOTOS`).
+Son 30 fotos. Fuentes: banners y fotos de bodegas de INAVI, Ministerio de Turismo (entrada de Termas del Daymán), archivo del proyecto, las de la Galería (sus créditos están en esa sección y en `FOTOS`) y 11 de Wikimedia Commons con licencia CC BY o CC BY-SA (autor y licencia salen impresos en la postal; en `FOTOS` están en `cr`). Las de Commons se bajaron a 1600 px de ancho desde la propia API de Commons, no el original de varios MB.
 
 **Agregar una foto**:
 1. `npm i --no-save sharp` (solo para esto) y `node scripts/postal-miniatura.js <foto> <id> [fx] [fy] --copiar`: crea la miniatura recortada con el foco `fx`/`fy` (0 = izquierda/arriba, 1 = derecha/abajo) y la foto en WebP (`postal-<id>.webp`).
