@@ -14,7 +14,7 @@ Publicado con GitHub Pages: https://homerotexeira04-ship-it.github.io/ruta-del-t
 | `sw.js`, `manifest.json` | Instalación como app y uso sin conexión |
 | `index.html` | Solo redirige a la página principal |
 | `apps-script/` | Opiniones reales de visitantes (planilla de Google + Apps Script). Guía de instalación y moderación en su README; sin instalar, el sitio no muestra el formulario |
-| `scripts/` | Chequeos del sitio: `check.js` (estático), `smoke.js` (en Chrome real) y `lh-assert.js` (mínimos de Lighthouse) |
+| `scripts/` | Chequeos del sitio: `check.js` (estático), `smoke.js` (en Chrome real) y `lh-assert.js` (mínimos de Lighthouse); `postal-miniatura.js` prepara fotos para la Postal de la Ruta |
 | `.github/workflows/checks.yml` | Los mismos chequeos, automáticos en GitHub Actions |
 | `404.html`, `robots.txt`, `sitemap.xml`, `favicon.ico`, `apple-touch-icon.png` | Archivos públicos de SEO y navegación |
 
@@ -37,6 +37,17 @@ Las fotos van en WebP. Los originales pesados (JPG/PNG, incluido el logo maestro
 
 Playfair Display (titulares) y Plus Jakarta Sans (texto) están alojadas en el sitio, sin pedidos a Google: tres archivos `.woff2` variables en `LaRutadelTannat_files/`, solo el subconjunto latin (alcanza para español, portugués e inglés; otro alfabeto cae a la fuente del sistema), declarados con `@font-face` en el `<head>` del HTML, precargados y guardados por el service worker. Licencia OFL. Los rangos de peso declarados (500–700, cursiva 500–600 y 400–800) son los mismos que pedía Google, para que nada cambie de aspecto; los archivos traen el rango completo si hiciera falta ampliarlo.
 
+## Postal de la Ruta
+
+La sección `#postal` arma una postal de 1080×1350 en un `<canvas>`: el visitante elige una foto (o sube la suya), escribe un mensaje y la descarga como JPG o la comparte con el menú de compartir del celular. Todo ocurre en su dispositivo: ni su foto ni su mensaje se suben a ningún lado. Las miniaturas (`postal-th-*.webp`, 244×200, ya recortadas como saldrán) cargan perezosas, y la foto grande, el logo y las tipografías se piden recién cuando la sección está por verse. El crédito de cada foto sale impreso bajo la foto.
+
+Fuentes de las fotos: banners y fotos de bodegas de INAVI, Ministerio de Turismo (entrada de Termas del Daymán), archivo del proyecto y las de la Galería (sus créditos están arriba de esa sección y en `FOTOS`).
+
+**Agregar una foto**:
+1. `npm i --no-save sharp` (solo para esto) y `node scripts/postal-miniatura.js <foto> <id> [fx] [fy] --copiar`: crea la miniatura recortada con el foco `fx`/`fy` (0 = izquierda/arriba, 1 = derecha/abajo) y la foto en WebP (`postal-<id>.webp`).
+2. Sumar una línea a `FOTOS` en `initPostal` (`LaRutadelTannat.html`) con el mismo `id`, el archivo, la clave de la leyenda, el crédito y los mismos `fx`/`fy`.
+3. Escribir la leyenda en los tres idiomas (`postal.c.<id>` en `translations`) o reutilizar una de la Galería (`gallery.capN`). Si la foto ya trae letras, marcarla con `sg: 1` para que la postal no le ponga el saludo encima.
+
 ## Chequeos automáticos
 
 En GitHub Actions (`.github/workflows/checks.yml`) corren solos en cada cambio a `master` y en cada pull request, y los lunes revisan además los enlaces externos. Se pueden correr también en la computadora:
@@ -45,7 +56,7 @@ En GitHub Actions (`.github/workflows/checks.yml`) corren solos en cada cambio a
 npm install           # solo la primera vez
 npm run check         # archivos citados, anclas, ids, JSON-LD, idiomas ES/PT/EN y FAQ al día
 npm test              # backend de opiniones y contador de uso, con una planilla simulada
-npm run smoke         # en Chrome real: errores, desbordes, WhatsApp, La Copa, itinerario, menú del encabezado, movimiento (hover, presión, galería y modales) y detalles visuales (letra mínima, zonas táctiles, cursor de botella, descorche y su sonido, tipografías propias, foto del inicio según la pantalla, tarjetas de Estaciones, retrato de El Pionero y reintento de la lista de opiniones si Google falla) (CHROME_PATH si no lo encuentra)
+npm run smoke         # en Chrome real: errores, desbordes, WhatsApp, La Copa, itinerario, menú del encabezado, movimiento (hover, presión, galería y modales) y detalles visuales (letra mínima, zonas táctiles, cursor de botella, descorche y su sonido, tipografías propias, foto del inicio según la pantalla, tarjetas de Estaciones, retrato de El Pionero reintento de la lista de opiniones si Google falla y la postal: se dibuja, descarga un JPG de 1080×1350 y comparte) (CHROME_PATH si no lo encuentra)
 npm run check:links   # enlaces externos (más lento)
 ```
 

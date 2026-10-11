@@ -105,7 +105,7 @@ function servidor() {
     const sin = await page.evaluate(() => { const enMenu = new Set([...document.querySelectorAll('[data-nav-group] a')].map((a) => a.getAttribute('href').slice(1))); return [...document.querySelectorAll('main section[id]')].map((s) => s.id).filter((id) => id !== 'hero' && !enMenu.has(id)); });
     check('todas las secciones de la página son alcanzables desde el menú', sin.length === 0, 'sin acceso: ' + sin.join(', ')); await page.close(); }
 
-  // 9. menú del celular: 4 grupos en acordeón (se abre uno a la vez) con las 17 secciones, y abierto no pisa la barra fija de reserva
+  // 9. menú del celular: 4 grupos en acordeón (se abre uno a la vez) con las 18 secciones, y abierto no pisa la barra fija de reserva
   { const page = await abrir(360, 640, true); const r = await page.evaluate(async () => {
       const esp = (ms) => new Promise((ok) => setTimeout(ok, ms)), d = [...document.querySelectorAll('#mobileMenu details')], bar = document.querySelector('div.mbar');
       document.getElementById('mobileMenuBtn').click(); await esp(200);
@@ -114,7 +114,7 @@ function servidor() {
       d[2].querySelector('summary').click(); await esp(150);
       return { grupos: d.length, exclusivo, enlaces: document.querySelectorAll('#mobileMenu details a').length, solapa: Math.round(document.getElementById('mobileMenu').getBoundingClientRect().bottom - bar.getBoundingClientRect().top) };
     });
-    check('el menú del celular agrupa las 17 secciones en acordeón y no pisa la barra de reserva', r.grupos === 4 && r.exclusivo && r.enlaces === 17 && r.solapa <= 0, JSON.stringify(r)); await page.close(); }
+    check('el menú del celular agrupa las 18 secciones en acordeón y no pisa la barra de reserva', r.grupos === 4 && r.exclusivo && r.enlaces === 18 && r.solapa <= 0, JSON.stringify(r)); await page.close(); }
 
   // 10. el hover de las tarjetas anima (el reveal al hacer scroll no debe pisarles la transición): se mide cuadro por cuadro cuántos pasos distintos recorre la elevación
   { const page = await abrir(1280, 800, false);
@@ -279,6 +279,35 @@ function servidor() {
     await page.evaluate(() => document.getElementById('testimonios').scrollIntoView()); await sleep(caso === 'recupera' ? 5000 : 11000);
     const n = await page.evaluate(() => document.querySelectorAll('#opinionsList figure').length);
     check(caso === 'recupera' ? 'las opiniones se recuperan solas si Google falla una vez (reintento)' : 'si Google falla siempre, la lista se pide 3 veces y se deja de insistir, sin errores', caso === 'recupera' ? n === 1 && gets === 2 : n === 0 && gets === 3 && errs.length === 0, JSON.stringify({ tarjetas: n, pedidos: gets, errores: errs.length })); await page.close(); }
+
+  // 26. postal: la vista previa se dibuja, cambiar de foto y escribir la redibujan, "Descargar" entrega un JPG de 1080×1350, una foto propia se usa sin salir del dispositivo y las leyendas siguen el idioma
+  { const page = await abrir(1280, 800, false); await page.addStyleTag({ content: 'html{scroll-behavior:auto!important}' });
+    const dir = fs.mkdtempSync(path.join(require('os').tmpdir(), 'postal-')); const cdp = await page.target().createCDPSession(); await cdp.send('Browser.setDownloadBehavior', { behavior: 'allow', downloadPath: dir });
+    await page.evaluate(() => document.getElementById('postal').scrollIntoView()); await sleep(2500);
+    const huella = () => page.evaluate(() => { const c = document.getElementById('postalCanvas'), d = c.getContext('2d').getImageData(0, 0, c.width, c.height).data; let h = 0; for (let i = 0; i < d.length; i += 97) h = (h * 31 + d[i]) | 0; return h; });
+    const pixel = await page.evaluate(() => Array.from(document.getElementById('postalCanvas').getContext('2d').getImageData(300, 300, 1, 1).data).slice(0, 3));
+    const h0 = await huella(); await page.evaluate(() => document.querySelector('input[name=postalFoto][value=atardecer]').click()); await sleep(900); const h1 = await huella();
+    await page.type('#postalMsg', ' Hola'); await sleep(300); const h2 = await huella();
+    check('la postal se dibuja con la foto elegida y se redibuja al cambiar de foto o de mensaje', !(pixel[0] === 246 && pixel[1] === 238 && pixel[2] === 223) && h0 !== h1 && h1 !== h2, JSON.stringify({ pixel, h0, h1, h2 }));
+    await page.click('#postalDownload'); let jpg = null; for (let i = 0; i < 40 && !jpg; i++) { await sleep(150); jpg = fs.readdirSync(dir).find((f) => f === 'postal-ruta-del-tannat.jpg') || null; }
+    const dims = (b) => { let i = 2; while (i < b.length) { if (b[i] !== 0xFF) return null; const m = b[i + 1], len = b.readUInt16BE(i + 2); if (m >= 0xC0 && m <= 0xCF && m !== 0xC4 && m !== 0xC8 && m !== 0xCC) return b.readUInt16BE(i + 7) + 'x' + b.readUInt16BE(i + 5); i += 2 + len; } return null; };
+    const bytes = jpg ? fs.readFileSync(path.join(dir, jpg)) : null;
+    check('«Descargar» entrega un JPG de 1080×1350 (entre 60 KB y 3 MB)', !!bytes && bytes[0] === 0xFF && bytes[1] === 0xD8 && dims(bytes) === '1080x1350' && bytes.length > 60000 && bytes.length < 3e6, bytes ? dims(bytes) + ' ' + bytes.length + ' bytes' : 'no se descargó nada');
+    const propia = await page.$('#postalFile'); await propia.uploadFile(path.join(ROOT, 'LaRutadelTannat_files', 'termas-dayman.webp')); await sleep(900); const h3 = await huella();
+    const tile = await page.evaluate(() => { const r = document.querySelector('#postalOwnTile input'); return !!r && r.checked; });
+    check('«Usar mi foto» arma la postal con la foto propia', tile && h3 !== h2, JSON.stringify({ tile, h2, h3 }));
+    const alt = {}; for (const l of ['en', 'pt', 'es']) { await page.evaluate((l) => setLanguage(l), l); await sleep(200); alt[l] = await page.evaluate(() => document.querySelector('#postalPics img[data-id="amanecer"]').alt); }
+    check('las leyendas de las fotos de la postal siguen el idioma (es/pt/en)', alt.en === 'Uruguayan vineyard at sunrise' && alt.pt === 'Vinhedo uruguaio ao amanhecer' && alt.es === 'Viñedo uruguayo al amanecer', JSON.stringify(alt));
+    await page.close(); fs.rmSync(dir, { recursive: true, force: true }); }
+  // 26b. «Compartir» (si el navegador puede compartir archivos) entrega ese mismo JPG: se simula el menú de compartir y se mide qué archivo recibe
+  { const page = await browser.newPage(); await page.setViewport({ width: 390, height: 844, isMobile: true, hasTouch: true });
+    await page.evaluateOnNewDocument(() => { window.__shared = null; Object.defineProperty(navigator, 'canShare', { value: (d) => !!(d && d.files && d.files.length), configurable: true }); Object.defineProperty(navigator, 'share', { value: async (d) => { const f = d.files[0]; window.__shared = { name: f.name, type: f.type, size: f.size }; }, configurable: true }); });
+    await page.goto(srv.url, { waitUntil: 'load' }); await page.evaluate(() => document.fonts.ready); await page.addStyleTag({ content: 'html{scroll-behavior:auto!important}' });
+    await page.evaluate(() => document.getElementById('postal').scrollIntoView()); await sleep(2500);
+    const visible = await page.evaluate(() => getComputedStyle(document.getElementById('postalShare')).display !== 'none');
+    await page.evaluate(() => document.getElementById('postalShare').click()); await sleep(1200);
+    const s = await page.evaluate(() => window.__shared);
+    check('«Compartir» entrega el JPG de la postal al menú de compartir del celular', visible && !!s && s.name === 'postal-ruta-del-tannat.jpg' && s.type === 'image/jpeg' && s.size > 60000, JSON.stringify({ visible, s })); await page.close(); }
 
   await browser.close(); srv.cerrar();
   if (failures.length) { console.log('\n' + failures.length + ' prueba(s) fallaron:\n - ' + failures.join('\n - ')); process.exit(1); }
