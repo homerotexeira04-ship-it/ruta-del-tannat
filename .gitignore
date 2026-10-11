@@ -4,6 +4,8 @@
 !.claude/mcp/
 !.claude/skills/
 .agents/
+# impeccable trae un motor nativo de Windows (14 MB) que su lanzador baja solo la primera vez: no se sube
+.claude/skills/impeccable/scripts/bin/
 node_modules/
 # Fotos y logos originales pesados (copia local; el sitio usa las versiones WebP optimizadas)
 originales/
