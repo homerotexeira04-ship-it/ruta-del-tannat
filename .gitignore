@@ -13,5 +13,8 @@ originales/
 # Instalador de codebase-memory-mcp (otro proyecto): no es parte del sitio
 /install.ps1
 
+# Material de preparación de la defensa ante el tribunal (uso interno del equipo): no se publica
+/defensa/
+
 # Snapshots y logs que genera el MCP de Playwright
 .playwright-mcp/
