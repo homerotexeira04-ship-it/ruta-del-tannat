@@ -27,8 +27,8 @@ function servidor() {
   // Un Chrome sin pantalla (p. ej. el de GitHub Actions) no detecta mouse y reporta (hover: none): ahí los :hover no se aplican, a propósito.
   // Se fuerza "mouse fino con hover" para que las pruebas de escritorio midan lo mismo en cualquier máquina (la emulación táctil del celular lo reemplaza sola).
   const browser = await puppeteer.launch({ executablePath: CHROME, headless: 'new', args: ['--no-sandbox', '--disable-dev-shm-usage', '--blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4'] });
-  const abrir = async (W, H, mobile) => {
-    const page = await browser.newPage(); await page.setViewport({ width: W, height: H, isMobile: mobile, hasTouch: mobile });
+  const abrir = async (W, H, mobile, dpr = 1) => {
+    const page = await browser.newPage(); await page.setViewport({ width: W, height: H, isMobile: mobile, hasTouch: mobile, deviceScaleFactor: dpr });
     await page.emulateMediaFeatures([{ name: 'prefers-reduced-motion', value: 'reduce' }]);
     page.problemas = [];
     page.on('pageerror', (e) => page.problemas.push('error de JS: ' + e.message));
@@ -325,6 +325,36 @@ function servidor() {
     await page.evaluate(() => document.querySelector('input[name=maridajePlato][value=cordero]').click()); await page.evaluate(() => document.querySelector('[data-pair-postal]').click()); await sleep(1500);
     const p = await page.evaluate(() => ({ msg: document.getElementById('postalMsg').value, foco: document.activeElement.id, cuenta: document.getElementById('postalCount').textContent }));
     check('«Mandar este maridaje en una postal» deja el mensaje escrito en la postal y el foco en el campo', /Cordero/.test(p.msg) && /Tannat Reserva/.test(p.msg) && p.foco === 'postalMsg' && +p.cuenta === p.msg.length && p.msg.length <= 140, JSON.stringify(p)); await page.close(); }
+
+  // 28. logo de la portada: desde 1024 px va a la izquierda del texto, fuera del flujo (así no lo mueve) y sin taparlo; en pantallas más angostas va arriba del texto solo si la pantalla es alta (si no, empujaría "Explorar las 4 Estaciones" bajo la barra fija) y, si se omite, ni se descarga; siempre baja un archivo con píxeles de sobra y el texto alternativo sigue el idioma
+  { const malos = [];
+    for (const [W, H, mob, dpr] of [[1920, 1080, false, 1], [1440, 900, false, 2], [1366, 768, false, 1], [1280, 720, false, 1], [1180, 820, true, 2], [1100, 700, false, 1], [1024, 768, false, 1], [1024, 1366, true, 2], [820, 1180, true, 2], [768, 1024, true, 2], [900, 700, false, 1], [390, 844, true, 3], [375, 667, true, 2], [360, 640, true, 3], [360, 800, true, 3]]) {
+      const page = await abrir(W, H, mob, dpr);
+      await page.waitForFunction(() => { const i = document.querySelector('#hero img[src*="logo-portada"]'); return getComputedStyle(i).display === 'none' || (i.complete && i.naturalWidth > 0); }, { timeout: 8000 }).catch(() => {}); // oculto y perezoso = nunca se pide; visible = esperar a que cargue
+      await sleep(300);
+      const m = await page.evaluate(() => {
+        const r = (e) => { const x = e.getBoundingClientRect(); return { x: x.x, y: x.y + scrollY, w: x.width, h: x.height }; };
+        const img = document.querySelector('#hero img[src*="logo-portada"]'), vis = getComputedStyle(img).display !== 'none';
+        return { vis, logo: vis ? r(img) : null, texto: [...document.querySelectorAll('#hero h1, #hero p.max-w-2xl, #hero a[href="#estaciones"]')].map(r), pill: r(document.querySelector('#hero .animate-pulse')), cta: r(document.querySelector('#hero a[href="#estaciones"]')),
+          archivo: vis ? img.currentSrc : '', pos: getComputedStyle(img).position, bajadas: performance.getEntriesByType('resource').filter((e) => /logo-portada/.test(e.name)).length, cargo: vis ? img.complete && img.naturalWidth > 0 : true, dpr: devicePixelRatio, scroll: document.documentElement.scrollWidth - document.documentElement.clientWidth };
+      });
+      const id = W + 'x' + H, debeVerse = W >= 1024 || (W < 640 ? H >= 760 : H >= 820);
+      if (m.vis !== debeVerse) malos.push(id + ': ' + (debeVerse ? 'falta' : 'sobra') + ' el logo');
+      if (!m.vis && m.bajadas) malos.push(id + ': está oculto pero se descargó');
+      if (m.vis) {
+        const L = m.logo, ancho = +(/logo-portada-(\d+)/.exec(m.archivo) || [])[1];
+        if (!m.cargo) malos.push(id + ': no cargó');
+        if (!(ancho >= L.w * m.dpr - 1)) malos.push(id + ': ' + ancho + ' px para ' + Math.round(L.w * m.dpr) + ' necesarios (se vería borroso)');
+        if (m.bajadas !== 1) malos.push(id + ': bajó ' + m.bajadas + ' veces');
+        if (W >= 1024) { if (m.pos !== 'absolute') malos.push(id + ': está en el flujo y empujaría el texto'); if (L.x < 0 || L.x + L.w > Math.min(...m.texto.map((t) => t.x)) - 8) malos.push(id + ': toca el texto o se sale de la pantalla'); }
+        else if (L.y + L.h > m.pill.y) malos.push(id + ': pisa la insignia');
+      }
+      if (W < 1280 && m.cta.y + m.cta.h > H - 69) malos.push(id + ': «Explorar las 4 Estaciones» queda bajo la barra fija');
+      if (m.scroll > 0) malos.push(id + ': scroll horizontal');
+      if (W === 1440) { const alts = await page.evaluate(() => { const g = (l) => { setLanguage(l); return document.querySelector('#hero img[src*="logo-portada"]').alt; }; return { pt: g('pt'), en: g('en'), es: g('es') }; }); if (!/^Logotipo/.test(alts.pt) || !/logo: a bunch of grapes/.test(alts.en) || !/^Logo de La Ruta/.test(alts.es)) malos.push('el texto alternativo no sigue el idioma: ' + JSON.stringify(alts)); }
+      await page.close();
+    }
+    check('el logo de la portada se ve nítido y no tapa nada: a la izquierda del texto desde 1024 px (sin moverlo), arriba solo en pantallas altas y sin empujar el primer botón bajo la barra', malos.length === 0, malos.join(' | ')); }
 
   await browser.close(); srv.cerrar();
   if (failures.length) { console.log('\n' + failures.length + ' prueba(s) fallaron:\n - ' + failures.join('\n - ')); process.exit(1); }
