@@ -6,7 +6,7 @@ const path = require('path');
 const sharp = require('sharp');
 const [logo] = process.argv.slice(2);
 if (!logo) { console.error('uso: node scripts/logo-portada.js <logo.webp|png>'); process.exit(1); }
-const DIR = path.join(__dirname, '..', 'LaRutadelTannat_files'), ANCHOS = [400, 640, 880], MARGEN = 8;
+const DIR = path.join(__dirname, '..', 'LaRutadelTannat_files'), ANCHOS = [400, 640, 880];
 (async () => {
   const { data, info } = await sharp(logo).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
   const { width: W, height: H } = info, N = W * H, lab = new Int32Array(N), tam = [0];
@@ -23,6 +23,7 @@ const DIR = path.join(__dirname, '..', 'LaRutadelTannat_files'), ANCHOS = [400, 
     if (lab[p] !== mayor) { data[p * 4 + 3] = 0; motas++; continue; }
     const x = p % W, y = (p / W) | 0; if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y;
   }
+  const MARGEN = Math.max(4, Math.round((x1 - x0 + 1) * 0.0046)); // ≈ 4 px a 880 px de ancho, sea cual sea el tamaño del maestro
   const left = Math.max(0, x0 - MARGEN), top = Math.max(0, y0 - MARGEN), width = Math.min(W - left, x1 - x0 + 1 + 2 * MARGEN), height = Math.min(H - top, y1 - y0 + 1 + 2 * MARGEN);
   const limpio = sharp(data, { raw: { width: W, height: H, channels: 4 } }).extract({ left, top, width, height });
   for (const a of ANCHOS) { const o = await limpio.clone().resize({ width: a, kernel: 'lanczos3' }).webp({ quality: 76, alphaQuality: 90, effort: 6 }).toFile(path.join(DIR, 'logo-portada-' + a + '.webp')); console.log('logo-portada-' + a + '.webp', o.width + '×' + o.height, (o.size / 1024).toFixed(0) + ' KB'); }

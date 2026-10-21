@@ -10,13 +10,9 @@ const CORE_ASSETS = [
   './LaRutadelTannat_files/playfair-display-italic-latin.woff2',
   './LaRutadelTannat_files/logo-ruta-del-tannat-450.webp',
   './LaRutadelTannat_files/logo-enoturismo-uruguay.webp',
-  './LaRutadelTannat_files/favicon.svg',
-  './LaRutadelTannat_files/favicon-32.png',
-  './LaRutadelTannat_files/favicon-180.png',
-  './LaRutadelTannat_files/icon-192.png',
-  './LaRutadelTannat_files/icon-512.png',
-  './LaRutadelTannat_files/icon-maskable-192.png',
-  './LaRutadelTannat_files/icon-maskable-512.png'
+  './LaRutadelTannat_files/favicon-32.png?v=2', // los íconos llevan ?v= para que los navegadores los pidan de nuevo cuando cambian; los de 512 px no se precachean: solo se usan al instalar la app
+  './LaRutadelTannat_files/icon-192.png?v=2',
+  './LaRutadelTannat_files/icon-maskable-192.png?v=2'
 ];
 
 self.addEventListener('install', (event) => {

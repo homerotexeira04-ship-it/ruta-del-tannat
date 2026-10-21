@@ -17,8 +17,8 @@ const markup = html.replace(/<script[\s\S]*?<\/script>/g, '').replace(/<style[\s
   for (const f of sources) {
     const s = read(f);
     for (const m of s.matchAll(new RegExp(DIR + '/([A-Za-z0-9._%@()-]+)', 'g'))) { n++; const p = DIR + '/' + decodeURIComponent(m[1]); if (!exists(p)) fail('falta el archivo ' + p + ' (citado en ' + f + ')'); }
-    if (f === 'sw.js') for (const m of s.matchAll(/'\.\/([A-Za-z0-9._-]+)'/g)) { n++; if (!exists(m[1])) fail('falta ' + m[1] + ' (citado en sw.js)'); }
-    if (/^(LaRutadelTannat|index|404)\.html$/.test(f)) for (const m of s.replace(/<script[\s\S]*?<\/script>/g, '').matchAll(/(?:href|src)="\.\/([A-Za-z0-9._-]+)"/g)) { n++; if (!exists(m[1])) fail('falta ' + m[1] + ' (citado en ' + f + ')'); }
+    if (f === 'sw.js') for (const m of s.matchAll(/'\.\/([A-Za-z0-9._-]+)(?:\?[^']*)?'/g)) { n++; if (!exists(m[1])) fail('falta ' + m[1] + ' (citado en sw.js)'); }
+    if (/^(LaRutadelTannat|index|404)\.html$/.test(f)) for (const m of s.replace(/<script[\s\S]*?<\/script>/g, '').matchAll(/(?:href|src)="\.\/([A-Za-z0-9._-]+)(?:\?[^"]*)?"/g)) { n++; if (!exists(m[1])) fail('falta ' + m[1] + ' (citado en ' + f + ')'); }
   }
   console.log('archivos citados verificados:', n);
 }
