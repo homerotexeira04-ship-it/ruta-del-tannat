@@ -269,7 +269,7 @@
   <!-- Tailwind CSS compilado (ver README: npm run build:css) -->
   <!-- Foto del inicio: 720 px para celulares (va recortada y bajo un velo oscuro, por eso "sizes" la pide a media pantalla: alcanza aun con pantallas de alta densidad), 1280 y 1920 para el resto. Debe decir lo mismo que la imagen del hero (más abajo). -->
   <link rel="preload" as="image" href="./LaRutadelTannat_files/hero-vinedo-uruguay-1280.webp" imagesrcset="./LaRutadelTannat_files/hero-vinedo-uruguay-720.webp 720w, ./LaRutadelTannat_files/hero-vinedo-uruguay-1280.webp 1280w, ./LaRutadelTannat_files/hero-vinedo-uruguay.webp 1920w" imagesizes="(max-width: 767px) 50vw, 100vw" fetchpriority="high">
-  <link rel="stylesheet" href="./LaRutadelTannat_files/tailwind.css?v=23">
+  <link rel="stylesheet" href="./LaRutadelTannat_files/tailwind.css?v=24">
 
   <!-- Tipografía editorial alojada en el sitio (sin pedidos a Google): Playfair Display (titulares) + Plus Jakarta Sans (cuerpo/UI).
        Fuentes variables, solo el subconjunto latin (cubre es/pt/en; otro alfabeto cae a la fuente del sistema). Licencia OFL.
@@ -1097,7 +1097,7 @@
         <a href="https://commons.wikimedia.org/wiki/File:Vi%C3%B1a_en_Oto%C3%B1o.jpg" target="_blank" rel="noopener noreferrer" class="absolute bottom-2 right-3 z-10 text-xs font-semibold text-tannat-dark bg-white/85 hover:bg-white px-2.5 py-1 rounded-full transition-colors after:content-[''] after:absolute after:-inset-x-2 after:-inset-y-3.5" data-i18n="hero.photoCredit">Foto: Viña Varela Zarranz (CC BY-SA)</a>
       </div>
 
-      <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-14">
+      <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 [@media(max-width:639px)_and_(max-height:660px)]:py-9 lg:py-14">
         <!-- Logo del proyecto. Desde 1024 px de ancho va a la izquierda de la columna de texto, en el margen libre y fuera del flujo, así que no mueve nada del texto. En pantallas más angostas va arriba del texto, y solo si la pantalla es alta
              (si no, empujaría "Explorar las 4 Estaciones" debajo de la barra fija de reserva); en pantallas bajas se omite: el encabezado ya lleva el logo. -->
         <img src="./LaRutadelTannat_files/logo-portada-640.webp" srcset="./LaRutadelTannat_files/logo-portada-400.webp 400w, ./LaRutadelTannat_files/logo-portada-640.webp 640w, ./LaRutadelTannat_files/logo-portada-880.webp 880w" sizes="(min-width: 1024px) min(400px, max(120px, calc((100vw - 736px) / 2 - 56px))), (min-width: 640px) 200px, 120px" width="880" height="636" alt="Logo de La Ruta del Tannat: un racimo de uvas, un viñedo y el retrato de Pascual Harriague" data-i18n-alt="hero.logoAlt" loading="lazy" decoding="async" draggable="false" class="hidden [@media(max-width:639px)_and_(min-height:760px)]:block [@media(min-width:640px)_and_(min-height:820px)]:block lg:block w-[120px] sm:w-[200px] lg:w-[clamp(120px,calc((100vw_-_736px)/2_-_56px),400px)] h-auto mb-4 sm:mb-5 lg:mb-0 lg:absolute lg:right-full lg:top-1/2 lg:-translate-y-1/2 select-none [filter:drop-shadow(0_14px_26px_rgba(0,0,0,.45))]">
