@@ -39,7 +39,7 @@ El circuito que cuenta el origen del Tannat en Uruguay desde el lugar donde empe
 - Historial del usuario: rechazó una escena 3D fijada al scroll porque "se tranca e interfiere". Lo interactivo tiene que ser liviano, iniciado por el visitante y no tomar el control del scroll.
 - **Redacción (resuelto):** el sitio no llama "oficial" al circuito ni a sus bodegas. Se corrigieron el `<title>`, el dato estructurado, la descripción del manifest, el panel del inicio ("4 Bodegas del Circuito") y la insignia de las estaciones ("Itinerario del Circuito"). "Fuentes oficiales" en los créditos de fotos se mantiene porque describe a INAVI. En lo nuevo, no usar "oficial" salvo que exista un aval documentado.
 - **Financiamiento (confirmado por el autor):** el único financiador real es INAVI. La Intendencia de Salto, UTU y MINTUR son potenciales, no confirmados. El dato estructurado (JSON-LD) lista solo a INAVI como `funder`; no volver a listar a otros como financiadores sin confirmación.
-- **Resuelto (2026-10-01):** en el pie de página, "Marco Institucional" ahora aclara el rol real de cada institución en vez de listarlas todas igual: INAVI financia y certifica, UTU forma a los guías, la Intendencia acompaña la conservación de Bodega Harriague, la Universidad del País Vasco acompaña la investigación (U-riharri) — separada de la Asociación Vasca de Salto, confirmada por el autor como una entidad real y distinta, sin rol documentado todavía — y MINTUR queda marcado explícitamente como vínculo potencial, no confirmado.
+- **Resuelto (2026-10-01):** en el pie de página, "Marco Institucional" ahora aclara el rol real de cada institución en vez de listarlas todas igual: INAVI impulsa el Programa de Viticultura Sostenible y promueve el enoturismo (no financia el proyecto), UTU forma a los guías, la Intendencia acompaña la conservación de Bodega Harriague, la Universidad del País Vasco acompaña la investigación (UribARRI) — separada de la Asociación Vasca de Salto, confirmada por el autor como una entidad real y distinta, sin rol documentado todavía — y MINTUR figura con los fondos concursables previstos para la inversión inicial (a postular). **Actualizado (2026-10-23):** roles alineados con el apartado 5.5.5 de la tesis.
 - Terminología: "Tannat", "estaciones" (las 4 estaciones de la ruta), "circuito", "Espacio Cultural Bodega Harriague (Punto Cero)". Español rioplatense con voseo.
 
 ## Brand Commitments
@@ -52,7 +52,7 @@ El circuito que cuenta el origen del Tannat en Uruguay desde el lugar donde empe
 
 - Fotografías reales de Salto con crédito: INAVI (cosecha), Bodegas del Uruguay (ruinas nocturnas, festival), Wikimedia Commons (retrato de Harriague, termas del Arapey, Salto desde el puerto, la fiesta de la vendimia de 1985, entre otras). Las imágenes de paquetes son ilustrativas, de otros lugares, y así se rotulan en el sitio.
 - Enlaces oficiales verificados de INAVI, UTU, Intendencia de Salto y el Ministerio de Turismo.
-- Contenido y datos del trabajo escrito: `La Ruta del Tannat - Proyecto Final.docx` y `LaRutadelTannatREVISADO.md` en la raíz del repositorio.
+- Contenido y datos del trabajo escrito: el Google Doc de la tesis (fuera del repositorio; se retiraron del repo las copias .docx y .md porque incluían datos personales).
 - **No hay** (y no se deben inventar): testimonios de turistas fuera de las opiniones que lleguen por el formulario, reseñas de prensa, cifras de visitantes anteriores al contador anónimo, tarifas cerradas de grupos ni un aval institucional formal registrado.
 
 ## Product Principles
