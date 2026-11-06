@@ -155,8 +155,8 @@
   const setActive = () => glass.setActive(inView && !document.hidden);
   if ('IntersectionObserver' in window) {
     new IntersectionObserver((es) => {
-      inView = es[0].isIntersecting; section.classList.toggle('cup-live', inView); setActive();
-      if (inView && !poured && es[0].intersectionRatio > 0.25) { poured = true; glass.pour(); setTimeout(() => { if (!touched) $('cupHint').classList.add('is-on'); }, reduced ? 200 : 3400); }
+      const e = es[es.length - 1]; inView = e.isIntersecting; // la última entrada es el estado actual (si el navegador restaura el scroll pueden llegar dos juntas) section.classList.toggle('cup-live', inView); setActive();
+      if (inView && !poured && e.intersectionRatio > 0.25) { poured = true; glass.pour(); setTimeout(() => { if (!touched) $('cupHint').classList.add('is-on'); }, reduced ? 200 : 3400); }
     }, { threshold: [0, 0.25, 0.5] }).observe(stage);
   } else { inView = true; poured = true; glass.pour(true); $('cupHint').classList.add('is-on'); setActive(); }
   document.addEventListener('visibilitychange', setActive);

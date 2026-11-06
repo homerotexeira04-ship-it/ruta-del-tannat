@@ -5795,7 +5795,7 @@
       const sec = document.getElementById('mapa');
       const start = () => loadLeaflet().then(initLeafletMap).catch((err) => console.warn('[Mapa]', err.message)); // sin conexión: queda el aviso de carga
       if (sec && 'IntersectionObserver' in window) {
-        const io = new IntersectionObserver((es) => { if (es[0].isIntersecting) { io.disconnect(); start(); } }, { rootMargin: '900px 0px' });
+        const io = new IntersectionObserver((es) => { if (es[es.length - 1].isIntersecting) { io.disconnect(); start(); } }, { rootMargin: '900px 0px' });
         io.observe(sec);
       } else start();
     })();
@@ -6022,7 +6022,7 @@
         load('copa-tannat-render.js').then(() => load('copa-tannat-ui.js')).then(() => { if (window.copaOnLang) window.copaOnLang(); })
           .catch((err) => { console.warn('[La Copa de Tannat]', err); sec.classList.add('cup-static'); });
       }
-      if ('IntersectionObserver' in window) new IntersectionObserver((es) => { if (es[0].isIntersecting) start(); }, { rootMargin: '1400px 0px' }).observe(sec);
+      if ('IntersectionObserver' in window) new IntersectionObserver((es) => { if (es[es.length - 1].isIntersecting) start(); }, { rootMargin: '1400px 0px' }).observe(sec);
       else start();
       sec.addEventListener('pointerdown', start, { once: true, passive: true });
     })();
@@ -6554,7 +6554,7 @@
       // Apps Script a veces responde 404 en su segunda dirección (macros/echo) y al volver a pedir anda: se reintenta hasta dos veces (leer no duplica nada; el envío del formulario nunca se reintenta solo)
       const load = (n = 0) => call({}).then((j) => { if (!j.ok) throw j; data = j.opiniones; render(); }).catch(() => { if (n < 2) setTimeout(() => load(n + 1), 2500 * (n + 1)); });
       if ('IntersectionObserver' in window) {
-        new IntersectionObserver((es, io) => { if (es[0].isIntersecting) { io.disconnect(); load(); } }, { rootMargin: '600px 0px' }).observe($('testimonios'));
+        new IntersectionObserver((es, io) => { if (es[es.length - 1].isIntersecting) { io.disconnect(); load(); } }, { rootMargin: '600px 0px' }).observe($('testimonios'));
       } else load();
 
       // La política de privacidad dice la verdad sobre lo que hace el sitio ahora que guarda opiniones
