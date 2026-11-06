@@ -156,22 +156,33 @@ function servidor() {
     const r = await page.evaluate(async () => { const esp = (ms) => new Promise((ok) => setTimeout(ok, ms)); openBookingModal('General'); await esp(400); closeBookingModal(); await esp(60); openBookingModal('General'); await esp(500); const m = document.getElementById('bookingModal'); return { visible: !m.classList.contains('hidden'), abierto: m.classList.contains('modal-open') }; });
     check('un modal cerrado y reabierto enseguida queda visible', r.visible && r.abierto, JSON.stringify(r)); await page.close(); }
 
-  // 14. la galería (movimiento automático) se puede pausar con un botón (WCAG 2.2.2), se reanuda y se queda quieta fuera de pantalla
+  // 14. galería: nada se mueve solo; cambia de foto con la flecha, el teclado, una miniatura y deslizando; el pie sigue a la foto (y al idioma);
+  //     la foto nunca se estira por encima de su tamaño real; un toque la abre en pantalla completa, donde las flechas del teclado siguen pasando; con "reducir movimiento" el cambio es instantáneo
   { const page = await abrir(1280, 800, false);
-    const redMov = await page.evaluate(() => { const b = document.getElementById('galPause'); return { anim: getComputedStyle(document.querySelector('.gallery-track')).animationName, boton: b ? getComputedStyle(b).display : 'no existe' }; });
-    check('con "reducir movimiento" la galería no se mueve y el botón de pausa se esconde', redMov.anim === 'none' && redMov.boton === 'none', JSON.stringify(redMov));
-    await page.emulateMediaFeatures([{ name: 'prefers-reduced-motion', value: 'no-preference' }]); await page.reload({ waitUntil: 'load' }); await page.evaluate(() => document.fonts.ready); await sleep(700);
-    if (!await page.$('#galPause')) check('la galería corre sola, se pausa con el botón, se reanuda y se queda quieta fuera de pantalla', false, 'no existe #galPause');
-    else {
-      const estado = () => page.evaluate(() => getComputedStyle(document.querySelector('.gallery-track')).animationPlayState);
-      await page.evaluate(() => document.getElementById('galPause').scrollIntoView({ block: 'start', behavior: 'instant' })); await page.mouse.move(2, 2); await sleep(900); // el IntersectionObserver tarda un par de cuadros: más margen para un equipo lento
-      const corre = await estado();
-      const rotulo = () => page.evaluate(() => document.getElementById('galPause').innerText.trim());
-      const r1 = await rotulo(); await page.click('#galPause'); await page.mouse.move(2, 2); await sleep(150); const pausada = await estado(), r2 = await rotulo();
-      await page.click('#galPause'); await page.mouse.move(2, 2); await sleep(150); const reanuda = await estado();
-      await page.evaluate(() => window.scrollTo(0, 0)); await sleep(800); const fuera = await estado();
-      check('la galería corre sola, se pausa con el botón, se reanuda y se queda quieta fuera de pantalla', corre === 'running' && pausada === 'paused' && reanuda === 'running' && fuera === 'paused' && r1 !== r2, [corre, pausada, reanuda, fuera, r1 + ' → ' + r2].join(' / '));
-    } await page.close(); }
+    const quieto = await page.evaluate(() => getComputedStyle(document.querySelector('.gal-foto')).transitionDuration);
+    check('con "reducir movimiento" la galería cambia de foto sin animación', /^0s(, 0s)*$/.test(quieto), quieto);
+    await page.emulateMediaFeatures([{ name: 'prefers-reduced-motion', value: 'no-preference' }]); await page.reload({ waitUntil: 'load' }); await page.evaluate(() => document.fonts.ready); await sleep(500);
+    await page.evaluate(() => document.getElementById('galRuta').scrollIntoView({ block: 'center', behavior: 'instant' })); await sleep(700);
+    const estado = () => page.evaluate(() => { const v = document.querySelector('.gal-foto.es-visible'), r = v.getBoundingClientRect();
+      return { src: v.currentSrc.split('/').pop(), alt: v.alt, num: document.getElementById('galNum').textContent, tit: document.getElementById('galTitulo').textContent.trim(), cur: document.querySelector('.gal-mini[aria-current="true"]').dataset.n, ancho: r.width, natural: v.naturalWidth, y: scrollY }; });
+    const e0 = await estado(); await sleep(2500); const e0b = await estado();
+    await page.click('.gal-next'); await sleep(900); const e1 = await estado();
+    await page.focus('.gal-next'); await page.keyboard.press('ArrowRight'); await sleep(900); const e2 = await estado();
+    await page.click('.gal-mini[data-n="3"]'); await sleep(900); const e3 = await estado(); // el cartel de Salto Chico: 498 px de ancho, no debe estirarse
+    await page.evaluate(() => document.getElementById('galEscena').scrollIntoView({ block: 'center', behavior: 'instant' })); await sleep(300); // tocar la miniatura desplazó la página: la foto vuelve al centro, lejos del encabezado fijo
+    const caja = await page.evaluate(() => { const r = document.getElementById('galEscena').getBoundingClientRect(); return { x: r.x + r.width / 2, y: r.y + r.height / 2 }; });
+    await page.mouse.move(caja.x + 120, caja.y); await page.mouse.down(); await page.mouse.move(caja.x - 120, caja.y, { steps: 6 }); await page.mouse.up(); await sleep(900); const e4 = await estado();
+    await page.evaluate(() => setLanguage('en')); await sleep(200); const e5 = await estado(); await page.evaluate(() => setLanguage('es')); await sleep(200);
+    await page.mouse.click(caja.x, caja.y); await sleep(500);
+    const lb1 = await page.evaluate(() => ({ abierto: !document.getElementById('galleryLightbox').classList.contains('hidden'), src: document.getElementById('lightboxImg').src.split('/').pop(), cap: document.getElementById('lightboxCaption').textContent.trim() }));
+    await page.keyboard.press('ArrowRight'); await sleep(400);
+    const lb2 = await page.evaluate(() => ({ src: document.getElementById('lightboxImg').src.split('/').pop(), cap: document.getElementById('lightboxCaption').textContent.trim() }));
+    await page.keyboard.press('Escape'); await sleep(400);
+    const ok = e0.src === e0b.src && e0.num === '1 / 19' && e1.num === '2 / 19' && e1.src !== e0.src && e1.tit !== e0.tit && e2.num === '3 / 19' && e3.cur === '3' && e3.ancho <= e3.natural + 1
+      && e4.num === '4 / 19' && /^[A-Z]/.test(e5.tit) && e5.tit !== e4.tit && e1.y === e0.y && e2.y === e1.y && lb1.abierto && lb1.src === e4.src && lb2.src !== lb1.src && lb2.cap !== lb1.cap;
+    check('la galería no se mueve sola; pasa de foto con flecha, teclado, miniatura y deslizando, sin estirar fotos chicas ni mover la página; la pantalla completa muestra la misma foto y pasa con las flechas',
+      ok, JSON.stringify({ e0, e0b, e1, e2, e3, e4, e5: e5.tit, lb1, lb2 }));
+    await page.close(); }
 
   // 15. formulario de reserva en el celular: campos de 16 px o más (con menos, iOS agranda la página al enfocar y no la devuelve)
   { const page = await abrir(390, 844, true);

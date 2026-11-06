@@ -266,7 +266,7 @@
   <!-- Tailwind CSS compilado (ver README: npm run build:css) -->
   <!-- Foto del inicio: 720 px para celulares (va recortada y bajo un velo oscuro, por eso "sizes" la pide a media pantalla: alcanza aun con pantallas de alta densidad), 1280 y 1920 para el resto. Debe decir lo mismo que la imagen del hero (más abajo). -->
   <link rel="preload" as="image" href="./LaRutadelTannat_files/hero-vinedo-uruguay-1280.webp" imagesrcset="./LaRutadelTannat_files/hero-vinedo-uruguay-720.webp 720w, ./LaRutadelTannat_files/hero-vinedo-uruguay-1280.webp 1280w, ./LaRutadelTannat_files/hero-vinedo-uruguay.webp 1920w" imagesizes="(max-width: 767px) 50vw, 100vw" fetchpriority="high">
-  <link rel="stylesheet" href="./LaRutadelTannat_files/tailwind.css?v=24">
+  <link rel="stylesheet" href="./LaRutadelTannat_files/tailwind.css?v=25">
 
   <!-- Tipografía editorial alojada en el sitio (sin pedidos a Google): Playfair Display (titulares) + Plus Jakarta Sans (cuerpo/UI).
        Fuentes variables, solo el subconjunto latin (cubre es/pt/en; otro alfabeto cae a la fuente del sistema). Licencia OFL.
@@ -442,27 +442,42 @@
     /* iOS agranda la página al enfocar un campo con letra menor a 16 px y no la devuelve: en pantallas táctiles el formulario de reserva va en 16 px (en escritorio queda en 14) */
     @media (pointer: coarse) { #bookingForm input, #bookingForm select, #bookingForm textarea { font-size: 16px; } }
 
-    /* Galería — muro fotográfico con desplazamiento vertical automático */
-    .gallery-columns { display: flex; gap: 1rem; }
-    .gallery-col { flex: 1 1 0; min-width: 0; height: 460px; overflow: hidden; position: relative; border-radius: 1rem; }
-    .gallery-col::before, .gallery-col::after { content: ""; position: absolute; left: 0; right: 0; height: 44px; z-index: 2; pointer-events: none; }
-    .gallery-col::before { top: 0; background: linear-gradient(to bottom, #fff, rgba(255,255,255,0)); }
-    .gallery-col::after { bottom: 0; background: linear-gradient(to top, #fff, rgba(255,255,255,0)); }
-    .gallery-track { display: flex; flex-direction: column; gap: 1rem; will-change: transform; animation-timing-function: linear; animation-iteration-count: infinite; }
-    .gallery-track.scroll-up { animation-name: galleryScrollUp; }
-    .gallery-track.scroll-down { animation-name: galleryScrollDown; }
-    .gallery-columns:focus-within .gallery-track, .gallery-columns.is-paused .gallery-track, .gallery-columns.is-offscreen .gallery-track { animation-play-state: paused; }
-    @media (hover: hover) { .gallery-columns:hover .gallery-track { animation-play-state: paused; } }
-    /* Botón de pausa (WCAG 2.2.2: el movimiento automático de más de 5 s se puede detener): muestra "Pausar" o "Reanudar" según data-paused; sin movimiento no hace falta */
-    #galPause[data-paused="true"] .gp-pause, #galPause:not([data-paused="true"]) .gp-play { display: none; }
-    @media (prefers-reduced-motion: reduce) { #galPause { display: none; } }
-    @keyframes galleryScrollUp { from { transform: translateY(0); } to { transform: translateY(-50%); } }
-    @keyframes galleryScrollDown { from { transform: translateY(-50%); } to { transform: translateY(0); } }
-    .gallery-item { position: relative; aspect-ratio: 1 / 1; border-radius: 1rem; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); flex-shrink: 0; cursor: pointer; }
-    .gallery-item img { width: 100%; height: 100%; display: block; object-fit: cover; transition: transform 0.7s cubic-bezier(0.4,0,0.2,1); }
-    @media (hover: hover) { .gallery-item:hover img { transform: scale(1.1); } }
-    .gallery-item:focus-visible { outline: 2px solid #C29D62; outline-offset: 2px; }
-    .gallery-caption { position: absolute; inset: 0; display: flex; align-items: flex-end; padding: 0.6rem 0.75rem; background: linear-gradient(to top, rgba(0,0,0,0.75), rgba(0,0,0,0) 65%); }
+    /* Galería: una foto grande con fundido entre fotos (solo cambia si el visitante la mueve: flechas, teclado, deslizar o miniaturas) y pantalla completa.
+       La foto nunca se agranda más que su tamaño real (no se pixela); el resto del cuadro lo llena la misma foto desenfocada. */
+    .gal-escena { position: relative; aspect-ratio: 3 / 2; overflow: hidden; border-radius: 10px; background: #1D060D; cursor: zoom-in; touch-action: pan-y; }
+    .gal-fondo { position: absolute; inset: -8%; width: 116%; height: 116%; max-width: none; object-fit: cover; filter: blur(22px) saturate(1.1) brightness(.5); }
+    .gal-foto { position: absolute; inset: 0; margin: auto; max-width: 100%; max-height: 100%; width: auto; height: auto; opacity: 0; transform: scale(1.025); transition: opacity .6s cubic-bezier(.16,1,.3,1), transform .9s cubic-bezier(.16,1,.3,1); box-shadow: 0 14px 34px -12px rgba(0,0,0,.65); }
+    .gal-foto.es-visible { opacity: 1; transform: none; }
+    .gal-escena img { -webkit-user-drag: none; user-select: none; } /* arrastrar con el mouse desliza la galería, no levanta la imagen */
+    .gal-boton { position: absolute; z-index: 3; width: 44px; height: 44px; border-radius: 9999px; display: grid; place-items: center; background: rgba(29,6,13,.6); color: #fff; border: 1px solid rgba(217,180,122,.5); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); transition: background-color .2s; }
+    .gal-boton:hover { background: rgba(29,6,13,.85); }
+    .gal-boton:focus-visible { outline: 2px solid #D9B47A; outline-offset: 2px; }
+    .gal-prev, .gal-next { top: 50%; translate: 0 -50%; } .gal-prev { left: 22px; } .gal-next { right: 22px; } .gal-ampliar { right: 22px; bottom: 22px; }
+    .gal-num { position: absolute; z-index: 3; left: 22px; bottom: 22px; padding: .35rem .65rem; border-radius: 9999px; background: rgba(29,6,13,.6); color: #fff; font-size: .75rem; font-weight: 600; letter-spacing: .06em; pointer-events: none; }
+    .gal-tira { display: flex; gap: .6rem; overflow-x: auto; scroll-snap-type: x proximity; padding: .6rem .25rem .8rem; scrollbar-width: thin; }
+    .gal-mini { position: relative; flex: 0 0 auto; width: 92px; aspect-ratio: 4 / 3; border-radius: 8px; overflow: hidden; scroll-snap-align: center; opacity: .55; outline: 2px solid transparent; outline-offset: 2px; transition: opacity .25s, outline-color .25s; }
+    .gal-mini img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .gal-mini:hover, .gal-mini[aria-current="true"], .gal-mini:focus-visible { opacity: 1; }
+    .gal-mini[aria-current="true"] { outline-color: #C29D62; } .gal-mini:focus-visible { outline-color: #721B28; }
+    @media (min-width: 768px) { .gal-mini { width: 116px; } }
+    @media (max-width: 639px) { .gal-escena { aspect-ratio: 4 / 3; } .gal-prev { left: 16px; } .gal-next { right: 16px; } .gal-ampliar { right: 16px; bottom: 16px; } .gal-num { left: 16px; bottom: 16px; } }
+    @media (prefers-reduced-motion: reduce) { .gal-foto { transition: none; transform: none; } }
+
+    /* Marco de la Ruta: doble filete dorado y paspartú (el mismo lenguaje del favicon). Vino sobre fondo claro; crema (marco-claro) sobre fondo oscuro. */
+    .marco-ruta { position: relative; padding: 12px; border-radius: 20px; background: linear-gradient(150deg, #4A101D, #2B0A14); box-shadow: 0 0 0 1px rgba(194,157,98,.55), 0 28px 50px -28px rgba(43,10,20,.6); }
+    .marco-ruta::before { content: ""; position: absolute; inset: 6px; border: 1px solid rgba(217,180,122,.6); border-radius: 15px; pointer-events: none; z-index: 2; }
+    .marco-ruta.marco-claro { background: linear-gradient(150deg, #FBF8F2, #F1E9DA); }
+    .marco-ruta.marco-claro::before { border-color: rgba(194,157,98,.8); }
+
+    /* Las fotos destacadas se descubren de abajo hacia arriba, como una copa que se llena (una sola vez, al entrar en pantalla; ver initScrollReveal) */
+    :is(.reveal-init, .reveal-fade-only) .revela { clip-path: inset(100% 0 0 0); }
+    :is(.reveal-init, .reveal-fade-only).reveal-in .revela { clip-path: inset(0); transition: clip-path .68s cubic-bezier(.65,0,.35,1); }
+
+    /* La ficha de una estación crece desde su tarjeta y vuelve a ella al cerrar (ver showModal) */
+    .modal-overlay .modal-card.desde-origen { transform: translate(var(--dx, 0px), var(--dy, 0px)) scale(.28); transition-duration: .45s; }
+    .modal-overlay.modal-open .modal-card.desde-origen { transform: none; }
+    .modal-overlay:not(.modal-open) .modal-card.desde-origen { transition-duration: .25s; }
+    @media (prefers-reduced-motion: reduce) { .modal-overlay .modal-card.desde-origen { transform: none; } }
     /* Zona táctil de 44 px alrededor de enlaces chicos sin agrandar lo que se ve (mismo recurso que las pestañas de La Copa) */
     .tap-area { position: relative; } .tap-area::after { content: ''; position: absolute; inset: -.875rem -.25rem; }
     .tap-area-pill { position: relative; } .tap-area-pill::after { content: ''; position: absolute; inset: -4px 0; }
@@ -475,33 +490,15 @@
        El corcho que sale volando al hacer clic es un efecto aparte (JS "descorche", al final del script). Los campos de texto, el mapa y la copa arrastrable conservan su cursor. */
     @media (hover: hover) and (pointer: fine) and (forced-colors: none) {
       html { cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cg transform='translate(17 18) rotate(-45) scale(.46) translate(-32 -30)'%3E%3Cpath d='M29,9 L35,9 L35,21 Q35,23.5 37,25.5 L40.5,31 Q43,35 43,40 L43,49 Q43,54 38,54 L26,54 Q21,54 21,49 L21,40 Q21,35 23.5,31 L27,25.5 Q29,23.5 29,21 Z' fill='%23fff' stroke='%23fff' stroke-width='7' stroke-linejoin='round'/%3E%3Cpath d='M29,9 L35,9 L35,21 Q35,23.5 37,25.5 L40.5,31 Q43,35 43,40 L43,49 Q43,54 38,54 L26,54 Q21,54 21,49 L21,40 Q21,35 23.5,31 L27,25.5 Q29,23.5 29,21 Z' fill='%232B0A14' stroke='%234A101D' stroke-width='1.2' stroke-linejoin='round'/%3E%3Cpath d='M24.3,34 L24.3,50 M30.6,12 L30.6,20' stroke='%238F2636' stroke-width='1.8' stroke-linecap='round' opacity='.9' fill='none'/%3E%3Crect x='29' y='9' width='6' height='7' fill='%23C29D62'/%3E%3Crect x='21.8' y='37' width='20.4' height='11' rx='1.2' fill='%23C29D62'/%3E%3Crect x='28' y='39.5' width='8' height='2.2' fill='%23721B28'/%3E%3Crect x='31' y='39.5' width='2' height='6.5' fill='%23721B28'/%3E%3Cg transform='translate(28.5 4) rotate(0 3.5 2.75)'%3E%3Crect x='-1.2' y='-1.2' width='9.4' height='7.9' rx='2.2' fill='%23fff'/%3E%3Crect x='0' y='0' width='7' height='5.5' rx='1.2' fill='%23D9B47A' stroke='%239B7440' stroke-width='.8'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") 8 9, auto; }
-      html :is(a[href], button:not(:disabled), summary, select, [role="button"], .cursor-pointer, .gallery-item, .cup-orb, .cup-tab, .cup-range) { cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cg transform='translate(17 18) rotate(-45) scale(.46) translate(-32 -30)'%3E%3Ccircle cx='32' cy='5' r='10' fill='%23C29D62' opacity='.35'/%3E%3Cpath d='M29,9 L35,9 L35,21 Q35,23.5 37,25.5 L40.5,31 Q43,35 43,40 L43,49 Q43,54 38,54 L26,54 Q21,54 21,49 L21,40 Q21,35 23.5,31 L27,25.5 Q29,23.5 29,21 Z' fill='%23fff' stroke='%23fff' stroke-width='7' stroke-linejoin='round'/%3E%3Cpath d='M29,9 L35,9 L35,21 Q35,23.5 37,25.5 L40.5,31 Q43,35 43,40 L43,49 Q43,54 38,54 L26,54 Q21,54 21,49 L21,40 Q21,35 23.5,31 L27,25.5 Q29,23.5 29,21 Z' fill='%232B0A14' stroke='%234A101D' stroke-width='1.2' stroke-linejoin='round'/%3E%3Cpath d='M24.3,34 L24.3,50 M30.6,12 L30.6,20' stroke='%238F2636' stroke-width='1.8' stroke-linecap='round' opacity='.9' fill='none'/%3E%3Crect x='29' y='9' width='6' height='7' fill='%23C29D62'/%3E%3Crect x='21.8' y='37' width='20.4' height='11' rx='1.2' fill='%23C29D62'/%3E%3Crect x='28' y='39.5' width='8' height='2.2' fill='%23721B28'/%3E%3Crect x='31' y='39.5' width='2' height='6.5' fill='%23721B28'/%3E%3Cg transform='translate(28.5 0.5) rotate(0 3.5 2.75)'%3E%3Crect x='-1.2' y='-1.2' width='9.4' height='7.9' rx='2.2' fill='%23fff'/%3E%3Crect x='0' y='0' width='7' height='5.5' rx='1.2' fill='%23D9B47A' stroke='%239B7440' stroke-width='.8'/%3E%3C/g%3E%3Cpath d='M22,-1 L19,-4 M42,-1 L45,-4 M32,-5 L32,-9' stroke='%23C29D62' stroke-width='1.6' stroke-linecap='round'/%3E%3C/g%3E%3C/svg%3E") 8 9, pointer; }
-      html :is(a[href], button:not(:disabled), summary, [role="button"], .cursor-pointer, .gallery-item, .cup-orb, .cup-tab, .cup-range):active { cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cg transform='translate(17 18) rotate(-45) scale(.46) translate(-32 -30)'%3E%3Cpath d='M29,9 L35,9 L35,21 Q35,23.5 37,25.5 L40.5,31 Q43,35 43,40 L43,49 Q43,54 38,54 L26,54 Q21,54 21,49 L21,40 Q21,35 23.5,31 L27,25.5 Q29,23.5 29,21 Z' fill='%23fff' stroke='%23fff' stroke-width='7' stroke-linejoin='round'/%3E%3Cpath d='M29,9 L35,9 L35,21 Q35,23.5 37,25.5 L40.5,31 Q43,35 43,40 L43,49 Q43,54 38,54 L26,54 Q21,54 21,49 L21,40 Q21,35 23.5,31 L27,25.5 Q29,23.5 29,21 Z' fill='%232B0A14' stroke='%234A101D' stroke-width='1.2' stroke-linejoin='round'/%3E%3Cpath d='M24.3,34 L24.3,50 M30.6,12 L30.6,20' stroke='%238F2636' stroke-width='1.8' stroke-linecap='round' opacity='.9' fill='none'/%3E%3Crect x='21.8' y='37' width='20.4' height='11' rx='1.2' fill='%23C29D62'/%3E%3Crect x='28' y='39.5' width='8' height='2.2' fill='%23721B28'/%3E%3Crect x='31' y='39.5' width='2' height='6.5' fill='%23721B28'/%3E%3Cellipse cx='32' cy='9' rx='3.1' ry='1.3' fill='%230f0408' stroke='%23C29D62' stroke-width='1'/%3E%3Cg transform='translate(21 -9) rotate(-22 3.5 2.75)'%3E%3Crect x='-1.2' y='-1.2' width='9.4' height='7.9' rx='2.2' fill='%23fff'/%3E%3Crect x='0' y='0' width='7' height='5.5' rx='1.2' fill='%23D9B47A' stroke='%239B7440' stroke-width='.8'/%3E%3C/g%3E%3Ccircle cx='39' cy='3' r='1.5' fill='%238F2636'/%3E%3Ccircle cx='25.5' cy='2' r='1.2' fill='%23C29D62'/%3E%3Ccircle cx='33' cy='-4.5' r='1.1' fill='%238F2636'/%3E%3Ccircle cx='37' cy='-1' r='.8' fill='%23D9B47A'/%3E%3C/g%3E%3C/svg%3E") 8 9, pointer; }
+      html :is(a[href], button:not(:disabled), summary, select, [role="button"], .cursor-pointer, .gal-escena, .cup-orb, .cup-tab, .cup-range) { cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cg transform='translate(17 18) rotate(-45) scale(.46) translate(-32 -30)'%3E%3Ccircle cx='32' cy='5' r='10' fill='%23C29D62' opacity='.35'/%3E%3Cpath d='M29,9 L35,9 L35,21 Q35,23.5 37,25.5 L40.5,31 Q43,35 43,40 L43,49 Q43,54 38,54 L26,54 Q21,54 21,49 L21,40 Q21,35 23.5,31 L27,25.5 Q29,23.5 29,21 Z' fill='%23fff' stroke='%23fff' stroke-width='7' stroke-linejoin='round'/%3E%3Cpath d='M29,9 L35,9 L35,21 Q35,23.5 37,25.5 L40.5,31 Q43,35 43,40 L43,49 Q43,54 38,54 L26,54 Q21,54 21,49 L21,40 Q21,35 23.5,31 L27,25.5 Q29,23.5 29,21 Z' fill='%232B0A14' stroke='%234A101D' stroke-width='1.2' stroke-linejoin='round'/%3E%3Cpath d='M24.3,34 L24.3,50 M30.6,12 L30.6,20' stroke='%238F2636' stroke-width='1.8' stroke-linecap='round' opacity='.9' fill='none'/%3E%3Crect x='29' y='9' width='6' height='7' fill='%23C29D62'/%3E%3Crect x='21.8' y='37' width='20.4' height='11' rx='1.2' fill='%23C29D62'/%3E%3Crect x='28' y='39.5' width='8' height='2.2' fill='%23721B28'/%3E%3Crect x='31' y='39.5' width='2' height='6.5' fill='%23721B28'/%3E%3Cg transform='translate(28.5 0.5) rotate(0 3.5 2.75)'%3E%3Crect x='-1.2' y='-1.2' width='9.4' height='7.9' rx='2.2' fill='%23fff'/%3E%3Crect x='0' y='0' width='7' height='5.5' rx='1.2' fill='%23D9B47A' stroke='%239B7440' stroke-width='.8'/%3E%3C/g%3E%3Cpath d='M22,-1 L19,-4 M42,-1 L45,-4 M32,-5 L32,-9' stroke='%23C29D62' stroke-width='1.6' stroke-linecap='round'/%3E%3C/g%3E%3C/svg%3E") 8 9, pointer; }
+      html :is(a[href], button:not(:disabled), summary, [role="button"], .cursor-pointer, .gal-escena, .cup-orb, .cup-tab, .cup-range):active { cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cg transform='translate(17 18) rotate(-45) scale(.46) translate(-32 -30)'%3E%3Cpath d='M29,9 L35,9 L35,21 Q35,23.5 37,25.5 L40.5,31 Q43,35 43,40 L43,49 Q43,54 38,54 L26,54 Q21,54 21,49 L21,40 Q21,35 23.5,31 L27,25.5 Q29,23.5 29,21 Z' fill='%23fff' stroke='%23fff' stroke-width='7' stroke-linejoin='round'/%3E%3Cpath d='M29,9 L35,9 L35,21 Q35,23.5 37,25.5 L40.5,31 Q43,35 43,40 L43,49 Q43,54 38,54 L26,54 Q21,54 21,49 L21,40 Q21,35 23.5,31 L27,25.5 Q29,23.5 29,21 Z' fill='%232B0A14' stroke='%234A101D' stroke-width='1.2' stroke-linejoin='round'/%3E%3Cpath d='M24.3,34 L24.3,50 M30.6,12 L30.6,20' stroke='%238F2636' stroke-width='1.8' stroke-linecap='round' opacity='.9' fill='none'/%3E%3Crect x='21.8' y='37' width='20.4' height='11' rx='1.2' fill='%23C29D62'/%3E%3Crect x='28' y='39.5' width='8' height='2.2' fill='%23721B28'/%3E%3Crect x='31' y='39.5' width='2' height='6.5' fill='%23721B28'/%3E%3Cellipse cx='32' cy='9' rx='3.1' ry='1.3' fill='%230f0408' stroke='%23C29D62' stroke-width='1'/%3E%3Cg transform='translate(21 -9) rotate(-22 3.5 2.75)'%3E%3Crect x='-1.2' y='-1.2' width='9.4' height='7.9' rx='2.2' fill='%23fff'/%3E%3Crect x='0' y='0' width='7' height='5.5' rx='1.2' fill='%23D9B47A' stroke='%239B7440' stroke-width='.8'/%3E%3C/g%3E%3Ccircle cx='39' cy='3' r='1.5' fill='%238F2636'/%3E%3Ccircle cx='25.5' cy='2' r='1.2' fill='%23C29D62'/%3E%3Ccircle cx='33' cy='-4.5' r='1.1' fill='%238F2636'/%3E%3Ccircle cx='37' cy='-1' r='.8' fill='%23D9B47A'/%3E%3C/g%3E%3C/svg%3E") 8 9, pointer; }
     }
     .pop-corcho { position: fixed; width: 0; height: 0; pointer-events: none; z-index: 9999; }
     .pop-corcho i { position: absolute; left: 0; top: 0; display: block; }
     .pc-onda { width: 44px; height: 44px; margin: -22px 0 0 -22px; border-radius: 50%; border: 2px solid #D9B47A; box-shadow: 0 0 0 1.5px rgba(255,255,255,.85); }
     .pc-corcho { width: 12px; height: 9px; margin: -4.5px 0 0 -6px; border-radius: 2.5px; background: #D9B47A; border: 1px solid #9B7440; box-shadow: 0 0 0 1.5px rgba(255,255,255,.95), 0 2px 4px rgba(0,0,0,.25); }
     .pc-burbuja { border-radius: 50%; background: radial-gradient(circle at 35% 30%, #fff 0 22%, #E8CC96 24% 100%); border: 1px solid #B88F52; box-shadow: 0 0 0 1px rgba(255,255,255,.7); }
-    .gallery-caption span { color: #fff; font-size: 0.75rem; font-weight: 600; line-height: 1.25; }
-    .gallery-item::after {
-      content: "";
-      position: absolute; top: 0.5rem; right: 0.5rem; width: 1.75rem; height: 1.75rem;
-      border-radius: 9999px; background-color: rgba(0,0,0,0.45);
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' stroke='white' stroke-width='2' viewBox='0 0 24 24'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16zM11 8v6M8 11h6'/%3E%3C/svg%3E");
-      background-repeat: no-repeat; background-position: center; background-size: 60%;
-      opacity: 0; transition: opacity 0.25s ease; pointer-events: none;
-    }
-    .gallery-item:focus-visible::after { opacity: 1; }
-    @media (hover: hover) { .gallery-item:hover::after { opacity: 1; } }
-
-    @media (max-width: 767px) {
-      .gallery-col-3 { display: none; }
-      .gallery-col { height: 420px; }
-    }
-
     @media (prefers-reduced-motion: reduce) {
-      .gallery-track { animation: none !important; transform: none !important; }
       .animate-pulse { animation: none; }
     }
 
@@ -1197,13 +1194,13 @@
           <div class="lg:col-span-5">
             <div class="relative group">
               <div class="absolute -inset-2 bg-gradient-to-r from-gold to-tannat rounded-3xl blur-lg opacity-25 group-hover:opacity-40 transition-opacity"></div>
-              <div class="relative bg-white p-3 rounded-3xl shadow-xl border border-tannat-100 overflow-hidden">
-                <div class="aspect-[4/5] rounded-2xl overflow-hidden bg-tannat-900">
-                  <img src="./LaRutadelTannat_files/semana-harriague-lanz-ppal4-jpg.webp" width="645" height="350" alt="Fotografía histórica del establecimiento La Caballada fundado por Pascual Harriague" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 opacity-90" loading="lazy">
+              <div class="relative marco-ruta">
+                <div class="aspect-[4/5] rounded-[10px] overflow-hidden bg-tannat-900">
+                  <img src="./LaRutadelTannat_files/semana-harriague-lanz-ppal4-jpg.webp" width="645" height="350" alt="Fotografía histórica del establecimiento La Caballada fundado por Pascual Harriague" class="revela w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 opacity-90" loading="lazy">
                 </div>
-                <div class="p-4 bg-white">
-                  <p class="text-xs text-terroir uppercase tracking-widest font-semibold" data-i18n="history.captionTag">Archivo Histórico Municipal</p>
-                  <p class="font-serif text-sm font-bold text-tannat-dark" data-i18n="history.captionText">Ruinas de Bodega Harriague · Salto, Uruguay</p>
+                <div class="px-3 pt-4 pb-2">
+                  <p class="text-xs text-gray-300 uppercase tracking-widest font-semibold" data-i18n="history.captionTag">Archivo Histórico Municipal</p>
+                  <p class="font-serif text-sm font-bold text-gold-light" data-i18n="history.captionText">Ruinas de Bodega Harriague · Salto, Uruguay</p>
                 </div>
               </div>
             </div>
@@ -1236,13 +1233,13 @@
           <div class="lg:col-span-4 lg:self-stretch">
             <div class="relative group lg:sticky lg:top-[calc(var(--hdr-h,6rem)+1.5rem)]">
               <div class="absolute -inset-2 bg-gradient-to-r from-gold to-tannat rounded-3xl blur-lg opacity-25"></div>
-              <div class="relative bg-white p-3 rounded-3xl shadow-xl border border-tannat-100 overflow-hidden">
-                <div class="aspect-[4/5] rounded-2xl overflow-hidden bg-tannat-900">
-                  <img src="./LaRutadelTannat_files/pascual-harriague-retrato.webp" width="700" height="700" alt="Retrato histórico de Pascual Harriague" class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700" loading="lazy">
+              <div class="relative marco-ruta">
+                <div class="aspect-[4/5] rounded-[10px] overflow-hidden bg-tannat-900">
+                  <img src="./LaRutadelTannat_files/pascual-harriague-retrato.webp" width="700" height="700" alt="Retrato histórico de Pascual Harriague" class="revela w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700" loading="lazy">
                 </div>
-                <div class="p-4 bg-white">
-                  <p class="font-serif text-lg font-bold text-tannat-dark">Don Pascual Harriague</p>
-                  <p class="text-xs text-terroir uppercase tracking-widest font-semibold" data-i18n="pioneer.captionTag">Hasparren, Francia · 1819 — París, 1894</p>
+                <div class="px-3 pt-4 pb-2">
+                  <p class="font-serif text-lg font-bold text-gold-light">Don Pascual Harriague</p>
+                  <p class="text-xs text-gray-300 uppercase tracking-widest font-semibold" data-i18n="pioneer.captionTag">Hasparren, Francia · 1819 — París, 1894</p>
                 </div>
               </div>
             </div>
@@ -1506,7 +1503,7 @@
           <!-- Station 1: Bodega Harriague -->
           <div role="button" tabindex="0" onclick="openStationModal(1)" onkeydown="if(event.key===&#39;Enter&#39;||event.key===&#39; &#39;){event.preventDefault();openStationModal(1);}" class="group bg-white rounded-2xl overflow-hidden border border-tannat-100 shadow-editorial shadow-editorial-hover hover:-translate-y-1.5 transition-all flex flex-col focus:outline-none focus:ring-2 focus:ring-gold" aria-labelledby="stc1-b stc1-t">
             <div class="aspect-[4/3] relative overflow-hidden bg-tannat-900">
-              <img src="./LaRutadelTannat_files/8254D59E-F679-48CA-94EB-EC6CFB40EC77.webp" width="700" height="525" alt="Espacio Cultural Bodega Harriague" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy">
+              <img src="./LaRutadelTannat_files/8254D59E-F679-48CA-94EB-EC6CFB40EC77.webp" width="700" height="525" alt="Espacio Cultural Bodega Harriague" class="revela w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy">
               <div id="stc1-b" class="absolute top-3 left-3 bg-tannat text-gold-light text-xs font-bold px-3 py-1 rounded-full shadow-md" data-i18n="st1.badge">
                 Estación 01
               </div>
@@ -1534,7 +1531,7 @@
           <!-- Station 2: Salto Chico -->
           <div role="button" tabindex="0" onclick="openStationModal(2)" onkeydown="if(event.key===&#39;Enter&#39;||event.key===&#39; &#39;){event.preventDefault();openStationModal(2);}" class="group bg-white rounded-2xl overflow-hidden border border-tannat-100 shadow-editorial shadow-editorial-hover hover:-translate-y-1.5 transition-all flex flex-col focus:outline-none focus:ring-2 focus:ring-gold" aria-labelledby="stc2-b stc2-t">
             <div class="aspect-[4/3] relative overflow-hidden bg-tannat-900">
-              <img src="./LaRutadelTannat_files/salto-chico-cartel-inavi.webp" width="498" height="280" alt="Cartel de entrada de Viñas y Bodega del Salto Chico" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy">
+              <img src="./LaRutadelTannat_files/salto-chico-cartel-inavi.webp" width="498" height="280" alt="Cartel de entrada de Viñas y Bodega del Salto Chico" class="revela w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy">
               <div id="stc2-b" class="absolute top-3 left-3 bg-tannat text-gold-light text-xs font-bold px-3 py-1 rounded-full shadow-md" data-i18n="st2.badge">
                 Estación 02
               </div>
@@ -1563,7 +1560,7 @@
           <!-- Station 3: Bertolini & Broglio -->
           <div role="button" tabindex="0" onclick="openStationModal(3)" onkeydown="if(event.key===&#39;Enter&#39;||event.key===&#39; &#39;){event.preventDefault();openStationModal(3);}" class="group bg-white rounded-2xl overflow-hidden border border-tannat-100 shadow-editorial shadow-editorial-hover hover:-translate-y-1.5 transition-all flex flex-col focus:outline-none focus:ring-2 focus:ring-gold" aria-labelledby="stc3-b stc3-t">
             <div class="aspect-[4/3] relative overflow-hidden bg-tannat-900">
-              <img src="./LaRutadelTannat_files/bertolini-broglio-inavi.jpg" width="960" height="720" alt="Fachada real de Bodega Bertolini &amp; Broglio, Ruta 3, Salto" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy">
+              <img src="./LaRutadelTannat_files/bertolini-broglio-inavi.jpg" width="960" height="720" alt="Fachada real de Bodega Bertolini &amp; Broglio, Ruta 3, Salto" class="revela w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy">
               <div id="stc3-b" class="absolute top-3 left-3 bg-tannat text-gold-light text-xs font-bold px-3 py-1 rounded-full shadow-md" data-i18n="st3.badge">
                 Estación 03
               </div>
@@ -1592,7 +1589,7 @@
           <!-- Station 4: Mori Maglio Wines -->
           <div role="button" tabindex="0" onclick="openStationModal(4)" onkeydown="if(event.key===&#39;Enter&#39;||event.key===&#39; &#39;){event.preventDefault();openStationModal(4);}" class="group bg-white rounded-2xl overflow-hidden border border-tannat-100 shadow-editorial shadow-editorial-hover hover:-translate-y-1.5 transition-all flex flex-col focus:outline-none focus:ring-2 focus:ring-gold" aria-labelledby="stc4-b stc4-t">
             <div class="aspect-[4/3] relative overflow-hidden bg-tannat-900">
-              <img src="./LaRutadelTannat_files/138db8c89a626f5efc0f940f343ad390bf0ec8ca.jpg" width="1024" height="768" alt="Mori Maglio Wines" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy">
+              <img src="./LaRutadelTannat_files/138db8c89a626f5efc0f940f343ad390bf0ec8ca.jpg" width="1024" height="768" alt="Mori Maglio Wines" class="revela w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy">
               <div id="stc4-b" class="absolute top-3 left-3 bg-tannat text-gold-light text-xs font-bold px-3 py-1 rounded-full shadow-md" data-i18n="st4.badge">
                 Estación 04
               </div>
@@ -1705,7 +1702,7 @@
               📍 Es Ahora
             </span>
             <div class="aspect-[4/3] w-full overflow-hidden bg-tannat-900">
-              <img src="./LaRutadelTannat_files/vendimia-cosecha-inavi.webp" width="750" height="500" alt="Cosecha manual de uva durante la vendimia, foto de INAVI" class="w-full h-full object-cover" loading="lazy">
+              <img src="./LaRutadelTannat_files/vendimia-cosecha-inavi.webp" width="750" height="500" alt="Cosecha manual de uva durante la vendimia, foto de INAVI" class="revela w-full h-full object-cover" loading="lazy">
             </div>
             <div class="p-6 flex flex-col justify-between flex-1">
               <div>
@@ -1736,7 +1733,7 @@
               📍 Es Ahora
             </span>
             <div class="aspect-[4/3] w-full overflow-hidden bg-tannat-900">
-              <img src="./LaRutadelTannat_files/semana-harriague-festival.webp" width="645" height="350" alt="Festival nocturno de la Semana de Harriague en las ruinas de la bodega histórica" class="w-full h-full object-cover" loading="lazy">
+              <img src="./LaRutadelTannat_files/semana-harriague-festival.webp" width="645" height="350" alt="Festival nocturno de la Semana de Harriague en las ruinas de la bodega histórica" class="revela w-full h-full object-cover" loading="lazy">
             </div>
             <div class="p-6 flex flex-col justify-between flex-1">
               <div>
@@ -1765,7 +1762,7 @@
               📍 Es Ahora
             </span>
             <div class="aspect-[4/3] w-full overflow-hidden bg-tannat-900">
-              <img src="./LaRutadelTannat_files/galeria-brindis-cavas.webp" width="850" height="555" alt="El calor de las cavas históricas en invierno" class="w-full h-full object-cover" loading="lazy">
+              <img src="./LaRutadelTannat_files/galeria-brindis-cavas.webp" width="850" height="555" alt="El calor de las cavas históricas en invierno" class="revela w-full h-full object-cover" loading="lazy">
             </div>
             <div class="p-6 flex flex-col justify-between flex-1">
               <div>
@@ -1792,7 +1789,7 @@
               📍 Es Ahora
             </span>
             <div class="aspect-[4/3] w-full overflow-hidden bg-tannat-900">
-              <img src="./LaRutadelTannat_files/138db8c89a626f5efc0f940f343ad390bf0ec8ca.jpg" width="1024" height="768" alt="El viñedo reverdece en primavera" class="w-full h-full object-cover" loading="lazy">
+              <img src="./LaRutadelTannat_files/temporada-primavera-picnic.webp" width="750" height="500" alt="Picnic con vino al aire libre en primavera" class="revela w-full h-full object-cover" loading="lazy">
             </div>
             <div class="p-6 flex flex-col justify-between flex-1">
               <div>
@@ -1817,7 +1814,7 @@
 
         </div>
 
-        <p class="text-center text-xs text-terroir mt-6 max-w-3xl mx-auto text-balance" data-i18n="seasons.credits">Fotografías cedidas para este proyecto por INAVI (cosecha de vendimia) y Bodegas del Uruguay (Semana de Harriague).</p>
+        <p class="text-center text-xs text-terroir mt-6 max-w-3xl mx-auto text-balance" data-i18n="seasons.credits">Fotografías cedidas para este proyecto por INAVI (cosecha de vendimia y picnic de primavera) y Bodegas del Uruguay (Semana de Harriague).</p>
 
         <!-- ==== Cómo Llegar / Duración (cierra el bloque "Planificá tu Visita" junto
              con las temporadas de arriba y los Paquetes de más abajo) ==== -->
@@ -1902,11 +1899,11 @@
           <div class="lg:col-span-6">
             <div class="relative group">
               <div class="absolute -inset-2 bg-gradient-to-r from-gold to-tannat-light rounded-3xl blur-lg opacity-20 group-hover:opacity-35 transition-opacity"></div>
-              <div class="relative bg-white p-3 rounded-3xl shadow-2xl border border-white/10 overflow-hidden">
-                <div class="aspect-[4/3] rounded-2xl overflow-hidden bg-tannat-900">
-                  <img src="./LaRutadelTannat_files/termas-dayman.webp" width="720" height="563" alt="Piscinas termales circulares de Termas del Daymán, Salto, Uruguay" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy">
+              <div class="relative marco-ruta marco-claro">
+                <div class="aspect-[4/3] rounded-[10px] overflow-hidden bg-tannat-900">
+                  <img src="./LaRutadelTannat_files/termas-dayman.webp" width="720" height="563" alt="Piscinas termales circulares de Termas del Daymán, Salto, Uruguay" class="revela w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy">
                 </div>
-                <div class="p-4 bg-white">
+                <div class="px-3 pt-4 pb-2">
                   <p class="text-xs text-terroir uppercase tracking-widest font-semibold" data-i18n="thermal.captionTag">Termas del Daymán</p>
                   <p class="font-serif text-sm font-bold text-tannat-dark" data-i18n="thermal.captionText">A pocos minutos de las bodegas del circuito</p>
                 </div>
@@ -2565,189 +2562,46 @@
           <p class="text-lg text-terroir font-light text-balance" data-i18n="gallery.subtitle">
             Imágenes reales de las bodegas, los viñedos y las termas que forman parte del circuito.
           </p>
-          <button type="button" id="galPause" class="mt-6 inline-flex items-center gap-2 px-4 min-h-[44px] rounded-full border border-tannat/25 text-tannat text-sm font-semibold hover:bg-tannat/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-tannat transition-colors">
-            <svg class="gp-pause w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.75 5.25v13.5m-7.5-13.5v13.5"></path></svg>
-            <svg class="gp-play w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 010 1.972l-11.54 6.347a1.125 1.125 0 01-1.667-.986V5.653z"></path></svg>
-            <span class="gp-pause" data-i18n="gallery.pause">Pausar movimiento</span>
-            <span class="gp-play" data-i18n="gallery.play">Reanudar movimiento</span>
-          </button>
         </div>
 
-        <div class="gallery-columns" role="group" aria-label="Galería de fotografías del circuito, con desplazamiento automático" data-i18n-aria="a11y.gallery">
-
-          <!-- Columna 1 (sube) -->
-          <div class="gallery-col gallery-col-1">
-            <div class="gallery-track scroll-up" style="animation-duration: 46s;">
-              <div class="gallery-item" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGalleryLightbox(this.querySelector('img'));}">
-                <img src="./LaRutadelTannat_files/hero-vinedo-uruguay.webp" width="1920" height="1440" alt="" loading="lazy">
-                <div class="gallery-caption"><span data-i18n="gallery.cap1">Viñedo uruguayo al amanecer</span></div>
-              </div>
-              <div class="gallery-item" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGalleryLightbox(this.querySelector('img'));}">
-                <img src="./LaRutadelTannat_files/bertolini-broglio-inavi.jpg" width="960" height="720" alt="" loading="lazy">
-                <div class="gallery-caption"><span data-i18n="gallery.cap4">Fachada de Bertolini &amp; Broglio</span></div>
-              </div>
-              <div class="gallery-item" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGalleryLightbox(this.querySelector('img'));}">
-                <img src="./LaRutadelTannat_files/semana-harriague-lanz-ppal4-jpg.webp" width="645" height="350" alt="" loading="lazy">
-                <div class="gallery-caption"><span data-i18n="gallery.cap7">Archivo histórico · La Caballada</span></div>
-              </div>
-              <div class="gallery-item" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGalleryLightbox(this.querySelector('img'));}">
-                <img src="./LaRutadelTannat_files/pascual-harriague-retrato.webp" width="700" height="700" alt="" loading="lazy">
-                <div class="gallery-caption"><span data-i18n="gallery.cap10">Pascual Harriague · pionero del Tannat</span></div>
-              </div>
-              <div class="gallery-item" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGalleryLightbox(this.querySelector('img'));}">
-                <img src="./LaRutadelTannat_files/termas-arapey-piscina.webp" width="1000" height="1000" alt="" loading="lazy">
-                <div class="gallery-caption"><span data-i18n="gallery.cap11">Piscinas termales del Arapey</span></div>
-              </div>
-              <div class="gallery-item" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGalleryLightbox(this.querySelector('img'));}">
-                <img src="./LaRutadelTannat_files/cata-vinos-bodega-harriague.webp" width="1200" height="1600" alt="" loading="lazy">
-                <div class="gallery-caption"><span data-i18n="gallery.cap16">Cata de vinos en Bodega Harriague</span></div>
-              </div>
-              <div class="gallery-item" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGalleryLightbox(this.querySelector('img'));}">
-                <img src="./LaRutadelTannat_files/placa-homenaje-harriague.webp" width="1600" height="1223" alt="" loading="lazy">
-                <div class="gallery-caption"><span data-i18n="gallery.cap18">Placa homenaje a Pascual Harriague en su bodega</span></div>
-              </div>
-              <!-- Duplicado para loop continuo -->
-              <div class="gallery-item" aria-hidden="true">
-                <img src="./LaRutadelTannat_files/hero-vinedo-uruguay.webp" width="1920" height="1440" alt="" loading="lazy">
-                <div class="gallery-caption"><span data-i18n="gallery.cap1">Viñedo uruguayo al amanecer</span></div>
-              </div>
-              <div class="gallery-item" aria-hidden="true">
-                <img src="./LaRutadelTannat_files/bertolini-broglio-inavi.jpg" width="960" height="720" alt="" loading="lazy">
-                <div class="gallery-caption"><span data-i18n="gallery.cap4">Fachada de Bertolini &amp; Broglio</span></div>
-              </div>
-              <div class="gallery-item" aria-hidden="true">
-                <img src="./LaRutadelTannat_files/semana-harriague-lanz-ppal4-jpg.webp" width="645" height="350" alt="" loading="lazy">
-                <div class="gallery-caption"><span data-i18n="gallery.cap7">Archivo histórico · La Caballada</span></div>
-              </div>
-              <div class="gallery-item" aria-hidden="true">
-                <img src="./LaRutadelTannat_files/pascual-harriague-retrato.webp" width="700" height="700" alt="" loading="lazy">
-                <div class="gallery-caption"><span data-i18n="gallery.cap10">Pascual Harriague · pionero del Tannat</span></div>
-              </div>
-              <div class="gallery-item" aria-hidden="true">
-                <img src="./LaRutadelTannat_files/termas-arapey-piscina.webp" width="1000" height="1000" alt="" loading="lazy">
-                <div class="gallery-caption"><span data-i18n="gallery.cap11">Piscinas termales del Arapey</span></div>
-              </div>
-              <div class="gallery-item" aria-hidden="true">
-                <img src="./LaRutadelTannat_files/cata-vinos-bodega-harriague.webp" width="1200" height="1600" alt="" loading="lazy">
-                <div class="gallery-caption"><span data-i18n="gallery.cap16">Cata de vinos en Bodega Harriague</span></div>
-              </div>
-              <div class="gallery-item" aria-hidden="true">
-                <img src="./LaRutadelTannat_files/placa-homenaje-harriague.webp" width="1600" height="1223" alt="" loading="lazy">
-                <div class="gallery-caption"><span data-i18n="gallery.cap18">Placa homenaje a Pascual Harriague en su bodega</span></div>
-              </div>
+        <!-- Galería: una foto grande en el marco de la Ruta. Cambia solo si el visitante la mueve (flechas, teclado, deslizar o miniaturas); un toque la abre en pantalla completa. -->
+        <div id="galRuta" class="max-w-5xl mx-auto" role="region" aria-roledescription="galería" aria-label="Galería de fotografías del circuito" data-i18n-aria="a11y.gallery">
+          <div class="marco-ruta">
+            <div id="galEscena" class="gal-escena">
+              <img class="gal-fondo" src="./LaRutadelTannat_files/gal-mini-1.webp" width="240" height="180" alt="" aria-hidden="true" loading="lazy">
+              <img class="gal-foto es-visible" src="./LaRutadelTannat_files/hero-vinedo-uruguay.webp" width="1920" height="1440" alt="Viñedo uruguayo al amanecer" data-i18n-alt="gallery.cap1" loading="lazy" decoding="async">
+              <img class="gal-foto" alt="" aria-hidden="true" decoding="async">
+              <span id="galNum" class="gal-num" aria-hidden="true">1 / 19</span>
             </div>
+            <button type="button" class="gal-boton gal-prev" aria-label="Foto anterior" data-i18n-aria="gallery.prev"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg></button>
+            <button type="button" class="gal-boton gal-next" aria-label="Foto siguiente" data-i18n-aria="gallery.next"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>
+            <button type="button" class="gal-boton gal-ampliar" aria-label="Ver la foto en pantalla completa" data-i18n-aria="gallery.zoom"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"></path></svg></button>
           </div>
-
-          <!-- Columna 2 (baja) -->
-          <div class="gallery-col gallery-col-2">
-            <div class="gallery-track scroll-down" style="animation-duration: 46s;">
-              <div class="gallery-item" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGalleryLightbox(this.querySelector('img'));}">
-                <img src="./LaRutadelTannat_files/8254D59E-F679-48CA-94EB-EC6CFB40EC77.webp" width="700" height="525" alt="" loading="lazy">
-                <div class="gallery-caption"><span data-i18n="gallery.cap2">Bodega Harriague · Punto Cero del Tannat</span></div>
-              </div>
-              <div class="gallery-item" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGalleryLightbox(this.querySelector('img'));}">
-                <img src="./LaRutadelTannat_files/138db8c89a626f5efc0f940f343ad390bf0ec8ca.jpg" width="1024" height="768" alt="" loading="lazy">
-                <div class="gallery-caption"><span data-i18n="gallery.cap5">Viñedo El Asombrado · Mori Maglio</span></div>
-              </div>
-              <div class="gallery-item" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGalleryLightbox(this.querySelector('img'));}">
-                <img src="./LaRutadelTannat_files/termas-dayman-aerea.webp" width="1024" height="576" alt="" loading="lazy">
-                <div class="gallery-caption"><span data-i18n="gallery.cap8">Vista aérea de Termas del Daymán</span></div>
-              </div>
-              <div class="gallery-item" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGalleryLightbox(this.querySelector('img'));}">
-                <img src="./LaRutadelTannat_files/salto-costanera-puerto.webp" width="1000" height="1000" alt="" loading="lazy">
-                <div class="gallery-caption"><span data-i18n="gallery.cap12">Salto vista desde el puerto</span></div>
-              </div>
-              <div class="gallery-item" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGalleryLightbox(this.querySelector('img'));}">
-                <img src="./LaRutadelTannat_files/vendimia-fiesta-1985.webp" width="1000" height="1000" alt="" loading="lazy">
-                <div class="gallery-caption"><span data-i18n="gallery.cap14">Fiesta de la Vendimia, 1985</span></div>
-              </div>
-              <div class="gallery-item" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGalleryLightbox(this.querySelector('img'));}">
-                <img src="./LaRutadelTannat_files/visita-grupal-fogon-cavas.webp" width="1600" height="1200" alt="" loading="lazy">
-                <div class="gallery-caption"><span data-i18n="gallery.cap17">Visita grupal con fogón en las cavas históricas</span></div>
-              </div>
-              <div class="gallery-item" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGalleryLightbox(this.querySelector('img'));}">
-                <img src="./LaRutadelTannat_files/productores-bertolini-broglio.webp" width="850" height="577" alt="" loading="lazy">
-                <div class="gallery-caption"><span data-i18n="gallery.cap19">Productores en Bodega Bertolini &amp; Broglio</span></div>
-              </div>
-              <!-- Duplicado para loop continuo -->
-              <div class="gallery-item" aria-hidden="true">
-                <img src="./LaRutadelTannat_files/8254D59E-F679-48CA-94EB-EC6CFB40EC77.webp" width="700" height="525" alt="" loading="lazy">
-                <div class="gallery-caption"><span data-i18n="gallery.cap2">Bodega Harriague · Punto Cero del Tannat</span></div>
-              </div>
-              <div class="gallery-item" aria-hidden="true">
-                <img src="./LaRutadelTannat_files/138db8c89a626f5efc0f940f343ad390bf0ec8ca.jpg" width="1024" height="768" alt="" loading="lazy">
-                <div class="gallery-caption"><span data-i18n="gallery.cap5">Viñedo El Asombrado · Mori Maglio</span></div>
-              </div>
-              <div class="gallery-item" aria-hidden="true">
-                <img src="./LaRutadelTannat_files/termas-dayman-aerea.webp" width="1024" height="576" alt="" loading="lazy">
-                <div class="gallery-caption"><span data-i18n="gallery.cap8">Vista aérea de Termas del Daymán</span></div>
-              </div>
-              <div class="gallery-item" aria-hidden="true">
-                <img src="./LaRutadelTannat_files/salto-costanera-puerto.webp" width="1000" height="1000" alt="" loading="lazy">
-                <div class="gallery-caption"><span data-i18n="gallery.cap12">Salto vista desde el puerto</span></div>
-              </div>
-              <div class="gallery-item" aria-hidden="true">
-                <img src="./LaRutadelTannat_files/vendimia-fiesta-1985.webp" width="1000" height="1000" alt="" loading="lazy">
-                <div class="gallery-caption"><span data-i18n="gallery.cap14">Fiesta de la Vendimia, 1985</span></div>
-              </div>
-              <div class="gallery-item" aria-hidden="true">
-                <img src="./LaRutadelTannat_files/visita-grupal-fogon-cavas.webp" width="1600" height="1200" alt="" loading="lazy">
-                <div class="gallery-caption"><span data-i18n="gallery.cap17">Visita grupal con fogón en las cavas históricas</span></div>
-              </div>
-              <div class="gallery-item" aria-hidden="true">
-                <img src="./LaRutadelTannat_files/productores-bertolini-broglio.webp" width="850" height="577" alt="" loading="lazy">
-                <div class="gallery-caption"><span data-i18n="gallery.cap19">Productores en Bodega Bertolini &amp; Broglio</span></div>
-              </div>
-            </div>
+          <div class="text-center mt-6 min-h-[5.5rem]" aria-live="polite">
+            <h3 id="galTitulo" class="font-serif text-xl sm:text-2xl font-bold text-tannat-dark" data-i18n="gallery.cap1">Viñedo uruguayo al amanecer</h3>
+            <p id="galDesc" class="mt-1 text-base text-terroir max-w-2xl mx-auto text-balance" data-i18n="gallery.desc1">Viñedo real de Canelones utilizado como imagen ilustrativa de la luz dorada del otoño uruguayo.</p>
           </div>
-
-          <!-- Columna 3 (sube, oculta en móvil) -->
-          <div class="gallery-col gallery-col-3">
-            <div class="gallery-track scroll-up" style="animation-duration: 46s;">
-              <div class="gallery-item" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGalleryLightbox(this.querySelector('img'));}">
-                <img src="./LaRutadelTannat_files/salto-chico-cartel-inavi.webp" width="498" height="280" alt="" loading="lazy">
-                <div class="gallery-caption"><span data-i18n="gallery.cap3">Viñas y Bodega del Salto Chico</span></div>
-              </div>
-              <div class="gallery-item" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGalleryLightbox(this.querySelector('img'));}">
-                <img src="./LaRutadelTannat_files/galeria-brindis-cavas.webp" width="850" height="555" alt="" loading="lazy">
-                <div class="gallery-caption"><span data-i18n="gallery.cap6">Brindis en las cavas históricas</span></div>
-              </div>
-              <div class="gallery-item" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGalleryLightbox(this.querySelector('img'));}">
-                <img src="./LaRutadelTannat_files/termas-dayman.webp" width="720" height="563" alt="" loading="lazy">
-                <div class="gallery-caption"><span data-i18n="gallery.cap9">Piscinas termales del Daymán</span></div>
-              </div>
-              <div class="gallery-item" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGalleryLightbox(this.querySelector('img'));}">
-                <img src="./LaRutadelTannat_files/tannat-copa-vino.webp" width="1000" height="1000" alt="" loading="lazy">
-                <div class="gallery-caption"><span data-i18n="gallery.cap13">Una copa de Tannat uruguayo</span></div>
-              </div>
-              <div class="gallery-item" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGalleryLightbox(this.querySelector('img'));}">
-                <img src="./LaRutadelTannat_files/harriague-ruinas-nocturna.webp" width="500" height="500" alt="" loading="lazy">
-                <div class="gallery-caption"><span data-i18n="gallery.cap15">Noche de luces en las ruinas de Harriague</span></div>
-              </div>
-              <!-- Duplicado para loop continuo -->
-              <div class="gallery-item" aria-hidden="true">
-                <img src="./LaRutadelTannat_files/salto-chico-cartel-inavi.webp" width="498" height="280" alt="" loading="lazy">
-                <div class="gallery-caption"><span data-i18n="gallery.cap3">Viñas y Bodega del Salto Chico</span></div>
-              </div>
-              <div class="gallery-item" aria-hidden="true">
-                <img src="./LaRutadelTannat_files/galeria-brindis-cavas.webp" width="850" height="555" alt="" loading="lazy">
-                <div class="gallery-caption"><span data-i18n="gallery.cap6">Brindis en las cavas históricas</span></div>
-              </div>
-              <div class="gallery-item" aria-hidden="true">
-                <img src="./LaRutadelTannat_files/termas-dayman.webp" width="720" height="563" alt="" loading="lazy">
-                <div class="gallery-caption"><span data-i18n="gallery.cap9">Piscinas termales del Daymán</span></div>
-              </div>
-              <div class="gallery-item" aria-hidden="true">
-                <img src="./LaRutadelTannat_files/tannat-copa-vino.webp" width="1000" height="1000" alt="" loading="lazy">
-                <div class="gallery-caption"><span data-i18n="gallery.cap13">Una copa de Tannat uruguayo</span></div>
-              </div>
-              <div class="gallery-item" aria-hidden="true">
-                <img src="./LaRutadelTannat_files/harriague-ruinas-nocturna.webp" width="500" height="500" alt="" loading="lazy">
-                <div class="gallery-caption"><span data-i18n="gallery.cap15">Noche de luces en las ruinas de Harriague</span></div>
-              </div>
-            </div>
+          <div id="galTira" class="gal-tira mt-2" role="group" aria-label="Elegir foto" data-i18n-aria="gallery.pick">
+            <button type="button" class="gal-mini" data-n="1" data-src="./LaRutadelTannat_files/hero-vinedo-uruguay.webp" data-w="1920" data-h="1440" aria-current="true"><img src="./LaRutadelTannat_files/gal-mini-1.webp" width="240" height="180" alt="" loading="lazy"><span class="sr-only" data-i18n="gallery.cap1">Viñedo uruguayo al amanecer</span></button>
+            <button type="button" class="gal-mini" data-n="2" data-src="./LaRutadelTannat_files/8254D59E-F679-48CA-94EB-EC6CFB40EC77.webp" data-w="700" data-h="525"><img src="./LaRutadelTannat_files/gal-mini-2.webp" width="240" height="180" alt="" loading="lazy"><span class="sr-only" data-i18n="gallery.cap2">Bodega Harriague · Punto Cero del Tannat</span></button>
+            <button type="button" class="gal-mini" data-n="3" data-src="./LaRutadelTannat_files/salto-chico-cartel-inavi.webp" data-w="498" data-h="280"><img src="./LaRutadelTannat_files/gal-mini-3.webp" width="240" height="180" alt="" loading="lazy"><span class="sr-only" data-i18n="gallery.cap3">Viñas y Bodega del Salto Chico</span></button>
+            <button type="button" class="gal-mini" data-n="4" data-src="./LaRutadelTannat_files/bertolini-broglio-inavi.jpg" data-w="960" data-h="720"><img src="./LaRutadelTannat_files/gal-mini-4.webp" width="240" height="180" alt="" loading="lazy"><span class="sr-only" data-i18n="gallery.cap4">Fachada de Bertolini &amp; Broglio</span></button>
+            <button type="button" class="gal-mini" data-n="5" data-src="./LaRutadelTannat_files/138db8c89a626f5efc0f940f343ad390bf0ec8ca.jpg" data-w="1024" data-h="768"><img src="./LaRutadelTannat_files/gal-mini-5.webp" width="240" height="180" alt="" loading="lazy"><span class="sr-only" data-i18n="gallery.cap5">Viñedo El Asombrado · Mori Maglio</span></button>
+            <button type="button" class="gal-mini" data-n="6" data-src="./LaRutadelTannat_files/galeria-brindis-cavas.webp" data-w="850" data-h="555"><img src="./LaRutadelTannat_files/gal-mini-6.webp" width="240" height="180" alt="" loading="lazy"><span class="sr-only" data-i18n="gallery.cap6">Brindis en las cavas históricas</span></button>
+            <button type="button" class="gal-mini" data-n="7" data-src="./LaRutadelTannat_files/semana-harriague-lanz-ppal4-jpg.webp" data-w="645" data-h="350"><img src="./LaRutadelTannat_files/gal-mini-7.webp" width="240" height="180" alt="" loading="lazy"><span class="sr-only" data-i18n="gallery.cap7">Archivo histórico · La Caballada</span></button>
+            <button type="button" class="gal-mini" data-n="8" data-src="./LaRutadelTannat_files/termas-dayman-aerea.webp" data-w="1024" data-h="576"><img src="./LaRutadelTannat_files/gal-mini-8.webp" width="240" height="180" alt="" loading="lazy"><span class="sr-only" data-i18n="gallery.cap8">Vista aérea de Termas del Daymán</span></button>
+            <button type="button" class="gal-mini" data-n="9" data-src="./LaRutadelTannat_files/termas-dayman.webp" data-w="720" data-h="563"><img src="./LaRutadelTannat_files/gal-mini-9.webp" width="240" height="180" alt="" loading="lazy"><span class="sr-only" data-i18n="gallery.cap9">Piscinas termales del Daymán</span></button>
+            <button type="button" class="gal-mini" data-n="10" data-src="./LaRutadelTannat_files/pascual-harriague-retrato.webp" data-w="700" data-h="700"><img src="./LaRutadelTannat_files/gal-mini-10.webp" width="240" height="180" alt="" loading="lazy"><span class="sr-only" data-i18n="gallery.cap10">Pascual Harriague · pionero del Tannat</span></button>
+            <button type="button" class="gal-mini" data-n="11" data-src="./LaRutadelTannat_files/termas-arapey-piscina.webp" data-w="1000" data-h="1000"><img src="./LaRutadelTannat_files/gal-mini-11.webp" width="240" height="180" alt="" loading="lazy"><span class="sr-only" data-i18n="gallery.cap11">Piscinas termales del Arapey</span></button>
+            <button type="button" class="gal-mini" data-n="12" data-src="./LaRutadelTannat_files/salto-costanera-puerto.webp" data-w="1000" data-h="1000"><img src="./LaRutadelTannat_files/gal-mini-12.webp" width="240" height="180" alt="" loading="lazy"><span class="sr-only" data-i18n="gallery.cap12">Salto vista desde el puerto</span></button>
+            <button type="button" class="gal-mini" data-n="13" data-src="./LaRutadelTannat_files/tannat-copa-vino.webp" data-w="1000" data-h="1000"><img src="./LaRutadelTannat_files/gal-mini-13.webp" width="240" height="180" alt="" loading="lazy"><span class="sr-only" data-i18n="gallery.cap13">Una copa de Tannat uruguayo</span></button>
+            <button type="button" class="gal-mini" data-n="14" data-src="./LaRutadelTannat_files/vendimia-fiesta-1985.webp" data-w="1000" data-h="1000"><img src="./LaRutadelTannat_files/gal-mini-14.webp" width="240" height="180" alt="" loading="lazy"><span class="sr-only" data-i18n="gallery.cap14">Fiesta de la Vendimia, 1985</span></button>
+            <button type="button" class="gal-mini" data-n="15" data-src="./LaRutadelTannat_files/harriague-ruinas-nocturna.webp" data-w="500" data-h="500"><img src="./LaRutadelTannat_files/gal-mini-15.webp" width="240" height="180" alt="" loading="lazy"><span class="sr-only" data-i18n="gallery.cap15">Noche de luces en las ruinas de Harriague</span></button>
+            <button type="button" class="gal-mini" data-n="16" data-src="./LaRutadelTannat_files/cata-vinos-bodega-harriague.webp" data-w="1200" data-h="1600"><img src="./LaRutadelTannat_files/gal-mini-16.webp" width="240" height="180" alt="" loading="lazy"><span class="sr-only" data-i18n="gallery.cap16">Cata de vinos en Bodega Harriague</span></button>
+            <button type="button" class="gal-mini" data-n="17" data-src="./LaRutadelTannat_files/visita-grupal-fogon-cavas.webp" data-w="1600" data-h="1200"><img src="./LaRutadelTannat_files/gal-mini-17.webp" width="240" height="180" alt="" loading="lazy"><span class="sr-only" data-i18n="gallery.cap17">Visita grupal con fogón en las cavas históricas</span></button>
+            <button type="button" class="gal-mini" data-n="18" data-src="./LaRutadelTannat_files/placa-homenaje-harriague.webp" data-w="1600" data-h="1223"><img src="./LaRutadelTannat_files/gal-mini-18.webp" width="240" height="180" alt="" loading="lazy"><span class="sr-only" data-i18n="gallery.cap18">Placa homenaje a Pascual Harriague en su bodega</span></button>
+            <button type="button" class="gal-mini" data-n="19" data-src="./LaRutadelTannat_files/productores-bertolini-broglio.webp" data-w="850" data-h="577"><img src="./LaRutadelTannat_files/gal-mini-19.webp" width="240" height="180" alt="" loading="lazy"><span class="sr-only" data-i18n="gallery.cap19">Productores en Bodega Bertolini &amp; Broglio</span></button>
           </div>
-
         </div>
 
         <p class="text-center text-xs text-terroir mt-6 max-w-3xl mx-auto text-balance" data-i18n="gallery.credits">Fotografías: archivo propio del proyecto (cata de vinos y visita grupal en las cavas, por Homero Texeira; placa homenaje y productores en Bertolini &amp; Broglio) e INAVI · Wikimedia Commons — Alejgon (Termas del Arapey, CC BY-SA 4.0), Shant (Salto desde el puerto, CC BY 2.5), colaboradores de Wikimedia (Fiesta de la Vendimia 1985, CC BY-SA/GFDL; copa de Tannat uruguayo, CC BY-SA), INAVI (retrato de Pascual Harriague, dominio público; foto de la Semana de Harriague, cedida por Bodegas del Uruguay).</p>
@@ -3551,8 +3405,10 @@
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
       </button>
       <div class="bg-crema rounded-2xl overflow-hidden shadow-2xl">
-        <div class="bg-black">
-          <img id="lightboxImg" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="" class="w-full max-h-[65vh] object-contain mx-auto">
+        <div class="relative bg-black">
+          <img id="lightboxImg" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="" class="block max-w-full w-auto h-auto max-h-[65vh] mx-auto">
+          <button type="button" class="gal-boton gal-prev" onclick="galeria && galeria.mover(-1)" aria-label="Foto anterior" data-i18n-aria="gallery.prev"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg></button>
+          <button type="button" class="gal-boton gal-next" onclick="galeria && galeria.mover(1)" aria-label="Foto siguiente" data-i18n-aria="gallery.next"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>
         </div>
         <div class="p-5 sm:p-6">
           <h3 id="lightboxCaption" class="font-serif text-lg sm:text-xl font-bold text-tannat-dark mb-2"></h3>
@@ -3575,9 +3431,16 @@
     // Teclado y lectores de pantalla: el foco entra a la tarjeta, Tab queda adentro (ver el keydown más abajo)
     // y al cerrar vuelve al botón que lo abrió.
     let lastFocusedTrigger = null, openModalId = null;
-    function showModal(id) {
+    function showModal(id, origen) {
       const overlay = document.getElementById(id);
       lastFocusedTrigger = document.activeElement;
+      const tarjeta = overlay.querySelector('.modal-card');
+      if (tarjeta && origen && origen.getClientRects().length && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        const o = origen.getBoundingClientRect();
+        tarjeta.style.setProperty('--dx', Math.round(o.left + o.width / 2 - innerWidth / 2) + 'px');
+        tarjeta.style.setProperty('--dy', Math.round(o.top + o.height / 2 - innerHeight / 2) + 'px');
+        tarjeta.classList.add('desde-origen');
+      }
       overlay.classList.remove('hidden');
       void overlay.offsetWidth; // fuerza reflow para que la transición se dispare
       setTimeout(() => overlay.classList.add('modal-open'), 10);
@@ -3590,7 +3453,7 @@
       const overlay = document.getElementById(id);
       overlay.classList.remove('modal-open');
       document.body.classList.remove('overflow-hidden');
-      setTimeout(() => { if (!overlay.classList.contains('modal-open')) overlay.classList.add('hidden'); }, 200); // el guardia evita esconder un modal que se reabrió mientras tanto
+      setTimeout(() => { if (!overlay.classList.contains('modal-open')) { overlay.classList.add('hidden'); const t = overlay.querySelector('.modal-card.desde-origen'); if (t) t.classList.remove('desde-origen'); } }, 260); // el guardia evita esconder un modal que se reabrió mientras tanto
       if (openModalId !== id) return; // Escape llama a todos los cierres: solo el modal abierto devuelve el foco
       openModalId = null;
       const t = lastFocusedTrigger; lastFocusedTrigger = null;
@@ -3908,7 +3771,7 @@
         "a11y.nav": "Navegación principal",
         "a11y.menu": "Abrir menú de navegación",
         "a11y.copaTabs": "Secciones de la copa",
-        "a11y.gallery": "Galería de fotografías del circuito, con desplazamiento automático",
+        "a11y.gallery": "Galería de fotografías del circuito",
         "a11y.map": "Mapa interactivo real de La Ruta del Tannat en Salto, Uruguay",
         "a11y.whatsapp": "Contactar por WhatsApp al +598 92 614 800",
         "a11y.compareTable": "Tabla comparativa de paquetes (se desplaza hacia los costados)",
@@ -4089,7 +3952,7 @@
 
         "seasons.title": "¿Cuándo Vivir la Experiencia?",
         "seasons.subtitle": "Cada estación del año transforma el paisaje de Salto y revela una faceta única de la uva, la vendimia y las cavas.",
-        "seasons.credits": "Fotografías cedidas para este proyecto por INAVI (cosecha de vendimia) y Bodegas del Uruguay (Semana de Harriague).",
+        "seasons.credits": "Fotografías cedidas para este proyecto por INAVI (cosecha de vendimia y picnic de primavera) y Bodegas del Uruguay (Semana de Harriague).",
         "season.s1Time": "Dic — Mar · Verano",
         "season.s1Title": "Temporada de Vendimia",
         "season.s1Desc": "Entre febrero y marzo, el momento cumbre del año: cosecha manual al amanecer, degustación de uvas directas del racimo, visitas crepusculares y pisada tradicional en lagares.",
@@ -4273,8 +4136,7 @@
         "gallery.badge": "Postales del Circuito",
         "gallery.title": "Galería",
         "gallery.subtitle": "Imágenes reales de las bodegas, los viñedos, las termas y el patrimonio que forman parte del circuito.",
-        "gallery.pause": "Pausar movimiento",
-        "gallery.play": "Reanudar movimiento",
+        "gallery.prev": "Foto anterior", "gallery.next": "Foto siguiente", "gallery.zoom": "Ver la foto en pantalla completa", "gallery.pick": "Elegir foto",
         "gallery.cap1": "Viñedo uruguayo al amanecer",
         "gallery.cap2": "Bodega Harriague · Punto Cero del Tannat",
         "gallery.cap3": "Viñas y Bodega del Salto Chico",
@@ -4570,7 +4432,7 @@
         "a11y.nav": "Navegação principal",
         "a11y.menu": "Abrir menu de navegação",
         "a11y.copaTabs": "Seções da taça",
-        "a11y.gallery": "Galeria de fotografias do circuito, com rolagem automática",
+        "a11y.gallery": "Galeria de fotografias do circuito",
         "a11y.map": "Mapa interativo real da Rota do Tannat em Salto, Uruguai",
         "a11y.whatsapp": "Falar pelo WhatsApp: +598 92 614 800",
         "a11y.compareTable": "Tabela comparativa de pacotes (rola para os lados)",
@@ -4751,7 +4613,7 @@
 
         "seasons.title": "Quando Viver a Experiência?",
         "seasons.subtitle": "Cada estação do ano transforma a paisagem de Salto e revela uma faceta única da uva, da colheita e das cavas.",
-        "seasons.credits": "Fotografias cedidas para este projeto por INAVI (colheita da vindima) e Bodegas del Uruguay (Semana de Harriague).",
+        "seasons.credits": "Fotografias cedidas para este projeto por INAVI (colheita da vindima e piquenique de primavera) e Bodegas del Uruguay (Semana de Harriague).",
         "season.s1Time": "Dez — Mar · Verão",
         "season.s1Title": "Temporada de Colheita",
         "season.s1Desc": "Entre fevereiro e março, o momento auge do ano: colheita manual ao amanhecer, degustação de uvas direto do cacho, visitas ao entardecer e pisa tradicional nos lagares.",
@@ -4935,8 +4797,7 @@
         "gallery.badge": "Postais do Circuito",
         "gallery.title": "Galeria",
         "gallery.subtitle": "Imagens reais das vinícolas, dos vinhedos, das termas e do patrimônio que fazem parte do circuito.",
-        "gallery.pause": "Pausar movimento",
-        "gallery.play": "Retomar movimento",
+        "gallery.prev": "Foto anterior", "gallery.next": "Próxima foto", "gallery.zoom": "Ver a foto em tela cheia", "gallery.pick": "Escolher foto",
         "gallery.cap1": "Vinhedo uruguaio ao amanhecer",
         "gallery.cap2": "Vinícola Harriague · Ponto Zero do Tannat",
         "gallery.cap3": "Vinhas e Vinícola do Salto Chico",
@@ -5232,7 +5093,7 @@
         "a11y.nav": "Main navigation",
         "a11y.menu": "Open navigation menu",
         "a11y.copaTabs": "Glass sections",
-        "a11y.gallery": "Photo gallery of the circuit, with automatic scrolling",
+        "a11y.gallery": "Photo gallery of the circuit",
         "a11y.map": "Interactive map of The Tannat Route in Salto, Uruguay",
         "a11y.whatsapp": "Contact us on WhatsApp: +598 92 614 800",
         "a11y.compareTable": "Package comparison table (scrolls sideways)",
@@ -5413,7 +5274,7 @@
 
         "seasons.title": "When to Live the Experience?",
         "seasons.subtitle": "Each season transforms Salto's landscape and reveals a unique facet of the grape, the harvest, and the cellars.",
-        "seasons.credits": "Photos provided for this project by INAVI (grape harvest) and Bodegas del Uruguay (Semana de Harriague).",
+        "seasons.credits": "Photos provided for this project by INAVI (grape harvest and spring picnic) and Bodegas del Uruguay (Semana de Harriague).",
         "season.s1Time": "Dec — Mar · Summer",
         "season.s1Title": "Harvest Season",
         "season.s1Desc": "Between February and March, the peak moment of the year: hand-picked harvest at dawn, grape tastings straight from the vine, sunset visits, and traditional grape-treading.",
@@ -5597,8 +5458,7 @@
         "gallery.badge": "Postcards from the Circuit",
         "gallery.title": "Gallery",
         "gallery.subtitle": "Real images of the wineries, vineyards, hot springs, and heritage that make up the circuit.",
-        "gallery.pause": "Pause motion",
-        "gallery.play": "Resume motion",
+        "gallery.prev": "Previous photo", "gallery.next": "Next photo", "gallery.zoom": "View the photo full screen", "gallery.pick": "Choose a photo",
         "gallery.cap1": "Uruguayan vineyard at sunrise",
         "gallery.cap2": "Harriague Winery · Ground Zero of Tannat",
         "gallery.cap3": "Salto Chico Vines and Winery",
@@ -6421,7 +6281,8 @@
     function openStationModal(id) {
       activeStationId = id;
       renderStationModalContent(id);
-      showModal('stationModal');
+      const a = document.activeElement;
+      showModal('stationModal', (a && a.closest && a.closest('[onclick^="openStationModal"]')) || document.querySelector('[onclick^="openStationModal(' + id + ')"]'));
     }
 
     function closeStationModal() {
@@ -6844,32 +6705,58 @@
       document.getElementById('lightboxCaption').innerHTML = dict[capKey] || '';
       document.getElementById('lightboxDesc').innerHTML = dict[descKey] || '';
     }
-    function openGalleryLightbox(imgEl) {
-      const item = imgEl.closest('.gallery-item');
-      const capSpan = item.querySelector('.gallery-caption [data-i18n]');
-      if (!capSpan) return;
-      activeLightboxCapKey = capSpan.getAttribute('data-i18n');
-      renderGalleryLightbox(activeLightboxCapKey, imgEl.src);
-      showModal('galleryLightbox');
-    }
+    // Galería: la foto grande cambia con un fundido (la de atrás se carga y decodifica antes de mostrarse); flechas, teclado, deslizar y miniaturas.
+    // Nada se mueve solo. Un toque en la foto (o el botón de esquina) la abre en pantalla completa, donde las flechas del teclado siguen funcionando.
+    const galeria = (function initGaleria() {
+      const raiz = document.getElementById('galRuta'); if (!raiz) return null;
+      const escena = document.getElementById('galEscena'), capas = escena.querySelectorAll('.gal-foto'), fondo = escena.querySelector('.gal-fondo');
+      const tira = document.getElementById('galTira'), minis = [...tira.querySelectorAll('.gal-mini')];
+      const tit = document.getElementById('galTitulo'), desc = document.getElementById('galDesc'), num = document.getElementById('galNum');
+      const quieto = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      let actual = 0, frente = 0, pedido = 0;
+      const dict = () => translations[currentLang] || translations.es;
+      function mostrar(i, enfocar) {
+        i = (i + minis.length) % minis.length;
+        const m = minis[i], n = m.dataset.n, d = dict(), cap = 'gallery.cap' + n, pid = ++pedido, atras = capas[1 - frente];
+        atras.width = +m.dataset.w; atras.height = +m.dataset.h; atras.src = m.dataset.src;
+        atras.setAttribute('data-i18n-alt', cap); atras.alt = decodeHtmlEntities(d[cap]);
+        (atras.decode ? atras.decode() : Promise.resolve()).catch(() => {}).then(() => {
+          if (pid !== pedido) return; // mientras cargaba se pidió otra foto
+          atras.classList.add('es-visible'); atras.removeAttribute('aria-hidden');
+          const vieja = capas[frente]; vieja.classList.remove('es-visible'); vieja.setAttribute('aria-hidden', 'true'); vieja.removeAttribute('data-i18n-alt'); vieja.alt = '';
+          frente = 1 - frente;
+        });
+        fondo.src = m.querySelector('img').src;
+        tit.setAttribute('data-i18n', cap); tit.innerHTML = d[cap] || '';
+        desc.setAttribute('data-i18n', 'gallery.desc' + n); desc.innerHTML = d['gallery.desc' + n] || '';
+        num.textContent = (i + 1) + ' / ' + minis.length;
+        minis[actual].removeAttribute('aria-current'); m.setAttribute('aria-current', 'true'); actual = i;
+        tira.scrollTo({ left: m.offsetLeft - (tira.clientWidth - m.offsetWidth) / 2, behavior: quieto() ? 'auto' : 'smooth' }); // solo la tira, nunca la página
+        if (enfocar) m.focus({ preventScroll: true });
+        const sig = minis[(i + 1) % minis.length]; (new Image()).src = sig.dataset.src; // la siguiente queda lista
+        if (activeLightboxCapKey) { activeLightboxCapKey = cap; renderGalleryLightbox(cap, m.dataset.src); }
+      }
+      const mover = (paso, enfocar) => mostrar(actual + paso, enfocar);
+      const ampliar = () => { const m = minis[actual]; activeLightboxCapKey = 'gallery.cap' + m.dataset.n; renderGalleryLightbox(activeLightboxCapKey, m.dataset.src); showModal('galleryLightbox'); };
+      raiz.querySelector('.gal-prev').addEventListener('click', () => mover(-1));
+      raiz.querySelector('.gal-next').addEventListener('click', () => mover(1));
+      raiz.querySelector('.gal-ampliar').addEventListener('click', ampliar);
+      minis.forEach((m, i) => m.addEventListener('click', () => mostrar(i)));
+      raiz.addEventListener('keydown', (e) => { if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return; e.preventDefault(); mover(e.key === 'ArrowRight' ? 1 : -1, tira.contains(document.activeElement)); });
+      // deslizar con el dedo (o arrastrar con el mouse) cambia de foto; un toque sin deslizar la abre en grande
+      let x0 = null, deslizo = false;
+      escena.addEventListener('pointerdown', (e) => { x0 = e.clientX; deslizo = false; });
+      escena.addEventListener('pointerup', (e) => { if (x0 === null) return; const dx = e.clientX - x0; x0 = null; if (Math.abs(dx) > 40) { deslizo = true; mover(dx < 0 ? 1 : -1); } });
+      escena.addEventListener('pointercancel', () => { x0 = null; });
+      escena.addEventListener('click', () => { if (deslizo) { deslizo = false; return; } ampliar(); });
+      return { mover };
+    })();
     function closeGalleryLightbox() {
       activeLightboxCapKey = null;
       hideModal('galleryLightbox');
     }
-    document.querySelectorAll('.gallery-columns').forEach(col => {
-      col.addEventListener('click', (e) => {
-        const item = e.target.closest('.gallery-item');
-        if (item) openGalleryLightbox(item.querySelector('img'));
-      });
-    });
-
-    // Galería: botón de pausa/reanudar y pausa automática cuando sale de pantalla (no gasta batería ni CPU donde nadie la mira)
-    (function initGalleryPause() {
-      const cols = document.querySelector('.gallery-columns'), btn = document.getElementById('galPause');
-      if (!cols || !btn) return;
-      btn.addEventListener('click', () => { const pausar = btn.dataset.paused !== 'true'; btn.dataset.paused = String(pausar); cols.classList.toggle('is-paused', pausar); });
-      if ('IntersectionObserver' in window) new IntersectionObserver((es) => cols.classList.toggle('is-offscreen', !es[0].isIntersecting)).observe(cols);
-    })();
+    // en pantalla completa, las flechas del teclado pasan de foto
+    document.addEventListener('keydown', (e) => { if (galeria && openModalId === 'galleryLightbox' && (e.key === 'ArrowLeft' || e.key === 'ArrowRight')) { e.preventDefault(); galeria.mover(e.key === 'ArrowRight' ? 1 : -1); } });
 
     // Tarjetas de Misión y Visión: alternan con clic o teclado (Enter/Espacio). Se maneja con JS directo
     // (no con variantes condicionales de Tailwind) para que la altura se calcule siempre a partir del
@@ -6976,7 +6863,7 @@
     // Descorche: al apretar el botón del mouse sobre algo clicable, un corcho sale volando con unas burbujas doradas (~0,6 s), justo cuando el cursor se ve destapado. Es decorativo: no frena ni cambia
     // la acción del clic, no corre con "reducir movimiento", con teclado ni en pantallas táctiles, y borra sus propios elementos.
     (function descorche() {
-      const CLICABLE = 'a[href], button:not(:disabled), summary, [role="button"], .cursor-pointer, .gallery-item, .cup-orb, .cup-tab';
+      const CLICABLE = 'a[href], button:not(:disabled), summary, [role="button"], .cursor-pointer, .gal-escena, .cup-orb, .cup-tab';
       const mouse = window.matchMedia('(hover: hover) and (pointer: fine)'), reducir = window.matchMedia('(prefers-reduced-motion: reduce)');
       if (!mouse.matches || !Element.prototype.animate) return;
       let ultimo = -1000, vivos = 0;
