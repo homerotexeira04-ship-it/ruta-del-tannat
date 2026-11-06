@@ -26,12 +26,13 @@
   const wallX = (y, th) => CX + halfW(y) * Math.cos(th);
   const wallY = (y, th) => y + halfW(y) * K * Math.sin(th);
 
-  function bowlPath() {
+  // open = solo las paredes (para el contorno): cerrado, el trazo agregaba una línea recta que cruzaba la boca y parecía una tapa
+  function bowlPath(open) {
     const p = new Path2D(), N = 56;
     p.moveTo(CX - halfW(RIM_Y), RIM_Y);
     for (let i = 1; i <= N; i++) { const y = RIM_Y + ((BOWL_END - RIM_Y) * i) / N; p.lineTo(CX - halfW(y), y); }
     for (let i = N; i >= 0; i--) { const y = RIM_Y + ((BOWL_END - RIM_Y) * i) / N; p.lineTo(CX + halfW(y), y); }
-    p.closePath(); return p;
+    if (!open) p.closePath(); return p;
   }
 
   // Color del vino según tanino (T), y acidez (A): rubí profundo → violáceo casi opaco; más acidez = más luminoso
@@ -47,7 +48,7 @@
 
   function create(canvas, opts) {
     opts = opts || {};
-    const ctx = canvas.getContext('2d'), bowl = bowlPath();
+    const ctx = canvas.getContext('2d'), bowl = bowlPath(), walls = bowlPath(true);
     const reduced = !!opts.reducedMotion;
     let S = 1, back = null, front = null, active = false, raf = 0, last = 0, running = false;
     const st = {
@@ -63,6 +64,14 @@
       const { c, g } = layer();
       g.save(); g.translate(CX + 8, FOOT_Y + 12); g.scale(1, 0.15);
       const sh = g.createRadialGradient(0, 0, 8, 0, 0, 160); sh.addColorStop(0, 'rgba(0,0,0,.65)'); sh.addColorStop(1, 'rgba(0,0,0,0)'); g.fillStyle = sh; g.fillRect(-170, -170, 340, 340); g.restore();
+      // la mesa: una línea de luz apenas visible donde apoya el pie, para que la copa no flote
+      const tb = g.createLinearGradient(CX - 250, 0, CX + 250, 0);
+      [[0, 0], [.3, .07], [.5, .12], [.7, .07], [1, 0]].forEach(([o, a]) => tb.addColorStop(o, 'rgba(243,226,179,' + a + ')'));
+      g.fillStyle = tb; g.fillRect(CX - 250, FOOT_Y + 16, 500, 1.2);
+      // reflejo del pie sobre la mesa
+      g.save(); g.beginPath(); g.ellipse(CX, FOOT_Y + 30, 96, 9, 0, 0, TAU);
+      const rf = g.createLinearGradient(0, FOOT_Y + 21, 0, FOOT_Y + 40); rf.addColorStop(0, 'rgba(255,255,255,.045)'); rf.addColorStop(1, 'rgba(255,255,255,0)');
+      g.fillStyle = rf; g.fill(); g.restore();
       // pie de la copa
       const fg = g.createLinearGradient(CX - 108, 0, CX + 108, 0);
       [[0, .32], [.16, .07], [.5, .03], [.84, .07], [1, .3]].forEach(([o, a]) => fg.addColorStop(o, 'rgba(255,255,255,' + a + ')'));
@@ -70,21 +79,25 @@
       g.beginPath(); g.ellipse(CX, FOOT_Y, 108, 17, 0, 0, TAU); g.fillStyle = fg; g.fill(); g.strokeStyle = 'rgba(255,255,255,.4)'; g.lineWidth = 1.3; g.stroke();
       // tallo
       const stem = new Path2D();
-      stem.moveTo(CX - 8, 490); stem.bezierCurveTo(CX - 6, 560, CX - 5.5, 610, CX - 6.5, 650); stem.bezierCurveTo(CX - 8, 676, CX - 24, 688, CX - 40, 697);
-      stem.lineTo(CX + 40, 697); stem.bezierCurveTo(CX + 24, 688, CX + 8, 676, CX + 6.5, 650); stem.bezierCurveTo(CX + 5.5, 610, CX + 6, 560, CX + 8, 490); stem.closePath();
-      const sg = g.createLinearGradient(CX - 8, 0, CX + 8, 0);
-      [[0, .4], [.3, .05], [.62, .03], [1, .26]].forEach(([o, a]) => sg.addColorStop(o, 'rgba(255,255,255,' + a + ')'));
-      g.fillStyle = sg; g.fill(stem); g.strokeStyle = 'rgba(255,255,255,.3)'; g.lineWidth = 1.1; g.stroke(stem);
-      g.beginPath(); g.moveTo(CX - 3.2, 515); g.lineTo(CX - 3, 650); g.strokeStyle = 'rgba(255,255,255,.5)'; g.lineWidth = 1.4; g.lineCap = 'round'; g.stroke();
+      // tallo: nace ancho de la copa, se afina hacia el medio y se abre en curva suave hacia el pie
+      stem.moveTo(CX - 11, 486); stem.bezierCurveTo(CX - 6.5, 506, CX - 4.4, 532, CX - 4.4, 572); stem.bezierCurveTo(CX - 4.4, 618, CX - 5, 640, CX - 7, 656);
+      stem.bezierCurveTo(CX - 10, 678, CX - 26, 689, CX - 44, 697);
+      stem.lineTo(CX + 44, 697); stem.bezierCurveTo(CX + 26, 689, CX + 10, 678, CX + 7, 656);
+      stem.bezierCurveTo(CX + 5, 640, CX + 4.4, 618, CX + 4.4, 572); stem.bezierCurveTo(CX + 4.4, 532, CX + 6.5, 506, CX + 11, 486); stem.closePath();
+      const sg = g.createLinearGradient(CX - 9, 0, CX + 9, 0);
+      [[0, .34], [.3, .06], [.62, .03], [1, .22]].forEach(([o, a]) => sg.addColorStop(o, 'rgba(255,255,255,' + a + ')'));
+      g.fillStyle = sg; g.fill(stem); g.strokeStyle = 'rgba(255,255,255,.24)'; g.lineWidth = 1; g.stroke(stem);
+      const sl = g.createLinearGradient(0, 505, 0, 662); sl.addColorStop(0, 'rgba(255,255,255,0)'); sl.addColorStop(.25, 'rgba(255,255,255,.55)'); sl.addColorStop(.8, 'rgba(255,255,255,.4)'); sl.addColorStop(1, 'rgba(255,255,255,0)');
+      g.beginPath(); g.moveTo(CX - 2.2, 505); g.lineTo(CX - 2, 662); g.strokeStyle = sl; g.lineWidth = 1.3; g.lineCap = 'round'; g.stroke();
       // borde trasero
-      g.beginPath(); g.ellipse(CX, RIM_Y, halfW(RIM_Y), halfW(RIM_Y) * K, 0, Math.PI, TAU); g.strokeStyle = 'rgba(255,255,255,.2)'; g.lineWidth = 1.2; g.stroke();
+      g.beginPath(); g.ellipse(CX, RIM_Y, halfW(RIM_Y), halfW(RIM_Y) * K, 0, Math.PI, TAU); g.strokeStyle = 'rgba(255,255,255,.13)'; g.lineWidth = 1; g.stroke();
       return c;
     }
     function buildFront() {
       const { c, g } = layer();
       // grosor del vidrio: banda interior suave + contorno
-      g.save(); g.clip(bowl); g.lineWidth = 12; g.strokeStyle = 'rgba(255,255,255,.075)'; g.stroke(bowl); g.restore();
-      g.lineWidth = 1.3; g.strokeStyle = 'rgba(255,255,255,.34)'; g.stroke(bowl);
+      g.save(); g.clip(bowl); g.lineWidth = 12; g.strokeStyle = 'rgba(255,255,255,.075)'; g.stroke(walls); g.restore();
+      g.lineWidth = 1.3; g.strokeStyle = 'rgba(255,255,255,.34)'; g.stroke(walls);
       // reflejos verticales (ventana de estudio) a la izquierda y difuso a la derecha
       const streak = (dx, y0, y1, w, a) => {
         g.beginPath();
@@ -95,11 +108,11 @@
       streak(15, 222, 420, 10, 0.11); streak(15, 222, 420, 3, 0.7);
       g.save(); g.scale(-1, 1); g.translate(-2 * CX, 0); streak(17, 250, 400, 9, 0.07); streak(17, 250, 400, 2, 0.32); g.restore();
       // reflejos puntuales
-      [[CX - 83, 262, 3.2, .9], [CX - 78, 279, 1.6, .6], [CX + 76, 318, 2, .55]].forEach(([x, y, r, a]) => { g.beginPath(); g.arc(x, y, r, 0, TAU); g.fillStyle = 'rgba(255,255,255,' + a + ')'; g.fill(); });
-      // borde delantero
-      const hr = halfW(RIM_Y);
-      g.beginPath(); g.ellipse(CX, RIM_Y, hr, hr * K, 0, 0, Math.PI); g.strokeStyle = 'rgba(255,255,255,.62)'; g.lineWidth = 1.8; g.stroke();
-      g.beginPath(); g.ellipse(CX, RIM_Y, hr - 3, (hr - 3) * K * 0.92, 0, 0.1, Math.PI - 0.1); g.strokeStyle = 'rgba(255,255,255,.22)'; g.lineWidth = 1; g.stroke();
+      [[CX - 83, 262, 2, .7], [CX + 76, 318, 1.4, .4]].forEach(([x, y, r, a]) => { const pg = g.createRadialGradient(x, y, 0, x, y, r * 2.4); pg.addColorStop(0, 'rgba(255,255,255,' + a + ')'); pg.addColorStop(.4, 'rgba(255,255,255,' + a * 0.5 + ')'); pg.addColorStop(1, 'rgba(255,255,255,0)'); g.fillStyle = pg; g.fillRect(x - r * 3, y - r * 3, r * 6, r * 6); });
+      // borde delantero: brilla en los costados (donde el vidrio se ve de canto) y casi desaparece al frente
+      const hr = halfW(RIM_Y), rimG = (a) => { const lg = g.createLinearGradient(CX - hr, 0, CX + hr, 0); [[0, a], [.22, a * 0.5], [.5, a * 0.28], [.78, a * 0.5], [1, a]].forEach(([o, v]) => lg.addColorStop(o, 'rgba(255,255,255,' + v + ')')); return lg; };
+      g.beginPath(); g.ellipse(CX, RIM_Y, hr, hr * K, 0, 0, Math.PI); g.strokeStyle = rimG(0.72); g.lineWidth = 1.6; g.stroke();
+      g.beginPath(); g.ellipse(CX, RIM_Y, hr - 3, (hr - 3) * K * 0.92, 0, 0.1, Math.PI - 0.1); g.strokeStyle = rimG(0.16); g.lineWidth = 1; g.stroke();
       // luz que atraviesa la base del cuenco
       const rg = g.createRadialGradient(CX - 3, 476, 1, CX - 3, 476, 30); rg.addColorStop(0, 'rgba(255,255,255,.18)'); rg.addColorStop(1, 'rgba(255,255,255,0)');
       g.fillStyle = rg; g.fillRect(CX - 40, 440, 80, 70);
@@ -205,19 +218,20 @@
         g.beginPath();
         for (let i = 0; i < n; i++) { const th = (i / (n - 1)) * Math.PI, yc = st.level - liftAt(th), yf = yc - st.film[i]; const x = wallX(yf, th), y = wallY(yf, th); i ? g.lineTo(x, y) : g.moveTo(x, y); }
         for (let i = n - 1; i >= 0; i--) { const th = (i / (n - 1)) * Math.PI, yc = st.level - liftAt(th); g.lineTo(wallX(yc, th), wallY(yc, th)); }
-        g.closePath(); g.fillStyle = colors.midA(0.42); g.fill();
+        g.closePath(); g.fillStyle = colors.midA(0.34); g.fill();
         g.beginPath();
         for (let i = 0; i < n; i++) { const th = (i / (n - 1)) * Math.PI, yc = st.level - liftAt(th), yf = yc - st.film[i]; const x = wallX(yf, th), y = wallY(yf, th); i ? g.lineTo(x, y) : g.moveTo(x, y); }
-        g.strokeStyle = colors.rimA(0.6); g.lineWidth = 1.3; g.stroke();
+        g.strokeStyle = colors.rimA(0.32); g.lineWidth = 1; g.stroke();
       }
-      // lágrimas
+      // lágrimas: hilos finos y translúcidos que se engrosan hacia una gota alargada, con un brillo mínimo
       for (const t of st.tears) {
+        const hx = wallX(t.y, t.th), hy = wallY(t.y, t.th), w = 0.9 + st.cB * 1.1, ty = wallY(t.top, t.th);
         g.beginPath();
         for (let y = t.top; y <= t.y; y += 4) { const x = wallX(y, t.th), yy = wallY(y, t.th); y === t.top ? g.moveTo(x, yy) : g.lineTo(x, yy); }
-        const hx = wallX(t.y, t.th), hy = wallY(t.y, t.th), w = 1.6 + st.cB * 1.6;
-        g.strokeStyle = colors.midA(0.75); g.lineWidth = w; g.lineCap = 'round'; g.stroke();
-        g.beginPath(); g.arc(hx, hy, w * 0.95 + 1.2, 0, TAU); g.fillStyle = colors.rimA(0.9); g.fill();
-        g.beginPath(); g.arc(hx - 0.5, hy - 0.6, 0.7, 0, TAU); g.fillStyle = 'rgba(255,255,255,.7)'; g.fill();
+        const tg = g.createLinearGradient(0, ty, 0, hy); tg.addColorStop(0, colors.rimA(0)); tg.addColorStop(1, colors.rimA(0.42));
+        g.strokeStyle = tg; g.lineWidth = w; g.lineCap = 'round'; g.stroke();
+        g.beginPath(); g.ellipse(hx, hy - w * 0.6, w * 0.95, w * 1.7, 0, 0, TAU); g.fillStyle = colors.rimA(0.5); g.fill();
+        g.beginPath(); g.arc(hx - w * 0.3, hy - w * 1.1, w * 0.35, 0, TAU); g.fillStyle = 'rgba(255,255,255,.32)'; g.fill();
       }
       // superficie
       g.beginPath(); pts.forEach((p, i) => (i ? g.lineTo(p.x, p.y) : g.moveTo(p.x, p.y))); g.closePath();
@@ -230,7 +244,10 @@
       const cx1 = Math.cos(phi + 0.6), cy1 = Math.sin(phi + 0.6);
       const sh = g.createLinearGradient(CX - cx1 * hw0, sy - cy1 * hw0 * K, CX + cx1 * hw0, sy + cy1 * hw0 * K);
       sh.addColorStop(0.3, 'rgba(255,255,255,0)'); sh.addColorStop(0.5, 'rgba(255,255,255,' + (0.12 + A * 0.2) + ')'); sh.addColorStop(0.7, 'rgba(255,255,255,0)'); g.fillStyle = sh; g.fill();
-      g.save(); g.translate(CX - hw0 * 0.36, sy - hw0 * K * 0.3); g.rotate(-0.25); g.beginPath(); g.ellipse(0, 0, hw0 * 0.22, hw0 * K * 0.15, 0, 0, TAU); g.fillStyle = 'rgba(255,255,255,.17)'; g.fill(); g.restore();
+      // reflejo de la ventana: un arco fino sobre la mitad de atrás de la superficie, que se desvanece en las puntas
+      { const r = hw0 * 0.78, a0 = Math.PI * 1.12, a1 = Math.PI * 1.5, ag = g.createLinearGradient(CX + r * Math.cos(a0), 0, CX + r * Math.cos(a1), 0);
+        ag.addColorStop(0, 'rgba(255,255,255,0)'); ag.addColorStop(.55, 'rgba(255,255,255,.26)'); ag.addColorStop(1, 'rgba(255,255,255,0)');
+        g.beginPath(); g.ellipse(CX, sy, r, r * K, 0, a0, a1); g.strokeStyle = ag; g.lineWidth = 2; g.lineCap = 'round'; g.stroke(); }
       // vórtice: arcos concéntricos que giran con distinto retraso
       if (A > 0.03) {
         for (let k = 1; k <= 3; k++) {
@@ -264,9 +281,14 @@
     function drawParticles(g) {
       if (!st.sparks.length && !st.wisps.length) return;
       g.save(); g.globalCompositeOperation = 'lighter';
+      // aromas: volutas doradas finas que suben ondulando (antes eran manchas borrosas que ensuciaban la copa)
+      g.lineCap = 'round';
       for (const p of st.wisps) {
-        const q = p.life / p.max, a = Math.sin(Math.PI * q) * 0.22, r = p.size * (0.7 + q);
-        const gr = g.createRadialGradient(p.x, p.y, 0, p.x, p.y, r); gr.addColorStop(0, 'rgba(255,205,175,' + a + ')'); gr.addColorStop(1, 'rgba(255,205,175,0)'); g.fillStyle = gr; g.fillRect(p.x - r, p.y - r, r * 2, r * 2);
+        if (p.life < 0) continue;
+        const q = p.life / p.max, a = Math.sin(Math.PI * q) * 0.5, amp = 3 + q * p.size * 0.45, len = p.size * 1.6;
+        g.beginPath();
+        for (let k = 0; k <= 8; k++) { const f = k / 8, x = p.x + Math.sin(p.ph + f * 4.2 + q * 5) * amp * f, y = p.y + f * len; k ? g.lineTo(x, y) : g.moveTo(x, y); }
+        g.strokeStyle = 'rgba(236,204,140,' + a + ')'; g.lineWidth = 1.1 * (1 - q * 0.5); g.stroke();
       }
       for (const p of st.sparks) {
         const q = 1 - p.life / p.max, a = q * q; g.fillStyle = 'rgba(255,214,140,' + a + ')';
@@ -305,7 +327,7 @@
         kick();
       },
       wisps(n) {
-        for (let i = 0; i < (n || 10); i++) st.wisps.push({ x: CX + (Math.random() - 0.5) * 120, y: st.level - 8 - Math.random() * 12, vx: (Math.random() - 0.5) * 16, vy: -28 - Math.random() * 40, life: -Math.random() * 0.5, max: 1.7 + Math.random() * 0.9, size: 12 + Math.random() * 16 });
+        for (let i = 0; i < (n || 10); i++) st.wisps.push({ x: CX + (Math.random() - 0.5) * 120, y: st.level - 8 - Math.random() * 12, vx: (Math.random() - 0.5) * 16, vy: -28 - Math.random() * 40, life: -Math.random() * 0.5, max: 1.7 + Math.random() * 0.9, size: 12 + Math.random() * 16, ph: Math.random() * TAU });
         kick();
       },
       get charge() { return st.charge; }, resetCharge() { st.charge = 0; },
