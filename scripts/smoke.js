@@ -105,7 +105,7 @@ function servidor() {
     const sin = await page.evaluate(() => { const enMenu = new Set([...document.querySelectorAll('[data-nav-group] a')].map((a) => a.getAttribute('href').slice(1))); return [...document.querySelectorAll('main section[id]')].map((s) => s.id).filter((id) => id !== 'hero' && !enMenu.has(id)); });
     check('todas las secciones de la página son alcanzables desde el menú', sin.length === 0, 'sin acceso: ' + sin.join(', ')); await page.close(); }
 
-  // 9. menú del celular: 4 grupos en acordeón (se abre uno a la vez) con las 19 secciones, y abierto no pisa la barra fija de reserva
+  // 9. menú del celular: 4 grupos en acordeón (se abre uno a la vez) con las 18 secciones, y abierto no pisa la barra fija de reserva
   { const page = await abrir(360, 640, true); const r = await page.evaluate(async () => {
       const esp = (ms) => new Promise((ok) => setTimeout(ok, ms)), d = [...document.querySelectorAll('#mobileMenu details')], bar = document.querySelector('div.mbar');
       document.getElementById('mobileMenuBtn').click(); await esp(200);
@@ -114,7 +114,7 @@ function servidor() {
       d[2].querySelector('summary').click(); await esp(150);
       return { grupos: d.length, exclusivo, enlaces: document.querySelectorAll('#mobileMenu details a').length, solapa: Math.round(document.getElementById('mobileMenu').getBoundingClientRect().bottom - bar.getBoundingClientRect().top) };
     });
-    check('el menú del celular agrupa las 19 secciones en acordeón y no pisa la barra de reserva', r.grupos === 4 && r.exclusivo && r.enlaces === 19 && r.solapa <= 0, JSON.stringify(r)); await page.close(); }
+    check('el menú del celular agrupa las 18 secciones en acordeón y no pisa la barra de reserva', r.grupos === 4 && r.exclusivo && r.enlaces === 18 && r.solapa <= 0, JSON.stringify(r)); await page.close(); }
 
   // 10. el hover de las tarjetas anima (el reveal al hacer scroll no debe pisarles la transición): se mide cuadro por cuadro cuántos pasos distintos recorre la elevación
   //     (las tarjetas de las estaciones se inclinan con el mouse: su transform es matrix3d y la elevación va en el índice 13)
