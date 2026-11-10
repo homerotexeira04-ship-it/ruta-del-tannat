@@ -266,7 +266,7 @@
   <!-- Tailwind CSS compilado (ver README: npm run build:css) -->
   <!-- Foto del inicio: 720 px para celulares (va recortada y bajo un velo oscuro, por eso "sizes" la pide a media pantalla: alcanza aun con pantallas de alta densidad), 1280 y 1920 para el resto. Debe decir lo mismo que la imagen del hero (más abajo). -->
   <link rel="preload" as="image" href="./LaRutadelTannat_files/hero-vinedo-uruguay-1280.webp" imagesrcset="./LaRutadelTannat_files/hero-vinedo-uruguay-720.webp 720w, ./LaRutadelTannat_files/hero-vinedo-uruguay-1280.webp 1280w, ./LaRutadelTannat_files/hero-vinedo-uruguay.webp 1920w" imagesizes="(max-width: 767px) 50vw, 100vw" fetchpriority="high">
-  <link rel="stylesheet" href="./LaRutadelTannat_files/tailwind.css?v=26">
+  <link rel="stylesheet" href="./LaRutadelTannat_files/tailwind.css?v=27">
 
   <!-- Tipografía editorial alojada en el sitio (sin pedidos a Google): Playfair Display (titulares) + Plus Jakarta Sans (cuerpo/UI).
        Fuentes variables, solo el subconjunto latin (cubre es/pt/en; otro alfabeto cae a la fuente del sistema). Licencia OFL.
@@ -1025,7 +1025,6 @@
               <a href="#pionero" class="block px-3 py-2 rounded-lg text-sm text-gray-200 hover:text-gold hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold transition-colors" data-i18n="nav.pioneer">El Pionero</a>
               <a href="#copa" class="block px-3 py-2 rounded-lg text-sm text-gray-200 hover:text-gold hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold transition-colors" data-i18n="nav.cup">La Copa de Tannat</a>
               <a href="#inavi" class="block px-3 py-2 rounded-lg text-sm text-gray-200 hover:text-gold hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold transition-colors" data-i18n="nav.inavi">INAVI</a>
-              <a href="#vinos" class="block px-3 py-2 rounded-lg text-sm text-gray-200 hover:text-gold hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold transition-colors" data-i18n="nav.wines">Vinos</a>
               <a href="#maridaje" class="block px-3 py-2 rounded-lg text-sm text-gray-200 hover:text-gold hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold transition-colors" data-i18n="nav.pairing">Maridaje</a>
             </div>
           </div>
@@ -1112,7 +1111,6 @@
           <a href="#pionero" class="block text-gray-200 hover:text-gold py-2 font-medium" data-i18n="nav.pioneer">El Pionero</a>
           <a href="#copa" class="block text-gray-200 hover:text-gold py-2 font-medium" data-i18n="nav.cup">La Copa de Tannat</a>
           <a href="#inavi" class="block text-gray-200 hover:text-gold py-2 font-medium" data-i18n="nav.inavi">INAVI</a>
-          <a href="#vinos" class="block text-gray-200 hover:text-gold py-2 font-medium" data-i18n="nav.wines">Vinos</a>
           <a href="#maridaje" class="block text-gray-200 hover:text-gold py-2 font-medium" data-i18n="nav.pairing">Maridaje</a>
         </div>
       </details>
@@ -2763,56 +2761,8 @@
       </div>
     </section>
 
-    <!-- ==================== VINOS Y FICHAS TÉCNICAS ==================== -->
-    <section id="vinos" class="py-20 lg:py-28 bg-crema text-basalt">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center max-w-3xl mx-auto mb-16">
-          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gold/15 border border-gold/30 text-gold-dark font-semibold text-xs uppercase tracking-wider mb-4" data-i18n="vinos.badge">
-            Fichas Técnicas
-          </div>
-          <h2 class="font-serif text-3xl sm:text-5xl sm:leading-[1.15] font-bold tracking-[0.012em] text-balance text-tannat-dark mb-4 uppercase" data-i18n="vinos.title">
-            Vinos del Circuito
-          </h2>
-          <p class="text-lg text-terroir font-light max-w-[40rem] mx-auto" data-i18n="vinos.subtitle">
-            Tannat real de las bodegas de la Ruta, con datos verificados de cada etiqueta y sus premios. Bodega Harriague es hoy un espacio cultural en recuperación, sin producción propia de vino.
-          </p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div class="bg-white rounded-2xl border border-tannat-100 p-6 flex flex-col">
-            <span class="inline-block self-start px-3 py-1 rounded-full bg-tannat/10 text-tannat text-xs font-bold uppercase tracking-wider mb-4" data-i18n="vinos.w1Style">Gran Reserva</span>
-            <h3 class="font-serif text-xl font-bold text-tannat-dark" data-i18n="vinos.w1Name">Salto Chico — Tannat Reserva</h3>
-            <p class="text-xs text-terroir/80 uppercase tracking-wide mb-3" data-i18n="st2.title">Bodega Salto Chico</p>
-            <p class="text-sm text-terroir leading-relaxed flex-1" data-i18n="vinos.w1Desc">
-              100% Tannat, sobre suelos arenosos y de canto rodado en la costa del río Uruguay. Crianza en barricas de roble francés y americano: redondo en boca, con gran cuerpo y persistencia.
-            </p>
-            <p class="text-xs text-gold-dark font-semibold mt-4 pt-4 border-t border-tannat-100" data-i18n="vinos.w1Award">Medalla de Oro, Vinalies Internationales (París, 2011) y Tannat al Mundo 2024.</p>
-          </div>
-          <div class="bg-white rounded-2xl border border-tannat-100 p-6 flex flex-col">
-            <span class="inline-block self-start px-3 py-1 rounded-full bg-tannat/10 text-tannat text-xs font-bold uppercase tracking-wider mb-4" data-i18n="vinos.w2Style">Parcela Única</span>
-            <h3 class="font-serif text-xl font-bold text-tannat-dark" data-i18n="vinos.w2Name">Bertolini &amp; Broglio — Tannat Exotic Senza Crianza</h3>
-            <p class="text-xs text-terroir/80 uppercase tracking-wide mb-3" data-i18n="st3.title">Bodega Bertolini &amp; Broglio</p>
-            <p class="text-sm text-terroir leading-relaxed flex-1" data-i18n="vinos.w2Desc">
-              100% Tannat clon 717, de una única parcela y sin paso por barrica (14,7% vol.). Muy oscuro y denso, con notas a frutas negras maduras, chocolate y tabaco; en boca es untuoso, con taninos dulces y una larga persistencia.
-            </p>
-            <p class="text-xs text-gold-dark font-semibold mt-4 pt-4 border-t border-tannat-100" data-i18n="vinos.w2Award">Medalla de Oro y mejor puntaje del certamen, Tannat al Mundo (6ª edición).</p>
-          </div>
-          <div class="bg-white rounded-2xl border border-tannat-100 p-6 flex flex-col">
-            <span class="inline-block self-start px-3 py-1 rounded-full bg-tannat/10 text-tannat text-xs font-bold uppercase tracking-wider mb-4" data-i18n="vinos.w3Style">Reserva</span>
-            <h3 class="font-serif text-xl font-bold text-tannat-dark" data-i18n="vinos.w3Name">Mori Maglio — Tannat Reserva</h3>
-            <p class="text-xs text-terroir/80 uppercase tracking-wide mb-3" data-i18n="st4.title">Mori Maglio Wines</p>
-            <p class="text-sm text-terroir leading-relaxed flex-1" data-i18n="vinos.w3Desc">
-              Tannat del Viñedo El Asombrado, en Parada Daymán, implantado desde 1999. Vino de autor de la familia Mori Maglio, en partidas limitadas.
-            </p>
-            <p class="text-xs text-gold-dark font-semibold mt-4 pt-4 border-t border-tannat-100" data-i18n="vinos.w3Award">Medalla, Tannat al Mundo 2022 (cosecha 2021).</p>
-          </div>
-        </div>
-        <p class="text-xs text-terroir/80 text-center mt-8 max-w-3xl mx-auto text-balance" data-i18n="vinos.source">Datos verificados en los sitios oficiales de cada bodega, INAVI y coberturas de prensa especializada (Tannat al Mundo, Vinalies Internationales).</p>
-      </div>
-    </section>
-
     <!-- ==================== SECTION: MARIDAJE (DEL PLATO AL VINO) ==================== -->
-    <section id="maridaje" class="py-20 lg:py-28 bg-tannat-900 text-white relative" aria-labelledby="pairTitle">
+    <section id="maridaje" class="py-20 lg:py-28 bg-tannat-900 text-white relative border-t border-white/10" aria-labelledby="pairTitle">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         <div class="text-center max-w-3xl mx-auto mb-12">
@@ -3792,7 +3742,7 @@
         "pair.air": "Aireación",
         "pair.avoid": "Evitá:",
         "pair.route": "En la Ruta:",
-        "pair.seeWines": "Ver los vinos →",
+        "pair.seeStations": "Ver las bodegas →",
         "pair.toPostcard": "Mandar este maridaje en una postal",
         "pair.postalMsg": "Maridaje del día: {dish} con {wine}. ¡Salud desde Salto!",
         "pair.scale": "{name}: {n} de 5",
@@ -4307,23 +4257,6 @@
         "gallery.credits": "Fotografías: archivo propio del proyecto (cata de vinos y visita grupal en las cavas, por Homero Texeira; placa homenaje y productores en Bertolini &amp; Broglio) e INAVI · Wikimedia Commons — Alejgon (Termas del Arapey, CC BY-SA 4.0), Shant (Salto desde el puerto, CC BY 2.5), colaboradores de Wikimedia (Fiesta de la Vendimia 1985, CC BY-SA/GFDL; copa de Tannat uruguayo, CC BY-SA), INAVI (retrato de Pascual Harriague, dominio público; foto de la Semana de Harriague, cedida por Bodegas del Uruguay).",
 
         "map.title": "Mapa del Circuito Enoturístico",
-        "nav.wines": "Vinos",
-        "vinos.badge": "Fichas Técnicas",
-        "vinos.title": "Vinos del Circuito",
-        "vinos.subtitle": "Tannat real de las bodegas de la Ruta, con datos verificados de cada etiqueta y sus premios. Bodega Harriague es hoy un espacio cultural en recuperación, sin producción propia de vino.",
-        "vinos.w1Style": "Gran Reserva",
-        "vinos.w1Name": "Salto Chico — Tannat Reserva",
-        "vinos.w1Desc": "100% Tannat, sobre suelos arenosos y de canto rodado en la costa del río Uruguay. Crianza en barricas de roble francés y americano: redondo en boca, con gran cuerpo y persistencia.",
-        "vinos.w1Award": "Medalla de Oro, Vinalies Internationales (París, 2011) y Tannat al Mundo 2024.",
-        "vinos.w2Style": "Parcela Única",
-        "vinos.w2Name": "Bertolini &amp; Broglio — Tannat Exotic Senza Crianza",
-        "vinos.w2Desc": "100% Tannat clon 717, de una única parcela y sin paso por barrica (14,7% vol.). Muy oscuro y denso, con notas a frutas negras maduras, chocolate y tabaco; en boca es untuoso, con taninos dulces y una larga persistencia.",
-        "vinos.w2Award": "Medalla de Oro y mejor puntaje del certamen, Tannat al Mundo (6ª edición).",
-        "vinos.w3Style": "Reserva",
-        "vinos.w3Name": "Mori Maglio — Tannat Reserva",
-        "vinos.w3Desc": "Tannat del Viñedo El Asombrado, en Parada Daymán, implantado desde 1999. Vino de autor de la familia Mori Maglio, en partidas limitadas.",
-        "vinos.w3Award": "Medalla, Tannat al Mundo 2022 (cosecha 2021).",
-        "vinos.source": "Datos verificados en los sitios oficiales de cada bodega, INAVI y coberturas de prensa especializada (Tannat al Mundo, Vinalies Internationales).",
         "map.subtitle": "Haz clic en los puntos del mapa para ubicar cada estación a lo largo de Salto y la Ruta 3 hacia Parada Daymán.",
         "map.gps": "GPS &nearr;",
         "map.waze": "Waze &nearr;",
@@ -4477,7 +4410,7 @@
         "pair.air": "Oxigenação",
         "pair.avoid": "Evite:",
         "pair.route": "Na Rota:",
-        "pair.seeWines": "Ver os vinhos →",
+        "pair.seeStations": "Ver as vinícolas →",
         "pair.toPostcard": "Enviar esta harmonização em um cartão-postal",
         "pair.postalMsg": "Harmonização do dia: {dish} com {wine}. Saúde de Salto!",
         "pair.scale": "{name}: {n} de 5",
@@ -4992,23 +4925,6 @@
         "gallery.credits": "Fotografias: arquivo próprio do projeto (degustação de vinhos e visita em grupo nas caves, por Homero Texeira; placa de homenagem e produtores em Bertolini &amp; Broglio) e INAVI · Wikimedia Commons — Alejgon (Termas do Arapey, CC BY-SA 4.0), Shant (Salto visto do porto, CC BY 2.5), colaboradores da Wikimedia (Festa da Vindima 1985, CC BY-SA/GFDL; taça de Tannat uruguaio, CC BY-SA), INAVI (retrato de Pascual Harriague, domínio público; foto da Semana de Harriague, cedida pela Bodegas del Uruguay).",
 
         "map.title": "Mapa do Circuito Enoturístico",
-        "nav.wines": "Vinhos",
-        "vinos.badge": "Fichas Técnicas",
-        "vinos.title": "Vinhos do Circuito",
-        "vinos.subtitle": "Tannat real das vinícolas da Rota, com dados verificados de cada rótulo e seus prêmios. A Vinícola Harriague é hoje um espaço cultural em recuperação, sem produção própria de vinho.",
-        "vinos.w1Style": "Gran Reserva",
-        "vinos.w1Name": "Salto Chico — Tannat Reserva",
-        "vinos.w1Desc": "100% Tannat, sobre solos arenosos e de seixos rolados na costa do Rio Uruguai. Envelhecimento em barricas de carvalho francês e americano: redondo na boca, com grande corpo e persistência.",
-        "vinos.w1Award": "Medalha de Ouro, Vinalies Internationales (Paris, 2011) e Tannat al Mundo 2024.",
-        "vinos.w2Style": "Parcela Única",
-        "vinos.w2Name": "Bertolini &amp; Broglio — Tannat Exotic Senza Crianza",
-        "vinos.w2Desc": "100% Tannat clone 717, de uma única parcela e sem passagem por barrica (14,7% vol.). Muito escuro e denso, com notas de frutas negras maduras, chocolate e tabaco; na boca é untuoso, com taninos doces e longa persistência.",
-        "vinos.w2Award": "Medalha de Ouro e melhor pontuação do concurso, Tannat al Mundo (6ª edição).",
-        "vinos.w3Style": "Reserva",
-        "vinos.w3Name": "Mori Maglio — Tannat Reserva",
-        "vinos.w3Desc": "Tannat do Vinhedo El Asombrado, em Parada Daymán, implantado desde 1999. Vinho de autor da família Mori Maglio, em lotes limitados.",
-        "vinos.w3Award": "Medalha, Tannat al Mundo 2022 (safra 2021).",
-        "vinos.source": "Dados verificados nos sites oficiais de cada vinícola, no INAVI e em coberturas de imprensa especializada (Tannat al Mundo, Vinalies Internationales).",
         "map.subtitle": "Clique nos pontos do mapa para localizar cada vinícola ao longo de Salto e da Rota 3 rumo a Parada Daymán.",
         "map.gps": "GPS &nearr;",
         "map.waze": "Waze &nearr;",
@@ -5162,7 +5078,7 @@
         "pair.air": "Breathing",
         "pair.avoid": "Avoid:",
         "pair.route": "On the Route:",
-        "pair.seeWines": "See the wines →",
+        "pair.seeStations": "See the wineries →",
         "pair.toPostcard": "Send this pairing on a postcard",
         "pair.postalMsg": "Pairing of the day: {dish} with {wine}. Cheers from Salto!",
         "pair.scale": "{name}: {n} out of 5",
@@ -5677,23 +5593,6 @@
         "gallery.credits": "Photos: the project's own archive (wine tasting and group cellar visit, by Homero Texeira; commemorative plaque and producers at Bertolini &amp; Broglio) and INAVI · Wikimedia Commons — Alejgon (Termas del Arapey, CC BY-SA 4.0), Shant (Salto seen from the port, CC BY 2.5), Wikimedia contributors (the 1985 Vendimia Festival, CC BY-SA/GFDL; glass of Uruguayan Tannat, CC BY-SA), INAVI (portrait of Pascual Harriague, public domain; Semana de Harriague photo, provided by Bodegas del Uruguay).",
 
         "map.title": "Interactive Wine Route Map",
-        "nav.wines": "Wines",
-        "vinos.badge": "Technical Sheets",
-        "vinos.title": "Wines of the Route",
-        "vinos.subtitle": "Real Tannat from the Route's wineries, with verified data on each label and its awards. Bodega Harriague is today a cultural space under restoration, with no wine production of its own.",
-        "vinos.w1Style": "Gran Reserva",
-        "vinos.w1Name": "Salto Chico — Tannat Reserva",
-        "vinos.w1Desc": "100% Tannat, grown on sandy, river-stone soils on the Uruguay River coast. Aged in French and American oak barrels: round on the palate, with great body and persistence.",
-        "vinos.w1Award": "Gold Medal, Vinalies Internationales (Paris, 2011) and Tannat al Mundo 2024.",
-        "vinos.w2Style": "Single Vineyard",
-        "vinos.w2Name": "Bertolini &amp; Broglio — Tannat Exotic Senza Crianza",
-        "vinos.w2Desc": "100% Tannat, clone 717, from a single vineyard plot with no oak aging (14.7% ABV). Very dark and dense, with notes of ripe black fruit, chocolate and tobacco; full-bodied on the palate, with sweet tannins and a long finish.",
-        "vinos.w2Award": "Gold Medal and top score of the competition, Tannat al Mundo (6th edition).",
-        "vinos.w3Style": "Reserva",
-        "vinos.w3Name": "Mori Maglio — Tannat Reserva",
-        "vinos.w3Desc": "Tannat from the El Asombrado Vineyard in Parada Daymán, planted since 1999. A family label from Mori Maglio, produced in limited batches.",
-        "vinos.w3Award": "Medal, Tannat al Mundo 2022 (2021 vintage).",
-        "vinos.source": "Data verified on each winery's official site, INAVI, and specialized press coverage (Tannat al Mundo, Vinalies Internationales).",
         "map.subtitle": "Click on map markers to locate each historic winery along Salto and Route 3.",
         "map.gps": "GPS &nearr;",
         "map.waze": "Waze &nearr;",
@@ -7809,7 +7708,7 @@
           + '<div class="space-y-2 mb-5">' + medidas + '</div>'
           + '<dl class="grid sm:grid-cols-3 gap-3 mb-5">' + dato(t('pair.temp'), e.temp + ' °C') + dato(t('pair.glass'), t('pair.s.' + k + '.glass')) + dato(t('pair.air'), t('pair.s.' + k + '.air')) + '</dl>'
           + '<p class="text-sm text-gray-300 mb-3"><strong class="text-gold-light">' + t('pair.avoid') + '</strong> ' + t('pair.d.' + plato + '.avoid') + '</p>'
-          + (ruta ? '<p class="text-sm text-gray-300 mb-3"><strong class="text-gold-light">' + t('pair.route') + '</strong> ' + ruta + ' <a href="#vinos" class="underline underline-offset-2 text-gold-light hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white rounded">' + t('pair.seeWines') + '</a></p>' : '')
+          + (ruta ? '<p class="text-sm text-gray-300 mb-3"><strong class="text-gold-light">' + t('pair.route') + '</strong> ' + ruta + ' <a href="#estaciones" class="underline underline-offset-2 text-gold-light hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white rounded">' + t('pair.seeStations') + '</a></p>' : '')
           + (k !== 'D' ? '<p class="text-sm text-gray-300 mb-3">' + t('pair.summer') + '</p>' : '')
           + '<div class="flex flex-wrap items-center gap-3 mt-6"><a href="#paquetes" class="' + BTN + ' font-extrabold bg-gold hover:bg-gold-light text-tannat-900">' + t('cup.cta') + '</a><button type="button" data-pair-postal class="' + BTN + ' font-bold border border-gold/60 text-gold-light hover:bg-white/10">' + t('pair.toPostcard') + '</button></div>';
         live.textContent = decodeHtmlEntities(t('pair.live').replace('{dish}', dish).replace('{wine}', vino));
