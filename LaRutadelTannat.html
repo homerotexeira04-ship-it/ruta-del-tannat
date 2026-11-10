@@ -457,8 +457,12 @@
        La foto nunca se agranda más que su tamaño real (no se pixela); el resto del cuadro lo llena la misma foto desenfocada. */
     .gal-escena { position: relative; aspect-ratio: 3 / 2; overflow: hidden; border-radius: 10px; background: #1D060D; cursor: zoom-in; touch-action: pan-y; }
     .gal-fondo { position: absolute; inset: -8%; width: 116%; height: 116%; max-width: none; object-fit: cover; filter: blur(22px) saturate(1.1) brightness(.5); }
-    .gal-foto { position: absolute; inset: 0; margin: auto; max-width: 100%; max-height: 100%; width: auto; height: auto; opacity: 0; transform: scale(1.025); transition: opacity .6s var(--ease-out), transform .9s var(--ease-out); box-shadow: 0 14px 34px -12px rgba(0,0,0,.65); }
+    .gal-foto { position: absolute; inset: 0; margin: auto; max-width: 100%; max-height: 100%; width: auto; height: auto; opacity: 0; transform: scale(1.025); transition: opacity .6s var(--ease-out), transform .9s var(--ease-out), translate .45s var(--ease-out); box-shadow: 0 14px 34px -12px rgba(0,0,0,.65); }
     .gal-foto.es-visible { opacity: 1; transform: none; }
+    .gal-escena.arrastrando .gal-foto { transition-property: opacity, transform; } /* mientras se arrastra, la foto va pegada al dedo */
+    .lb-escena { overflow: hidden; touch-action: none; }
+    #lightboxImg { transform-origin: 0 0; cursor: zoom-in; transition: transform var(--dur-media) var(--ease-out); -webkit-user-drag: none; user-select: none; }
+    #lightboxImg.con-zoom { cursor: grab; } #lightboxImg.sin-transicion { transition: none; }
     .gal-escena img { -webkit-user-drag: none; user-select: none; } /* arrastrar con el mouse desliza la galería, no levanta la imagen */
     .gal-boton { position: absolute; z-index: 3; width: 44px; height: 44px; border-radius: 9999px; display: grid; place-items: center; background: rgba(29,6,13,.6); color: #fff; border: 1px solid rgba(217,180,122,.5); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); transition: background-color .2s; }
     .gal-boton:hover { background: rgba(29,6,13,.85); }
@@ -832,6 +836,46 @@
       .cup-orb { transition: none; } .cup-orb.is-on .cup-orb-i, .cup-ambient i, .cup-hint svg, .cup-in, .cup-flare .cup-glow, .cup-done .cup-cta { animation: none; }
       .cup-tilt { transition: none; transform: none; } .cup-toast.is-on { animation: none; opacity: 1; } .cup-g { transition: none; }
     }
+    /* Formulario de reserva: errores junto al campo y vista previa del mensaje como burbuja de WhatsApp */
+    .fld-err { margin-top: .35rem; font-size: .8rem; line-height: 1.35; color: #9B1C2E; }
+    .fld-err:not([hidden]) { animation: errIn var(--dur-media) var(--ease-out); }
+    @keyframes errIn { from { opacity: 0; transform: translateY(-3px); } }
+    #bookingForm [aria-invalid="true"] { border-color: #B4233A; box-shadow: 0 0 0 3px rgba(180, 35, 58, .14); }
+    .wa-burbuja { margin-top: .6rem; padding: .7rem .85rem; border-radius: .9rem .9rem .9rem .25rem; background: #DCF8C6; color: #111B21; font-size: .85rem; line-height: 1.45; white-space: pre-wrap; overflow-wrap: anywhere; box-shadow: 0 1px 1px rgba(0, 0, 0, .12); max-height: 15rem; overflow-y: auto; }
+    .wa-burbuja .wa-falta { color: #7A5B12; font-style: italic; }
+    .wa-nota { margin-top: .6rem; text-align: center; font-size: .78rem; color: #5A4D41; }
+    @media (prefers-reduced-motion: reduce) { .fld-err:not([hidden]) { animation: none; } }
+    /* Armá tu día (ver initMiDia) */
+    .dia { margin-top: 2rem; padding: 1.25rem; border-radius: 1.25rem; background: #fff; border: 1px solid #F4EBED; box-shadow: 0 10px 30px -10px rgba(43, 10, 20, .12); }
+    @media (min-width: 640px) { .dia { padding: 1.75rem 2rem; } }
+    .dia-tit { font-family: "Playfair Display", Georgia, serif; font-size: 1.5rem; font-weight: 700; color: #4A101D; }
+    .dia-sub { margin-top: .25rem; color: #5A4D41; font-size: .95rem; }
+    .dia-opciones { display: flex; flex-wrap: wrap; gap: .5rem; margin: 1rem 0 0; padding: 0; border: 0; min-width: 0; }
+    .dia-chip { display: inline-flex; align-items: center; min-height: 44px; padding: .45rem .95rem; border-radius: 999px; border: 1.5px solid #E6D3B5; background: #FCF9F2; color: #5A4D41; font-size: .85rem; font-weight: 600; cursor: pointer; user-select: none; transition: background-color var(--dur-rapida) var(--ease-out), border-color var(--dur-rapida) var(--ease-out), color var(--dur-rapida) var(--ease-out), scale var(--dur-rapida) var(--ease-out); }
+    .dia-chip:has(:checked) { background: #721B28; border-color: #721B28; color: #fff; }
+    .dia-chip:has(:focus-visible) { outline: 2px solid #C29D62; outline-offset: 2px; }
+    .dia-chip:active { scale: .96; }
+    .dia-chip-termas:has(:checked) { background: #2B0A14; border-color: #2B0A14; }
+    .dia-lista { margin: 1.25rem 0 0; padding: 0; list-style: none; }
+    .dia-parada { display: flex; align-items: center; gap: .75rem; }
+    .dia-num { flex: none; display: inline-grid; place-items: center; width: 2.25rem; height: 2.25rem; border-radius: 999px; background: #721B28; color: #D9B47A; font-size: .78rem; font-weight: 800; letter-spacing: .02em; }
+    .dia-parada.es-termas .dia-num { background: #2B0A14; font-size: 1rem; }
+    .dia-nom { font-weight: 700; color: #4A101D; line-height: 1.25; }
+    .dia-tramo { position: relative; margin-left: 1.125rem; padding: .55rem 0 .55rem 1.6rem; border-left: 2px dashed #D9B47A; color: #5A4D41; font-size: .82rem; }
+    .dia-lista.dia-nueva .dia-parada, .dia-lista.dia-nueva .dia-tramo { animation: diaIn var(--dur-media) var(--ease-out) both; animation-delay: calc(var(--i, 0) * 45ms); }
+    @keyframes diaIn { from { opacity: 0; transform: translateY(4px); } }
+    .dia-total { margin-top: 1rem; font-weight: 700; color: #4A101D; }
+    .dia-nota { margin-top: .35rem; font-size: .8rem; color: #5A4D41; }
+    .dia-acciones { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1rem; }
+    .dia-btn { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: .6rem 1.2rem; background: #721B28; color: #fff; font-size: .875rem; font-weight: 700; transition: background-color var(--dur-rapida) var(--ease-out), scale var(--dur-rapida) var(--ease-out); }
+    .dia-btn:hover { background: #4A101D; }
+    .dia-btn:focus-visible { outline: 2px solid #C29D62; outline-offset: 2px; }
+    .dia-btn-sec { background: transparent; color: #721B28; border: 1.5px solid rgba(114, 27, 40, .3); }
+    .dia-btn-sec:hover { background: #FAF5F6; }
+    .dia-btn[aria-disabled="true"] { opacity: .45; pointer-events: none; }
+    /* La ruta en el mapa: se dibuja de punta a punta (ver dibujarRutaMapa) */
+    .ruta-mapa { transition: stroke-dashoffset 1.6s var(--ease-in-out); }
+    @media (prefers-reduced-motion: reduce) { .dia-lista.dia-nueva .dia-parada, .dia-lista.dia-nueva .dia-tramo { animation: none; } .ruta-mapa { transition: none; } }
     /* ===== Movimiento al scrollear y al pasar el mouse (ver initMovimiento). Nada se fija al scroll ni lo frena. ===== */
     /* Barra de lectura: una línea de vino bajo el encabezado que se llena a medida que se baja */
     .read-bar { position: absolute; left: 0; right: 0; bottom: -1px; height: 3px; transform-origin: 0 50%; transform: scaleX(0); background: linear-gradient(90deg, #8F2636, #C29D62 70%, #D9B47A); pointer-events: none; }
@@ -2835,6 +2879,28 @@
             </div>
           </div>
 
+          <!-- Armá tu día: el visitante elige paradas, se ordenan con el menor manejo (tiempos reales de OpenStreetMap, ver initMiDia)
+               y ese recorrido es el que se dibuja en el mapa. «Pedir por WhatsApp» lo deja escrito en el formulario de reserva. -->
+          <div id="miDia" class="dia">
+            <h3 class="dia-tit" data-i18n="day.title">Armá tu día</h3>
+            <p class="dia-sub" data-i18n="day.subtitle">Elegí qué querés visitar: te mostramos el orden con menos manejo y lo dibujamos en el mapa.</p>
+            <fieldset class="dia-opciones">
+              <legend class="sr-only" data-i18n="day.legend">Paradas del recorrido</legend>
+              <label class="dia-chip"><input type="checkbox" class="sr-only" value="1" checked><span data-i18n="day.s1">01 · Bodega Harriague</span></label>
+              <label class="dia-chip"><input type="checkbox" class="sr-only" value="2" checked><span data-i18n="day.s2">02 · Salto Chico</span></label>
+              <label class="dia-chip"><input type="checkbox" class="sr-only" value="3" checked><span data-i18n="day.s3">03 · Bertolini &amp; Broglio</span></label>
+              <label class="dia-chip"><input type="checkbox" class="sr-only" value="4" checked><span data-i18n="day.s4">04 · Mori Maglio</span></label>
+              <label class="dia-chip dia-chip-termas"><input type="checkbox" class="sr-only" value="t"><span data-i18n="day.termasChip">♨ Terminar en Termas del Daymán</span></label>
+            </fieldset>
+            <ol id="miDiaLista" class="dia-lista" aria-live="polite"></ol>
+            <p id="miDiaTotal" class="dia-total"></p>
+            <p class="dia-nota" data-i18n="day.note">Tiempos de manejo reales de OpenStreetMap, sin contar lo que te quedes en cada lugar: eso lo coordinamos por WhatsApp.</p>
+            <div class="dia-acciones">
+              <a id="miDiaMaps" class="dia-btn dia-btn-sec rounded-full" href="https://www.google.com/maps" target="_blank" rel="noopener noreferrer" data-i18n="day.maps">Abrir en Google Maps ↗</a>
+              <button type="button" id="miDiaPedir" class="dia-btn rounded-full" data-i18n="day.ask">Pedir este recorrido por WhatsApp</button>
+            </div>
+          </div>
+
           <!-- Accesos rápidos: ruta completa (Google Maps soporta varias paradas; Waze no, así que va a la primera) -->
           <div class="mt-8 flex flex-wrap justify-center gap-3">
             <a href="https://www.google.com/maps/dir/?api=1&amp;destination=-31.4550,-57.9050&amp;waypoints=-31.3998,-57.9846%7C-31.334285,-57.971263%7C-31.527946170700144,-57.91004803293071&amp;travelmode=driving" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-5 py-2.5 min-h-[44px] rounded-full bg-tannat text-white text-sm font-bold hover:bg-tannat-dark transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-tannat focus-visible:ring-offset-2" data-i18n="map.openRouteGoogle">
@@ -3328,20 +3394,22 @@
       <div class="p-6 sm:p-8">
         <p class="text-sm text-terroir mb-4" data-i18n="modal.desc">Completa tus datos y te coordinaremos el itinerario inmediatamente.</p>
 
-        <form id="bookingForm" onsubmit="handleBookingSubmit(event)">
+        <form id="bookingForm" onsubmit="handleBookingSubmit(event)" novalidate>
           <div class="grid grid-cols-1 sm:grid-cols-5 gap-5">
 
             <!-- Left: datos del visitante -->
             <div class="sm:col-span-3 space-y-4">
               <div>
                 <label for="bookName" class="block text-xs font-bold uppercase tracking-wider text-terroir mb-1" data-i18n="form.name">Nombre Completo *</label>
-                <input type="text" id="bookName" name="name" autocomplete="name" required="" placeholder="Ej. Carlos Martínez" data-i18n-ph="form.namePh" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-gold focus:border-gold text-sm bg-white">
+                <input type="text" id="bookName" name="name" autocomplete="name" required="" aria-describedby="bookNameErr" placeholder="Ej. Carlos Martínez" data-i18n-ph="form.namePh" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-gold focus:border-gold text-sm bg-white">
+                <p id="bookNameErr" class="fld-err" hidden></p>
               </div>
 
               <div class="grid grid-cols-2 gap-3">
                 <div>
                   <label for="bookDate" class="block text-xs font-bold uppercase tracking-wider text-terroir mb-1" data-i18n="form.date">Fecha Deseada *</label>
-                  <input type="date" id="bookDate" autocomplete="off" required="" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-gold focus:border-gold text-sm bg-white">
+                  <input type="date" id="bookDate" autocomplete="off" required="" aria-describedby="bookDateErr" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-gold focus:border-gold text-sm bg-white">
+                  <p id="bookDateErr" class="fld-err" hidden></p>
                 </div>
                 <div>
                   <label for="bookGuests" class="block text-xs font-bold uppercase tracking-wider text-terroir mb-1" data-i18n="form.guests">Pasajeros *</label>
@@ -3401,10 +3469,20 @@
 
           </div>
 
+          <!-- Vista previa: el mismo texto que se abre en WhatsApp (ver mensajeReserva) -->
+          <details id="bookPreview" class="group mt-5">
+            <summary class="cursor-pointer select-none list-none flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-gold-dark">
+              <svg class="w-3.5 h-3.5 flex-shrink-0 transition-transform group-open:rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+              <span data-i18n="form.previewTitle">Ver el mensaje que vas a mandar</span>
+            </summary>
+            <div id="bookPreviewText" class="wa-burbuja"></div>
+          </details>
+
           <button type="submit" class="w-full bg-gradient-to-r from-gold to-gold-dark hover:from-gold-dark hover:to-gold text-tannat-900 font-extrabold py-4 rounded-xl shadow-xl transition-all flex items-center justify-center gap-2 text-sm mt-5 active:scale-[0.98]">
             <span data-i18n="form.submit">Enviar Solicitud por WhatsApp</span>
             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM10 16.5V7.5L16 12L10 16.5Z"></path></svg>
           </button>
+          <p class="wa-nota" data-i18n="form.sendNote">Se abre WhatsApp con este mensaje ya escrito: lo revisás y lo mandás vos.</p>
         </form>
       </div>
 
@@ -3456,7 +3534,7 @@
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
       </button>
       <div class="bg-crema rounded-2xl overflow-hidden shadow-2xl">
-        <div class="relative bg-black">
+        <div class="relative bg-black lb-escena">
           <img id="lightboxImg" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="" class="block max-w-full w-auto h-auto max-h-[65vh] mx-auto">
           <button type="button" class="gal-boton gal-prev" onclick="galeria && galeria.mover(-1)" aria-label="Foto anterior" data-i18n-aria="gallery.prev"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg></button>
           <button type="button" class="gal-boton gal-next" onclick="galeria && galeria.mover(1)" aria-label="Foto siguiente" data-i18n-aria="gallery.next"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>
@@ -4255,6 +4333,23 @@
         "map.matrixTitle": "Distancias y tiempos de manejo entre estaciones",
         "map.matrixSource": "Calculado con datos reales de OpenStreetMap (ruta en auto, sin contar paradas).",
         "map.matrixTotal": "Recorriendo las 4 estaciones en orden (01→02→03→04): 45 km y unos 55 min de manejo neto.",
+        "day.title": "Armá tu día",
+        "day.subtitle": "Elegí qué querés visitar: te mostramos el orden con menos manejo y lo dibujamos en el mapa.",
+        "day.legend": "Paradas del recorrido",
+        "day.s1": "01 · Bodega Harriague",
+        "day.s2": "02 · Salto Chico",
+        "day.s3": "03 · Bertolini &amp; Broglio",
+        "day.s4": "04 · Mori Maglio",
+        "day.termasChip": "♨ Terminar en Termas del Daymán",
+        "day.termas": "Termas del Daymán",
+        "day.note": "Tiempos de manejo reales de OpenStreetMap, sin contar lo que te quedes en cada lugar: eso lo coordinamos por WhatsApp.",
+        "day.maps": "Abrir en Google Maps ↗",
+        "day.ask": "Pedir este recorrido por WhatsApp",
+        "day.none": "Elegí al menos una estación para armar el recorrido.",
+        "day.single": "Una sola parada: no hay traslados entre estaciones.",
+        "day.leg": "{min} min en auto · {km} km",
+        "day.total": "Manejo total: {min} min · {km} km",
+        "day.waLine": "Recorrido",
         "map.filterAll": "Ruta Completa",
         "map.filterWineries": "Solo Bodegas",
         "map.filterThermal": "Termas",
@@ -4334,6 +4429,13 @@
         "form.notesPh": "Opciones vegetarianas, intolerancias, movilidad reducida, etc.",
         "form.moreDetails": "Agregar hotel o comentarios (opcional)",
         "form.submit": "Enviar Solicitud por WhatsApp",
+        "form.errName": "Escribí tu nombre, así sabemos a quién responder.",
+        "form.errDate": "Elegí una fecha. Si todavía no la tenés clara, poné una aproximada: la ajustamos por WhatsApp.",
+        "form.errPast": "Esa fecha ya pasó: elegí hoy o un día que venga.",
+        "form.previewTitle": "Ver el mensaje que vas a mandar",
+        "form.previewNoName": "tu nombre",
+        "form.previewNoDate": "la fecha",
+        "form.sendNote": "Se abre WhatsApp con este mensaje ya escrito: lo revisás y lo mandás vos.",
 
         "whatsapp.msgTitle": "SOLICITUD DE RESERVA - LA RUTA DEL TANNAT (SALTO)",
         "whatsapp.labelName": "Nombre",
@@ -4916,6 +5018,23 @@
         "map.matrixTitle": "Distâncias e tempos de condução entre as estações",
         "map.matrixSource": "Calculado com dados reais do OpenStreetMap (rota de carro, sem contar as paradas).",
         "map.matrixTotal": "Percorrendo as 4 estações em ordem (01→02→03→04): 45 km e cerca de 55 min de condução líquida.",
+        "day.title": "Monte seu dia",
+        "day.subtitle": "Escolha o que quer visitar: mostramos a ordem com menos direção e desenhamos no mapa.",
+        "day.legend": "Paradas do roteiro",
+        "day.s1": "01 · Bodega Harriague",
+        "day.s2": "02 · Salto Chico",
+        "day.s3": "03 · Bertolini &amp; Broglio",
+        "day.s4": "04 · Mori Maglio",
+        "day.termasChip": "♨ Terminar nas Termas do Daymán",
+        "day.termas": "Termas do Daymán",
+        "day.note": "Tempos de direção reais do OpenStreetMap, sem contar quanto você fica em cada lugar: isso combinamos pelo WhatsApp.",
+        "day.maps": "Abrir no Google Maps ↗",
+        "day.ask": "Pedir este roteiro pelo WhatsApp",
+        "day.none": "Escolha pelo menos uma estação para montar o roteiro.",
+        "day.single": "Uma só parada: não há deslocamentos entre estações.",
+        "day.leg": "{min} min de carro · {km} km",
+        "day.total": "Direção total: {min} min · {km} km",
+        "day.waLine": "Roteiro",
         "map.filterAll": "Rota Completa",
         "map.filterWineries": "Só Vinícolas",
         "map.filterThermal": "Termas",
@@ -4995,6 +5114,13 @@
         "form.notesPh": "Opções vegetarianas, alergias, mobilidade reduzida, etc.",
         "form.moreDetails": "Adicionar hotel ou comentários (opcional)",
         "form.submit": "Enviar Solicitação por WhatsApp",
+        "form.errName": "Escreva seu nome, assim sabemos a quem responder.",
+        "form.errDate": "Escolha uma data. Se ainda não tiver certeza, coloque uma aproximada: ajustamos pelo WhatsApp.",
+        "form.errPast": "Essa data já passou: escolha hoje ou um dia futuro.",
+        "form.previewTitle": "Ver a mensagem que você vai enviar",
+        "form.previewNoName": "seu nome",
+        "form.previewNoDate": "a data",
+        "form.sendNote": "O WhatsApp abre com esta mensagem já escrita: você revisa e envia.",
 
         "whatsapp.msgTitle": "SOLICITAÇÃO DE RESERVA - A ROTA DO TANNAT (SALTO)",
         "whatsapp.labelName": "Nome",
@@ -5577,6 +5703,23 @@
         "map.matrixTitle": "Driving distances and times between stations",
         "map.matrixSource": "Calculated with real OpenStreetMap data (driving route, not counting stops).",
         "map.matrixTotal": "Driving the 4 stations in order (01→02→03→04): 45 km, about 55 net driving minutes.",
+        "day.title": "Plan your day",
+        "day.subtitle": "Pick what you'd like to visit: we show the order with the least driving and draw it on the map.",
+        "day.legend": "Route stops",
+        "day.s1": "01 · Bodega Harriague",
+        "day.s2": "02 · Salto Chico",
+        "day.s3": "03 · Bertolini &amp; Broglio",
+        "day.s4": "04 · Mori Maglio",
+        "day.termasChip": "♨ End at Daymán Hot Springs",
+        "day.termas": "Daymán Hot Springs",
+        "day.note": "Real OpenStreetMap driving times, not counting how long you stay at each place: we'll arrange that on WhatsApp.",
+        "day.maps": "Open in Google Maps ↗",
+        "day.ask": "Request this route on WhatsApp",
+        "day.none": "Pick at least one station to plan the route.",
+        "day.single": "A single stop: no driving between stations.",
+        "day.leg": "{min} min by car · {km} km",
+        "day.total": "Total driving: {min} min · {km} km",
+        "day.waLine": "Route",
         "map.filterAll": "Full Route",
         "map.filterWineries": "Wineries Only",
         "map.filterThermal": "Thermal Springs",
@@ -5656,6 +5799,13 @@
         "form.notesPh": "Vegetarian options, allergies, reduced mobility, etc.",
         "form.moreDetails": "Add hotel or notes (optional)",
         "form.submit": "Send Request via WhatsApp",
+        "form.errName": "Type your name so we know who to reply to.",
+        "form.errDate": "Pick a date. If you're not sure yet, choose an approximate one: we'll adjust it on WhatsApp.",
+        "form.errPast": "That date has already passed: pick today or a future day.",
+        "form.previewTitle": "See the message you'll send",
+        "form.previewNoName": "your name",
+        "form.previewNoDate": "the date",
+        "form.sendNote": "WhatsApp opens with this message already written: you review it and send it yourself.",
 
         "whatsapp.msgTitle": "BOOKING REQUEST - THE TANNAT ROUTE (SALTO)",
         "whatsapp.labelName": "Name",
@@ -5757,6 +5907,7 @@
       // estable, y fitBounds calcula el zoom en base al tamaño del contenedor.
       leafletMap.invalidateSize();
       leafletMap.fitBounds(bounds, { padding: [28, 28] });
+      mapaListo(); // la ruta de «Armá tu día» (ver dibujarRutaMapa)
 
       // Reacomoda el mapa si el layout cambia (rotación de celular, fuentes que recién cargaron)
       window.addEventListener('resize', () => leafletMap && leafletMap.invalidateSize());
@@ -5772,6 +5923,7 @@
     function filterMapMarkers(mode) {
       mapFilterMode = mode;
       if (!leafletMap) return;
+      if (rutaCapa) { if (mode === 'thermal') rutaCapa.remove(); else rutaCapa.addTo(leafletMap); } // la ruta de «Armá tu día» va con las bodegas
       const showWineries = mode === 'all' || mode === 'wineries';
       const showThermal = mode === 'all' || mode === 'thermal';
       const visibleLatLngs = [];
@@ -6375,6 +6527,9 @@
         });
       });
 
+      if (window.refrescarReserva) window.refrescarReserva(); // errores y vista previa del formulario de reserva
+      if (window.refrescarMiDia) window.refrescarMiDia(); // «Armá tu día»
+
       // If station modal is currently open, refresh its content in current language
       if (activeStationId) {
         renderStationModalContent(activeStationId);
@@ -6977,7 +7132,7 @@
     function renderGalleryLightbox(capKey, imgSrc) {
       const descKey = capKey.replace('gallery.cap', 'gallery.desc');
       const dict = translations[currentLang] || translations.es;
-      if (imgSrc) document.getElementById('lightboxImg').src = imgSrc;
+      if (imgSrc) { document.getElementById('lightboxImg').src = imgSrc; if (window.reiniciarZoom) window.reiniciarZoom(); }
       document.getElementById('lightboxImg').alt = decodeHtmlEntities(dict[capKey]);
       document.getElementById('lightboxCaption').innerHTML = dict[capKey] || '';
       document.getElementById('lightboxDesc').innerHTML = dict[descKey] || '';
@@ -6992,15 +7147,19 @@
       const quieto = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       let actual = 0, frente = 0, pedido = 0;
       const dict = () => translations[currentLang] || translations.es;
-      function mostrar(i, enfocar) {
+      function mostrar(i, enfocar, dir) {
         i = (i + minis.length) % minis.length;
         const m = minis[i], n = m.dataset.n, d = dict(), cap = 'gallery.cap' + n, pid = ++pedido, atras = capas[1 - frente];
+        // con dirección (al deslizar): la nueva espera a un costado, sin transición, y entra deslizándose mientras aparece
+        atras.style.transition = 'none'; atras.style.translate = dir && !quieto() ? (dir * 60) + 'px 0' : ''; atras.getBoundingClientRect(); atras.style.transition = '';
         atras.width = +m.dataset.w; atras.height = +m.dataset.h; atras.src = m.dataset.src;
         atras.setAttribute('data-i18n-alt', cap); atras.alt = decodeHtmlEntities(d[cap]);
         (atras.decode ? atras.decode() : Promise.resolve()).catch(() => {}).then(() => {
           if (pid !== pedido) return; // mientras cargaba se pidió otra foto
-          atras.classList.add('es-visible'); atras.removeAttribute('aria-hidden');
-          const vieja = capas[frente]; vieja.classList.remove('es-visible'); vieja.setAttribute('aria-hidden', 'true'); vieja.removeAttribute('data-i18n-alt'); vieja.alt = '';
+          atras.classList.add('es-visible'); atras.removeAttribute('aria-hidden'); atras.style.translate = '';
+          const vieja = capas[frente];
+          if (dir && !quieto()) vieja.style.translate = (-dir * 80) + 'px 0'; // la que se va sigue de largo hacia el otro lado
+          vieja.classList.remove('es-visible'); vieja.setAttribute('aria-hidden', 'true'); vieja.removeAttribute('data-i18n-alt'); vieja.alt = '';
           frente = 1 - frente;
         });
         fondo.src = m.querySelector('img').src;
@@ -7013,23 +7172,95 @@
         const sig = minis[(i + 1) % minis.length]; (new Image()).src = sig.dataset.src; // la siguiente queda lista
         if (activeLightboxCapKey) { activeLightboxCapKey = cap; renderGalleryLightbox(cap, m.dataset.src); }
       }
-      const mover = (paso, enfocar) => mostrar(actual + paso, enfocar);
+      const mover = (paso, enfocar, dir) => mostrar(actual + paso, enfocar, dir);
       const ampliar = () => { const m = minis[actual]; activeLightboxCapKey = 'gallery.cap' + m.dataset.n; renderGalleryLightbox(activeLightboxCapKey, m.dataset.src); showModal('galleryLightbox'); };
       raiz.querySelector('.gal-prev').addEventListener('click', () => mover(-1));
       raiz.querySelector('.gal-next').addEventListener('click', () => mover(1));
       raiz.querySelector('.gal-ampliar').addEventListener('click', ampliar);
       minis.forEach((m, i) => m.addEventListener('click', () => mostrar(i)));
       raiz.addEventListener('keydown', (e) => { if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return; e.preventDefault(); mover(e.key === 'ArrowRight' ? 1 : -1, tira.contains(document.activeElement)); });
-      // deslizar con el dedo (o arrastrar con el mouse) cambia de foto; un toque sin deslizar la abre en grande
-      let x0 = null, deslizo = false;
-      escena.addEventListener('pointerdown', (e) => { x0 = e.clientX; deslizo = false; });
-      escena.addEventListener('pointerup', (e) => { if (x0 === null) return; const dx = e.clientX - x0; x0 = null; if (Math.abs(dx) > 40) { deslizo = true; mover(dx < 0 ? 1 : -1); } });
-      escena.addEventListener('pointercancel', () => { x0 = null; });
+      // Deslizar con el dedo (o arrastrar con el mouse): la foto sigue al dedo y, al soltar, pasa de foto si se movió más de un
+      // 18 % del ancho o con un gesto rápido; si no, vuelve a su lugar. Un movimiento más vertical que horizontal es scroll de la
+      // página (touch-action: pan-y) y no se toca. Un toque sin deslizar la abre en pantalla completa.
+      let x0 = null, y0 = 0, t0 = 0, dx = 0, arrastra = false, deslizo = false, puntero = null;
+      const soltar = (e, cancelado) => {
+        if (x0 === null) return;
+        x0 = null; escena.classList.remove('arrastrando');
+        const vel = Math.abs(dx) / Math.max(1, (e ? e.timeStamp : t0) - t0);
+        if (!cancelado && arrastra && (Math.abs(dx) > escena.clientWidth * 0.18 || (Math.abs(dx) > 30 && vel > 0.45))) { deslizo = true; mover(dx < 0 ? 1 : -1, false, dx < 0 ? 1 : -1); }
+        else capas[frente].style.translate = ''; // vuelve a su lugar con su transición
+        arrastra = false; dx = 0;
+      };
+      escena.addEventListener('pointerdown', (e) => { if (e.button) return; x0 = e.clientX; y0 = e.clientY; t0 = e.timeStamp; dx = 0; arrastra = false; deslizo = false; puntero = e.pointerId; });
+      escena.addEventListener('pointermove', (e) => {
+        if (x0 === null || e.pointerId !== puntero) return;
+        const mx = e.clientX - x0, my = e.clientY - y0;
+        if (!arrastra) {
+          if (Math.abs(mx) < 8) return;
+          if (Math.abs(my) > Math.abs(mx)) { x0 = null; return; } // es scroll vertical
+          arrastra = true; escena.classList.add('arrastrando'); try { escena.setPointerCapture(puntero); } catch (x) { /* sin captura: igual funciona */ }
+        }
+        dx = mx; if (!quieto()) capas[frente].style.translate = (dx * 0.85).toFixed(1) + 'px 0';
+      });
+      escena.addEventListener('pointerup', (e) => soltar(e, false));
+      escena.addEventListener('pointercancel', () => soltar(null, true));
       escena.addEventListener('click', () => { if (deslizo) { deslizo = false; return; } ampliar(); });
       return { mover };
     })();
+
+    // Pantalla completa: pellizcar (dos dedos) o doble toque / doble clic acerca la foto donde se toca; con zoom, un dedo (o el mouse) la mueve
+    // sin salirse de su marco. Sin zoom, deslizar pasa de foto. Cambiar de foto o cerrar vuelve al tamaño normal.
+    (function initZoomLightbox() {
+      const img = document.getElementById('lightboxImg');
+      if (!img) return;
+      const MAX = 4, punteros = new Map();
+      let s = 1, tx = 0, ty = 0, gesto = null, ultimoToque = 0, x0 = 0, dxSwipe = 0, dobleTactil = -1000;
+      const lim = (v, a, b) => Math.min(b, Math.max(a, v));
+      const aplicar = (animar) => {
+        const w = img.offsetWidth, h = img.offsetHeight;
+        s = lim(s, 1, MAX); tx = lim(tx, w - w * s, 0); ty = lim(ty, h - h * s, 0); // nunca deja ver el fondo negro
+        img.classList.toggle('sin-transicion', !animar); img.classList.toggle('con-zoom', s > 1.01);
+        img.style.transform = s > 1.001 ? `translate(${tx.toFixed(1)}px, ${ty.toFixed(1)}px) scale(${s.toFixed(3)})` : '';
+      };
+      // punto de pantalla → coordenadas desde la esquina de la foto sin transformar (la foto va centrada en su marco)
+      const local = (cx, cy) => { const r = img.parentElement.getBoundingClientRect(); return { x: cx - r.left - img.offsetLeft, y: cy - r.top - img.offsetTop }; };
+      const zoomEn = (ns, px, py, animar) => { // px, py: punto de la imagen en pantalla que queda fijo
+        const k = lim(ns, 1, MAX) / s; tx = px - (px - tx) * k; ty = py - (py - ty) * k; s = lim(ns, 1, MAX); aplicar(animar);
+      };
+      window.reiniciarZoom = () => { s = 1; tx = ty = 0; punteros.clear(); gesto = null; aplicar(false); };
+      img.addEventListener('dblclick', (e) => { e.preventDefault(); if (performance.now() - dobleTactil < 600) return; /* el celular también manda dblclick tras un doble toque ya atendido */ const p = local(e.clientX, e.clientY); zoomEn(s > 1.01 ? 1 : 2.5, p.x, p.y, true); });
+      img.addEventListener('pointerdown', (e) => {
+        img.setPointerCapture(e.pointerId); punteros.set(e.pointerId, { x: e.clientX, y: e.clientY });
+        if (punteros.size === 2) { const [a, b] = [...punteros.values()]; gesto = { tipo: 'pellizco', d0: Math.hypot(a.x - b.x, a.y - b.y), s0: s }; }
+        else if (punteros.size === 1) {
+          // doble toque en pantallas táctiles (el dblclick no siempre llega)
+          if (e.pointerType !== 'mouse' && e.timeStamp - ultimoToque < 300) { const p = local(e.clientX, e.clientY); zoomEn(s > 1.01 ? 1 : 2.5, p.x, p.y, true); ultimoToque = 0; gesto = null; dobleTactil = performance.now(); return; }
+          ultimoToque = e.timeStamp; x0 = e.clientX; dxSwipe = 0;
+          gesto = { tipo: s > 1.01 ? 'mover' : 'deslizar', x: e.clientX, y: e.clientY };
+        }
+      });
+      img.addEventListener('pointermove', (e) => {
+        if (!punteros.has(e.pointerId)) return;
+        const antes = punteros.get(e.pointerId); punteros.set(e.pointerId, { x: e.clientX, y: e.clientY });
+        if (!gesto) return;
+        if (gesto.tipo === 'pellizco' && punteros.size === 2) {
+          const [a, b] = [...punteros.values()], c = local((a.x + b.x) / 2, (a.y + b.y) / 2);
+          zoomEn(gesto.s0 * Math.hypot(a.x - b.x, a.y - b.y) / gesto.d0, c.x, c.y, false);
+        } else if (gesto.tipo === 'mover') { tx += e.clientX - antes.x; ty += e.clientY - antes.y; aplicar(false); }
+        else if (gesto.tipo === 'deslizar') { dxSwipe = e.clientX - x0; }
+      });
+      const fin = (e) => {
+        punteros.delete(e.pointerId);
+        if (gesto && gesto.tipo === 'deslizar' && punteros.size === 0 && Math.abs(dxSwipe) > 50 && galeria) galeria.mover(dxSwipe < 0 ? 1 : -1);
+        if (punteros.size === 0) { gesto = null; if (s < 1.05) { s = 1; aplicar(true); } }
+        else if (punteros.size === 1) { const [p] = [...punteros.values()]; gesto = { tipo: s > 1.01 ? 'mover' : 'deslizar', x: p.x, y: p.y }; x0 = p.x; dxSwipe = 0; }
+      };
+      img.addEventListener('pointerup', fin); img.addEventListener('pointercancel', fin);
+      img.addEventListener('wheel', (e) => { if (!e.ctrlKey) return; e.preventDefault(); const c = local(e.clientX, e.clientY); zoomEn(s * Math.exp(-e.deltaY * 0.01), c.x, c.y, false); }, { passive: false }); // pellizco del touchpad
+    })();
     function closeGalleryLightbox() {
       activeLightboxCapKey = null;
+      if (window.reiniciarZoom) window.reiniciarZoom();
       hideModal('galleryLightbox');
     }
     // en pantalla completa, las flechas del teclado pasan de foto
@@ -7068,6 +7299,7 @@
           }
         }
       }
+      pintarVistaPrevia();
       showModal('bookingModal');
     }
 
@@ -7104,30 +7336,87 @@
     });
 
     // Booking Submit via WhatsApp Direct Link
-    function handleBookingSubmit(e) {
-      e.preventDefault();
+    // ===== Reserva: el mismo texto para la vista previa y para WhatsApp, y errores claros junto a cada campo =====
+    const LOCALE_FECHA = { es: 'es-UY', pt: 'pt-BR', en: 'en-US' };
+    function fechaLarga(iso) { // «2026-11-14» → «Sábado 14 de noviembre de 2026» en el idioma elegido
+      const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso || '');
+      if (!m) return '';
+      const txt = new Date(+m[1], +m[2] - 1, +m[3]).toLocaleDateString(LOCALE_FECHA[currentLang] || 'es-UY', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+      return txt.charAt(0).toUpperCase() + txt.slice(1);
+    }
+    const hoyIso = () => { const d = new Date(), z = (n) => String(n).padStart(2, '0'); return d.getFullYear() + '-' + z(d.getMonth() + 1) + '-' + z(d.getDate()); };
+
+    // Texto del mensaje. Con `faltan`, los datos vacíos se marcan entre ⟨ ⟩ (solo para la vista previa)
+    function mensajeReserva(faltan) {
       const dict = translations[currentLang] || translations.es;
-      const name = document.getElementById('bookName').value;
-      const date = document.getElementById('bookDate').value;
-      const guests = document.getElementById('bookGuests').value;
-      const pkgOn = document.querySelector('input[name="bookPackage"]:checked').dataset.match;
+      const val = (id) => document.getElementById(id).value.trim();
+      const falta = (k) => (faltan ? '⟨' + (dict[k] || '…') + '⟩' : '');
+      const pkgOn = (document.querySelector('input[name="bookPackage"]:checked') || {}).dataset?.match;
       const pkg = pkgOn === '95' ? dict['form.pkgFull'] : pkgOn === '45' ? dict['form.pkgHalf'] : dict['form.pkgCustom'];
-      track('reserva', 'enviar', pkgOn === '95' ? 'dia-completo' : pkgOn === '45' ? 'medio-dia' : 'personalizada');
-      const hotel = document.getElementById('bookHotel').value || dict['whatsapp.defaultHotel'];
-      const notes = document.getElementById('bookNotes').value || dict['whatsapp.defaultNotes'];
       // URL real donde vive el sitio (se omite en pruebas locales)
       const siteUrl = /^https?:$/.test(location.protocol) && !/^(localhost|127\.0\.0\.1)$/.test(location.hostname) ? ' ' + location.origin + location.pathname : '';
+      return [
+        `*${dict['whatsapp.msgTitle']}*`, '',
+        `👤 *${dict['whatsapp.labelName']}:* ${val('bookName') || falta('form.previewNoName')}`,
+        `📅 *${dict['whatsapp.labelDate']}:* ${fechaLarga(val('bookDate')) || falta('form.previewNoDate')}`,
+        `👥 *${dict['whatsapp.labelGuests']}:* ${val('bookGuests')}`,
+        `🍷 *${dict['whatsapp.labelExperience']}:* ${pkg}`,
+        `🏨 *${dict['whatsapp.labelHotel']}:* ${val('bookHotel') || dict['whatsapp.defaultHotel']}`,
+        `📝 *${dict['whatsapp.labelNotes']}:* ${val('bookNotes') || dict['whatsapp.defaultNotes']}`, '',
+        `_${dict['whatsapp.sentFrom']}${siteUrl}_`,
+      ].join('\n');
+    }
 
-      const msg = `*${dict['whatsapp.msgTitle']}*%0A%0A` +
-                  `👤 *${dict['whatsapp.labelName']}:* ${encodeURIComponent(name)}%0A` +
-                  `📅 *${dict['whatsapp.labelDate']}:* ${encodeURIComponent(date)}%0A` +
-                  `👥 *${dict['whatsapp.labelGuests']}:* ${encodeURIComponent(guests)}%0A` +
-                  `🍷 *${dict['whatsapp.labelExperience']}:* ${encodeURIComponent(pkg)}%0A` +
-                  `🏨 *${dict['whatsapp.labelHotel']}:* ${encodeURIComponent(hotel)}%0A` +
-                  `📝 *${dict['whatsapp.labelNotes']}:* ${encodeURIComponent(notes)}%0A%0A` +
-                  `_${dict['whatsapp.sentFrom']}${siteUrl}_`;
+    // Vista previa: el texto se escapa y recién después se pintan las negritas (*…*) y cursivas (_…_) como en WhatsApp
+    function pintarVistaPrevia() {
+      const caja = document.getElementById('bookPreviewText');
+      if (!caja) return;
+      const esc = (t) => t.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+      caja.innerHTML = esc(mensajeReserva(true))
+        .replace(/⟨([^⟩]*)⟩/g, '<span class="wa-falta">$1</span>')
+        .replace(/\*([^*\n]+)\*/g, '<strong>$1</strong>')
+        .replace(/(^|\s)_([^_\n]+)_(?=\s|$)/g, '$1<em>$2</em>');
+    }
 
-      const waUrl = `https://wa.me/${CONTACT_PHONE}?text=${msg}`;
+    // Validación: devuelve el primer campo con problema. Cada campo muestra su error al salir de él o al enviar,
+    // y una vez marcado se revisa mientras se escribe, así el aviso se va apenas queda bien.
+    const CAMPOS_RESERVA = {
+      bookName: (v) => (v.trim().length < 2 ? 'form.errName' : ''),
+      bookDate: (v) => (!v ? 'form.errDate' : v < hoyIso() ? 'form.errPast' : ''),
+    };
+    function marcarCampo(id, mostrar) {
+      const campo = document.getElementById(id), err = document.getElementById(id + 'Err');
+      const clave = CAMPOS_RESERVA[id](campo.value);
+      if (!clave) { campo.removeAttribute('aria-invalid'); err.hidden = true; err.textContent = ''; delete err.dataset.clave; return true; }
+      if (mostrar || campo.getAttribute('aria-invalid') === 'true') {
+        const dict = translations[currentLang] || translations.es;
+        campo.setAttribute('aria-invalid', 'true'); err.dataset.clave = clave; err.textContent = dict[clave]; err.hidden = false;
+      }
+      return false;
+    }
+    function validarReserva(mostrar) {
+      let primero = null;
+      Object.keys(CAMPOS_RESERVA).forEach((id) => { if (!marcarCampo(id, mostrar) && !primero) primero = document.getElementById(id); });
+      return primero;
+    }
+    (function initReservaEnVivo() {
+      const form = document.getElementById('bookingForm');
+      if (!form) return;
+      form.addEventListener('input', (e) => { if (CAMPOS_RESERVA[e.target.id]) marcarCampo(e.target.id, false); pintarVistaPrevia(); });
+      form.addEventListener('change', (e) => { if (CAMPOS_RESERVA[e.target.id]) marcarCampo(e.target.id, true); pintarVistaPrevia(); });
+      Object.keys(CAMPOS_RESERVA).forEach((id) => document.getElementById(id).addEventListener('blur', (e) => { if (e.target.value || e.target.dataset.tocado) marcarCampo(id, true); e.target.dataset.tocado = '1'; }));
+      // al cambiar de idioma: errores visibles y vista previa en el idioma nuevo
+      window.refrescarReserva = () => { Object.keys(CAMPOS_RESERVA).forEach((id) => { const err = document.getElementById(id + 'Err'); if (!err.hidden && err.dataset.clave) err.textContent = (translations[currentLang] || translations.es)[err.dataset.clave]; }); pintarVistaPrevia(); };
+      pintarVistaPrevia();
+    })();
+
+    function handleBookingSubmit(e) {
+      e.preventDefault();
+      const malo = validarReserva(true);
+      if (malo) { malo.focus(); return; } // el error ya se ve junto al campo y el lector de pantalla lo lee por aria-describedby
+      const pkgOn = document.querySelector('input[name="bookPackage"]:checked').dataset.match;
+      track('reserva', 'enviar', pkgOn === '95' ? 'dia-completo' : pkgOn === '45' ? 'medio-dia' : 'personalizada');
+      const waUrl = `https://wa.me/${CONTACT_PHONE}?text=${encodeURIComponent(mensajeReserva(false))}`;
       // enlace real con noopener: no deja la ventana abierta enlazada a WhatsApp y no lo bloquea el bloqueador de ventanas
       const link = document.createElement('a');
       link.href = waUrl; link.target = '_blank'; link.rel = 'noopener noreferrer'; link.dataset.noTrack = '1';
@@ -7136,6 +7425,111 @@
       if (sendBtn) { sendBtn.disabled = true; setTimeout(() => { sendBtn.disabled = false; }, 2500); } // evita doble envío
       closeBookingModal();
     }
+
+    // ===== Armá tu día + la ruta dibujada en el mapa =====
+    // Tramos en auto entre cada par de paradas (1-4 = estaciones, t = Termas del Daymán): km, minutos y el trazado por calle,
+    // bajados de OpenStreetMap/OSRM (el mismo cálculo de la tabla de distancias; trazado simplificado a ~15 m). No son estimaciones.
+    const TRAMOS = {"1-2":{"km":9.1,"min":16,"c":[[-31.39979,-57.98461],[-31.39906,-57.98395],[-31.39803,-57.98367],[-31.39802,-57.98267],[-31.39715,-57.98137],[-31.39452,-57.98056],[-31.39401,-57.9798],[-31.39212,-57.97881],[-31.39067,-57.97756],[-31.38985,-57.97636],[-31.38914,-57.97336],[-31.38876,-57.97309],[-31.38781,-57.97315],[-31.38654,-57.97435],[-31.38499,-57.97403],[-31.38361,-57.97427],[-31.37926,-57.97583],[-31.37719,-57.97799],[-31.37618,-57.97801],[-31.37346,-57.98093],[-31.37254,-57.98157],[-31.3659,-57.98385],[-31.36379,-57.984],[-31.3596,-57.98498],[-31.35793,-57.98466],[-31.35668,-57.9836],[-31.35626,-57.98296],[-31.35663,-57.97664],[-31.35608,-57.97575],[-31.35576,-57.97563],[-31.35117,-57.97608],[-31.34477,-57.97692],[-31.34116,-57.97673],[-31.3405,-57.97635],[-31.33458,-57.97087]]},"1-3":{"km":19.4,"min":19,"c":[[-31.39979,-57.98461],[-31.39966,-57.98449],[-31.40074,-57.98297],[-31.3997,-57.98179],[-31.40439,-57.95023],[-31.40404,-57.94994],[-31.40771,-57.94846],[-31.41313,-57.94371],[-31.41351,-57.94308],[-31.42818,-57.93171],[-31.43874,-57.922],[-31.44983,-57.91386],[-31.45424,-57.91097],[-31.45571,-57.90575],[-31.46635,-57.89784],[-31.46732,-57.89747],[-31.46844,-57.8974],[-31.4718,-57.89792],[-31.47313,-57.89852],[-31.48239,-57.90782],[-31.48335,-57.90851],[-31.4842,-57.90879],[-31.50061,-57.90802],[-31.52614,-57.91053],[-31.52764,-57.91051],[-31.52815,-57.91036],[-31.52808,-57.91001]]},"1-4":{"km":10.8,"min":13,"c":[[-31.39979,-57.98461],[-31.39966,-57.98449],[-31.40074,-57.98297],[-31.3997,-57.98179],[-31.40439,-57.95023],[-31.40404,-57.94994],[-31.40771,-57.94846],[-31.41313,-57.94371],[-31.41351,-57.94308],[-31.42818,-57.93171],[-31.43874,-57.922],[-31.44983,-57.91386],[-31.45424,-57.91097],[-31.45548,-57.90619],[-31.45525,-57.90603],[-31.45539,-57.90575],[-31.45501,-57.90499]]},"1-t":{"km":10.3,"min":12,"c":[[-31.39979,-57.98461],[-31.39966,-57.98449],[-31.40074,-57.98297],[-31.3997,-57.98179],[-31.40439,-57.95023],[-31.40404,-57.94994],[-31.40788,-57.94834],[-31.41313,-57.94371],[-31.41351,-57.94308],[-31.42818,-57.93171],[-31.43874,-57.922],[-31.45162,-57.91266],[-31.45248,-57.90845]]},"2-3":{"km":26.7,"min":32,"c":[[-31.33458,-57.97087],[-31.3405,-57.97635],[-31.34116,-57.97673],[-31.34477,-57.97692],[-31.35628,-57.97553],[-31.35675,-57.97508],[-31.35695,-57.97248],[-31.36579,-57.97407],[-31.36721,-57.96547],[-31.36903,-57.94305],[-31.40055,-57.94755],[-31.40651,-57.94822],[-31.40752,-57.94801],[-31.41238,-57.94391],[-31.41308,-57.94376],[-31.41351,-57.94308],[-31.42818,-57.93171],[-31.43874,-57.922],[-31.44983,-57.91386],[-31.45424,-57.91097],[-31.45571,-57.90575],[-31.46569,-57.89827],[-31.46707,-57.89754],[-31.46844,-57.8974],[-31.47096,-57.89777],[-31.47208,-57.89801],[-31.47313,-57.89852],[-31.48239,-57.90782],[-31.48335,-57.90851],[-31.4842,-57.90879],[-31.50061,-57.90802],[-31.52614,-57.91053],[-31.52764,-57.91051],[-31.52815,-57.91036],[-31.52808,-57.91001]]},"2-4":{"km":18.1,"min":26,"c":[[-31.33458,-57.97087],[-31.3405,-57.97635],[-31.34116,-57.97673],[-31.34477,-57.97692],[-31.35628,-57.97553],[-31.35675,-57.97508],[-31.35695,-57.97248],[-31.36579,-57.97407],[-31.36721,-57.96547],[-31.36903,-57.94305],[-31.40055,-57.94755],[-31.40651,-57.94822],[-31.40752,-57.94801],[-31.41238,-57.94391],[-31.41308,-57.94376],[-31.41351,-57.94308],[-31.42818,-57.93171],[-31.43874,-57.922],[-31.44983,-57.91386],[-31.45424,-57.91097],[-31.45548,-57.90619],[-31.45525,-57.90603],[-31.45539,-57.90575],[-31.45501,-57.90499]]},"2-t":{"km":17.6,"min":26,"c":[[-31.33458,-57.97087],[-31.3405,-57.97635],[-31.34116,-57.97673],[-31.34477,-57.97692],[-31.35628,-57.97553],[-31.35675,-57.97508],[-31.35695,-57.97248],[-31.36579,-57.97407],[-31.36721,-57.96547],[-31.36903,-57.94305],[-31.40055,-57.94755],[-31.40651,-57.94822],[-31.40752,-57.94801],[-31.41238,-57.94391],[-31.41308,-57.94376],[-31.41351,-57.94308],[-31.42818,-57.93171],[-31.43874,-57.922],[-31.45162,-57.91266],[-31.45248,-57.90845]]},"3-4":{"km":8.8,"min":7,"c":[[-31.52808,-57.91001],[-31.52815,-57.91036],[-31.52764,-57.91051],[-31.52614,-57.91053],[-31.50061,-57.90802],[-31.4842,-57.90879],[-31.48335,-57.90851],[-31.48239,-57.90782],[-31.4733,-57.89864],[-31.4718,-57.89792],[-31.46844,-57.8974],[-31.46732,-57.89747],[-31.46605,-57.89802],[-31.45567,-57.90564],[-31.45534,-57.90563],[-31.45501,-57.90499]]},"3-t":{"km":9.2,"min":8,"c":[[-31.52808,-57.91001],[-31.52815,-57.91036],[-31.52764,-57.91051],[-31.52614,-57.91053],[-31.50061,-57.90802],[-31.4842,-57.90879],[-31.48335,-57.90851],[-31.48239,-57.90782],[-31.4733,-57.89864],[-31.4718,-57.89792],[-31.46802,-57.89739],[-31.46665,-57.89769],[-31.46569,-57.89827],[-31.45325,-57.9074],[-31.45298,-57.90857],[-31.45248,-57.90845]]},"4-t":{"km":0.5,"min":1,"c":[[-31.45501,-57.90499],[-31.45536,-57.90594],[-31.45325,-57.9074],[-31.45298,-57.90857],[-31.45248,-57.90845]]}};
+    const tramo = (a, b) => { const k = [a, b].sort((x, y) => (x === 't') - (y === 't') || x.localeCompare(y)).join('-'); const t = TRAMOS[k]; return t && { ...t, c: k === a + '-' + b ? t.c : t.c.slice().reverse() }; };
+    // Orden con menos manejo: Harriague (kilómetro cero, en la ciudad) va primero si está; las Termas, al final si se eligieron
+    function ordenMiDia(estaciones, termas) {
+      if (!estaciones.length) return null;
+      const fijas = estaciones.includes('1') ? ['1'] : [], resto = estaciones.filter((e) => e !== '1');
+      const perms = (xs) => (xs.length <= 1 ? [xs] : xs.flatMap((x, i) => perms(xs.slice(0, i).concat(xs.slice(i + 1))).map((p) => [x].concat(p))));
+      let mejor = null;
+      perms(resto).forEach((p) => {
+        const orden = fijas.concat(p, termas ? ['t'] : []);
+        let min = 0, km = 0;
+        for (let i = 1; i < orden.length; i++) { const t = tramo(orden[i - 1], orden[i]); min += t.min; km += t.km; }
+        if (!mejor || min < mejor.min || (min === mejor.min && km < mejor.km)) mejor = { orden, min, km };
+      });
+      return mejor;
+    }
+    const COORD = { 1: [-31.3998, -57.9846], 2: [-31.334285, -57.971263], 3: [-31.527946170700144, -57.91004803293071], 4: [-31.4550, -57.9050], t: [-31.4525, -57.9084] };
+
+    // La ruta en el mapa: una línea por calle que se dibuja de punta a punta cuando el mapa está a la vista (una vez) y cada vez que cambia el recorrido
+    let rutaPendiente = null, rutaCapa = null, mapaVisto = false;
+    function dibujarRutaMapa(orden) {
+      rutaPendiente = orden;
+      if (!leafletMap || !window.L) return; // se dibuja apenas el mapa exista (ver initLeafletMap)
+      if (rutaCapa) { rutaCapa.remove(); rutaCapa = null; }
+      if (!orden || orden.length < 2) return;
+      let puntos = [];
+      for (let i = 1; i < orden.length; i++) puntos = puntos.concat(tramo(orden[i - 1], orden[i]).c);
+      rutaCapa = L.layerGroup([
+        L.polyline(puntos, { color: '#FFFFFF', weight: 8, opacity: .85, lineCap: 'round', lineJoin: 'round', interactive: false }),
+        L.polyline(puntos, { color: '#721B28', weight: 4.5, opacity: .95, lineCap: 'round', lineJoin: 'round', interactive: false }),
+      ]);
+      if (mapFilterMode !== 'thermal') rutaCapa.addTo(leafletMap);
+      if (!mapaVisto || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      rutaCapa.eachLayer((l) => {
+        const path = l.getElement && l.getElement(); if (!path) return;
+        const largo = path.getTotalLength();
+        path.style.strokeDasharray = largo + ' ' + largo; path.style.strokeDashoffset = largo;
+        path.getBoundingClientRect(); // fija el punto de partida antes de animar
+        path.classList.add('ruta-mapa'); path.style.strokeDashoffset = '0';
+        path.addEventListener('transitionend', () => { path.classList.remove('ruta-mapa'); path.style.strokeDasharray = ''; path.style.strokeDashoffset = ''; }, { once: true }); // al hacer zoom el largo cambia
+      });
+    }
+    function mapaListo() { // la llama initLeafletMap
+      const caja = document.getElementById('leafletMap');
+      if ('IntersectionObserver' in window && caja) {
+        const io = new IntersectionObserver((es) => { if (es[0].isIntersecting) { io.disconnect(); mapaVisto = true; dibujarRutaMapa(rutaPendiente); } }, { threshold: 0.45 });
+        io.observe(caja);
+      } else mapaVisto = true;
+      dibujarRutaMapa(rutaPendiente);
+    }
+
+    (function initMiDia() {
+      const caja = document.getElementById('miDia');
+      if (!caja) return;
+      const lista = document.getElementById('miDiaLista'), total = document.getElementById('miDiaTotal'), maps = document.getElementById('miDiaMaps'), pedir = document.getElementById('miDiaPedir');
+      const nombre = (id, d) => (id === 't' ? d['day.termas'] : decodeHtmlEntities(d['day.s' + id] || '').replace(/^\d+\s*·\s*/, ''));
+      let plan = null, primera = true;
+      function pintar(animar) {
+        const d = translations[currentLang] || translations.es, loc = LOCALE_FECHA[currentLang] || 'es-UY';
+        const marcadas = [...caja.querySelectorAll('input:checked')].map((i) => i.value);
+        plan = ordenMiDia(marcadas.filter((v) => v !== 't'), marcadas.includes('t'));
+        const km = (n) => n.toLocaleString(loc, { maximumFractionDigits: 1 });
+        lista.classList.toggle('dia-nueva', !!animar);
+        lista.innerHTML = '';
+        if (!plan) { total.textContent = d['day.none']; pedir.setAttribute('aria-disabled', 'true'); maps.setAttribute('aria-disabled', 'true'); dibujarRutaMapa(null); return; }
+        pedir.removeAttribute('aria-disabled'); maps.removeAttribute('aria-disabled');
+        let i = 0;
+        plan.orden.forEach((id, n) => {
+          if (n) {
+            const t = tramo(plan.orden[n - 1], id), li = document.createElement('li');
+            li.className = 'dia-tramo'; li.style.setProperty('--i', i++);
+            li.textContent = d['day.leg'].replace('{min}', t.min).replace('{km}', km(t.km));
+            lista.appendChild(li);
+          }
+          const li = document.createElement('li');
+          li.className = 'dia-parada' + (id === 't' ? ' es-termas' : ''); li.style.setProperty('--i', i++);
+          const num = document.createElement('span'); num.className = 'dia-num'; num.setAttribute('aria-hidden', 'true'); num.textContent = id === 't' ? '♨' : '0' + id;
+          const nom = document.createElement('span'); nom.className = 'dia-nom'; nom.textContent = nombre(id, d);
+          li.append(num, nom); lista.appendChild(li);
+        });
+        total.textContent = plan.orden.length < 2 ? d['day.single'] : d['day.total'].replace('{min}', plan.min).replace('{km}', km(plan.km));
+        const c = (id) => COORD[id].join(','), o = plan.orden;
+        maps.href = 'https://www.google.com/maps/dir/?api=1&travelmode=driving' + (o.length > 1 ? '&origin=' + c(o[0]) : '') + '&destination=' + c(o[o.length - 1]) +
+          (o.length > 2 ? '&waypoints=' + o.slice(1, -1).map(c).join('%7C') : '');
+        if (!primera) dibujarRutaMapa(plan.orden); else { rutaPendiente = plan.orden; primera = false; }
+      }
+      caja.addEventListener('change', () => pintar(true));
+      // Pedir por WhatsApp: abre el formulario de reserva con el recorrido escrito en los comentarios (reemplaza uno anterior si lo había)
+      pedir.addEventListener('click', () => {
+        if (!plan) return;
+        const d = translations[currentLang] || translations.es;
+        const linea = d['day.waLine'] + ': ' + plan.orden.map((id) => (id === 't' ? '' : '0' + id + ' ') + nombre(id, d)).join(' → ');
+        const notas = document.getElementById('bookNotes');
+        const otras = notas.value.split('\n').filter((l) => !/^(Recorrido|Roteiro|Route)\b/.test(l) && l.trim());
+        notas.value = [linea].concat(otras).join('\n');
+        const detalles = notas.closest('details'); if (detalles) detalles.open = true;
+        openBookingModal('General');
+      });
+      window.refrescarMiDia = () => pintar(false);
+      pintar(false);
+    })();
 
     // Descorche: al apretar el botón del mouse sobre algo clicable, un corcho sale volando con unas burbujas doradas (~0,6 s), justo cuando el cursor se ve destapado. Es decorativo: no frena ni cambia
     // la acción del clic, no corre con "reducir movimiento", con teclado ni en pantallas táctiles, y borra sus propios elementos.
