@@ -843,6 +843,7 @@
     .tilt-glare { position: absolute; inset: 0; z-index: 5; pointer-events: none; border-radius: inherit; opacity: 0; transition: opacity .35s; background: radial-gradient(22rem circle at var(--gx, 50%) var(--gy, 50%), rgba(217, 180, 122, .26), transparent 55%); }
     .tilt-on .tilt-glare { opacity: 1; }
     @media (prefers-reduced-motion: reduce) { #mainHeader .hdr-row, #mainHeader .hdr-logo { transition: none; } }
+    @media print { .tit-init { clip-path: none; translate: none; } .read-bar, .tilt-glare { display: none; } }
   </style>
 </head>
 <body class="bg-crema text-basalt font-sans antialiased selection:bg-gold selection:text-tannat-dark overflow-x-hidden">
@@ -6010,7 +6011,7 @@
       const rgb = (c) => (c.match(/\d+(\.\d+)?/g) || []).slice(0, 3).map(Number);
       const OSCURO = [43, 10, 20], CREMA = [250, 248, 245];
       const colorDe = (el) => { const c = el ? getComputedStyle(el).backgroundColor : ''; const v = rgb(c); return v.length === 3 && !/rgba\(.*,\s*0\)/.test(c) ? v : CREMA; };
-      const oscuras = quieto ? [] : [...document.querySelectorAll('main > section.bg-tannat-900')].map((s) => ({ s, antes: colorDe(s.previousElementSibling), despues: colorDe(s.nextElementSibling), ultimo: '' }));
+      const oscuras = quieto ? [] : [...document.querySelectorAll('main > section.bg-tannat-900')].filter((s) => s.id !== 'hero').map((s) => { const cs = getComputedStyle(s); return { s, antes: colorDe(s.previousElementSibling), despues: colorDe(s.nextElementSibling), arriba: parseFloat(cs.paddingTop) || 80, abajo: parseFloat(cs.paddingBottom) || 80, ultimo: '' }; });
       const mezcla = (a, t) => 'rgb(' + a.map((v, i) => Math.round(v + (OSCURO[i] - v) * t)).join(',') + ')';
 
       // 5. Números que suben (Historia: 1874, 4, 30+); 1874 cuenta desde 1819, el año en que nace Harriague
@@ -6034,7 +6035,7 @@
           (deBloque.get(e.target) || []).forEach((h) => { h.classList.add('tit-in'); setTimeout(() => h.classList.remove('tit-init', 'tit-in'), 1100); });
         }), { rootMargin: '0px 0px -18% 0px' });
         document.querySelectorAll('main > section h2').forEach((h) => {
-          if (h.getBoundingClientRect().top <= innerHeight || !h.parentElement) return;
+          if (!h.parentElement || !h.getClientRects().length || h.getBoundingClientRect().top <= innerHeight) return; // ya visto u oculto: queda como está
           h.classList.add('tit-init');
           const b = h.parentElement; if (!deBloque.has(b)) { deBloque.set(b, []); entra.observe(b); } deBloque.get(b).push(h);
         });
@@ -6051,11 +6052,12 @@
             cancelAnimationFrame(cuadro);
             cuadro = requestAnimationFrame(() => {
               const r = card.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
-              card.style.transform = `perspective(900px) rotateX(${((0.5 - y) * 7).toFixed(2)}deg) rotateY(${((x - 0.5) * 9).toFixed(2)}deg) translateY(-6px)`;
+              card.style.transform = `perspective(900px) rotateX(${((0.5 - y) * 5).toFixed(2)}deg) rotateY(${((x - 0.5) * 7).toFixed(2)}deg) translateY(-6px)`;
               card.style.setProperty('--gx', (x * 100).toFixed(1) + '%'); card.style.setProperty('--gy', (y * 100).toFixed(1) + '%');
             });
           });
-          card.addEventListener('pointerleave', () => { cancelAnimationFrame(cuadro); card.classList.remove('tilt-on'); card.style.transform = ''; });
+          const soltar = () => { cancelAnimationFrame(cuadro); card.classList.remove('tilt-on'); card.style.transform = ''; };
+          card.addEventListener('pointerleave', soltar); card.addEventListener('pointercancel', soltar); card.addEventListener('click', soltar); // al abrir la ficha, la tarjeta vuelve a su lugar
         });
       }
 
@@ -6084,10 +6086,10 @@
           termImg.style.translate = '0 ' + lim(-off * 50, -margen, margen).toFixed(1) + 'px';
         }
         oscuras.forEach((o, i) => {
-          const r = rOsc[i], tramo = vh * 0.25;
+          const r = rOsc[i];
           let c = '';
-          if (r.bottom > 0 && r.top < vh) {
-            const entra = lim((vh - r.top) / tramo, 0, 1), sale = lim((r.bottom - hh) / tramo, 0, 1);
+          if (r.bottom > 0 && r.top < vh) { // el tramo del fundido no pasa del margen de la sección: el texto (blanco) siempre aparece sobre el fondo oscuro
+            const entra = lim((vh - r.top) / Math.min(vh * 0.25, o.arriba), 0, 1), sale = lim((r.bottom - hh) / Math.min(vh * 0.25, o.abajo), 0, 1);
             if (entra < 1) c = mezcla(o.antes, suave(entra));
             else if (sale < 1) c = mezcla(o.despues, suave(sale));
           }
