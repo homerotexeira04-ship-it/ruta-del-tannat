@@ -821,6 +821,28 @@
       .cup-orb { transition: none; } .cup-orb.is-on .cup-orb-i, .cup-ambient i, .cup-hint svg, .cup-in, .cup-flare .cup-glow, .cup-done .cup-cta { animation: none; }
       .cup-tilt { transition: none; transform: none; } .cup-toast.is-on { animation: none; opacity: 1; } .cup-g { transition: none; }
     }
+    /* ===== Movimiento al scrollear y al pasar el mouse (ver initMovimiento). Nada se fija al scroll ni lo frena. ===== */
+    /* Barra de lectura: una línea de vino bajo el encabezado que se llena a medida que se baja */
+    .read-bar { position: absolute; left: 0; right: 0; bottom: -1px; height: 3px; transform-origin: 0 50%; transform: scaleX(var(--leido, 0)); background: linear-gradient(90deg, #8F2636, #C29D62 70%, #D9B47A); pointer-events: none; }
+    /* Encabezado compacto al bajar; vuelve a su alto cerca del inicio */
+    #mainHeader .hdr-row, #mainHeader .hdr-logo { transition: height .35s cubic-bezier(.2, .8, .2, 1); }
+    #mainHeader.hdr-compact .hdr-row { height: 3.5rem; }
+    #mainHeader.hdr-compact .hdr-logo { height: 2.6rem; }
+    @media (max-height: 420px) { #mainHeader.hdr-compact .hdr-row { height: 3.25rem; } #mainHeader.hdr-compact .hdr-logo { height: 2.5rem; } }
+    /* Línea de tiempo del Pionero: la línea se entinta al leer y cada año se enciende cuando la tinta llega */
+    .tl-ink::before { content: ''; position: absolute; left: -2px; top: 0; bottom: 0; width: 2px; background: linear-gradient(#C29D62, #721B28); transform-origin: top; transform: scaleY(var(--tinta, 0)); }
+    .tl-ink .tl-dot { transition: background-color .35s, scale .35s; }
+    .tl-ink .tl-dot:not(.is-on) { background-color: #F4EBED; scale: .8; }
+    /* Parallax suave de la foto de Termas: un poco más grande que su marco para tener por dónde moverse */
+    .plx-scale { scale: 1.12; }
+    /* Titulares: entran de arriba hacia abajo, renglón por renglón, subiendo apenas */
+    .tit-init { clip-path: inset(0 0 100% 0); translate: 0 .35em; }
+    .tit-init.tit-in { clip-path: inset(0); translate: 0 0; transition: clip-path 1s cubic-bezier(.65, 0, .35, 1), translate 1s cubic-bezier(.2, .8, .2, 1); }
+    /* Tarjetas de las estaciones: se inclinan siguiendo el mouse, con un reflejo dorado (solo con mouse) */
+    .tilt-on { transition: transform .15s ease-out, box-shadow .3s !important; will-change: transform; }
+    .tilt-glare { position: absolute; inset: 0; z-index: 5; pointer-events: none; border-radius: inherit; opacity: 0; transition: opacity .35s; background: radial-gradient(22rem circle at var(--gx, 50%) var(--gy, 50%), rgba(217, 180, 122, .26), transparent 55%); }
+    .tilt-on .tilt-glare { opacity: 1; }
+    @media (prefers-reduced-motion: reduce) { #mainHeader .hdr-row, #mainHeader .hdr-logo { transition: none; } }
   </style>
 </head>
 <body class="bg-crema text-basalt font-sans antialiased selection:bg-gold selection:text-tannat-dark overflow-x-hidden">
@@ -5958,6 +5980,125 @@
       }, 4000);
     }
     initScrollReveal();
+
+    // ===== Movimiento: barra de lectura, línea de tiempo que se entinta, parallax suave, fondos que se funden, números que
+    // suben, titulares que entran, tarjetas que se inclinan y encabezado que se achica. Nada se fija al scroll ni lo frena:
+    // un solo manejador pasivo que lee y escribe en el próximo cuadro. Con «reducir movimiento» solo quedan la barra de
+    // lectura y el encabezado compacto (sin transición).
+    (function initMovimiento() {
+      const quieto = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const io = 'IntersectionObserver' in window;
+      const lim = (v, a, b) => Math.min(b, Math.max(a, v));
+      const suave = (t) => t * t * (3 - 2 * t);
+      const hdr = document.getElementById('mainHeader');
+
+      // 1. Barra de lectura
+      let barra = null;
+      if (hdr) { barra = document.createElement('div'); barra.className = 'read-bar'; barra.setAttribute('aria-hidden', 'true'); hdr.appendChild(barra); }
+
+      // 2. Línea de tiempo del Pionero
+      const tl = quieto ? null : document.querySelector('#pionero .border-l-2');
+      const puntos = tl ? [...tl.children].map((c) => c.querySelector(':scope > span.absolute')).filter(Boolean) : [];
+      if (tl) { tl.classList.add('tl-ink'); puntos.forEach((d) => d.classList.add('tl-dot')); }
+
+      // 3. Parallax: la foto de la portada baja más lento que la página; la de Termas se desliza dentro de su marco
+      const heroImg = quieto ? null : document.querySelector('#hero > div.absolute img');
+      const termImg = quieto ? null : document.querySelector('#termas img[src*="termas-dayman"]');
+      if (termImg) termImg.classList.add('plx-scale');
+
+      // 4. Secciones oscuras: al entrar se funden desde el color de la sección anterior y al salir hacia el de la siguiente
+      const rgb = (c) => (c.match(/\d+(\.\d+)?/g) || []).slice(0, 3).map(Number);
+      const OSCURO = [43, 10, 20], CREMA = [250, 248, 245];
+      const colorDe = (el) => { const c = el ? getComputedStyle(el).backgroundColor : ''; const v = rgb(c); return v.length === 3 && !/rgba\(.*,\s*0\)/.test(c) ? v : CREMA; };
+      const oscuras = quieto ? [] : [...document.querySelectorAll('main > section.bg-tannat-900')].map((s) => ({ s, antes: colorDe(s.previousElementSibling), despues: colorDe(s.nextElementSibling), ultimo: '' }));
+      const mezcla = (a, t) => 'rgb(' + a.map((v, i) => Math.round(v + (OSCURO[i] - v) * t)).join(',') + ')';
+
+      // 5. Números que suben (Historia: 1874, 4, 30+); 1874 cuenta desde 1819, el año en que nace Harriague
+      if (!quieto && io) {
+        const nums = [...document.querySelectorAll('#historia .grid-cols-3 span.font-serif')].filter((n) => /^\d+\D*$/.test(n.textContent.trim()));
+        const cuenta = new IntersectionObserver((es) => es.forEach((e) => {
+          if (!e.isIntersecting) return; cuenta.unobserve(e.target);
+          const n = e.target, [, num, resto] = n.textContent.trim().match(/^(\d+)(\D*)$/), fin = +num, ini = fin > 1000 ? 1819 : 0, t0 = performance.now(), dur = fin > 1000 ? 1400 : 1100;
+          const paso = (ahora) => { const t = lim((ahora - t0) / dur, 0, 1), v = ini + (fin - ini) * (1 - Math.pow(1 - t, 3)); n.textContent = Math.round(v) + resto; if (t < 1) requestAnimationFrame(paso); };
+          requestAnimationFrame(paso);
+        }), { threshold: 0.6 });
+        nums.forEach((n) => { n.style.fontVariantNumeric = 'tabular-nums'; if (n.getBoundingClientRect().top > innerHeight) cuenta.observe(n); });
+      }
+
+      // 6. Titulares de sección: solo los que todavía no se vieron
+      if (!quieto && io) {
+        // Se observa el bloque que contiene al titular: un elemento recortado del todo nunca cuenta como visible
+        const deBloque = new Map();
+        const entra = new IntersectionObserver((es) => es.forEach((e) => {
+          if (!e.isIntersecting) return; entra.unobserve(e.target);
+          (deBloque.get(e.target) || []).forEach((h) => { h.classList.add('tit-in'); setTimeout(() => h.classList.remove('tit-init', 'tit-in'), 1100); });
+        }), { rootMargin: '0px 0px -18% 0px' });
+        document.querySelectorAll('main > section h2').forEach((h) => {
+          if (h.getBoundingClientRect().top <= innerHeight || !h.parentElement) return;
+          h.classList.add('tit-init');
+          const b = h.parentElement; if (!deBloque.has(b)) { deBloque.set(b, []); entra.observe(b); } deBloque.get(b).push(h);
+        });
+      }
+
+      // 7. Tarjetas de las estaciones que se inclinan con el mouse (no en pantallas táctiles)
+      if (!quieto && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+        document.querySelectorAll('#estaciones div[role="button"]').forEach((card) => {
+          const brillo = document.createElement('span'); brillo.className = 'tilt-glare'; brillo.setAttribute('aria-hidden', 'true');
+          card.style.position = 'relative'; card.appendChild(brillo);
+          let cuadro = 0;
+          card.addEventListener('pointerenter', () => card.classList.add('tilt-on'));
+          card.addEventListener('pointermove', (e) => {
+            cancelAnimationFrame(cuadro);
+            cuadro = requestAnimationFrame(() => {
+              const r = card.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+              card.style.transform = `perspective(900px) rotateX(${((0.5 - y) * 7).toFixed(2)}deg) rotateY(${((x - 0.5) * 9).toFixed(2)}deg) translateY(-6px)`;
+              card.style.setProperty('--gx', (x * 100).toFixed(1) + '%'); card.style.setProperty('--gy', (y * 100).toFixed(1) + '%');
+            });
+          });
+          card.addEventListener('pointerleave', () => { cancelAnimationFrame(cuadro); card.classList.remove('tilt-on'); card.style.transform = ''; });
+        });
+      }
+
+      // Un solo manejador de scroll: primero se lee todo, después se escribe
+      let pendiente = false, compacto = false;
+      function cuadro() {
+        pendiente = false;
+        const y = window.scrollY, vh = window.innerHeight, max = document.documentElement.scrollHeight - vh;
+        const hh = hdr ? hdr.getBoundingClientRect().height : 0;
+        const rTl = tl && tl.getBoundingClientRect();
+        const tlCerca = rTl && rTl.bottom > -200 && rTl.top < vh + 200;
+        const yPuntos = tlCerca ? puntos.map((d) => d.getBoundingClientRect().top) : null;
+        const rTerm = termImg && termImg.parentElement.getBoundingClientRect();
+        const rOsc = oscuras.map((o) => o.s.getBoundingClientRect());
+
+        if (barra) barra.style.setProperty('--leido', max > 0 ? lim(y / max, 0, 1).toFixed(4) : 0);
+        if (hdr) { const c = compacto ? y > 60 : y > 140; if (c !== compacto) { compacto = c; hdr.classList.toggle('hdr-compact', c); } }
+        if (tlCerca) {
+          const linea = vh * 0.62;
+          tl.style.setProperty('--tinta', lim((linea - rTl.top) / rTl.height, 0, 1).toFixed(4));
+          puntos.forEach((d, i) => d.classList.toggle('is-on', yPuntos[i] + 10 <= linea));
+        }
+        if (heroImg && y < vh * 1.3) heroImg.style.translate = '0 ' + (y * 0.3).toFixed(1) + 'px';
+        if (rTerm && rTerm.bottom > 0 && rTerm.top < vh) {
+          const margen = rTerm.height * 0.06 - 1, off = (rTerm.top + rTerm.height / 2 - vh / 2) / vh;
+          termImg.style.translate = '0 ' + lim(-off * 50, -margen, margen).toFixed(1) + 'px';
+        }
+        oscuras.forEach((o, i) => {
+          const r = rOsc[i], tramo = vh * 0.25;
+          let c = '';
+          if (r.bottom > 0 && r.top < vh) {
+            const entra = lim((vh - r.top) / tramo, 0, 1), sale = lim((r.bottom - hh) / tramo, 0, 1);
+            if (entra < 1) c = mezcla(o.antes, suave(entra));
+            else if (sale < 1) c = mezcla(o.despues, suave(sale));
+          }
+          if (c !== o.ultimo) { o.ultimo = c; o.s.style.backgroundColor = c; }
+        });
+      }
+      const pedir = () => { if (!pendiente) { pendiente = true; requestAnimationFrame(cuadro); } };
+      window.addEventListener('scroll', pedir, { passive: true });
+      window.addEventListener('resize', pedir);
+      cuadro();
+    })();
 
     // Tarjetas 3D desplegables de "El Pionero": cada hito de la línea de tiempo gira
     // sobre su eje al tocarlo para mostrar una curiosidad adicional al dorso.
