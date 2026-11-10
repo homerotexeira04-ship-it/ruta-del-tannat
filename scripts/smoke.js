@@ -117,13 +117,14 @@ function servidor() {
     check('el menú del celular agrupa las 19 secciones en acordeón y no pisa la barra de reserva', r.grupos === 4 && r.exclusivo && r.enlaces === 19 && r.solapa <= 0, JSON.stringify(r)); await page.close(); }
 
   // 10. el hover de las tarjetas anima (el reveal al hacer scroll no debe pisarles la transición): se mide cuadro por cuadro cuántos pasos distintos recorre la elevación
+  //     (las tarjetas de las estaciones se inclinan con el mouse: su transform es matrix3d y la elevación va en el índice 13)
   { const page = await abrir(1280, 800, false);
     await page.emulateMediaFeatures([{ name: 'prefers-reduced-motion', value: 'no-preference' }]); await page.reload({ waitUntil: 'load' }); await page.evaluate(() => document.fonts.ready); await sleep(700);
     await recorrer(page, 800); await sleep(1700); // deja terminar el reveal
     const sel = '.shadow-editorial-hover[class*="hover:-translate-y"]';
     const c = await page.evaluate(async (sel) => { const el = document.querySelector(sel); el.scrollIntoView({ block: 'center', behavior: 'instant' }); await new Promise((ok) => setTimeout(ok, 500)); const r = el.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2, prop: getComputedStyle(el).transitionProperty, hover: matchMedia('(hover: hover)').matches }; }, sel);
     await page.mouse.move(2, 2); await sleep(500);
-    await page.evaluate((sel) => { const el = document.querySelector(sel); window.__pasos = null; el.addEventListener('mouseenter', () => { const v = new Set(); window.__pasos = v; const t0 = performance.now(); (function f() { const m = /matrix\(([^)]*)\)/.exec(getComputedStyle(el).transform); v.add(m ? m[1].split(',')[5].trim() : '0'); if (performance.now() - t0 < 600) requestAnimationFrame(f); })(); }, { once: true }); }, sel);
+    await page.evaluate((sel) => { const el = document.querySelector(sel); window.__pasos = null; el.addEventListener('mouseenter', () => { const v = new Set(); window.__pasos = v; const t0 = performance.now(); (function f() { const m = /matrix(3d)?\(([^)]*)\)/.exec(getComputedStyle(el).transform); v.add(m ? m[2].split(',')[m[1] ? 13 : 5].trim() : '0'); if (performance.now() - t0 < 600) requestAnimationFrame(f); })(); }, { once: true }); }, sel);
     await page.mouse.move(c.x, c.y); await sleep(1100);
     const pasos = await page.evaluate(() => (window.__pasos ? window.__pasos.size : -1));
     check('el hover de las tarjetas anima en vez de saltar (' + pasos + ' pasos)', c.hover && pasos >= 3, (c.hover ? '' : 'el Chrome de prueba no reporta mouse ((hover: hover) falso) y los hover no se aplican; ') + 'transition-property=' + c.prop + ', pasos=' + pasos); await page.close(); }
