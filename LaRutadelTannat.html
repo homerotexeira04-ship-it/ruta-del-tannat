@@ -346,89 +346,6 @@
       text-shadow: 0 2px 12px rgba(0,0,0,0.7);
     }
     
-    /* Preloader Animations */
-    #preloader {
-      animation: fadeOutPreloader 0.6s cubic-bezier(0.4, 0, 0.2, 1) 2.5s forwards;
-    }
-    @keyframes fadeOutPreloader {
-      0% {
-        opacity: 1;
-        pointer-events: auto;
-        visibility: visible;
-      }
-      80% {
-        opacity: 0.2;
-        pointer-events: none;
-      }
-      100% {
-        opacity: 0;
-        pointer-events: none;
-        visibility: hidden;
-      }
-    }
-
-    @keyframes wineFill {
-      0% {
-        height: 0%;
-        opacity: 0.3;
-      }
-      20% {
-        opacity: 0.8;
-      }
-      100% {
-        height: 72%;
-        opacity: 1;
-      }
-    }
-
-    @keyframes streamFlow {
-      0% {
-        height: 0;
-        opacity: 0;
-      }
-      15% {
-        height: 100px;
-        opacity: 1;
-      }
-      85% {
-        height: 100px;
-        opacity: 1;
-      }
-      100% {
-        height: 0;
-        opacity: 0;
-      }
-    }
-
-    @keyframes surfaceWave {
-      0%, 100% {
-        transform: translateY(0) scaleY(1);
-      }
-      50% {
-        transform: translateY(-2px) scaleY(1.05);
-      }
-    }
-
-    .wine-stream {
-      animation: streamFlow 2.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-    }
-
-    .wine-liquid {
-      animation: wineFill 2.2s cubic-bezier(0.25, 1, 0.5, 1) 0.2s forwards;
-    }
-
-    .wine-surface {
-      animation: surfaceWave 1s ease-in-out infinite;
-    }
-
-    @keyframes loaderProgress {
-      0% { width: 0%; }
-      100% { width: 100%; }
-    }
-
-    .loader-bar-fill {
-      animation: loaderProgress 2.5s ease-out forwards;
-    }
 
     /* Leaflet — mapa interactivo real: estilo acorde a la marca */
     #leafletMap { z-index: 0; background: #EFECE6; font-family: "Plus Jakarta Sans", sans-serif; }
@@ -917,62 +834,6 @@
 
   <!-- Itinerario para imprimir o guardar como PDF: se arma en JS (renderPrintItinerary) y solo se ve al imprimir -->
   <div id="printItinerary" aria-hidden="true"></div>
-
-  <!-- ==================== PRELOADER / LOADING SCREEN (2.5 SECONDS) ==================== -->
-  <div id="preloader" onclick="dismissPreloader()" class="fixed inset-0 z-[100] bg-tannat-900 flex flex-col items-center justify-center transition-all duration-700 select-none cursor-pointer" aria-label="Cargando experiencia enoturística" style="opacity: 0; pointer-events: none; visibility: hidden; display: none;">
-    <div class="relative flex flex-col items-center justify-center p-6 text-center max-w-sm">
-      
-      <!-- Animated Wine Glass Container -->
-      <div class="relative w-36 h-48 mb-6 flex items-center justify-center">
-        
-        <!-- Pouring Wine Stream from Above -->
-        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-1.5 bg-gradient-to-b from-red-400 via-tannat-light to-tannat rounded-full wine-stream z-10"></div>
-
-        <!-- Wine Glass SVG Graphic with Clipping Path for Liquid -->
-        <svg class="w-28 h-44 drop-shadow-[0_4px_20px_rgba(194,157,98,0.35)]" viewBox="0 0 100 160" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <clippath id="glassBowlClip">
-              <path d="M22 18 C22 55, 36 82, 50 82 C64 82, 78 55, 78 18 Z"></path>
-            </clippath>
-            <lineargradient id="wineGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stop-color="#8F2636"></stop>
-              <stop offset="50%" stop-color="#721B28"></stop>
-              <stop offset="100%" stop-color="#4A101D"></stop>
-            </lineargradient>
-          </defs>
-
-          <!-- Filling Liquid inside the bowl -->
-          <g clip-path="url(#glassBowlClip)">
-            <rect x="0" y="82" width="100" height="0" fill="url(#wineGrad)" class="wine-liquid origin-bottom transform -translate-y-full"></rect>
-            <ellipse cx="50" cy="40" rx="26" ry="3" fill="#A83A4E" opacity="0.6" class="wine-surface"></ellipse>
-          </g>
-
-          <!-- Glass Outline & Highlights (Bowl, Stem, Base) -->
-          <path d="M20 16 C20 58, 35 84, 48 85 L48 138 L32 144 C30 145, 30 148, 33 148 L67 148 C70 148, 70 145, 68 144 L52 138 L52 85 C65 84, 80 58, 80 16" stroke="#C29D62" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.85"></path>
-          <ellipse cx="50" cy="16" rx="30" ry="4.5" stroke="#D9B47A" stroke-width="2" opacity="0.7"></ellipse>
-          <path d="M24 24 C24 48, 32 68, 42 74" stroke="white" stroke-width="1.8" stroke-linecap="round" opacity="0.4"></path>
-          <path d="M74 24 C75 35, 74 46, 70 56" stroke="#D9B47A" stroke-width="1.2" stroke-linecap="round" opacity="0.5"></path>
-          <ellipse cx="50" cy="147" rx="22" ry="2.5" stroke="#C29D62" stroke-width="1.5" opacity="0.75"></ellipse>
-        </svg>
-
-      </div>
-
-      <!-- Text & Brand in Preloader -->
-      <span class="font-serif text-2xl font-bold tracking-wider text-white uppercase text-shadow mb-1" data-i18n="loader.title">
-        La Ruta del Tannat
-      </span>
-      <span class="text-xs text-gold tracking-widest font-semibold uppercase mb-4" data-i18n="loader.subtitle">
-        Sirviendo la experiencia · Cuna del Vino Uruguayo
-      </span>
-
-      <!-- 2.5s Progress Bar -->
-      <div class="w-48 h-1 bg-white/15 rounded-full overflow-hidden mb-2">
-        <div class="h-full bg-gradient-to-r from-gold to-gold-light loader-bar-fill"></div>
-      </div>
-      <span class="text-xs text-gray-400 font-mono tracking-wider">Salto, Uruguay</span>
-
-    </div>
-  </div>
 
   <!-- ==================== HEADER & NAVIGATION ==================== -->
   <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 glass-nav border-b border-gold/25" id="mainHeader">
@@ -3545,30 +3406,6 @@
       if (t && t.isConnected && t.getClientRects().length) t.focus({ preventScroll: true });
     }
 
-    // Loading Screen (Preloader) 2.5-second robust dismissal
-    function dismissPreloader() {
-      const preloader = document.getElementById('preloader');
-      if (preloader && preloader.style.display !== 'none') {
-        preloader.style.opacity = '0';
-        preloader.style.pointerEvents = 'none';
-        preloader.style.visibility = 'hidden';
-        setTimeout(() => {
-          preloader.style.display = 'none';
-        }, 600);
-      }
-    }
-
-    // Direct countdown timer starting immediately
-    setTimeout(dismissPreloader, 2500);
-
-    // Redundant triggers on DOMContentLoaded & Window Load
-    if (document.readyState === 'complete' || document.readyState === 'interactive') {
-      setTimeout(dismissPreloader, 2500);
-    } else {
-      document.addEventListener('DOMContentLoaded', () => setTimeout(dismissPreloader, 2500));
-      window.addEventListener('load', () => setTimeout(dismissPreloader, 2500));
-    }
-
     // Multilingual Stations Database (ES / PT / EN)
     const stationsInfo = {
       1: {
@@ -3731,8 +3568,6 @@
         "print.book": "Reservas y consultas",
         "print.bookText": "Los horarios, cupos y precios se confirman por WhatsApp con las bodegas; los precios del sitio son de referencia.",
         "print.credit": "La Ruta del Tannat · Proyecto final de Federico Camara, Homero Texeira y Anthony Moreira · Polo Educativo Tecnológico Salto (DGETP-UTU)",
-        "loader.title": "La Ruta del Tannat",
-        "loader.subtitle": "Sirviendo la experiencia · Cuna del Vino Uruguayo",
         "nav.brand": "La Ruta del Tannat",
         "nav.history": "Historia",
         "nav.stations": "Estaciones",
@@ -4398,8 +4233,6 @@
         "print.book": "Reservas e consultas",
         "print.bookText": "Horários, vagas e preços são confirmados por WhatsApp com as vinícolas; os preços do site são de referência.",
         "print.credit": "La Ruta del Tannat · Projeto final de Federico Camara, Homero Texeira e Anthony Moreira · Polo Educativo Tecnológico Salto (DGETP-UTU)",
-        "loader.title": "A Rota do Tannat",
-        "loader.subtitle": "Servindo a experiência · Berço do Vinho Uruguaio",
         "nav.brand": "A Rota do Tannat",
         "nav.history": "História",
         "nav.stations": "Estações",
@@ -5065,8 +4898,6 @@
         "print.book": "Bookings and questions",
         "print.bookText": "Times, availability and prices are confirmed over WhatsApp with the wineries; prices on the site are for reference.",
         "print.credit": "La Ruta del Tannat · Final project by Federico Camara, Homero Texeira and Anthony Moreira · Polo Educativo Tecnológico Salto (DGETP-UTU)",
-        "loader.title": "The Tannat Route",
-        "loader.subtitle": "Pouring the experience · Cradle of Uruguayan Wine",
         "nav.brand": "The Tannat Route",
         "nav.history": "History",
         "nav.stations": "Stations",
