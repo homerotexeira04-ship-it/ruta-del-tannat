@@ -18,3 +18,4 @@ originales/
 
 # Snapshots y logs que genera el MCP de Playwright
 .playwright-mcp/
+intro/.hyperframes/

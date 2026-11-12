@@ -6,7 +6,7 @@ const ROOT = path.join(__dirname, '..');
 const CHROME = process.env.CHROME_PATH || ['C:/Program Files/Google/Chrome/Application/chrome.exe', '/usr/bin/google-chrome', '/usr/bin/google-chrome-stable', '/usr/bin/chromium', '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'].find((p) => fs.existsSync(p));
 if (!CHROME) { console.error('No encuentro Chrome: definí CHROME_PATH'); process.exit(2); }
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
-const MIME = { '.html': 'text/html; charset=utf-8', '.css': 'text/css', '.js': 'text/javascript', '.json': 'application/json', '.webp': 'image/webp', '.jpg': 'image/jpeg', '.png': 'image/png', '.svg': 'image/svg+xml', '.ico': 'image/x-icon', '.woff2': 'font/woff2', '.xml': 'application/xml', '.txt': 'text/plain' };
+const MIME = { '.html': 'text/html; charset=utf-8', '.css': 'text/css', '.js': 'text/javascript', '.json': 'application/json', '.webp': 'image/webp', '.jpg': 'image/jpeg', '.png': 'image/png', '.svg': 'image/svg+xml', '.ico': 'image/x-icon', '.woff2': 'font/woff2', '.mp4': 'video/mp4','.xml': 'application/xml', '.txt': 'text/plain' };
 const failures = [];
 const check = (name, cond, extra) => { if (!cond) failures.push(name + (extra ? ' → ' + extra : '')); console.log((cond ? 'OK  ' : 'MAL ') + name + (extra && !cond ? '  → ' + extra : '')); };
 
@@ -27,6 +27,9 @@ function servidor() {
   // Un Chrome sin pantalla (p. ej. el de GitHub Actions) no detecta mouse y reporta (hover: none): ahí los :hover no se aplican, a propósito.
   // Se fuerza "mouse fino con hover" para que las pruebas de escritorio midan lo mismo en cualquier máquina (la emulación táctil del celular lo reemplaza sola).
   const browser = await puppeteer.launch({ executablePath: CHROME, headless: 'new', args: ['--no-sandbox', '--disable-dev-shm-usage', '--blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4'] });
+  // La apertura en video tapa la página unos segundos: el resto de las pruebas entra como quien ya la vio; la apertura se prueba aparte (29)
+  const paginaConApertura = browser.newPage.bind(browser);
+  browser.newPage = async () => { const p = await paginaConApertura(); await p.evaluateOnNewDocument(() => { try { sessionStorage.setItem('tannat_intro', '1'); } catch (e) {} }); return p; };
   const abrir = async (W, H, mobile, dpr = 1) => {
     const page = await browser.newPage(); await page.setViewport({ width: W, height: H, isMobile: mobile, hasTouch: mobile, deviceScaleFactor: dpr });
     await page.emulateMediaFeatures([{ name: 'prefers-reduced-motion', value: 'reduce' }]);
@@ -366,6 +369,18 @@ function servidor() {
       await page.close();
     }
     check('el logo de la portada se ve nítido y no tapa nada: a la izquierda del texto desde 1024 px (sin moverlo), arriba solo en pantallas altas y sin empujar el primer botón bajo la barra', malos.length === 0, malos.join(' | ')); }
+
+  // 29. apertura (video de HyperFrames): sin movimiento reducido se ve y el video avanza, "Saltar intro" la saca y marca la sesión,
+  //     al recargar ya no sale, y entrando a una sección (#estaciones) tampoco
+  { const page = await paginaConApertura(); await page.setViewport({ width: 390, height: 844, isMobile: true, hasTouch: true });
+    await page.goto(srv.url, { waitUntil: 'domcontentloaded' });
+    let avanza = true; try { await page.waitForFunction(() => { const v = document.getElementById('introVideo'); return v && v.currentTime > 0.3; }, { timeout: 15000 }); } catch (e) { avanza = false; }
+    await page.evaluate(() => { const b = document.getElementById('introSkip'); if (b) b.click(); }); await sleep(800);
+    const tras = await page.evaluate(() => ({ quitada: !document.getElementById('intro'), sesion: sessionStorage.getItem('tannat_intro') }));
+    await page.reload({ waitUntil: 'domcontentloaded' }); const recarga = await page.evaluate(() => !document.getElementById('intro'));
+    const p2 = await paginaConApertura(); await p2.goto(srv.url + '#estaciones', { waitUntil: 'domcontentloaded' }); const conHash = await p2.evaluate(() => !document.getElementById('intro'));
+    check('apertura: se ve, el video avanza, "Saltar intro" la saca, no vuelve en la sesión ni al entrar a una sección', avanza && tras.quitada && tras.sesion === '1' && recarga && conHash, JSON.stringify({ avanza, tras, recarga, conHash }));
+    await page.close(); await p2.close(); }
 
   await browser.close(); srv.cerrar();
   if (failures.length) { console.log('\n' + failures.length + ' prueba(s) fallaron:\n - ' + failures.join('\n - ')); process.exit(1); }

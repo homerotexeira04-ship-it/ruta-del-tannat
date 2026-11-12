@@ -34,6 +34,7 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   const req = event.request;
   if (req.method !== 'GET') return;
+  if (req.headers.has('range')) return; // video de la apertura: pedidos parciales (206) directo a la red; la caché no los guarda
 
   // Navegación (abrir/recargar la página): red primero, caché como respaldo sin conexión
   if (req.mode === 'navigate') {
