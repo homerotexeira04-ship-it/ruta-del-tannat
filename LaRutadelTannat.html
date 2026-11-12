@@ -266,7 +266,7 @@
   <!-- Tailwind CSS compilado (ver README: npm run build:css) -->
   <!-- Foto del inicio: 720 px para celulares (va recortada y bajo un velo oscuro, por eso "sizes" la pide a media pantalla: alcanza aun con pantallas de alta densidad), 1280 y 1920 para el resto. Debe decir lo mismo que la imagen del hero (más abajo). -->
   <link rel="preload" as="image" href="./LaRutadelTannat_files/hero-vinedo-uruguay-1280.webp" imagesrcset="./LaRutadelTannat_files/hero-vinedo-uruguay-720.webp 720w, ./LaRutadelTannat_files/hero-vinedo-uruguay-1280.webp 1280w, ./LaRutadelTannat_files/hero-vinedo-uruguay.webp 1920w" imagesizes="(max-width: 767px) 50vw, 100vw" fetchpriority="high">
-  <link rel="stylesheet" href="./LaRutadelTannat_files/tailwind.css?v=25">
+  <link rel="stylesheet" href="./LaRutadelTannat_files/tailwind.css?v=26">
 
   <!-- Tipografía editorial alojada en el sitio (sin pedidos a Google): Playfair Display (titulares) + Plus Jakarta Sans (cuerpo/UI).
        Fuentes variables, solo el subconjunto latin (cubre es/pt/en; otro alfabeto cae a la fuente del sistema). Licencia OFL.
@@ -420,6 +420,12 @@
     .tannat-pin { display: flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); background: #4A101D; border: 2px solid #C29D62; box-shadow: 0 2px 6px rgba(0,0,0,0.35); }
     .tannat-pin span { transform: rotate(45deg); color: #D9B47A; font-family: "Playfair Display", serif; font-weight: 700; font-size: 13px; }
     .tannat-pin.thermal-pin { background: #9A7B38; }
+    /* termas: insignia redonda; con poco zoom se corre al costado para no quedar tapada por el 04 (están a ~400 m) */
+    .thermal-badge { display: flex; align-items: center; justify-content: center; width: 26px; height: 26px; border-radius: 50%; background: #9A7B38; border: 2px solid #F3E2B3; color: #fff; font-size: 13px; box-shadow: 0 2px 6px rgba(0,0,0,0.35); }
+    /* el mapa de OpenStreetMap con colores apagados y cálidos, para que acompañe la paleta (el recorrido y los pines quedan con su color) */
+    #leafletMap .leaflet-tile-pane { filter: saturate(.5) sepia(.16) brightness(1.02) contrast(.96); }
+    .map-tap-hint { margin: .6rem 0 0; text-align: center; font-size: .8rem; font-weight: 600; color: #721B28; } /* debajo del mapa: flotando encima tapaba pines */
+    .map-num { display: inline-flex; align-items: center; justify-content: center; flex: none; width: 1.6rem; height: 1.6rem; border-radius: 50%; background: #4A101D; border: 1.5px solid #C29D62; color: #D9B47A; font-family: "Playfair Display", serif; font-size: .75rem; font-weight: 700; }
     .leaflet-popup-content-wrapper { border-radius: 14px; padding: 0; overflow: hidden; }
     .leaflet-popup-content { margin: 0; width: 230px !important; }
     .tannat-popup img { width: 100%; height: 110px; object-fit: cover; display: block; }
@@ -2781,19 +2787,20 @@
         <!-- Filtros rápidos: muestran/ocultan marcadores reales del mapa (no recortan contenido, solo la vista) -->
         <div class="flex justify-center mb-6">
           <div class="inline-flex items-center gap-1 bg-crema rounded-full p-1 border border-tannat-100 shadow-sm">
-            <button type="button" id="mapFilterAll" onclick="filterMapMarkers('all')" aria-pressed="true" class="tap-area-pill px-3.5 py-1.5 rounded-full font-semibold transition-all bg-tannat text-white shadow-sm" data-i18n="map.filterAll">Ruta Completa</button>
-            <button type="button" id="mapFilterWineries" onclick="filterMapMarkers('wineries')" aria-pressed="false" class="tap-area-pill px-3.5 py-1.5 rounded-full font-semibold transition-all text-tannat hover:bg-tannat/10" data-i18n="map.filterWineries">Solo Bodegas</button>
-            <button type="button" id="mapFilterThermal" onclick="filterMapMarkers('thermal')" aria-pressed="false" class="tap-area-pill px-3.5 py-1.5 rounded-full font-semibold transition-all text-tannat hover:bg-tannat/10" data-i18n="map.filterThermal">Termas</button>
+            <button type="button" id="mapFilterAll" onclick="filterMapMarkers('all')" aria-pressed="true" class="tap-area-pill px-3.5 py-1.5 rounded-full text-sm font-semibold transition-all bg-tannat text-white shadow-sm" data-i18n="map.filterAll">Ruta Completa</button>
+            <button type="button" id="mapFilterWineries" onclick="filterMapMarkers('wineries')" aria-pressed="false" class="tap-area-pill px-3.5 py-1.5 rounded-full text-sm font-semibold transition-all text-tannat hover:bg-tannat/10" data-i18n="map.filterWineries">Solo Bodegas</button>
+            <button type="button" id="mapFilterThermal" onclick="filterMapMarkers('thermal')" aria-pressed="false" class="tap-area-pill px-3.5 py-1.5 rounded-full text-sm font-semibold transition-all text-tannat hover:bg-tannat/10" data-i18n="map.filterThermal">Termas</button>
           </div>
         </div>
 
         <!-- Interactive Map Visual: marco premium con filo dorado -->
-        <div class="bg-crema rounded-3xl p-6 sm:p-10 border border-gold/30 shadow-editorial">
-          <div class="relative aspect-square sm:aspect-[16/9] w-full bg-[#EFECE6] rounded-2xl overflow-hidden border-2 border-gold/40">
+        <div class="bg-crema rounded-3xl p-3 sm:p-10 border border-gold/30 shadow-editorial">
+          <div class="relative aspect-[4/5] sm:aspect-[16/9] w-full bg-[#EFECE6] rounded-2xl overflow-hidden border-2 border-gold/40">
             <div id="leafletMap" class="absolute inset-0 w-full h-full" aria-label="Mapa interactivo real de La Ruta del Tannat en Salto, Uruguay" data-i18n-aria="a11y.map">
               <p class="w-full h-full flex items-center justify-center text-sm text-terroir px-6 text-center" data-i18n="map.loading">Cargando mapa interactivo…</p>
             </div>
           </div>
+          <p id="mapTapHint" class="map-tap-hint" data-i18n="map.tapHint" hidden>Tocá el mapa para moverlo</p>
 
           <!-- Accesos rápidos: ruta completa (Google Maps soporta varias paradas; Waze no, así que va a la primera) -->
           <div class="mt-8 flex flex-wrap justify-center gap-3">
@@ -2808,7 +2815,7 @@
           <!-- Quick Navigation Links: GPS, Waze y foco en el mapa por estación -->
           <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
             <div class="p-3 bg-white rounded-xl border border-tannat-100">
-              <span class="font-semibold block mb-2" data-i18n="st1.title">01. Bodega Harriague</span>
+              <span class="font-semibold flex items-center gap-2 mb-2"><span class="map-num" aria-hidden="true">01</span><span data-i18n="st1.title">Espacio Cultural Bodega Harriague</span></span>
               <div class="flex items-center gap-3 flex-wrap">
                 <button type="button" onclick="focusStationOnMap(1)" class="tap-area text-tannat hover:underline font-semibold" data-i18n="map.focus">Ver en el mapa</button>
                 <a href="https://maps.google.com/?q=Bodega+Harriague+Salto+Uruguay" target="_blank" rel="noopener noreferrer" class="text-gold-dark hover:underline inline-flex items-center gap-1" data-i18n="map.gps">GPS ↗</a>
@@ -2816,7 +2823,7 @@
               </div>
             </div>
             <div class="p-3 bg-white rounded-xl border border-tannat-100">
-              <span class="font-semibold block mb-2" data-i18n="st2.title">02. Bodega Salto Chico</span>
+              <span class="font-semibold flex items-center gap-2 mb-2"><span class="map-num" aria-hidden="true">02</span><span data-i18n="st2.title">Bodega Salto Chico</span></span>
               <div class="flex items-center gap-3 flex-wrap">
                 <button type="button" onclick="focusStationOnMap(2)" class="tap-area text-tannat hover:underline font-semibold" data-i18n="map.focus">Ver en el mapa</button>
                 <a href="https://maps.google.com/?q=Bodega+Salto+Chico+Salto+Uruguay" target="_blank" rel="noopener noreferrer" class="text-gold-dark hover:underline inline-flex items-center gap-1" data-i18n="map.gps">GPS ↗</a>
@@ -2824,7 +2831,7 @@
               </div>
             </div>
             <div class="p-3 bg-white rounded-xl border border-tannat-100">
-              <span class="font-semibold block mb-2" data-i18n="st3.title">03. Bertolini &amp; Broglio</span>
+              <span class="font-semibold flex items-center gap-2 mb-2"><span class="map-num" aria-hidden="true">03</span><span data-i18n="st3.title">Bodega Bertolini &amp; Broglio</span></span>
               <div class="flex items-center gap-3 flex-wrap">
                 <button type="button" onclick="focusStationOnMap(3)" class="tap-area text-tannat hover:underline font-semibold" data-i18n="map.focus">Ver en el mapa</button>
                 <a href="https://maps.google.com/?q=Bertolini+%26+Broglio+Salto+Uruguay" target="_blank" rel="noopener noreferrer" class="text-gold-dark hover:underline inline-flex items-center gap-1" data-i18n="map.gps">GPS ↗</a>
@@ -2832,7 +2839,7 @@
               </div>
             </div>
             <div class="p-3 bg-white rounded-xl border border-tannat-100">
-              <span class="font-semibold block mb-2" data-i18n="st4.title">04. Mori Maglio Wines</span>
+              <span class="font-semibold flex items-center gap-2 mb-2"><span class="map-num" aria-hidden="true">04</span><span data-i18n="st4.title">Mori Maglio Wines</span></span>
               <div class="flex items-center gap-3 flex-wrap">
                 <button type="button" onclick="focusStationOnMap(4)" class="tap-area text-tannat hover:underline font-semibold" data-i18n="map.focus">Ver en el mapa</button>
                 <a href="https://maps.google.com/?q=Mori+Maglio+Dayman+Salto+Uruguay" target="_blank" rel="noopener noreferrer" class="text-gold-dark hover:underline inline-flex items-center gap-1" data-i18n="map.gps">GPS ↗</a>
@@ -4210,6 +4217,7 @@
         "map.gps": "GPS &nearr;",
         "map.waze": "Waze &nearr;",
         "map.focus": "Ver en el mapa",
+        "map.tapHint": "Tocá el mapa para moverlo",
         "map.openRouteGoogle": "Abrir ruta completa en Google Maps",
         "map.openRouteWaze": "Abrir primera parada en Waze",
         "map.matrixTitle": "Distancias y tiempos de manejo entre estaciones",
@@ -4871,6 +4879,7 @@
         "map.gps": "GPS &nearr;",
         "map.waze": "Waze &nearr;",
         "map.focus": "Ver no mapa",
+        "map.tapHint": "Toque no mapa para movê-lo",
         "map.openRouteGoogle": "Abrir rota completa no Google Maps",
         "map.openRouteWaze": "Abrir primeira parada no Waze",
         "map.matrixTitle": "Distâncias e tempos de condução entre as estações",
@@ -5532,6 +5541,7 @@
         "map.gps": "GPS &nearr;",
         "map.waze": "Waze &nearr;",
         "map.focus": "View on map",
+        "map.tapHint": "Tap the map to move it",
         "map.openRouteGoogle": "Open full route in Google Maps",
         "map.openRouteWaze": "Open first stop in Waze",
         "map.matrixTitle": "Driving distances and times between stations",
@@ -5638,9 +5648,16 @@
     // real de Parada Daymán — el botón "GPS" de su ficha sigue apuntando a la
     // búsqueda por nombre de Google Maps, que es más precisa para llegar.
     const THERMAL_SPOT = { lat: -31.4525, lng: -57.9084, mapsUrl: "https://maps.google.com/?q=Termas+del+Dayman+Salto+Uruguay" };
+    // Recorrido 01→02→03→04 por calles y rutas reales (OSRM sobre OpenStreetMap, 45,9 km), simplificado a 94 puntos: se dibuja sin pedir nada a otro servicio
+    const RUTA_TANNAT = [[-31.39979,-57.98461],[-31.39906,-57.98395],[-31.39803,-57.98367],[-31.39802,-57.98267],[-31.39715,-57.98137],[-31.39452,-57.98056],[-31.39401,-57.9798],[-31.39212,-57.97881],[-31.39067,-57.97756],[-31.38978,-57.9762],[-31.38911,-57.97329],[-31.38841,-57.97306],[-31.38781,-57.97315],[-31.38654,-57.97435],[-31.38499,-57.97403],[-31.38361,-57.97427],[-31.37926,-57.97583],[-31.37719,-57.97799],[-31.3761,-57.97807],[-31.37311,-57.98124],[-31.37099,-57.98218],[-31.36547,-57.98395],[-31.36379,-57.984],[-31.35983,-57.98497],[-31.35802,-57.9847],[-31.35658,-57.98349],[-31.35621,-57.98273],[-31.35663,-57.97664],[-31.35646,-57.97611],[-31.35608,-57.97575],[-31.35576,-57.97563],[-31.35117,-57.97608],[-31.35037,-57.97631],[-31.34477,-57.97692],[-31.34116,-57.97673],[-31.3405,-57.97635],[-31.33538,-57.9717],[-31.33322,-57.96947],[-31.32765,-57.96301],[-31.33007,-57.95865],[-31.33526,-57.9584],[-31.33838,-57.95923],[-31.34195,-57.94161],[-31.34211,-57.94149],[-31.34594,-57.94254],[-31.34664,-57.93866],[-31.35332,-57.94024],[-31.36894,-57.94304],[-31.40055,-57.94755],[-31.40651,-57.94822],[-31.40752,-57.94801],[-31.41238,-57.94391],[-31.41308,-57.94376],[-31.41351,-57.94308],[-31.42818,-57.93171],[-31.43874,-57.922],[-31.44983,-57.91386],[-31.45424,-57.91097],[-31.45571,-57.90575],[-31.46569,-57.89827],[-31.46732,-57.89747],[-31.46844,-57.8974],[-31.47149,-57.89786],[-31.47313,-57.89852],[-31.48239,-57.90782],[-31.48335,-57.90851],[-31.4842,-57.90879],[-31.50061,-57.90802],[-31.52614,-57.91053],[-31.52715,-57.91057],[-31.52815,-57.91036],[-31.528,-57.90964],[-31.52813,-57.90896],[-31.52771,-57.90856],[-31.52749,-57.90923],[-31.5266,-57.90901],[-31.52749,-57.90923],[-31.52781,-57.90859],[-31.52813,-57.90896],[-31.528,-57.90964],[-31.52815,-57.91036],[-31.52679,-57.91057],[-31.50061,-57.90802],[-31.4842,-57.90879],[-31.48335,-57.90851],[-31.48239,-57.90782],[-31.4733,-57.89864],[-31.4718,-57.89792],[-31.46844,-57.8974],[-31.46732,-57.89747],[-31.46605,-57.89802],[-31.45567,-57.90564],[-31.45534,-57.90563],[-31.45501,-57.90499]];
+    let rutaLayer = null;
     let leafletMap = null;
     let thermalMarker = null;
     const stationMarkers = {};
+
+    function thermalIcon(corrida) {
+      return L.divIcon({ className: '', html: '<div class="thermal-badge">♨</div>', iconSize: [26, 26], iconAnchor: corrida ? [46, 24] : [13, 13], popupAnchor: corrida ? [-33, -22] : [0, -12] });
+    }
 
     function tannatPinIcon(label, isThermal) {
       return L.divIcon({
@@ -5691,7 +5708,18 @@
       if (!mapEl || typeof L === 'undefined') return; // sin conexión: queda el mensaje de carga como aviso
 
       mapEl.innerHTML = '';
-      leafletMap = L.map('leafletMap', { scrollWheelZoom: false }).setView([-31.415, -57.945], 12);
+      const bounds = L.latLngBounds(
+        [1, 2, 3, 4].map(id => [stationsInfo[id].lat, stationsInfo[id].lng]).concat([[THERMAL_SPOT.lat, THERMAL_SPOT.lng]])
+      );
+      // en pantallas táctiles el mapa no atrapa el dedo: un dedo sigue moviendo la página hasta que se toca el mapa
+      const tactil = window.matchMedia && matchMedia('(pointer: coarse)').matches;
+      // arranca directo en el encuadre final (antes abría en otro zoom y bajaba ~20 imágenes que enseguida descartaba)
+      leafletMap = L.map('leafletMap', { scrollWheelZoom: false, dragging: !tactil }).fitBounds(bounds, { paddingTopLeft: [28, 48], paddingBottomRight: [28, 24] });
+      const hint = document.getElementById('mapTapHint');
+      if (tactil) {
+        if (hint) hint.hidden = false;
+        mapEl.addEventListener('click', () => { leafletMap.dragging.enable(); if (hint) hint.hidden = true; }, { once: true });
+      }
 
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 18,
@@ -5705,25 +5733,30 @@
         stationMarkers[id] = marker;
       });
 
-      thermalMarker = L.marker([THERMAL_SPOT.lat, THERMAL_SPOT.lng], { icon: tannatPinIcon('♨', true) })
+      // el recorrido: un trazo bordó con borde claro, debajo de los pines
+      rutaLayer = L.layerGroup([
+        L.polyline(RUTA_TANNAT, { color: '#FFFFFF', weight: 7, opacity: 0.85, interactive: false }),
+        L.polyline(RUTA_TANNAT, { color: '#721B28', weight: 3.5, opacity: 0.9, interactive: false })
+      ]).addTo(leafletMap);
+
+      const corrida = () => leafletMap.getZoom() < 14;
+      thermalMarker = L.marker([THERMAL_SPOT.lat, THERMAL_SPOT.lng], { icon: thermalIcon(corrida()), zIndexOffset: 500 })
         .addTo(leafletMap)
         .bindPopup(thermalPopupHtml);
 
-      const bounds = L.latLngBounds(
-        [1, 2, 3, 4].map(id => [stationsInfo[id].lat, stationsInfo[id].lng]).concat([[THERMAL_SPOT.lat, THERMAL_SPOT.lng]])
-      );
+      leafletMap.on('zoomend', () => thermalMarker.setIcon(thermalIcon(corrida())));
       // invalidateSize() antes de fitBounds: al recién crearse, el contenedor
       // (dimensionado por aspect-ratio de Tailwind) puede no tener aún un tamaño
       // estable, y fitBounds calcula el zoom en base al tamaño del contenedor.
       leafletMap.invalidateSize();
-      leafletMap.fitBounds(bounds, { padding: [28, 28] });
+      leafletMap.fitBounds(bounds, { paddingTopLeft: [28, 48], paddingBottomRight: [28, 24] });
 
       // Reacomoda el mapa si el layout cambia (rotación de celular, fuentes que recién cargaron)
       window.addEventListener('resize', () => leafletMap && leafletMap.invalidateSize());
       setTimeout(() => {
         if (!leafletMap) return;
         leafletMap.invalidateSize();
-        leafletMap.fitBounds(bounds, { padding: [28, 28] });
+        leafletMap.fitBounds(bounds, { paddingTopLeft: [28, 48], paddingBottomRight: [28, 24] });
       }, 400);
     }
 
@@ -5741,16 +5774,17 @@
         if (showWineries) { if (!leafletMap.hasLayer(m)) m.addTo(leafletMap); visibleLatLngs.push(m.getLatLng()); }
         else if (leafletMap.hasLayer(m)) leafletMap.removeLayer(m);
       });
+      if (rutaLayer) { if (showWineries) { if (!leafletMap.hasLayer(rutaLayer)) rutaLayer.addTo(leafletMap); } else if (leafletMap.hasLayer(rutaLayer)) leafletMap.removeLayer(rutaLayer); }
       if (thermalMarker) {
         if (showThermal) { if (!leafletMap.hasLayer(thermalMarker)) thermalMarker.addTo(leafletMap); visibleLatLngs.push(thermalMarker.getLatLng()); }
         else if (leafletMap.hasLayer(thermalMarker)) leafletMap.removeLayer(thermalMarker);
       }
       if (visibleLatLngs.length) {
         leafletMap.invalidateSize();
-        leafletMap.fitBounds(L.latLngBounds(visibleLatLngs), { padding: [28, 28], maxZoom: 15 });
+        leafletMap.fitBounds(L.latLngBounds(visibleLatLngs), { paddingTopLeft: [28, 48], paddingBottomRight: [28, 24], maxZoom: 15 });
       }
-      const active = "tap-area-pill px-3.5 py-1.5 rounded-full font-semibold transition-all bg-tannat text-white shadow-sm";
-      const inactive = "tap-area-pill px-3.5 py-1.5 rounded-full font-semibold transition-all text-tannat hover:bg-tannat/10";
+      const active = "tap-area-pill px-3.5 py-1.5 rounded-full text-sm font-semibold transition-all bg-tannat text-white shadow-sm";
+      const inactive = "tap-area-pill px-3.5 py-1.5 rounded-full text-sm font-semibold transition-all text-tannat hover:bg-tannat/10";
       [['mapFilterAll', 'all'], ['mapFilterWineries', 'wineries'], ['mapFilterThermal', 'thermal']].forEach(([elId, code]) => {
         const btn = document.getElementById(elId);
         if (!btn) return;
@@ -6015,7 +6049,7 @@
         const setPanel = () => { sec.style.setProperty('--cup-panel', cupPanel.offsetHeight + 'px'); sec.style.setProperty('--cup-head', (cupHead ? cupHead.offsetHeight : 0) + 'px'); };
         setPanel(); const ro = new ResizeObserver(setPanel); ro.observe(cupPanel); if (cupHead) ro.observe(cupHead);
       }
-      const load = (f) => new Promise((ok, no) => { const el = document.createElement('script'); el.src = './LaRutadelTannat_files/' + f + '?v=5'; el.onload = ok; el.onerror = () => no(new Error('No se pudo cargar ' + f)); document.head.appendChild(el); });
+      const load = (f) => new Promise((ok, no) => { const el = document.createElement('script'); el.src = './LaRutadelTannat_files/' + f + '?v=6'; el.onload = ok; el.onerror = () => no(new Error('No se pudo cargar ' + f)); document.head.appendChild(el); });
       function start() {
         if (started) return;
         started = true;

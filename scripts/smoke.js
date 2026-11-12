@@ -367,6 +367,29 @@ function servidor() {
     }
     check('el logo de la portada se ve nítido y no tapa nada: a la izquierda del texto desde 1024 px (sin moverlo), arriba solo en pantallas altas y sin empujar el primer botón bajo la barra', malos.length === 0, malos.join(' | ')); }
 
+  // 29. mapa: carga solo al llegar (también si el navegador restaura el scroll de golpe), dibuja el recorrido, el pin de las termas no queda tapado por el 04,
+  //     en el celular un dedo mueve la página (no el mapa) hasta tocar el mapa, el aviso sigue el idioma, y el filtro "Termas" esconde el recorrido
+  { const page = await abrir(390, 844, true, 2);
+    await page.evaluate(() => document.getElementById('leafletMap').scrollIntoView({ block: 'center', behavior: 'instant' }));
+    let listo = true; try { await page.waitForFunction(() => document.querySelectorAll('#leafletMap .leaflet-tile-loaded').length >= 3, { timeout: 30000 }); } catch (e) { listo = false; }
+    await sleep(700);
+    const m = await page.evaluate(() => {
+      const r = (el) => { const b = el.getBoundingClientRect(); return { x: b.x, y: b.y, w: b.width, h: b.height }; };
+      const p4 = [...document.querySelectorAll('.tannat-pin span')].find((sp) => sp.textContent === '04'), t = document.querySelector('.thermal-badge'), hint = document.getElementById('mapTapHint');
+      const a = p4 && r(p4.parentElement), b = t && r(t);
+      const choca = a && b && !(a.x + a.w <= b.x || b.x + b.w <= a.x || a.y + a.h <= b.y || b.y + b.h <= a.y);
+      setLanguage('en'); const en = hint.textContent.trim(); setLanguage('es');
+      return { trazos: document.querySelectorAll('#leafletMap .leaflet-overlay-pane path').length, pines: document.querySelectorAll('.tannat-pin').length, termas: !!t, choca, arrastre: leafletMap.dragging.enabled(), aviso: !hint.hidden, en };
+    });
+    await page.tap('#leafletMap'); await sleep(300);
+    const tocado = await page.evaluate(() => ({ arrastre: leafletMap.dragging.enabled(), aviso: !document.getElementById('mapTapHint').hidden }));
+    await page.evaluate(() => filterMapMarkers('thermal')); await sleep(300);
+    const soloTermas = await page.evaluate(() => document.querySelectorAll('#leafletMap .leaflet-overlay-pane path').length); await page.evaluate(() => filterMapMarkers('all'));
+    check('mapa: carga al llegar, dibuja el recorrido, el pin de las termas se ve al lado del 04, en el celular un dedo mueve la página hasta tocar el mapa y el aviso sigue el idioma',
+      listo && m.trazos >= 2 && m.pines === 4 && m.termas && !m.choca && !m.arrastre && m.aviso && m.en === 'Tap the map to move it' && tocado.arrastre && !tocado.aviso && soloTermas === 0,
+      JSON.stringify({ listo, m, tocado, soloTermas }));
+    await page.close(); }
+
   await browser.close(); srv.cerrar();
   if (failures.length) { console.log('\n' + failures.length + ' prueba(s) fallaron:\n - ' + failures.join('\n - ')); process.exit(1); }
   console.log('\nTodas las pruebas de humo pasaron');
