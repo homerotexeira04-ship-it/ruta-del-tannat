@@ -1,0 +1,158 @@
+<!doctype html>
+<!-- El recorrido de La Ruta del Tannat en un día (12 s, 1080×1080). Ruta real: tramos de OpenStreetMap que usa «Armá tu día»
+     (TRAMOS en LaRutadelTannat.html), en el mismo orden que «Armá tu día» con todo marcado. Sin texto traducible: nombres propios, números, km y min.
+     Render: npx hyperframes render -c recorrido.html -f 30 --crf 30 -o ../LaRutadelTannat_files/video-recorrido.mp4 -->
+<html lang="es" style="overflow:hidden; margin:0">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=1080, height=1080" />
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@hyperframes/core/dist/hyperframe.runtime.iife.js"></script>
+  <style>
+    @font-face { font-family: "Playfair Display"; font-weight: 400 900; font-style: normal; font-display: block; src: url(fonts/playfair-display-latin.woff2) format("woff2"); }
+    @font-face { font-family: "Plus Jakarta Sans"; font-weight: 200 800; font-style: normal; font-display: block; src: url(fonts/plus-jakarta-sans-latin.woff2) format("woff2"); }
+    :root { --bg: #1D060D; --vino: #721B28; --oro: #C5A059; --oro-claro: #DFCA9D; --crema: #FDFBF7; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 1080px; height: 1080px; overflow: hidden; background: var(--bg); color: var(--crema); font-family: "Plus Jakarta Sans", sans-serif; }
+    .scene { position: absolute; inset: 0; width: 1080px; height: 1080px; overflow: hidden;
+      background: radial-gradient(ellipse 60% 70% at 52% 50%, #3a0f1c 0%, rgba(29,6,13,0) 70%), var(--bg); }
+    svg.mapa, svg.guia { position: absolute; inset: 0; width: 1080px; height: 1080px; overflow: visible; }
+    .reticula line { stroke: rgba(223,202,157,.07); stroke-width: 1; }
+    .tramo { fill: none; stroke: var(--oro); stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 1; filter: drop-shadow(0 0 6px rgba(197,160,89,.45)); }
+    .tramo-fondo { fill: none; stroke: rgba(253,251,247,.08); stroke-width: 11; stroke-linecap: round; stroke-linejoin: round; }
+    svg.guia path { fill: none; stroke: rgba(223,202,157,.55); stroke-width: 1.5; stroke-dasharray: 1; stroke-dashoffset: 1; }
+    svg.guia.fina path { stroke: rgba(223,202,157,.6); stroke-dasharray: 3 4; stroke-dashoffset: 0; }
+    .punto { position: absolute; width: 8px; height: 8px; margin: -4px 0 0 -4px; border-radius: 50%; background: var(--oro-claro); }
+    .pin { position: absolute; width: 46px; height: 46px; margin: -23px 0 0 -23px; border-radius: 50%; background: var(--vino); border: 3px solid var(--oro);
+      display: grid; place-items: center; box-shadow: 0 4px 14px rgba(0,0,0,.5); }
+    .pin span { font: 700 17px/1 "Plus Jakarta Sans", sans-serif; color: var(--crema); letter-spacing: .02em; }
+    .pin.termas { background: #0f4c5c; border-color: var(--oro-claro); }
+    .pin.termas span { font-size: 22px; }
+    .onda { position: absolute; width: 46px; height: 46px; margin: -23px 0 0 -23px; border-radius: 50%; border: 2px solid var(--oro); opacity: 0; }
+    .tarjeta { position: absolute; width: 270px; height: 112px; display: flex; align-items: center; gap: 14px; padding: 10px;
+      border-radius: 16px; background: rgba(253,251,247,.06); border: 1px solid rgba(197,160,89,.35); box-shadow: 0 10px 30px rgba(0,0,0,.35); }
+    .tarjeta.der { flex-direction: row-reverse; text-align: right; }
+    .tarjeta img { width: 92px; height: 92px; border-radius: 11px; object-fit: cover; flex-shrink: 0; }
+    .tarjeta .num { display: block; font: 700 14px/1 "Plus Jakarta Sans", sans-serif; letter-spacing: .2em; color: var(--oro); margin-bottom: 6px; }
+    .tarjeta .sup { display: block; font: 600 15px/1.2 "Plus Jakarta Sans", sans-serif; color: rgba(253,251,247,.7); }
+    .tarjeta .nom { display: block; font: 700 23px/1.12 "Playfair Display", Georgia, serif; color: var(--crema); }
+    .tiempo { position: absolute; padding: 7px 13px; border-radius: 999px; background: rgba(29,6,13,.85); border: 1px solid rgba(197,160,89,.6);
+      font: 700 17px/1 "Plus Jakarta Sans", sans-serif; color: var(--oro-claro); white-space: nowrap; transform: translate(-50%, -50%); }
+    .viajero { position: absolute; width: 16px; height: 16px; margin: -8px 0 0 -8px; border-radius: 50%; background: var(--crema);
+      box-shadow: 0 0 0 4px rgba(197,160,89,.45), 0 0 18px rgba(255,236,190,.9); opacity: 0; }
+    .norte { position: absolute; left: 980px; top: 40px; width: 56px; text-align: center; color: var(--oro-claro); font: 700 18px/1 "Plus Jakarta Sans", sans-serif; }
+    .norte svg { display: block; margin: 6px auto 0; }
+    .escala { position: absolute; left: 44px; top: 1020px; color: rgba(223,202,157,.75); font: 600 15px/1 "Plus Jakarta Sans", sans-serif; }
+    .escala i { display: block; height: 6px; width: 177px; border: 2px solid rgba(223,202,157,.75); border-top: 0; margin-bottom: 7px; }
+    .total { position: absolute; left: 780px; top: 92px; width: 256px; text-align: right; }
+    .total .min { display: block; font: 700 96px/1 "Playfair Display", Georgia, serif; color: var(--crema); }
+    .total .km { display: block; margin-top: 10px; font: 600 26px/1 "Plus Jakarta Sans", sans-serif; letter-spacing: .14em; color: var(--oro); }
+    .total i { display: block; height: 2px; background: var(--oro); margin: 18px 0 0 auto; width: 150px; transform-origin: 100% 50%; }
+  </style>
+</head>
+<body>
+  <div id="main" data-composition-id="main" data-width="1080" data-height="1080" data-start="0" data-duration="12" data-fps="30">
+    <div class="scene clip" id="s1" data-start="0" data-duration="12" data-track-index="0">
+      <svg class="mapa" viewBox="0 0 1080 1080" aria-hidden="true">
+        <g class="reticula" id="ret"><line x1="54" y1="0" x2="54" y2="1080"/><line x1="0" y1="54" x2="1080" y2="54"/><line x1="162" y1="0" x2="162" y2="1080"/><line x1="0" y1="162" x2="1080" y2="162"/><line x1="270" y1="0" x2="270" y2="1080"/><line x1="0" y1="270" x2="1080" y2="270"/><line x1="378" y1="0" x2="378" y2="1080"/><line x1="0" y1="378" x2="1080" y2="378"/><line x1="486" y1="0" x2="486" y2="1080"/><line x1="0" y1="486" x2="1080" y2="486"/><line x1="594" y1="0" x2="594" y2="1080"/><line x1="0" y1="594" x2="1080" y2="594"/><line x1="702" y1="0" x2="702" y2="1080"/><line x1="0" y1="702" x2="1080" y2="702"/><line x1="810" y1="0" x2="810" y2="1080"/><line x1="0" y1="810" x2="1080" y2="810"/><line x1="918" y1="0" x2="918" y2="1080"/><line x1="0" y1="918" x2="1080" y2="918"/><line x1="1026" y1="0" x2="1026" y2="1080"/><line x1="0" y1="1026" x2="1080" y2="1026"/></g>
+        <path class="tramo-fondo" d="M394.5 406 L396.7 403.2 L397.7 399.1 L401 399.1 L405.4 395.7 L408.1 385.3 L410.6 383.3 L414 375.9 L418.1 370.2 L422.2 367 L432.2 364.2 L433.1 362.7 L432.9 359 L428.9 354 L430 347.9 L429.2 342.5 L423.9 325.4 L416.7 317.3 L416.6 313.3 L406.9 302.7 L404.7 299 L397.1 273 L396.6 264.7 L393.3 248.2 L394.4 241.7 L397.9 236.8 L400 235.1 L421.2 236.6 L424.2 234.4 L424.6 233.2 L423.1 215.1 L420.3 190 L420.9 175.8 L422.2 173.2 L440.6 150" />
+        <path class="tramo-fondo" d="M440.6 150 L422.2 173.2 L420.9 175.8 L420.3 190 L424.9 235.2 L426.5 237 L435.2 237.8 L429.8 272.5 L458.6 278.1 L533.8 285.3 L518.7 409 L516.4 432.4 L517.1 436.4 L530.9 455.5 L531.4 458.2 L533.7 459.9 L571.8 517.5 L604.3 559 L631.6 602.5 L641.3 619.8 L658.7 625.6 L683.8 664.8 L686.3 670.2 L686.7 675.6 L685.5 685.5 L684.7 689.9 L683 694 L651.8 730.3 L649.5 734.1 L648.6 737.4 L651.1 801.9 L642.7 902.1 L642.8 908 L643.3 910 L644.5 909.7" />
+        <path class="tramo-fondo" d="M644.5 909.7 L643.3 910 L642.8 908 L642.7 902.1 L651.1 801.9 L648.6 737.4 L649.5 734.1 L651.8 730.3 L682.6 694.6 L685 688.8 L686.7 675.6 L686.5 671.2 L684.6 666.2 L659.1 625.4 L659.1 624.1 L661.3 622.8" />
+        <path class="tramo-fondo" d="M661.3 622.8 L658.1 624.2 L653.2 615.9 L649.3 614.9 L649.7 612.9" />
+        <path class="tramo" id="t0" d="M394.5 406 L396.7 403.2 L397.7 399.1 L401 399.1 L405.4 395.7 L408.1 385.3 L410.6 383.3 L414 375.9 L418.1 370.2 L422.2 367 L432.2 364.2 L433.1 362.7 L432.9 359 L428.9 354 L430 347.9 L429.2 342.5 L423.9 325.4 L416.7 317.3 L416.6 313.3 L406.9 302.7 L404.7 299 L397.1 273 L396.6 264.7 L393.3 248.2 L394.4 241.7 L397.9 236.8 L400 235.1 L421.2 236.6 L424.2 234.4 L424.6 233.2 L423.1 215.1 L420.3 190 L420.9 175.8 L422.2 173.2 L440.6 150" pathLength="1" />
+        <path class="tramo" id="t1" d="M440.6 150 L422.2 173.2 L420.9 175.8 L420.3 190 L424.9 235.2 L426.5 237 L435.2 237.8 L429.8 272.5 L458.6 278.1 L533.8 285.3 L518.7 409 L516.4 432.4 L517.1 436.4 L530.9 455.5 L531.4 458.2 L533.7 459.9 L571.8 517.5 L604.3 559 L631.6 602.5 L641.3 619.8 L658.7 625.6 L683.8 664.8 L686.3 670.2 L686.7 675.6 L685.5 685.5 L684.7 689.9 L683 694 L651.8 730.3 L649.5 734.1 L648.6 737.4 L651.1 801.9 L642.7 902.1 L642.8 908 L643.3 910 L644.5 909.7" pathLength="1" />
+        <path class="tramo" id="t2" d="M644.5 909.7 L643.3 910 L642.8 908 L642.7 902.1 L651.1 801.9 L648.6 737.4 L649.5 734.1 L651.8 730.3 L682.6 694.6 L685 688.8 L686.7 675.6 L686.5 671.2 L684.6 666.2 L659.1 625.4 L659.1 624.1 L661.3 622.8" pathLength="1" />
+        <path class="tramo" id="t3" d="M661.3 622.8 L658.1 624.2 L653.2 615.9 L649.3 614.9 L649.7 612.9" pathLength="1" />
+      </svg>
+      
+      <svg class="guia" id="g0" viewBox="0 0 1080 1080"><path d="M314 408 L394.5 406" pathLength="1" /></svg>
+      <div class="tarjeta izq" id="c0" style="left:44px; top:352px">
+        <img src="img/8254D59E-F679-48CA-94EB-EC6CFB40EC77.webp" alt="">
+        <div><span class="num">01</span><span class="sup">Espacio Cultural</span><span class="nom">Bodega Harriague</span></div>
+      </div>
+      <svg class="guia" id="g1" viewBox="0 0 1080 1080"><path d="M314 152 L440.6 150" pathLength="1" /></svg>
+      <div class="tarjeta izq" id="c1" style="left:44px; top:96px">
+        <img src="img/salto-chico-cartel-inavi.webp" alt="">
+        <div><span class="num">02</span><span class="sup">Bodega</span><span class="nom">Salto Chico</span></div>
+      </div>
+      <svg class="guia" id="g2" viewBox="0 0 1080 1080"><path d="M766 908 L644.5 909.7" pathLength="1" /></svg>
+      <div class="tarjeta der" id="c2" style="left:766px; top:852px">
+        <img src="img/bertolini-broglio-inavi.jpg" alt="">
+        <div><span class="num">03</span><span class="sup">Bodega</span><span class="nom">Bertolini &amp; Broglio</span></div>
+      </div>
+      <svg class="guia" id="g3" viewBox="0 0 1080 1080"><path d="M766 674 L661.3 622.8" pathLength="1" /></svg>
+      <div class="tarjeta der" id="c3" style="left:766px; top:618px">
+        <img src="img/138db8c89a626f5efc0f940f343ad390bf0ec8ca.jpg" alt="">
+        <div><span class="num">04</span><span class="sup">Mori Maglio</span><span class="nom">Wines</span></div>
+      </div>
+      <svg class="guia" id="g4" viewBox="0 0 1080 1080"><path d="M766 526 L615.7 582.9" pathLength="1" /></svg>
+      <div class="tarjeta der" id="c4" style="left:766px; top:470px">
+        <img src="img/termas-dayman.webp" alt="">
+        <div><span class="sup">Termas</span><span class="nom">del Daymán</span></div>
+      </div>
+      
+      <div class="pin " id="p0" style="left:394.5px; top:406px"><span>01</span></div>
+      <div class="onda" id="o0" style="left:394.5px; top:406px"></div>
+      <div class="pin " id="p1" style="left:440.6px; top:150px"><span>02</span></div>
+      <div class="onda" id="o1" style="left:440.6px; top:150px"></div>
+      <div class="pin " id="p2" style="left:644.5px; top:909.7px"><span>03</span></div>
+      <div class="onda" id="o2" style="left:644.5px; top:909.7px"></div>
+      <div class="pin " id="p3" style="left:661.3px; top:622.8px"><span>04</span></div>
+      <div class="onda" id="o3" style="left:661.3px; top:622.8px"></div><svg class="guia fina" viewBox="0 0 1080 1080"><path d="M615.7 582.9 L649.7 612.9"/></svg><span class="punto" style="left:649.7px; top:612.9px"></span>
+      <div class="pin termas" id="p4" style="left:615.7px; top:582.9px"><span>♨</span></div>
+      <div class="onda" id="o4" style="left:615.7px; top:582.9px"></div>
+      <div class="tiempo" id="e0">16 min</div><div class="tiempo" id="e1">32 min</div><div class="tiempo" id="e2">7 min</div><div class="tiempo" id="e3">1 min</div>
+      <div class="viajero" id="viajero"></div>
+      <div class="norte" id="norte">N<svg width="18" height="26" viewBox="0 0 18 26"><path d="M9 0 L18 26 L9 20 L0 26 Z" fill="#C5A059"/></svg></div>
+      <div class="escala" id="escala"><i></i>5 km</div>
+      <div class="total" id="total"><span class="min" id="totMin">56 min</span><span class="km">45 KM</span><i id="totLinea"></i></div>
+    </div>
+  </div>
+  <script>
+    window.__timelines = window.__timelines || {};
+    var tl = gsap.timeline({ paused: true });
+    var LLEGA = [0.6,2.9,6.2,7.9,8.9], SALE = [1.4,3.7,7,8.6];
+    var viajero = document.getElementById('viajero');
+
+    // ubica las etiquetas de tiempo en la mitad de cada tramo, corridas hacia afuera de la ruta
+    [0, 1, 2, 3].forEach(function (i) {
+      var p = document.getElementById('t' + i), L = p.getTotalLength(), m = p.getPointAtLength(L * 0.5), q = p.getPointAtLength(L * 0.52);
+      var nx = -(q.y - m.y), ny = q.x - m.x, n = Math.hypot(nx, ny) || 1, off = i === 3 ? 52 : 46;
+      var e = document.getElementById('e' + i); e.style.left = (m.x + nx / n * off) + 'px'; e.style.top = (m.y + ny / n * off) + 'px';
+    });
+
+    tl.from('#ret', { autoAlpha: 0, duration: 1.2, ease: 'sine.out' }, 0);
+    tl.from('#norte', { autoAlpha: 0, y: -12, duration: .7, ease: 'power2.out' }, .3);
+    tl.from('#escala', { autoAlpha: 0, x: -14, duration: .7, ease: 'power2.out' }, .4);
+
+    LLEGA.forEach(function (t, i) {
+      var der = document.getElementById('c' + i).classList.contains('der');
+      tl.from('#p' + i, { scale: 0, autoAlpha: 0, duration: .45, ease: 'back.out(2.2)' }, t);
+      tl.fromTo('#o' + i, { scale: 1, autoAlpha: .9 }, { scale: 2.6, autoAlpha: 0, duration: 1.1, ease: 'power2.out', immediateRender: false }, t + .1);
+      tl.to('#g' + i + ' path', { strokeDashoffset: 0, duration: .4, ease: 'power2.inOut' }, t + .2);
+      tl.from('#c' + i, { autoAlpha: 0, x: der ? 30 : -30, duration: .55, ease: 'power3.out' }, t + .3);
+      tl.from('#c' + i + ' img', { scale: 1.15, duration: 1.4, ease: 'power2.out' }, t + .3);
+    });
+    tl.set('#o0, #o1, #o2, #o3, #o4', { autoAlpha: 0 }, 0);
+
+    SALE.forEach(function (t0, i) {
+      var p = document.getElementById('t' + i), L = p.getTotalLength(), dur = LLEGA[i + 1] - t0, avance = { v: 0 };
+      tl.to(p, { strokeDashoffset: 0, duration: dur, ease: 'power1.inOut' }, t0);
+      tl.set(viajero, { autoAlpha: 1 }, t0);
+      tl.to(avance, { v: 1, duration: dur, ease: 'power1.inOut', onUpdate: function () {
+        var q = p.getPointAtLength(L * avance.v); viajero.style.left = q.x + 'px'; viajero.style.top = q.y + 'px'; } }, t0);
+      tl.set(viajero, { autoAlpha: 0 }, t0 + dur);
+      tl.from('#e' + i, { autoAlpha: 0, scale: .7, duration: .4, ease: 'back.out(1.8)' }, t0 + dur * .5);
+    });
+
+    // cierre: la ruta brilla entera y aparece el total
+    tl.to('.tramo', { strokeWidth: 7, duration: .6, ease: 'sine.inOut' }, 9.4);
+    tl.from('#total .min', { autoAlpha: 0, y: 24, duration: .7, ease: 'power3.out' }, 9.5);
+    tl.from('#total .km', { autoAlpha: 0, y: 14, duration: .6, ease: 'power2.out' }, 9.75);
+    tl.from('#totLinea', { scaleX: 0, duration: .7, ease: 'expo.out' }, 9.9);
+    var c = { v: 0 }; tl.to(c, { v: 56, duration: 1.1, ease: 'power2.out', onUpdate: function () { document.getElementById('totMin').textContent = Math.round(c.v) + ' min'; } }, 9.5);
+    tl.set({}, {}, 12);
+    window.__timelines['main'] = tl;
+  </script>
+</body>
+</html>

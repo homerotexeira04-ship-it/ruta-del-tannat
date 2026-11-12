@@ -268,7 +268,7 @@
   <!-- Tailwind CSS compilado (ver README: npm run build:css) -->
   <!-- Foto del inicio: 720 px para celulares (va recortada y bajo un velo oscuro, por eso "sizes" la pide a media pantalla: alcanza aun con pantallas de alta densidad), 1280 y 1920 para el resto. Debe decir lo mismo que la imagen del hero (más abajo). -->
   <link rel="preload" as="image" href="./LaRutadelTannat_files/hero-vinedo-uruguay-1280.webp" imagesrcset="./LaRutadelTannat_files/hero-vinedo-uruguay-720.webp 720w, ./LaRutadelTannat_files/hero-vinedo-uruguay-1280.webp 1280w, ./LaRutadelTannat_files/hero-vinedo-uruguay.webp 1920w" imagesizes="(max-width: 767px) 50vw, 100vw" fetchpriority="high">
-  <link rel="stylesheet" href="./LaRutadelTannat_files/tailwind.css?v=30">
+  <link rel="stylesheet" href="./LaRutadelTannat_files/tailwind.css?v=31">
 
   <!-- Tipografía editorial alojada en el sitio (sin pedidos a Google): Playfair Display (titulares) + Plus Jakarta Sans (cuerpo/UI).
        Fuentes variables, solo el subconjunto latin (cubre es/pt/en; otro alfabeto cae a la fuente del sistema). Licencia OFL.
@@ -370,6 +370,21 @@
     .modal-overlay.modal-open .modal-card { opacity: 1; transform: scale(1) translateY(0); }
     .modal-overlay:not(.modal-open), .modal-overlay:not(.modal-open) .modal-card { transition-duration: .18s; } /* al cerrar sale más rápido de lo que entró */
     @media (prefers-reduced-motion: reduce) { .modal-card { transform: none; } } /* sin escala ni desplazamiento: queda el fundido */
+    /* Termas: vapor suave que sube sobre la foto, solo mientras se ve (sin filtros: gradientes que se mueven, liviano) */
+    .vapor { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+    .vapor i { position: absolute; bottom: -40%; width: 70%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(closest-side, rgba(255,255,255,.62), rgba(255,255,255,.24) 50%, transparent); opacity: 0; animation: vapor 11s linear infinite paused; }
+    .vapor i:nth-child(1) { left: 2%; } .vapor i:nth-child(2) { left: 30%; animation-delay: -2.8s; width: 78%; } .vapor i:nth-child(3) { left: 50%; animation-delay: -5.5s; } .vapor i:nth-child(4) { left: 16%; animation-delay: -8.2s; width: 60%; }
+    .vapor.en-vista i { animation-play-state: running; }
+    @keyframes vapor { 0% { transform: translate(0, 0) scale(.7); opacity: 0; } 25% { opacity: .9; } 70% { opacity: .45; } 100% { transform: translate(6%, -120%) scale(1.25); opacity: 0; } }
+    @media (prefers-reduced-motion: reduce) { .vapor { display: none; } }
+    /* Temporadas: la sección toma la luz de la estación elegida (fundido entre capas; por defecto, la de hoy) */
+    .temp-luz, .temp-luz i { position: absolute; inset: 0; pointer-events: none; }
+    .temp-luz i { opacity: 0; transition: opacity 1.2s var(--ease-out); }
+    .temp-luz i:nth-child(1) { background: radial-gradient(ellipse 80% 45% at 50% 0%, rgba(223,172,70,.42), transparent 75%), linear-gradient(180deg, rgba(223,172,70,.16), transparent 85%); }
+    .temp-luz i:nth-child(2) { background: radial-gradient(ellipse 80% 45% at 50% 0%, rgba(196,104,52,.34), transparent 75%), linear-gradient(180deg, rgba(150,60,40,.12), transparent 85%); }
+    .temp-luz i:nth-child(3) { background: radial-gradient(ellipse 80% 45% at 50% 0%, rgba(114,27,40,.24), transparent 75%), linear-gradient(180deg, rgba(200,110,50,.12), transparent 85%); }
+    .temp-luz i:nth-child(4) { background: radial-gradient(ellipse 80% 45% at 50% 0%, rgba(140,175,70,.36), transparent 75%), linear-gradient(180deg, rgba(200,190,90,.12), transparent 85%); }
+    #temporadas[data-luz="1"] .temp-luz i:nth-child(1), #temporadas[data-luz="2"] .temp-luz i:nth-child(2), #temporadas[data-luz="3"] .temp-luz i:nth-child(3), #temporadas[data-luz="4"] .temp-luz i:nth-child(4) { opacity: 1; }
     .modal-card:focus { outline: none; } /* el foco entra a la tarjeta al abrir (showModal); no es un control */
     /* iOS agranda la página al enfocar un campo con letra menor a 16 px y no la devuelve: en pantallas táctiles el formulario de reserva va en 16 px (en escritorio queda en 14) */
     @media (pointer: coarse) { #bookingForm input, #bookingForm select, #bookingForm textarea { font-size: 16px; } }
@@ -380,6 +395,11 @@
     .gal-fondo { position: absolute; inset: -8%; width: 116%; height: 116%; max-width: none; object-fit: cover; filter: blur(22px) saturate(1.1) brightness(.5); }
     .gal-foto { position: absolute; inset: 0; margin: auto; max-width: 100%; max-height: 100%; width: auto; height: auto; opacity: 0; transform: scale(1.025); transition: opacity .6s var(--ease-out), transform .9s var(--ease-out), translate .45s var(--ease-out); box-shadow: 0 14px 34px -12px rgba(0,0,0,.65); }
     .gal-foto.es-visible { opacity: 1; transform: none; }
+    /* Ken Burns: mientras la galería está a la vista, la foto grande se acerca y se corre muy despacio dentro de su propio marco
+       (object-view-box recorta adentro de la imagen: el marco, la sombra y el deslizar no cambian). Donde no existe (Safari, Firefox) queda quieta. */
+    .gal-foto { animation: galKB 18s ease-in-out infinite alternate paused; }
+    .gal-escena.en-vista:not(.arrastrando) .gal-foto.es-visible { animation-play-state: running; }
+    @keyframes galKB { from { object-view-box: inset(0% 0% 0% 0%); } to { object-view-box: inset(2% 1.5% 4.5% 5%); } }
     .gal-escena.arrastrando .gal-foto { transition-property: opacity, transform; } /* mientras se arrastra, la foto va pegada al dedo */
     .lb-escena { overflow: hidden; touch-action: none; }
     #lightboxImg { transform-origin: 0 0; cursor: zoom-in; transition: transform var(--dur-media) var(--ease-out); -webkit-user-drag: none; user-select: none; }
@@ -397,7 +417,7 @@
     .gal-mini[aria-current="true"] { outline-color: #C29D62; } .gal-mini:focus-visible { outline-color: #721B28; }
     @media (min-width: 768px) { .gal-mini { width: 116px; } }
     @media (max-width: 639px) { .gal-escena { aspect-ratio: 4 / 3; } .gal-prev { left: 16px; } .gal-next { right: 16px; } .gal-ampliar { right: 16px; bottom: 16px; } .gal-num { left: 16px; bottom: 16px; } }
-    @media (prefers-reduced-motion: reduce) { .gal-foto { transition: none; transform: none; } }
+    @media (prefers-reduced-motion: reduce) { .gal-foto { transition: none; transform: none; animation: none; } }
 
     /* Marco de la Ruta: doble filete dorado y paspartú (el mismo lenguaje del favicon). Vino sobre fondo claro; crema (marco-claro) sobre fondo oscuro. */
     .marco-ruta { position: relative; padding: 12px; border-radius: 20px; background: linear-gradient(150deg, #4A101D, #2B0A14); box-shadow: 0 0 0 1px rgba(194,157,98,.55), 0 28px 50px -28px rgba(43,10,20,.6); }
@@ -1418,7 +1438,10 @@
               </div>
             </div>
 
-            <a href="#copa" class="mt-8 inline-flex items-center gap-2 px-5 py-3 rounded-full bg-tannat text-white font-semibold text-sm shadow-md hover:bg-tannat-dark transition-colors" data-i18n="pioneer.cupLink">Ahora probá el Tannat: la copa interactiva →</a>
+            <div class="mt-8 flex flex-wrap items-center justify-center lg:justify-start gap-3">
+            <button type="button" onclick="openVideoModal('harriague', this)" class="inline-flex items-center gap-2 px-5 py-3 rounded-full border-2 border-tannat text-tannat font-semibold text-sm hover:bg-tannat hover:text-white transition-colors"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg><span data-i18n="pioneer.video">Su vida en 20 segundos</span></button>
+            <a href="#copa" class="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-tannat text-white font-semibold text-sm shadow-md hover:bg-tannat-dark transition-colors" data-i18n="pioneer.cupLink">Ahora probá el Tannat: la copa interactiva →</a>
+            </div>
           </div>
 
         </div>
@@ -1725,8 +1748,9 @@
     </section>
 
     <!-- ==================== SECTION: CALENDARIO ENOTURÍSTICO ESTACIONAL (PUNTO 4) ==================== -->
-    <section id="temporadas" class="py-20 lg:py-28 bg-crema text-basalt border-t border-tannat-100">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="temporadas" class="relative py-20 lg:py-28 bg-crema text-basalt border-t border-tannat-100">
+      <div class="temp-luz" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+      <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         <div class="text-center max-w-3xl mx-auto mb-16">
           <h2 class="font-serif text-3xl sm:text-5xl sm:leading-[1.15] font-bold tracking-[0.012em] text-balance text-tannat-dark mb-4 uppercase" data-i18n="seasons.title">
@@ -1943,8 +1967,9 @@
             <div class="relative group">
               <div class="absolute -inset-2 bg-gradient-to-r from-gold to-tannat-light rounded-3xl blur-lg opacity-20 group-hover:opacity-35 transition-opacity"></div>
               <div class="relative marco-ruta marco-claro">
-                <div class="aspect-[4/3] rounded-[10px] overflow-hidden bg-tannat-900">
+                <div class="relative aspect-[4/3] rounded-[10px] overflow-hidden bg-tannat-900">
                   <img src="./LaRutadelTannat_files/termas-dayman.webp" width="720" height="563" alt="Piscinas termales circulares de Termas del Daymán, Salto, Uruguay" class="revela w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy">
+                  <div class="vapor" data-en-vista aria-hidden="true"><i></i><i></i><i></i><i></i></div>
                 </div>
                 <div class="px-3 pt-4 pb-2">
                   <p class="text-xs text-terroir uppercase tracking-widest font-semibold" data-i18n="thermal.captionTag">Termas del Daymán</p>
@@ -2610,7 +2635,7 @@
         <!-- Galería: una foto grande en el marco de la Ruta. Cambia solo si el visitante la mueve (flechas, teclado, deslizar o miniaturas); un toque la abre en pantalla completa. -->
         <div id="galRuta" class="max-w-5xl mx-auto" role="region" aria-roledescription="galería" aria-label="Galería de fotografías del circuito" data-i18n-aria="a11y.gallery">
           <div class="marco-ruta">
-            <div id="galEscena" class="gal-escena">
+            <div id="galEscena" class="gal-escena" data-en-vista>
               <img class="gal-fondo" src="./LaRutadelTannat_files/gal-mini-1.webp" width="240" height="180" alt="" aria-hidden="true" loading="lazy">
               <img class="gal-foto es-visible" src="./LaRutadelTannat_files/hero-vinedo-uruguay.webp" width="1920" height="1440" alt="Viñedo uruguayo al amanecer" data-i18n-alt="gallery.cap1" loading="lazy" decoding="async">
               <img class="gal-foto" alt="" aria-hidden="true" decoding="async">
@@ -2763,12 +2788,13 @@
         </div>
 
         <!-- Filtros rápidos: muestran/ocultan marcadores reales del mapa (no recortan contenido, solo la vista) -->
-        <div class="flex justify-center mb-6">
+        <div class="flex flex-wrap justify-center items-center gap-3 mb-6">
           <div class="inline-flex items-center gap-1 bg-crema rounded-full p-1 border border-tannat-100 shadow-sm">
             <button type="button" id="mapFilterAll" onclick="filterMapMarkers('all')" aria-pressed="true" class="tap-area-pill px-3.5 py-1.5 rounded-full font-semibold transition-all bg-tannat text-white shadow-sm" data-i18n="map.filterAll">Ruta Completa</button>
             <button type="button" id="mapFilterWineries" onclick="filterMapMarkers('wineries')" aria-pressed="false" class="tap-area-pill px-3.5 py-1.5 rounded-full font-semibold transition-all text-tannat hover:bg-tannat/10" data-i18n="map.filterWineries">Solo Bodegas</button>
             <button type="button" id="mapFilterThermal" onclick="filterMapMarkers('thermal')" aria-pressed="false" class="tap-area-pill px-3.5 py-1.5 rounded-full font-semibold transition-all text-tannat hover:bg-tannat/10" data-i18n="map.filterThermal">Termas</button>
           </div>
+          <button type="button" onclick="openVideoModal('recorrido', this)" class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-tannat text-white font-semibold shadow-sm hover:bg-tannat-dark transition-colors"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg><span data-i18n="map.video">Ver el recorrido en 12 s</span></button>
         </div>
 
         <!-- Interactive Map Visual: marco premium con filo dorado -->
@@ -3427,6 +3453,19 @@
     </div>
   </div>
 
+  <!-- ==================== MODAL: VIDEOS (HyperFrames: el recorrido y la vida de Harriague) ==================== -->
+  <div id="videoModal" class="modal-overlay fixed inset-0 z-50 hidden bg-black/85 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto" role="dialog" aria-modal="true" aria-labelledby="videoModalTitle" onclick="closeVideoModal()">
+    <div class="modal-card relative w-full max-w-[min(34rem,78vh)] my-8" onclick="event.stopPropagation()">
+      <div class="flex items-center justify-between gap-3 mb-3">
+        <h3 id="videoModalTitle" class="font-serif text-lg sm:text-xl font-bold text-white"></h3>
+        <button onclick="closeVideoModal()" class="shrink-0 text-white bg-white/10 hover:bg-white/20 p-2 rounded-full transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white" aria-label="Cerrar" data-i18n-aria="modal.close">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+      </div>
+      <video id="videoModalVideo" class="block w-full aspect-square rounded-2xl bg-[#1D060D] shadow-2xl" width="1080" height="1080" muted playsinline controls preload="none"></video>
+    </div>
+  </div>
+
   <!-- ==================== MODAL: GALERÍA LIGHTBOX ==================== -->
   <div id="galleryLightbox" class="modal-overlay fixed inset-0 z-50 hidden bg-black/90 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto" role="dialog" aria-modal="true" aria-labelledby="lightboxCaption" onclick="closeGalleryLightbox()">
     <div class="modal-card relative max-w-3xl w-full my-8" onclick="event.stopPropagation()">
@@ -3488,6 +3527,21 @@
       const t = lastFocusedTrigger; lastFocusedTrigger = null;
       if (t && t.isConnected && t.getClientRects().length) t.focus({ preventScroll: true });
     }
+
+    // Videos cortos hechos con HyperFrames (fuentes en hyperframes/): sin sonido, se cargan recién al abrirlos.
+    // El de Harriague tiene el texto en el idioma de la página; el del recorrido solo lleva nombres, minutos y km.
+    const VIDEOS = {
+      recorrido: { src: () => 'video-recorrido.mp4', poster: 'video-recorrido-poster.webp', tit: 'video.routeTitle' },
+      harriague: { src: () => 'video-harriague-' + (currentLang in { es: 1, pt: 1, en: 1 } ? currentLang : 'es') + '.mp4', poster: 'video-harriague-poster.webp', tit: 'video.pioneerTitle' },
+    };
+    function openVideoModal(cual, origen) {
+      const c = VIDEOS[cual], v = document.getElementById('videoModalVideo'), d = translations[currentLang] || translations.es;
+      const t = document.getElementById('videoModalTitle'); t.setAttribute('data-i18n', c.tit); t.textContent = d[c.tit];
+      v.poster = './LaRutadelTannat_files/' + c.poster; v.src = './LaRutadelTannat_files/' + c.src();
+      showModal('videoModal', origen);
+      v.play().catch(() => {}); // si el navegador no deja, quedan los controles
+    }
+    function closeVideoModal() { document.getElementById('videoModalVideo').pause(); hideModal('videoModal'); }
 
     // Multilingual Stations Database (ES / PT / EN)
     const stationsInfo = {
@@ -4205,6 +4259,10 @@
         "day.single": "Una sola parada: no hay traslados entre estaciones.",
         "day.leg": "{min} min en auto · {km} km",
         "day.total": "Manejo total: {min} min · {km} km",
+        "map.video": "Ver el recorrido en 12 s",
+        "video.routeTitle": "La Ruta del Tannat, de punta a punta",
+        "pioneer.video": "Su vida en 20 segundos",
+        "video.pioneerTitle": "La vida de Pascual Harriague",
         "day.waLine": "Recorrido",
         "map.filterAll": "Ruta Completa",
         "map.filterWineries": "Solo Bodegas",
@@ -4870,6 +4928,10 @@
         "day.single": "Uma só parada: não há deslocamentos entre estações.",
         "day.leg": "{min} min de carro · {km} km",
         "day.total": "Direção total: {min} min · {km} km",
+        "map.video": "Ver o percurso em 12 s",
+        "video.routeTitle": "A Rota do Tannat, de ponta a ponta",
+        "pioneer.video": "Sua vida em 20 segundos",
+        "video.pioneerTitle": "A vida de Pascual Harriague",
         "day.waLine": "Roteiro",
         "map.filterAll": "Rota Completa",
         "map.filterWineries": "Só Vinícolas",
@@ -5535,6 +5597,10 @@
         "day.single": "A single stop: no driving between stations.",
         "day.leg": "{min} min by car · {km} km",
         "day.total": "Total driving: {min} min · {km} km",
+        "map.video": "Watch the route in 12 s",
+        "video.routeTitle": "The Tannat Route, end to end",
+        "pioneer.video": "His life in 20 seconds",
+        "video.pioneerTitle": "The life of Pascual Harriague",
         "day.waLine": "Route",
         "map.filterAll": "Full Route",
         "map.filterWineries": "Wineries Only",
@@ -5896,6 +5962,27 @@
       if (card) card.classList.add('outline', 'outline-2', 'outline-gold', 'outline-offset-4');
     }
     highlightCurrentSeason();
+
+    // Luz de temporada: al pasar el mouse (o el foco) por una tarjeta, la sección toma su luz; al salir vuelve a la de hoy.
+    // En pantallas táctiles manda la tarjeta que está en el medio de la pantalla (solo se observa, nunca se toca el scroll).
+    (function initLuzTemporada() {
+      const sec = document.getElementById('temporadas'); if (!sec) return;
+      const hoy = String([...sec.querySelectorAll('[id^="seasonCard"]')].findIndex((c) => c.classList.contains('outline')) + 1 || 1);
+      sec.dataset.luz = hoy;
+      const cards = [...sec.querySelectorAll('[id^="seasonCard"]')], n = (c) => c.id.slice(-1);
+      cards.forEach((c) => { c.addEventListener('mouseenter', () => { sec.dataset.luz = n(c); }); c.addEventListener('focusin', () => { sec.dataset.luz = n(c); }); });
+      cards[0].parentElement.addEventListener('mouseleave', () => { sec.dataset.luz = hoy; });
+      if (window.matchMedia('(hover: none)').matches && 'IntersectionObserver' in window) {
+        const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) sec.dataset.luz = n(e.target); }), { rootMargin: '-45% 0px -45% 0px' });
+        cards.forEach((c) => io.observe(c));
+      }
+    })();
+
+    // Efectos que solo corren mientras se ven (vapor de las termas, Ken Burns de la galería): marca .en-vista y nada más
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((es) => es.forEach((e) => e.target.classList.toggle('en-vista', e.isIntersecting)));
+      document.querySelectorAll('[data-en-vista]').forEach((el) => io.observe(el));
+    }
 
     // Cuenta regresiva real hasta el 14 de abril (Día Nacional del Tannat / Semana de Harriague)
     function updateHarriagueCountdown() {
@@ -7134,6 +7221,7 @@
         closeLegalModal();
         closePlanModal();
         closeGalleryLightbox();
+        closeVideoModal();
         return;
       }
       if (e.key !== 'Tab' || !openModalId) return;

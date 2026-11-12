@@ -6,7 +6,7 @@ const ROOT = path.join(__dirname, '..');
 const CHROME = process.env.CHROME_PATH || ['C:/Program Files/Google/Chrome/Application/chrome.exe', '/usr/bin/google-chrome', '/usr/bin/google-chrome-stable', '/usr/bin/chromium', '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'].find((p) => fs.existsSync(p));
 if (!CHROME) { console.error('No encuentro Chrome: definí CHROME_PATH'); process.exit(2); }
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
-const MIME = { '.html': 'text/html; charset=utf-8', '.css': 'text/css', '.js': 'text/javascript', '.json': 'application/json', '.webp': 'image/webp', '.jpg': 'image/jpeg', '.png': 'image/png', '.svg': 'image/svg+xml', '.ico': 'image/x-icon', '.woff2': 'font/woff2', '.xml': 'application/xml', '.txt': 'text/plain' };
+const MIME = { '.html': 'text/html; charset=utf-8', '.css': 'text/css', '.js': 'text/javascript', '.json': 'application/json', '.webp': 'image/webp', '.jpg': 'image/jpeg', '.png': 'image/png', '.svg': 'image/svg+xml', '.ico': 'image/x-icon', '.woff2': 'font/woff2', '.xml': 'application/xml', '.txt': 'text/plain', '.mp4': 'video/mp4' };
 const failures = [];
 const check = (name, cond, extra) => { if (!cond) failures.push(name + (extra ? ' → ' + extra : '')); console.log((cond ? 'OK  ' : 'MAL ') + name + (extra && !cond ? '  → ' + extra : '')); };
 
@@ -388,6 +388,23 @@ function servidor() {
     const p4 = await esperaEn(srv.url, true); const reducido = await p4.evaluate(() => !document.getElementById('espera')); await p4.close();
     check('espera de entrada: el vino sube y se llena, se va sola en menos de 4 s, un toque la cierra, no vuelve en la sesión ni sale con #sección o movimiento reducido',
       quitada && t < 4000 && sube && lleno && sesion === '1' && recarga && toque && conHash && reducido, JSON.stringify({ quitada, t, sube, lleno, sesion, recarga, toque, conHash, reducido, muestras: niveles.length })); }
+
+  // 30. efectos que solo corren a la vista (vapor de las termas, Ken Burns de la galería), luz de temporada (la de hoy; otra al pasar el mouse)
+  //     y videos: cada botón abre su video (el de Harriague en el idioma de la página), Escape lo cierra y lo pausa
+  { const page = await browser.newPage(); await page.setViewport({ width: 1280, height: 800 }); await page.goto(srv.url, { waitUntil: 'load' }); await sleep(500);
+    const corre = (sel) => page.$eval(sel, (el) => getComputedStyle(el).animationPlayState);
+    const vista = async (sel) => { await page.$eval(sel, (el) => el.scrollIntoView({ block: 'center', behavior: 'instant' })); await sleep(700); };
+    const antes = [await corre('.vapor i'), await corre('#galEscena .gal-foto.es-visible')];
+    await vista('.vapor'); const vapor = await corre('.vapor i'); await vista('#galEscena'); const kb = await corre('#galEscena .gal-foto.es-visible');
+    const hoy = await page.$eval('#temporadas', (s) => s.dataset.luz); await vista('#seasonCard2'); await page.hover('#seasonCard' + (hoy === '2' ? 3 : 2)); const otra = await page.$eval('#temporadas', (s) => s.dataset.luz);
+    const video = async (cual) => { await vista(`[onclick^="openVideoModal('${cual}"]`); await page.click(`[onclick^="openVideoModal('${cual}"]`); await sleep(1500);
+      const v = await page.$eval('#videoModalVideo', (v) => ({ src: v.currentSrc.split('/').pop(), w: v.videoWidth })); await page.keyboard.press('Escape'); await sleep(400);
+      return { ...v, cerrado: await page.$eval('#videoModal', (m) => m.classList.contains('hidden')), pausado: await page.$eval('#videoModalVideo', (v) => v.paused) }; };
+    const rec = await video('recorrido'); await page.evaluate(() => setLanguage('pt')); const har = await video('harriague'); await page.evaluate(() => setLanguage('es')); await page.close();
+    check('efectos a la vista (vapor, Ken Burns), luz de temporada y videos del recorrido y de Harriague (en el idioma de la página) que Escape cierra',
+      antes.every((a) => a === 'paused') && vapor === 'running' && kb === 'running' && /^[1-4]$/.test(hoy) && otra !== hoy &&
+      rec.src === 'video-recorrido.mp4' && rec.w === 1080 && rec.cerrado && rec.pausado && har.src === 'video-harriague-pt.mp4' && har.w === 1080 && har.cerrado && har.pausado,
+      JSON.stringify({ antes, vapor, kb, hoy, otra, rec, har })); }
 
   await browser.close(); srv.cerrar();
   if (failures.length) { console.log('\n' + failures.length + ' prueba(s) fallaron:\n - ' + failures.join('\n - ')); process.exit(1); }

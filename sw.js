@@ -1,10 +1,10 @@
 // Service Worker de La Ruta del Tannat: app shell cacheado para instalación PWA y uso sin conexión.
-const CACHE_VERSION = 'tannat-v30';
+const CACHE_VERSION = 'tannat-v31';
 const CORE_ASSETS = [
   './LaRutadelTannat.html',
   './index.html',
   './manifest.json',
-  './LaRutadelTannat_files/tailwind.css?v=30', // el ?v= sigue a CACHE_VERSION (npm run check avisa si no coinciden)
+  './LaRutadelTannat_files/tailwind.css?v=31', // el ?v= sigue a CACHE_VERSION (npm run check avisa si no coinciden)
   './LaRutadelTannat_files/plus-jakarta-sans-latin.woff2',
   './LaRutadelTannat_files/playfair-display-latin.woff2',
   './LaRutadelTannat_files/playfair-display-italic-latin.woff2',
@@ -33,7 +33,7 @@ self.addEventListener('activate', (event) => {
 
 self.addEventListener('fetch', (event) => {
   const req = event.request;
-  if (req.method !== 'GET') return;
+  if (req.method !== 'GET' || req.headers.has('range')) return; // los videos se piden por partes (206): esos los maneja el navegador, no la caché
 
   // Navegación (abrir/recargar la página): red primero, caché como respaldo sin conexión
   if (req.mode === 'navigate') {

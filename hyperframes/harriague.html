@@ -1,0 +1,136 @@
+<!doctype html>
+<!-- La vida de Pascual Harriague en 20 s (1080×1080), en 3 idiomas. Textos resumidos SOLO de la sección «El Pionero» del sitio.
+     Render (uno por idioma): npx hyperframes render -f 30 --crf 30 --variables '{"lang":"pt"}' -o ../LaRutadelTannat_files/video-harriague-pt.mp4 -->
+<html lang="es" style="overflow:hidden; margin:0" data-composition-variables='[{"id":"lang","type":"string","label":"Idioma (es, pt, en)","default":"es"}]'>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=1080, height=1080" />
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@hyperframes/core/dist/hyperframe.runtime.iife.js"></script>
+  <style>
+    @font-face { font-family: "Playfair Display"; font-weight: 400 900; font-style: normal; font-display: block; src: url(fonts/playfair-display-latin.woff2) format("woff2"); }
+    @font-face { font-family: "Playfair Display"; font-weight: 400 900; font-style: italic; font-display: block; src: url(fonts/playfair-display-italic-latin.woff2) format("woff2"); }
+    @font-face { font-family: "Plus Jakarta Sans"; font-weight: 200 800; font-style: normal; font-display: block; src: url(fonts/plus-jakarta-sans-latin.woff2) format("woff2"); }
+    :root { --bg: #1D060D; --vino: #721B28; --oro: #C5A059; --oro-claro: #DFCA9D; --crema: #FDFBF7; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 1080px; height: 1080px; overflow: hidden; background: var(--bg); color: var(--crema); font-family: "Plus Jakarta Sans", sans-serif; }
+    .scene { position: absolute; inset: 0; width: 1080px; height: 1080px; overflow: hidden;
+      background: radial-gradient(ellipse 70% 60% at 50% 32%, #43111f 0%, rgba(29,6,13,0) 70%), var(--bg); }
+    .fondo { position: absolute; inset: 0; background: url(img/8254D59E-F679-48CA-94EB-EC6CFB40EC77.webp) center/cover; opacity: 0; }
+    .fondo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(29,6,13,.75), rgba(29,6,13,.92) 55%, var(--bg)); }
+    .retrato { position: absolute; left: 380px; top: 96px; width: 320px; height: 320px; border-radius: 50%; overflow: hidden;
+      border: 4px solid var(--oro); box-shadow: 0 0 0 10px rgba(197,160,89,.12), 0 24px 60px rgba(0,0,0,.55); }
+    .retrato img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 22%; filter: sepia(.25); }
+    .titulo { position: absolute; left: 0; right: 0; top: 470px; text-align: center; }
+    .titulo .pre { display: block; font: 700 22px/1 "Plus Jakarta Sans", sans-serif; letter-spacing: .3em; color: var(--oro); text-transform: uppercase; }
+    .titulo .nom { display: block; margin-top: 18px; font: 700 92px/1.05 "Playfair Display", Georgia, serif; color: var(--crema); }
+    .titulo .sub { display: block; margin-top: 18px; font: italic 500 34px/1.2 "Playfair Display", Georgia, serif; color: var(--oro-claro); }
+    .anio { position: absolute; left: 0; right: 0; top: 452px; height: 190px; text-align: center; overflow: hidden; }
+    .anio span { position: absolute; left: 0; right: 0; top: 0; font: 700 176px/1.05 "Playfair Display", Georgia, serif; color: var(--crema); opacity: 0; }
+    .texto { position: absolute; left: 110px; right: 110px; top: 670px; height: 150px; }
+    .texto p { position: absolute; left: 0; right: 0; top: 0; text-align: center; font: 500 40px/1.3 "Plus Jakarta Sans", sans-serif; color: rgba(253,251,247,.92); opacity: 0; text-wrap: balance; }
+    .chip { position: absolute; left: 50%; top: 820px; transform: translateX(-50%); padding: 12px 26px; border-radius: 999px; border: 2px solid var(--oro);
+      font: 700 30px/1 "Plus Jakarta Sans", sans-serif; color: var(--oro-claro); white-space: nowrap; background: rgba(114,27,40,.55); opacity: 0; }
+    .linea { position: absolute; left: 140px; right: 140px; top: 960px; height: 2px; background: rgba(223,202,157,.22); }
+    .linea i { position: absolute; left: 0; top: 0; height: 2px; width: 100%; background: var(--oro); transform-origin: 0 50%; transform: scaleX(0); }
+    .hito { position: absolute; top: 960px; width: 16px; height: 16px; margin: -8px 0 0 -8px; border-radius: 50%; background: var(--bg); border: 2px solid rgba(223,202,157,.5); }
+    .hito b { position: absolute; left: 50%; top: 24px; transform: translateX(-50%); font: 600 20px/1 "Plus Jakarta Sans", sans-serif; color: rgba(223,202,157,.6); }
+    .final { position: absolute; left: 0; right: 0; top: 470px; text-align: center; opacity: 0; }
+    .final img { width: 250px; display: block; margin: 0 auto; }
+    .final .nom { display: block; margin-top: 22px; font: 700 64px/1.1 "Playfair Display", Georgia, serif; color: var(--crema); }
+    .final .anios { display: block; margin-top: 14px; font: 600 28px/1 "Plus Jakarta Sans", sans-serif; letter-spacing: .2em; color: var(--oro); }
+  </style>
+</head>
+<body>
+  <div id="main" data-composition-id="main" data-width="1080" data-height="1080" data-start="0" data-duration="20" data-fps="30">
+    <div class="scene clip" id="s1" data-start="0" data-duration="20" data-track-index="0">
+      <div class="fondo" id="fondo"></div>
+      <div class="retrato" id="retrato"><img src="img/pascual-harriague-retrato.webp" alt=""></div>
+      <div class="titulo" id="titulo"><span class="pre" id="tPre"></span><span class="nom">Pascual Harriague</span><span class="sub">1819 – 1894</span></div>
+      <div class="anio" id="anio"></div>
+      <div class="texto" id="texto"></div>
+      <div class="chip" id="chip">190 ha · 1888</div>
+      <div class="linea"><i id="progreso"></i></div>
+      <div id="hitos"></div>
+      <div class="final" id="final"><img src="img/logo-ruta-del-tannat-450.webp" alt=""><span class="nom">Pascual Harriague</span><span class="anios">1819 – 1894</span></div>
+    </div>
+  </div>
+  <script>
+    // Resúmenes de los textos de «El Pionero» (LaRutadelTannat.html, claves pioneer.*), uno por hito.
+    var TXT = {
+      es: { titulo: 'El Pionero', h: [
+        'Nace en Hasparren, en el País Vasco francés',
+        'Llega a Montevideo y trabaja en un saladero',
+        'En Salto, a orillas del río Uruguay: el saladero La Caballada',
+        'Planta las primeras cepas de Tannat',
+        'Fallece en París; su nombre queda unido a la cepa',
+        '14 de abril: Día Nacional del Tannat'] },
+      pt: { titulo: 'O Pioneiro', h: [
+        'Nasce em Hasparren, no País Basco francês',
+        'Chega a Montevidéu e trabalha em um saladero',
+        'Em Salto, às margens do rio Uruguai: o saladero La Caballada',
+        'Planta as primeiras cepas de Tannat',
+        'Falece em Paris; seu nome fica ligado à casta',
+        '14 de abril: Dia Nacional do Tannat'] },
+      en: { titulo: 'The Pioneer', h: [
+        'Born in Hasparren, in the French Basque Country',
+        'Arrives in Montevideo and works at a saladero',
+        'In Salto, on the Uruguay River: the La Caballada saladero',
+        'Plants the first Tannat vines',
+        'Dies in Paris; his name stays tied to the grape',
+        'April 14: National Tannat Day'] }
+    };
+    var vars = (window.__hyperframes && window.__hyperframes.getVariables && window.__hyperframes.getVariables()) || {};
+    var L = TXT[vars.lang] || TXT.es;
+    document.documentElement.lang = vars.lang in TXT ? vars.lang : 'es';
+    var ANIOS = [1819, 1838, 1860, 1874, 1894, 2016];
+    document.getElementById('tPre').textContent = L.titulo;
+    var anio = document.getElementById('anio'), texto = document.getElementById('texto'), hitos = document.getElementById('hitos');
+    ANIOS.forEach(function (a, i) {
+      anio.insertAdjacentHTML('beforeend', '<span id="a' + i + '">' + a + '</span>');
+      var p = document.createElement('p'); p.id = 'x' + i; p.textContent = L.h[i]; texto.appendChild(p);
+      hitos.insertAdjacentHTML('beforeend', '<div class="hito" id="h' + i + '" style="left:' + (140 + 800 * i / 5) + 'px"><b>' + a + '</b></div>');
+    });
+
+    window.__timelines = window.__timelines || {};
+    var tl = gsap.timeline({ paused: true });
+    // apertura: retrato y nombre
+    tl.from('#retrato', { autoAlpha: 0, scale: .85, duration: 1.1, ease: 'power3.out' }, .1);
+    tl.from('#retrato img', { scale: 1.2, duration: 3, ease: 'power2.out' }, .1);
+    tl.from('#titulo .pre', { autoAlpha: 0, y: 14, duration: .7, ease: 'power2.out' }, .5);
+    tl.from('#titulo .nom', { autoAlpha: 0, y: 26, duration: .9, ease: 'power3.out' }, .7);
+    tl.from('#titulo .sub', { autoAlpha: 0, y: 14, duration: .7, ease: 'power2.out' }, 1.0);
+    tl.from('.linea, .hito', { autoAlpha: 0, duration: .8, ease: 'sine.out' }, 1.2);
+    tl.to('#titulo', { autoAlpha: 0, y: -20, duration: .5, ease: 'power2.in' }, 2.5);
+
+    // un hito cada 2,5 s desde los 3,0 s
+    var T0 = 3.0, PASO = 2.5;
+    ANIOS.forEach(function (a, i) {
+      var t = T0 + i * PASO;
+      tl.fromTo('#a' + i, { autoAlpha: 0, yPercent: 60 }, { autoAlpha: 1, yPercent: 0, duration: .6, ease: 'power3.out', immediateRender: false }, t);
+      tl.fromTo('#x' + i, { autoAlpha: 0, y: 18 }, { autoAlpha: 1, y: 0, duration: .55, ease: 'power2.out', immediateRender: false }, t + .2);
+      tl.to('#progreso', { scaleX: i / 5, duration: .6, ease: 'power2.inOut' }, t);
+      tl.to('#h' + i, { backgroundColor: '#C5A059', borderColor: '#C5A059', scale: 1.35, duration: .35, ease: 'back.out(2)' }, t + .3);
+      tl.to('#h' + i + ' b', { color: '#DFCA9D', duration: .35 }, t + .3);
+      if (i < ANIOS.length - 1) {
+        tl.to('#a' + i, { autoAlpha: 0, yPercent: -50, duration: .45, ease: 'power2.in' }, t + PASO - .45);
+        tl.to('#x' + i, { autoAlpha: 0, duration: .35, ease: 'power1.in' }, t + PASO - .45);
+      }
+    });
+    // 1874: la bodega de fondo y el dato de 1888
+    var t1874 = T0 + 3 * PASO;
+    tl.to('#fondo', { autoAlpha: .55, duration: 1, ease: 'sine.inOut' }, t1874);
+    tl.fromTo('#chip', { autoAlpha: 0, y: 12 }, { autoAlpha: 1, y: 0, duration: .5, ease: 'back.out(1.6)', immediateRender: false }, t1874 + .7);
+    tl.to('#chip', { autoAlpha: 0, duration: .35 }, t1874 + PASO - .45);
+    tl.to('#fondo', { autoAlpha: 0, duration: .8, ease: 'sine.inOut' }, t1874 + PASO - .3);
+
+    // cierre: logo de la Ruta y el nombre
+    var tFin = T0 + 6 * PASO; // 18.0
+    tl.to('#a5, #x5', { autoAlpha: 0, duration: .45, ease: 'power2.in' }, tFin - .5);
+    tl.to('#retrato', { y: -10, scale: .9, duration: .8, ease: 'power2.inOut' }, tFin - .5);
+    tl.fromTo('#final', { autoAlpha: 0, y: 18 }, { autoAlpha: 1, y: 0, duration: .8, ease: 'power3.out', immediateRender: false }, tFin);
+    tl.set({}, {}, 20);
+    window.__timelines['main'] = tl;
+  </script>
+</body>
+</html>
