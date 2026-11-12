@@ -268,7 +268,7 @@
   <!-- Tailwind CSS compilado (ver README: npm run build:css) -->
   <!-- Foto del inicio: 720 px para celulares (va recortada y bajo un velo oscuro, por eso "sizes" la pide a media pantalla: alcanza aun con pantallas de alta densidad), 1280 y 1920 para el resto. Debe decir lo mismo que la imagen del hero (más abajo). -->
   <link rel="preload" as="image" href="./LaRutadelTannat_files/hero-vinedo-uruguay-1280.webp" imagesrcset="./LaRutadelTannat_files/hero-vinedo-uruguay-720.webp 720w, ./LaRutadelTannat_files/hero-vinedo-uruguay-1280.webp 1280w, ./LaRutadelTannat_files/hero-vinedo-uruguay.webp 1920w" imagesizes="(max-width: 767px) 50vw, 100vw" fetchpriority="high">
-  <link rel="stylesheet" href="./LaRutadelTannat_files/tailwind.css?v=31">
+  <link rel="stylesheet" href="./LaRutadelTannat_files/tailwind.css?v=32">
 
   <!-- Tipografía editorial alojada en el sitio (sin pedidos a Google): Playfair Display (titulares) + Plus Jakarta Sans (cuerpo/UI).
        Fuentes variables, solo el subconjunto latin (cubre es/pt/en; otro alfabeto cae a la fuente del sistema). Licencia OFL.
@@ -372,10 +372,11 @@
     @media (prefers-reduced-motion: reduce) { .modal-card { transform: none; } } /* sin escala ni desplazamiento: queda el fundido */
     /* Termas: vapor suave que sube sobre la foto, solo mientras se ve (sin filtros: gradientes que se mueven, liviano) */
     .vapor { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
-    .vapor i { position: absolute; bottom: -40%; width: 70%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(closest-side, rgba(255,255,255,.62), rgba(255,255,255,.24) 50%, transparent); opacity: 0; animation: vapor 11s linear infinite paused; }
-    .vapor i:nth-child(1) { left: 2%; } .vapor i:nth-child(2) { left: 30%; animation-delay: -2.8s; width: 78%; } .vapor i:nth-child(3) { left: 50%; animation-delay: -5.5s; } .vapor i:nth-child(4) { left: 16%; animation-delay: -8.2s; width: 60%; }
+    .vapor::before { content: ""; position: absolute; inset: 45% 0 0; background: linear-gradient(to top, rgba(255,255,255,.28), transparent); } /* bruma baja fija */
+    .vapor i { position: absolute; bottom: -45%; width: 80%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(closest-side, rgba(255,255,255,.85), rgba(255,255,255,.4) 45%, rgba(255,255,255,.12) 70%, transparent); opacity: 0; animation: vapor 9s linear infinite paused; }
+    .vapor i:nth-child(1) { left: -15%; } .vapor i:nth-child(2) { left: 20%; animation-delay: -1.5s; width: 90%; } .vapor i:nth-child(3) { left: 45%; animation-delay: -3s; } .vapor i:nth-child(4) { left: 5%; animation-delay: -4.5s; width: 70%; } .vapor i:nth-child(5) { left: 55%; animation-delay: -6s; width: 85%; } .vapor i:nth-child(6) { left: 30%; animation-delay: -7.5s; width: 75%; }
     .vapor.en-vista i { animation-play-state: running; }
-    @keyframes vapor { 0% { transform: translate(0, 0) scale(.7); opacity: 0; } 25% { opacity: .9; } 70% { opacity: .45; } 100% { transform: translate(6%, -120%) scale(1.25); opacity: 0; } }
+    @keyframes vapor { 0% { transform: translate(0, 0) scale(.6); opacity: 0; } 20% { opacity: 1; } 65% { opacity: .6; } 100% { transform: translate(8%, -115%) scale(1.3); opacity: 0; } }
     @media (prefers-reduced-motion: reduce) { .vapor { display: none; } }
     /* Temporadas: la sección toma la luz de la estación elegida (fundido entre capas; por defecto, la de hoy) */
     .temp-luz, .temp-luz i { position: absolute; inset: 0; pointer-events: none; }
@@ -395,11 +396,6 @@
     .gal-fondo { position: absolute; inset: -8%; width: 116%; height: 116%; max-width: none; object-fit: cover; filter: blur(22px) saturate(1.1) brightness(.5); }
     .gal-foto { position: absolute; inset: 0; margin: auto; max-width: 100%; max-height: 100%; width: auto; height: auto; opacity: 0; transform: scale(1.025); transition: opacity .6s var(--ease-out), transform .9s var(--ease-out), translate .45s var(--ease-out); box-shadow: 0 14px 34px -12px rgba(0,0,0,.65); }
     .gal-foto.es-visible { opacity: 1; transform: none; }
-    /* Ken Burns: mientras la galería está a la vista, la foto grande se acerca y se corre muy despacio dentro de su propio marco
-       (object-view-box recorta adentro de la imagen: el marco, la sombra y el deslizar no cambian). Donde no existe (Safari, Firefox) queda quieta. */
-    .gal-foto { animation: galKB 18s ease-in-out infinite alternate paused; }
-    .gal-escena.en-vista:not(.arrastrando) .gal-foto.es-visible { animation-play-state: running; }
-    @keyframes galKB { from { object-view-box: inset(0% 0% 0% 0%); } to { object-view-box: inset(2% 1.5% 4.5% 5%); } }
     .gal-escena.arrastrando .gal-foto { transition-property: opacity, transform; } /* mientras se arrastra, la foto va pegada al dedo */
     .lb-escena { overflow: hidden; touch-action: none; }
     #lightboxImg { transform-origin: 0 0; cursor: zoom-in; transition: transform var(--dur-media) var(--ease-out); -webkit-user-drag: none; user-select: none; }
@@ -417,7 +413,7 @@
     .gal-mini[aria-current="true"] { outline-color: #C29D62; } .gal-mini:focus-visible { outline-color: #721B28; }
     @media (min-width: 768px) { .gal-mini { width: 116px; } }
     @media (max-width: 639px) { .gal-escena { aspect-ratio: 4 / 3; } .gal-prev { left: 16px; } .gal-next { right: 16px; } .gal-ampliar { right: 16px; bottom: 16px; } .gal-num { left: 16px; bottom: 16px; } }
-    @media (prefers-reduced-motion: reduce) { .gal-foto { transition: none; transform: none; animation: none; } }
+    @media (prefers-reduced-motion: reduce) { .gal-foto { transition: none; transform: none; } }
 
     /* Marco de la Ruta: doble filete dorado y paspartú (el mismo lenguaje del favicon). Vino sobre fondo claro; crema (marco-claro) sobre fondo oscuro. */
     .marco-ruta { position: relative; padding: 12px; border-radius: 20px; background: linear-gradient(150deg, #4A101D, #2B0A14); box-shadow: 0 0 0 1px rgba(194,157,98,.55), 0 28px 50px -28px rgba(43,10,20,.6); }
@@ -1969,7 +1965,7 @@
               <div class="relative marco-ruta marco-claro">
                 <div class="relative aspect-[4/3] rounded-[10px] overflow-hidden bg-tannat-900">
                   <img src="./LaRutadelTannat_files/termas-dayman.webp" width="720" height="563" alt="Piscinas termales circulares de Termas del Daymán, Salto, Uruguay" class="revela w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy">
-                  <div class="vapor" data-en-vista aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+                  <div class="vapor" data-en-vista aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
                 </div>
                 <div class="px-3 pt-4 pb-2">
                   <p class="text-xs text-terroir uppercase tracking-widest font-semibold" data-i18n="thermal.captionTag">Termas del Daymán</p>
@@ -2635,11 +2631,11 @@
         <!-- Galería: una foto grande en el marco de la Ruta. Cambia solo si el visitante la mueve (flechas, teclado, deslizar o miniaturas); un toque la abre en pantalla completa. -->
         <div id="galRuta" class="max-w-5xl mx-auto" role="region" aria-roledescription="galería" aria-label="Galería de fotografías del circuito" data-i18n-aria="a11y.gallery">
           <div class="marco-ruta">
-            <div id="galEscena" class="gal-escena" data-en-vista>
+            <div id="galEscena" class="gal-escena">
               <img class="gal-fondo" src="./LaRutadelTannat_files/gal-mini-1.webp" width="240" height="180" alt="" aria-hidden="true" loading="lazy">
               <img class="gal-foto es-visible" src="./LaRutadelTannat_files/hero-vinedo-uruguay.webp" width="1920" height="1440" alt="Viñedo uruguayo al amanecer" data-i18n-alt="gallery.cap1" loading="lazy" decoding="async">
               <img class="gal-foto" alt="" aria-hidden="true" decoding="async">
-              <span id="galNum" class="gal-num" aria-hidden="true">1 / 19</span>
+              <span id="galNum" class="gal-num" aria-hidden="true">1 / 34</span>
             </div>
             <button type="button" class="gal-boton gal-prev" aria-label="Foto anterior" data-i18n-aria="gallery.prev"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg></button>
             <button type="button" class="gal-boton gal-next" aria-label="Foto siguiente" data-i18n-aria="gallery.next"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>
@@ -2669,6 +2665,21 @@
             <button type="button" class="gal-mini" data-n="17" data-src="./LaRutadelTannat_files/visita-grupal-fogon-cavas.webp" data-w="1600" data-h="1200"><img src="./LaRutadelTannat_files/gal-mini-17.webp" width="240" height="180" alt="" loading="lazy"><span class="sr-only" data-i18n="gallery.cap17">Visita grupal con fogón en las cavas históricas</span></button>
             <button type="button" class="gal-mini" data-n="18" data-src="./LaRutadelTannat_files/placa-homenaje-harriague.webp" data-w="1600" data-h="1223"><img src="./LaRutadelTannat_files/gal-mini-18.webp" width="240" height="180" alt="" loading="lazy"><span class="sr-only" data-i18n="gallery.cap18">Placa homenaje a Pascual Harriague en su bodega</span></button>
             <button type="button" class="gal-mini" data-n="19" data-src="./LaRutadelTannat_files/productores-bertolini-broglio.webp" data-w="850" data-h="577"><img src="./LaRutadelTannat_files/gal-mini-19.webp" width="240" height="180" alt="" loading="lazy"><span class="sr-only" data-i18n="gallery.cap19">Productores en Bodega Bertolini &amp; Broglio</span></button>
+            <button type="button" class="gal-mini" data-n="20" data-src="./LaRutadelTannat_files/bnu-49875-saladero-entrada.webp" data-w="1420" data-h="1196"><img src="./LaRutadelTannat_files/gal-mini-20.webp" width="240" height="180" alt="" loading="lazy"><span class="sr-only" data-i18n="gallery.cap20">Entrada al saladero y granja Harriague</span></button>
+            <button type="button" class="gal-mini" data-n="21" data-src="./LaRutadelTannat_files/bnu-49845-saladero-visita.webp" data-w="1365" data-h="1200"><img src="./LaRutadelTannat_files/gal-mini-21.webp" width="240" height="180" alt="" loading="lazy"><span class="sr-only" data-i18n="gallery.cap21">Una visita al saladero de La Caballada</span></button>
+            <button type="button" class="gal-mini" data-n="22" data-src="./LaRutadelTannat_files/bnu-12329-saladero-rio.webp" data-w="1600" data-h="1144"><img src="./LaRutadelTannat_files/gal-mini-22.webp" width="240" height="180" alt="" loading="lazy"><span class="sr-only" data-i18n="gallery.cap22">Saladero Harriague, Salto</span></button>
+            <button type="button" class="gal-mini" data-n="23" data-src="./LaRutadelTannat_files/bnu-12333-bichadero.webp" data-w="1600" data-h="1626"><img src="./LaRutadelTannat_files/gal-mini-23.webp" width="240" height="180" alt="" loading="lazy"><span class="sr-only" data-i18n="gallery.cap23">El bichadero del saladero La Caballada</span></button>
+            <button type="button" class="gal-mini" data-n="24" data-src="./LaRutadelTannat_files/bnu-49867-bodegas-granja.webp" data-w="1325" data-h="1186"><img src="./LaRutadelTannat_files/gal-mini-24.webp" width="240" height="180" alt="" loading="lazy"><span class="sr-only" data-i18n="gallery.cap24">Una visita a las bodegas de la granja Harriague</span></button>
+            <button type="button" class="gal-mini" data-n="25" data-src="./LaRutadelTannat_files/bnu-51238-vinedo-harriague.webp" data-w="1370" data-h="1166"><img src="./LaRutadelTannat_files/gal-mini-25.webp" width="240" height="180" alt="" loading="lazy"><span class="sr-only" data-i18n="gallery.cap25">Viñedo de D. Pascual Harriague</span></button>
+            <button type="button" class="gal-mini" data-n="26" data-src="./LaRutadelTannat_files/bnu-51244-vinedo-societe-viticole.webp" data-w="1370" data-h="1230"><img src="./LaRutadelTannat_files/gal-mini-26.webp" width="240" height="180" alt="" loading="lazy"><span class="sr-only" data-i18n="gallery.cap26">Viñedo de la Société Viticole Salteña</span></button>
+            <button type="button" class="gal-mini" data-n="27" data-src="./LaRutadelTannat_files/bnu-12252-accion-sociedad-viticola.webp" data-w="1600" data-h="1296"><img src="./LaRutadelTannat_files/gal-mini-27.webp" width="240" height="180" alt="" loading="lazy"><span class="sr-only" data-i18n="gallery.cap27">Acción de la Sociedad Vitícola Salteña</span></button>
+            <button type="button" class="gal-mini" data-n="28" data-src="./LaRutadelTannat_files/bnu-49846-salto-calle-yacuy.webp" data-w="1270" data-h="1060"><img src="./LaRutadelTannat_files/gal-mini-28.webp" width="240" height="180" alt="" loading="lazy"><span class="sr-only" data-i18n="gallery.cap28">Salto en 1888: vista desde el Cerro, calle Yacuy</span></button>
+            <button type="button" class="gal-mini" data-n="29" data-src="./LaRutadelTannat_files/bnu-49850-salto-norte-este.webp" data-w="1400" data-h="1130"><img src="./LaRutadelTannat_files/gal-mini-29.webp" width="240" height="180" alt="" loading="lazy"><span class="sr-only" data-i18n="gallery.cap29">Salto en 1888: vista desde el Cerro, de norte a este</span></button>
+            <button type="button" class="gal-mini" data-n="30" data-src="./LaRutadelTannat_files/bnu-49852-salto-ceibal.webp" data-w="1310" data-h="1066"><img src="./LaRutadelTannat_files/gal-mini-30.webp" width="240" height="180" alt="" loading="lazy"><span class="sr-only" data-i18n="gallery.cap30">Salto en 1888: vista desde el otro lado del Ceibal</span></button>
+            <button type="button" class="gal-mini" data-n="31" data-src="./LaRutadelTannat_files/bnu-49861-salto-junto-al-agua.webp" data-w="1430" data-h="1176"><img src="./LaRutadelTannat_files/gal-mini-31.webp" width="240" height="180" alt="" loading="lazy"><span class="sr-only" data-i18n="gallery.cap31">Salto en 1888: la ciudad junto al agua</span></button>
+            <button type="button" class="gal-mini" data-n="32" data-src="./LaRutadelTannat_files/bnu-49859-salto-inundado.webp" data-w="1370" data-h="1136"><img src="./LaRutadelTannat_files/gal-mini-32.webp" width="240" height="180" alt="" loading="lazy"><span class="sr-only" data-i18n="gallery.cap32">Salto en 1888: parajes inundados</span></button>
+            <button type="button" class="gal-mini" data-n="33" data-src="./LaRutadelTannat_files/bnu-70903-francisco-vidiella.webp" data-w="793" data-h="1200"><img src="./LaRutadelTannat_files/gal-mini-33.webp" width="240" height="180" alt="" loading="lazy"><span class="sr-only" data-i18n="gallery.cap33">Don Francisco Vidiella</span></button>
+            <button type="button" class="gal-mini" data-n="34" data-src="./LaRutadelTannat_files/bnu-12879-saturnino-ribes.webp" data-w="1500" data-h="1632"><img src="./LaRutadelTannat_files/gal-mini-34.webp" width="240" height="180" alt="" loading="lazy"><span class="sr-only" data-i18n="gallery.cap34">Don Saturnino Ribes</span></button>
           </div>
         </div>
 
@@ -4231,7 +4242,37 @@
         "gallery.desc17": "Visitantes junto a un fogón nocturno en las ruinas históricas de Bodega Harriague, fotografía de Homero Texeira.",
         "gallery.desc18": "Placa que el pueblo de Salto colocó en 2019 en homenaje a Pascual Harriague, al cumplirse el bicentenario de su nacimiento.",
         "gallery.desc19": "Productores y visitantes frente a la fachada histórica de Bodega Bertolini &amp; Broglio.",
-        "gallery.credits": "Fotografías: archivo propio del proyecto (cata de vinos y visita grupal en las cavas, por Homero Texeira; placa homenaje y productores en Bertolini &amp; Broglio) e INAVI · Wikimedia Commons — Alejgon (Termas del Arapey, CC BY-SA 4.0), Shant (Salto desde el puerto, CC BY 2.5), colaboradores de Wikimedia (Fiesta de la Vendimia 1985, CC BY-SA/GFDL; copa de Tannat uruguayo, CC BY-SA), INAVI (retrato de Pascual Harriague, dominio público; foto de la Semana de Harriague, cedida por Bodegas del Uruguay).",
+        "gallery.cap20": "Entrada al saladero y granja Harriague",
+        "gallery.desc20": "Una de las fotografías más antiguas del establecimiento de Harriague, tomada en la visita del Batallón de Cazadores N.º 4: el edificio de dos plantas de la entrada, la tropa formada y, al fondo, el río Uruguay. <span class=\"whitespace-nowrap\">Lorenzo Spátola, 1888 · BNU 49875</span>",
+        "gallery.cap21": "Una visita al saladero de La Caballada",
+        "gallery.desc21": "En primer plano, la banda del batallón con sus tambores; detrás, la tropa formada y construcciones del saladero, «situado sobre la costa del Uruguay». A la derecha, vecinos y niños que se acercaron a ver. <span class=\"whitespace-nowrap\">Lorenzo Spátola, 1888 · BNU 49845</span>",
+        "gallery.cap22": "Saladero Harriague, Salto",
+        "gallery.desc22": "El saladero visto desde el río, con sus galpones sobre la costa. Se formó hacia 1858 en 48 cuadras sobre el río Uruguay; en 1894 faenaba unos 700 vacunos por día para Río de Janeiro y La Habana. <span class=\"whitespace-nowrap\">Reproducción de 1960 · Colección Salto · BNU 12329</span>",
+        "gallery.cap23": "El bichadero del saladero La Caballada",
+        "gallery.desc23": "La torre de vigía del saladero, de madera, con su escalera y su plataforma, todavía en pie en 1961 sobre una base de piedra: uno de los pocos testimonios del paisaje industrial que rodeaba la bodega. <span class=\"whitespace-nowrap\">Fotografía de 1961 · Colección Salto · BNU 12333</span>",
+        "gallery.cap24": "Una visita a las bodegas de la granja Harriague",
+        "gallery.desc24": "La tropa frente a la bodega, con un galpón, barricas y carros de bueyes con los que se trasladaba el vino. En mayo de 1887 se contaron aquí 107.310 litros de vino, guardados en dos bodegas bajo tierra. <span class=\"whitespace-nowrap\">Lorenzo Spátola, 1888 · BNU 49867</span>",
+        "gallery.cap25": "Viñedo de D. Pascual Harriague",
+        "gallery.desc25": "La imagen con la que Uruguay mostró este viñedo en la Exposición Universal de París de 1889: hileras de vid en plena vegetación. Ese año, unas 200 de las 426 cuadras de viña de Salto eran de Harriague. <span class=\"whitespace-nowrap\">Joseph Fillat, 1889 · BNU 51238</span>",
+        "gallery.cap26": "Viñedo de la Société Viticole Salteña",
+        "gallery.desc26": "Otro viñedo salteño fotografiado para París en 1889, con vides jóvenes sostenidas por postes de madera: la viticultura ya se había extendido más allá de Harriague, en buena parte con sarmientos de su granja. <span class=\"whitespace-nowrap\">Joseph Fillat, 1889 · BNU 51244</span>",
+        "gallery.cap27": "Acción de la Sociedad Vitícola Salteña",
+        "gallery.desc27": "Título de una acción de cien pesos oro, de un capital de 210.000 pesos; los estatutos se aprobaron el 19 de noviembre de 1888. Un testimonio del entusiasmo vitícola de Salto en esos años. <span class=\"whitespace-nowrap\">Reproducción de 1961 · Colección Salto · BNU 12252</span>",
+        "gallery.cap28": "Salto en 1888: vista desde el Cerro, calle Yacuy",
+        "gallery.desc28": "Casas de azotea, galpones y una calle de tierra que baja hacia el centro: el Salto que conoció Harriague en los años de mayor actividad de su saladero y su bodega. <span class=\"whitespace-nowrap\">Lorenzo Spátola, 1888 · BNU 49846</span>",
+        "gallery.cap29": "Salto en 1888: vista desde el Cerro, de norte a este",
+        "gallery.desc29": "La ciudad detrás de una amplia superficie de agua, cuando la navegación por el río Uruguay unía a Salto con toda la región. <span class=\"whitespace-nowrap\">Lorenzo Spátola, 1888 · BNU 49850</span>",
+        "gallery.cap30": "Salto en 1888: vista desde el otro lado del Ceibal",
+        "gallery.desc30": "La ciudad sobre la costa y, a la izquierda, los mástiles de barcos de vela. Por agua llegaban las mercaderías y salía el tasajo del saladero. <span class=\"whitespace-nowrap\">Lorenzo Spátola, 1888 · BNU 49852</span>",
+        "gallery.cap31": "Salto en 1888: la ciudad junto al agua",
+        "gallery.desc31": "Personas y un bote en la orilla; detrás, la barranca y los edificios de la ciudad. El mismo año en que Harriague recibió el primer premio de la viticultura nacional. <span class=\"whitespace-nowrap\">Lorenzo Spátola, 1888 · BNU 49861</span>",
+        "gallery.cap32": "Salto en 1888: parajes inundados",
+        "gallery.desc32": "Una crecida cubrió las zonas bajas y los árboles y las casas aparecen rodeados de agua: las crecidas son parte de la historia de Salto y de su costa. <span class=\"whitespace-nowrap\">Lorenzo Spátola, 1888 · BNU 49859</span>",
+        "gallery.cap33": "Don Francisco Vidiella",
+        "gallery.desc33": "Gran pionero de la viticultura del sur, en Colón. En 1888 el gobierno resolvió que Vidiella y Harriague tenían igual derecho al primer premio de la ley de 1877. <span class=\"whitespace-nowrap\">Fecha sin determinar · BNU 70903</span>",
+        "gallery.cap34": "Don Saturnino Ribes",
+        "gallery.desc34": "Armador vasco, dueño de astilleros y de la Mensajería Fluvial a Vapor, una de las grandes empresas de navegación del río Uruguay. Fue socio comercial de Harriague en la bodega. <span class=\"whitespace-nowrap\">Fecha sin determinar · Colección Salto · BNU 12879</span>",
+        "gallery.credits": "Fotografías: archivo propio del proyecto (cata de vinos y visita grupal en las cavas, por Homero Texeira; placa homenaje y productores en Bertolini &amp; Broglio) e INAVI · Wikimedia Commons — Alejgon (Termas del Arapey, CC BY-SA 4.0), Shant (Salto desde el puerto, CC BY 2.5), colaboradores de Wikimedia (Fiesta de la Vendimia 1985, CC BY-SA/GFDL; copa de Tannat uruguayo, CC BY-SA), INAVI (retrato de Pascual Harriague, dominio público; foto de la Semana de Harriague, cedida por Bodegas del Uruguay) · Biblioteca Nacional del Uruguay: fotografías históricas de Lorenzo Spátola (1888), Joseph Fillat (1889) y la colección Salto, con su número BNU en cada foto.",
 
         "map.title": "Mapa del Circuito Enoturístico",
         "map.subtitle": "Haz clic en los puntos del mapa para ubicar cada estación a lo largo de Salto y la Ruta 3 hacia Parada Daymán.",
@@ -4900,7 +4941,37 @@
         "gallery.desc17": "Visitantes ao redor de uma fogueira noturna nas ruínas históricas da Bodega Harriague, fotografia de Homero Texeira.",
         "gallery.desc18": "Placa que o povo de Salto instalou em 2019 em homenagem a Pascual Harriague, no bicentenário de seu nascimento.",
         "gallery.desc19": "Produtores e visitantes em frente à fachada histórica da Bodega Bertolini &amp; Broglio.",
-        "gallery.credits": "Fotografias: arquivo próprio do projeto (degustação de vinhos e visita em grupo nas caves, por Homero Texeira; placa de homenagem e produtores em Bertolini &amp; Broglio) e INAVI · Wikimedia Commons — Alejgon (Termas do Arapey, CC BY-SA 4.0), Shant (Salto visto do porto, CC BY 2.5), colaboradores da Wikimedia (Festa da Vindima 1985, CC BY-SA/GFDL; taça de Tannat uruguaio, CC BY-SA), INAVI (retrato de Pascual Harriague, domínio público; foto da Semana de Harriague, cedida pela Bodegas del Uruguay).",
+        "gallery.cap20": "Entrada do saladero e granja Harriague",
+        "gallery.desc20": "Uma das fotografias mais antigas do estabelecimento de Harriague, tirada na visita do Batalhão de Caçadores n.º 4: o prédio de dois andares da entrada, a tropa em formação e, ao fundo, o rio Uruguai. <span class=\"whitespace-nowrap\">Lorenzo Spátola, 1888 · BNU 49875</span>",
+        "gallery.cap21": "Uma visita ao saladero de La Caballada",
+        "gallery.desc21": "Em primeiro plano, a banda do batalhão com seus tambores; atrás, a tropa em formação e construções do saladero, «situado sobre a costa do Uruguai». À direita, vizinhos e crianças que vieram assistir. <span class=\"whitespace-nowrap\">Lorenzo Spátola, 1888 · BNU 49845</span>",
+        "gallery.cap22": "Saladero Harriague, Salto",
+        "gallery.desc22": "O saladero visto do rio, com seus galpões na margem. Formou-se por volta de 1858 em 48 quadras sobre o rio Uruguai; em 1894 abatia cerca de 700 bovinos por dia para o Rio de Janeiro e Havana. <span class=\"whitespace-nowrap\">Reprodução de 1960 · Coleção Salto · BNU 12329</span>",
+        "gallery.cap23": "O bichadero do saladero La Caballada",
+        "gallery.desc23": "A torre de vigia do saladero, de madeira, com sua escada e sua plataforma, ainda de pé em 1961 sobre uma base de pedra: um dos poucos testemunhos da paisagem industrial ao redor da bodega. <span class=\"whitespace-nowrap\">Fotografia de 1961 · Coleção Salto · BNU 12333</span>",
+        "gallery.cap24": "Uma visita às bodegas da granja Harriague",
+        "gallery.desc24": "A tropa diante da bodega, com um galpão, barricas e carros de boi que levavam o vinho. Em maio de 1887 foram contados aqui 107.310 litros de vinho, guardados em duas adegas subterrâneas. <span class=\"whitespace-nowrap\">Lorenzo Spátola, 1888 · BNU 49867</span>",
+        "gallery.cap25": "Vinhedo de D. Pascual Harriague",
+        "gallery.desc25": "A imagem com que o Uruguai mostrou este vinhedo na Exposição Universal de Paris de 1889: fileiras de videiras em plena vegetação. Naquele ano, cerca de 200 das 426 quadras de vinha de Salto eram de Harriague. <span class=\"whitespace-nowrap\">Joseph Fillat, 1889 · BNU 51238</span>",
+        "gallery.cap26": "Vinhedo da Société Viticole Salteña",
+        "gallery.desc26": "Outro vinhedo de Salto fotografado para Paris em 1889, com videiras jovens apoiadas em postes de madeira: a viticultura já tinha se espalhado além de Harriague, em boa parte com mudas da sua granja. <span class=\"whitespace-nowrap\">Joseph Fillat, 1889 · BNU 51244</span>",
+        "gallery.cap27": "Ação da Sociedad Vitícola Salteña",
+        "gallery.desc27": "Título de uma ação de cem pesos ouro, de um capital de 210.000 pesos; os estatutos foram aprovados em 19 de novembro de 1888. Um testemunho do entusiasmo vitícola de Salto naqueles anos. <span class=\"whitespace-nowrap\">Reprodução de 1961 · Coleção Salto · BNU 12252</span>",
+        "gallery.cap28": "Salto em 1888: vista do Cerro, rua Yacuy",
+        "gallery.desc28": "Casas com terraço, galpões e uma rua de terra que desce para o centro: a Salto que Harriague conheceu nos anos de maior atividade do seu saladero e da sua bodega. <span class=\"whitespace-nowrap\">Lorenzo Spátola, 1888 · BNU 49846</span>",
+        "gallery.cap29": "Salto em 1888: vista do Cerro, de norte a leste",
+        "gallery.desc29": "A cidade atrás de uma ampla superfície de água, quando a navegação pelo rio Uruguai ligava Salto a toda a região. <span class=\"whitespace-nowrap\">Lorenzo Spátola, 1888 · BNU 49850</span>",
+        "gallery.cap30": "Salto em 1888: vista do outro lado do Ceibal",
+        "gallery.desc30": "A cidade na margem e, à esquerda, os mastros de veleiros. Pela água chegavam as mercadorias e saía o charque do saladero. <span class=\"whitespace-nowrap\">Lorenzo Spátola, 1888 · BNU 49852</span>",
+        "gallery.cap31": "Salto em 1888: a cidade junto à água",
+        "gallery.desc31": "Pessoas e um barco na margem; atrás, o barranco e os prédios da cidade. O mesmo ano em que Harriague recebeu o primeiro prêmio da viticultura nacional. <span class=\"whitespace-nowrap\">Lorenzo Spátola, 1888 · BNU 49861</span>",
+        "gallery.cap32": "Salto em 1888: lugares inundados",
+        "gallery.desc32": "Uma cheia cobriu as áreas baixas e as árvores e as casas aparecem cercadas de água: as cheias fazem parte da história de Salto e da sua margem. <span class=\"whitespace-nowrap\">Lorenzo Spátola, 1888 · BNU 49859</span>",
+        "gallery.cap33": "Don Francisco Vidiella",
+        "gallery.desc33": "Grande pioneiro da viticultura do sul, em Colón. Em 1888 o governo decidiu que Vidiella e Harriague tinham igual direito ao primeiro prêmio da lei de 1877. <span class=\"whitespace-nowrap\">Data não determinada · BNU 70903</span>",
+        "gallery.cap34": "Don Saturnino Ribes",
+        "gallery.desc34": "Armador basco, dono de estaleiros e da Mensajería Fluvial a Vapor, uma das grandes empresas de navegação do rio Uruguai. Foi sócio comercial de Harriague na bodega. <span class=\"whitespace-nowrap\">Data não determinada · Coleção Salto · BNU 12879</span>",
+        "gallery.credits": "Fotografias: arquivo próprio do projeto (degustação de vinhos e visita em grupo nas caves, por Homero Texeira; placa de homenagem e produtores em Bertolini &amp; Broglio) e INAVI · Wikimedia Commons — Alejgon (Termas do Arapey, CC BY-SA 4.0), Shant (Salto visto do porto, CC BY 2.5), colaboradores da Wikimedia (Festa da Vindima 1985, CC BY-SA/GFDL; taça de Tannat uruguaio, CC BY-SA), INAVI (retrato de Pascual Harriague, domínio público; foto da Semana de Harriague, cedida pela Bodegas del Uruguay) · Biblioteca Nacional do Uruguai: fotografias históricas de Lorenzo Spátola (1888), Joseph Fillat (1889) e da coleção Salto, com o número BNU em cada foto.",
 
         "map.title": "Mapa do Circuito Enoturístico",
         "map.subtitle": "Clique nos pontos do mapa para localizar cada vinícola ao longo de Salto e da Rota 3 rumo a Parada Daymán.",
@@ -5569,7 +5640,37 @@
         "gallery.desc17": "Visitors around a night bonfire at Bodega Harriague's historic ruins, photographed by Homero Texeira.",
         "gallery.desc18": "A plaque the town of Salto installed in 2019 honoring Pascual Harriague on the bicentennial of his birth.",
         "gallery.desc19": "Producers and visitors in front of Bodega Bertolini &amp; Broglio's historic facade.",
-        "gallery.credits": "Photos: the project's own archive (wine tasting and group cellar visit, by Homero Texeira; commemorative plaque and producers at Bertolini &amp; Broglio) and INAVI · Wikimedia Commons — Alejgon (Termas del Arapey, CC BY-SA 4.0), Shant (Salto seen from the port, CC BY 2.5), Wikimedia contributors (the 1985 Vendimia Festival, CC BY-SA/GFDL; glass of Uruguayan Tannat, CC BY-SA), INAVI (portrait of Pascual Harriague, public domain; Semana de Harriague photo, provided by Bodegas del Uruguay).",
+        "gallery.cap20": "Entrance to the Harriague saladero and farm",
+        "gallery.desc20": "One of the oldest known photographs of Harriague's estate, taken during the visit of the 4th Rifle Battalion: the two-story entrance building, the troops in formation and, behind them, the Uruguay River. <span class=\"whitespace-nowrap\">Lorenzo Spátola, 1888 · BNU 49875</span>",
+        "gallery.cap21": "A visit to the La Caballada saladero",
+        "gallery.desc21": "In the foreground, the battalion band with its drums; behind it, the troops in formation and saladero buildings \"on the bank of the Uruguay\". On the right, neighbors and children who came to watch. <span class=\"whitespace-nowrap\">Lorenzo Spátola, 1888 · BNU 49845</span>",
+        "gallery.cap22": "Harriague saladero, Salto",
+        "gallery.desc22": "The saladero seen from the river, with its sheds along the bank. It was set up around 1858 on 48 cuadras by the Uruguay River; by 1894 it processed some 700 cattle a day for Rio de Janeiro and Havana. <span class=\"whitespace-nowrap\">1960 reproduction · Salto collection · BNU 12329</span>",
+        "gallery.cap23": "The lookout tower of the La Caballada saladero",
+        "gallery.desc23": "The saladero's wooden watchtower (bichadero), with its ladder and platform, still standing in 1961 on a stone base: one of the few records of the industrial landscape around the winery. <span class=\"whitespace-nowrap\">1961 photograph · Salto collection · BNU 12333</span>",
+        "gallery.cap24": "A visit to the Harriague farm wineries",
+        "gallery.desc24": "The troops in front of the winery, with a shed, barrels and ox carts used to haul the wine. In May 1887, 107,310 liters of wine were counted here, kept in two underground cellars. <span class=\"whitespace-nowrap\">Lorenzo Spátola, 1888 · BNU 49867</span>",
+        "gallery.cap25": "Don Pascual Harriague's vineyard",
+        "gallery.desc25": "The image Uruguay used to show this vineyard at the 1889 Paris World's Fair: rows of vines in full leaf. That year, about 200 of Salto's 426 cuadras of vineyard belonged to Harriague. <span class=\"whitespace-nowrap\">Joseph Fillat, 1889 · BNU 51238</span>",
+        "gallery.cap26": "Vineyard of the Société Viticole Salteña",
+        "gallery.desc26": "Another Salto vineyard photographed for Paris in 1889, with young vines held up by wooden posts: by then winegrowing had spread beyond Harriague, largely with cuttings from his farm. <span class=\"whitespace-nowrap\">Joseph Fillat, 1889 · BNU 51244</span>",
+        "gallery.cap27": "Share certificate of the Sociedad Vitícola Salteña",
+        "gallery.desc27": "A one-hundred gold peso share, out of a capital of 210,000 pesos; its bylaws were approved on November 19, 1888. Evidence of Salto's winegrowing enthusiasm in those years. <span class=\"whitespace-nowrap\">1961 reproduction · Salto collection · BNU 12252</span>",
+        "gallery.cap28": "Salto in 1888: view from the Cerro, Yacuy street",
+        "gallery.desc28": "Flat-roofed houses, sheds and a dirt street running down to the center: the Salto Harriague knew in the busiest years of his saladero and winery. <span class=\"whitespace-nowrap\">Lorenzo Spátola, 1888 · BNU 49846</span>",
+        "gallery.cap29": "Salto in 1888: view from the Cerro, north to east",
+        "gallery.desc29": "The city beyond a wide stretch of water, when river traffic on the Uruguay linked Salto with the whole region. <span class=\"whitespace-nowrap\">Lorenzo Spátola, 1888 · BNU 49850</span>",
+        "gallery.cap30": "Salto in 1888: view from across the Ceibal",
+        "gallery.desc30": "The city on the riverbank and, on the left, the masts of sailing ships. Goods arrived by water, and the saladero's jerked beef left the same way. <span class=\"whitespace-nowrap\">Lorenzo Spátola, 1888 · BNU 49852</span>",
+        "gallery.cap31": "Salto in 1888: the city by the water",
+        "gallery.desc31": "People and a boat on the shore; behind them, the bluff and the city's buildings. The same year Harriague received the first national winegrowing prize. <span class=\"whitespace-nowrap\">Lorenzo Spátola, 1888 · BNU 49861</span>",
+        "gallery.cap32": "Salto in 1888: flooded areas",
+        "gallery.desc32": "A flood covered the low-lying areas, leaving trees and houses surrounded by water: floods are part of the history of Salto and its riverbank. <span class=\"whitespace-nowrap\">Lorenzo Spátola, 1888 · BNU 49859</span>",
+        "gallery.cap33": "Don Francisco Vidiella",
+        "gallery.desc33": "The great pioneer of winegrowing in the south, in Colón. In 1888 the government ruled that Vidiella and Harriague had an equal right to the first prize under the 1877 law. <span class=\"whitespace-nowrap\">Date unknown · BNU 70903</span>",
+        "gallery.cap34": "Don Saturnino Ribes",
+        "gallery.desc34": "A Basque shipowner who ran shipyards and the Mensajería Fluvial a Vapor, one of the major shipping companies on the Uruguay River. He was Harriague's business partner in the winery. <span class=\"whitespace-nowrap\">Date unknown · Salto collection · BNU 12879</span>",
+        "gallery.credits": "Photos: the project's own archive (wine tasting and group cellar visit, by Homero Texeira; commemorative plaque and producers at Bertolini &amp; Broglio) and INAVI · Wikimedia Commons — Alejgon (Termas del Arapey, CC BY-SA 4.0), Shant (Salto seen from the port, CC BY 2.5), Wikimedia contributors (the 1985 Vendimia Festival, CC BY-SA/GFDL; glass of Uruguayan Tannat, CC BY-SA), INAVI (portrait of Pascual Harriague, public domain; Semana de Harriague photo, provided by Bodegas del Uruguay) · National Library of Uruguay: historical photographs by Lorenzo Spátola (1888), Joseph Fillat (1889) and the Salto collection, with the BNU number on each photo.",
 
         "map.title": "Interactive Wine Route Map",
         "map.subtitle": "Click on map markers to locate each historic winery along Salto and Route 3.",
@@ -5978,7 +6079,7 @@
       }
     })();
 
-    // Efectos que solo corren mientras se ven (vapor de las termas, Ken Burns de la galería): marca .en-vista y nada más
+    // Efectos que solo corren mientras se ven (vapor de las termas): marca .en-vista y nada más
     if ('IntersectionObserver' in window) {
       const io = new IntersectionObserver((es) => es.forEach((e) => e.target.classList.toggle('en-vista', e.isIntersecting)));
       document.querySelectorAll('[data-en-vista]').forEach((el) => io.observe(el));

@@ -183,8 +183,8 @@ function servidor() {
     await page.keyboard.press('ArrowRight'); await sleep(400);
     const lb2 = await page.evaluate(() => ({ src: document.getElementById('lightboxImg').src.split('/').pop(), cap: document.getElementById('lightboxCaption').textContent.trim() }));
     await page.keyboard.press('Escape'); await sleep(400);
-    const ok = e0.src === e0b.src && e0.num === '1 / 19' && e1.num === '2 / 19' && e1.src !== e0.src && e1.tit !== e0.tit && e2.num === '3 / 19' && e3.cur === '3' && e3.ancho <= e3.natural + 1
-      && e4.num === '4 / 19' && /^[A-Z]/.test(e5.tit) && e5.tit !== e4.tit && e1.y === e0.y && e2.y === e1.y && lb1.abierto && lb1.src === e4.src && lb2.src !== lb1.src && lb2.cap !== lb1.cap;
+    const ok = e0.src === e0b.src && e0.num === '1 / 34' && e1.num === '2 / 34' && e1.src !== e0.src && e1.tit !== e0.tit && e2.num === '3 / 34' && e3.cur === '3' && e3.ancho <= e3.natural + 1
+      && e4.num === '4 / 34' && /^[A-Z]/.test(e5.tit) && e5.tit !== e4.tit && e1.y === e0.y && e2.y === e1.y && lb1.abierto && lb1.src === e4.src && lb2.src !== lb1.src && lb2.cap !== lb1.cap;
     check('la galería no se mueve sola; pasa de foto con flecha, teclado, miniatura y deslizando, sin estirar fotos chicas ni mover la página; la pantalla completa muestra la misma foto y pasa con las flechas',
       ok, JSON.stringify({ e0, e0b, e1, e2, e3, e4, e5: e5.tit, lb1, lb2 }));
     await page.close(); }
@@ -389,22 +389,22 @@ function servidor() {
     check('espera de entrada: el vino sube y se llena, se va sola en menos de 4 s, un toque la cierra, no vuelve en la sesión ni sale con #sección o movimiento reducido',
       quitada && t < 4000 && sube && lleno && sesion === '1' && recarga && toque && conHash && reducido, JSON.stringify({ quitada, t, sube, lleno, sesion, recarga, toque, conHash, reducido, muestras: niveles.length })); }
 
-  // 30. efectos que solo corren a la vista (vapor de las termas, Ken Burns de la galería), luz de temporada (la de hoy; otra al pasar el mouse)
+  // 30. efectos que solo corren a la vista (vapor de las termas), luz de temporada (la de hoy; otra al pasar el mouse)
   //     y videos: cada botón abre su video (el de Harriague en el idioma de la página), Escape lo cierra y lo pausa
   { const page = await browser.newPage(); await page.setViewport({ width: 1280, height: 800 }); await page.goto(srv.url, { waitUntil: 'load' }); await sleep(500);
     const corre = (sel) => page.$eval(sel, (el) => getComputedStyle(el).animationPlayState);
     const vista = async (sel) => { await page.$eval(sel, (el) => el.scrollIntoView({ block: 'center', behavior: 'instant' })); await sleep(700); };
-    const antes = [await corre('.vapor i'), await corre('#galEscena .gal-foto.es-visible')];
-    await vista('.vapor'); const vapor = await corre('.vapor i'); await vista('#galEscena'); const kb = await corre('#galEscena .gal-foto.es-visible');
+    const antes = [await corre('.vapor i')];
+    await vista('.vapor'); const vapor = await corre('.vapor i');
     const hoy = await page.$eval('#temporadas', (s) => s.dataset.luz); await vista('#seasonCard2'); await page.hover('#seasonCard' + (hoy === '2' ? 3 : 2)); const otra = await page.$eval('#temporadas', (s) => s.dataset.luz);
     const video = async (cual) => { await vista(`[onclick^="openVideoModal('${cual}"]`); await page.click(`[onclick^="openVideoModal('${cual}"]`); await sleep(1500);
       const v = await page.$eval('#videoModalVideo', (v) => ({ src: v.currentSrc.split('/').pop(), w: v.videoWidth })); await page.keyboard.press('Escape'); await sleep(400);
       return { ...v, cerrado: await page.$eval('#videoModal', (m) => m.classList.contains('hidden')), pausado: await page.$eval('#videoModalVideo', (v) => v.paused) }; };
     const rec = await video('recorrido'); await page.evaluate(() => setLanguage('pt')); const har = await video('harriague'); await page.evaluate(() => setLanguage('es')); await page.close();
-    check('efectos a la vista (vapor, Ken Burns), luz de temporada y videos del recorrido y de Harriague (en el idioma de la página) que Escape cierra',
-      antes.every((a) => a === 'paused') && vapor === 'running' && kb === 'running' && /^[1-4]$/.test(hoy) && otra !== hoy &&
+    check('efecto a la vista (vapor), luz de temporada y videos del recorrido y de Harriague (en el idioma de la página) que Escape cierra',
+      antes.every((a) => a === 'paused') && vapor === 'running' && /^[1-4]$/.test(hoy) && otra !== hoy &&
       rec.src === 'video-recorrido.mp4' && rec.w === 1080 && rec.cerrado && rec.pausado && har.src === 'video-harriague-pt.mp4' && har.w === 1080 && har.cerrado && har.pausado,
-      JSON.stringify({ antes, vapor, kb, hoy, otra, rec, har })); }
+      JSON.stringify({ antes, vapor, hoy, otra, rec, har })); }
 
   await browser.close(); srv.cerrar();
   if (failures.length) { console.log('\n' + failures.length + ' prueba(s) fallaron:\n - ' + failures.join('\n - ')); process.exit(1); }
