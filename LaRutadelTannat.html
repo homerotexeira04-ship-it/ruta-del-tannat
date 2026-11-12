@@ -828,9 +828,92 @@
     @keyframes imgIn { from { opacity: 0; } }
     /* Cambio de idioma: fundido cruzado de toda la página (View Transitions; ver cambiarIdioma) */
     ::view-transition-old(root), ::view-transition-new(root) { animation-duration: var(--dur-media); animation-timing-function: var(--ease-out); }
+
+    /* Espera de entrada: el logo se llena de vino al ritmo de la carga real (tipografías + foto de portada). Ver el script que sigue a <body> */
+    .espera { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; background: radial-gradient(circle at 50% 45%, #3a0f1c 0%, #1D060D 62%); transition: opacity .6s var(--ease-out), visibility .6s; }
+    .espera[hidden] { display: none; }
+    .espera.sale { opacity: 0; visibility: hidden; }
+    .espera-copa { position: relative; width: min(78vw, 420px); aspect-ratio: 3 / 2; opacity: 0; transform: scale(.96); transition: opacity .5s var(--ease-out), transform .9s var(--ease-out); }
+    .espera.con-logo .espera-copa { opacity: 1; transform: none; }
+    .espera.sale .espera-copa { transform: scale(1.05); }
+    .espera-copa > * { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .espera-copa img { object-fit: contain; filter: grayscale(1) brightness(1.15); opacity: .16; } /* la copa vacía: el grabado apenas insinuado */
+    /* Capas recortadas con la silueta del logo y, salvo la luz, con la superficie del vino: ola de 120 px de ancho que sube con --nivel (0 a 1) y corre con --ola */
+    .espera-vino, .espera-borde, .espera-luz {
+      -webkit-mask: var(--logo) center / contain no-repeat, var(--sup) var(--ola, 0px) calc(var(--nivel, 0) * 100%) / 120px 200% repeat-x; -webkit-mask-composite: source-in;
+      mask: var(--logo) center / contain no-repeat, var(--sup) var(--ola, 0px) calc(var(--nivel, 0) * 100%) / 120px 200% repeat-x; mask-composite: intersect;
+      --sup: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 200' preserveAspectRatio='none'%3E%3Cpath d='M0 100C20 94 40 94 60 100S100 106 120 100V200H0Z'/%3E%3C/svg%3E"); }
+    .espera-vino { background: linear-gradient(to bottom, rgba(214,86,104,.9), rgba(128,30,50,.92)), var(--logo) center / contain no-repeat; background-blend-mode: multiply; transition: opacity .7s var(--ease-out) .15s; }
+    /* lleno: el tinte se disuelve y queda el logo real, con halo dorado, mientras pasa la luz (el mismo logo del encabezado) */
+    .espera-copa img { transition: opacity .7s var(--ease-out), filter .7s var(--ease-out); }
+    .espera.lleno .espera-copa img { opacity: 1; filter: drop-shadow(0 0 22px rgba(197,160,89,.35)); }
+    .espera.lleno .espera-vino, .espera.lleno .espera-borde { opacity: 0; }
+    /* el menisco: la misma ola un poco más arriba, en dorado; el vino la tapa salvo un filete fino */
+    .espera-borde { background: #DFCA9D; opacity: .6; --nivel: var(--nivel-borde, 0); transition: opacity .4s var(--ease-out); }
+    .espera-luz { --nivel: 1.1; opacity: 0; background: linear-gradient(105deg, transparent 45%, rgba(255,238,200,.55) 50%, transparent 55%) 130% 0 / 260% 100% no-repeat; mix-blend-mode: screen; }
+    .espera.lleno .espera-luz { animation: esperaLuz .8s var(--ease-out) forwards; }
+    @keyframes esperaLuz { 0% { opacity: 0; background-position: 130% 0; } 25% { opacity: 1; } 100% { opacity: 0; background-position: -30% 0; } }
   </style>
 </head>
 <body class="bg-crema text-basalt font-sans antialiased selection:bg-gold selection:text-tannat-dark overflow-x-hidden">
+
+  <!-- ==================== ESPERA DE ENTRADA: el logo se llena de vino mientras carga lo que se ve primero ==================== -->
+  <div id="espera" class="espera" hidden aria-hidden="true">
+    <div class="espera-copa">
+      <img src="./LaRutadelTannat_files/logo-ruta-del-tannat-450.webp" width="450" height="300" alt="" decoding="async">
+      <div class="espera-borde"></div>
+      <div class="espera-vino"></div>
+      <div class="espera-luz"></div>
+    </div>
+  </div>
+  <script>
+    // Va inline, antes del resto de la página, para tapar desde el primer cuadro.
+    // El nivel sigue la carga real (tipografías + foto de portada): no llega arriba hasta que están, el llenado arranca
+    // cuando el logo ya se ve y dura al menos 0,9 s para que se lea, y a los 1,5 s se llena igual. Si el logo no aparece
+    // en 1,5 s se entra directo. Una vez por sesión; no sale con movimiento reducido ni entrando a una sección (#...);
+    // un toque, la rueda o una tecla la cierran al instante.
+    (function () {
+      var el = document.getElementById('espera'), visto = false;
+      try { visto = sessionStorage.getItem('tannat_espera') === '1'; } catch (e) {}
+      if (visto || location.hash || !window.requestAnimationFrame || matchMedia('(prefers-reduced-motion: reduce)').matches) { el.remove(); return; }
+      el.hidden = false;
+      var MIN = 900, MAX = 1500, t0 = 0, nivel = 0, listo = false, cerrada = false, evs = ['pointerdown', 'wheel', 'keydown'];
+      var img = el.querySelector('img');
+      var mostrarLogo = function () {
+        if (cerrada) return;
+        el.style.setProperty('--logo', 'url("' + (img.currentSrc || img.src) + '")'); el.classList.add('con-logo');
+        requestAnimationFrame(function (ahora) { t0 = ahora; requestAnimationFrame(cuadro); });
+      };
+      if (img.decode) img.decode().then(mostrarLogo, cerrar); else { img.onload = mostrarLogo; img.onerror = cerrar; }
+      setTimeout(function () { if (!t0) cerrar(); }, MAX); // si el logo no llega a tiempo, se entra directo
+      document.addEventListener('DOMContentLoaded', function () {
+        var foto = document.querySelector('#hero > div.absolute img');
+        var fotoLista = new Promise(function (ok) { if (!foto || foto.complete) ok(); else { foto.addEventListener('load', ok); foto.addEventListener('error', ok); } });
+        Promise.all([document.fonts ? document.fonts.ready : null, fotoLista]).then(function () { listo = true; });
+      });
+      function cuadro(ahora) {
+        if (cerrada) return;
+        var t = ahora - t0;
+        // mientras carga, sube rápido al principio y se frena cerca del borde (nunca llega sola a más de 0,82)
+        var meta = (listo && t >= MIN) || t >= MAX ? 1 : 0.82 * (1 - Math.exp(-t / 450));
+        nivel += meta === 1 ? Math.max((meta - nivel) * 0.1, 0.014) : (meta - nivel) * 0.09; // al final no se arrastra: termina de llenar a paso firme
+        el.style.setProperty('--nivel', nivel.toFixed(4));
+        el.style.setProperty('--nivel-borde', Math.min(1, nivel + 0.018).toFixed(4));
+        el.style.setProperty('--ola', ((t * 0.045) % 120).toFixed(1) + 'px');
+        if (nivel > 0.985) { el.style.setProperty('--nivel', '1.06'); el.style.setProperty('--nivel-borde', '1.06'); el.classList.add('lleno'); setTimeout(cerrar, 950); return; }
+        requestAnimationFrame(cuadro);
+      }
+      function cerrar() {
+        if (cerrada) return; cerrada = true;
+        try { sessionStorage.setItem('tannat_espera', '1'); } catch (e) {}
+        evs.forEach(function (t) { removeEventListener(t, cerrar, true); });
+        el.classList.add('sale');
+        setTimeout(function () { el.remove(); }, 650);
+      }
+      evs.forEach(function (t) { addEventListener(t, cerrar, { capture: true, passive: true }); });
+      setTimeout(cerrar, 4000); // por las dudas: nunca más de 4 s
+    })();
+  </script>
 
   <!-- Itinerario para imprimir o guardar como PDF: se arma en JS (renderPrintItinerary) y solo se ve al imprimir -->
   <div id="printItinerary" aria-hidden="true"></div>

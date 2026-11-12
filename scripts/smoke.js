@@ -27,6 +27,10 @@ function servidor() {
   // Un Chrome sin pantalla (p. ej. el de GitHub Actions) no detecta mouse y reporta (hover: none): ahí los :hover no se aplican, a propósito.
   // Se fuerza "mouse fino con hover" para que las pruebas de escritorio midan lo mismo en cualquier máquina (la emulación táctil del celular lo reemplaza sola).
   const browser = await puppeteer.launch({ executablePath: CHROME, headless: 'new', args: ['--no-sandbox', '--disable-dev-shm-usage', '--blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4'] });
+  // La espera de entrada (el logo que se llena de vino) tapa la página un par de segundos: el resto de las pruebas entra
+  // como quien ya la vio; la espera se prueba aparte (29)
+  const paginaConEspera = browser.newPage.bind(browser);
+  browser.newPage = async () => { const p = await paginaConEspera(); await p.evaluateOnNewDocument(() => { try { sessionStorage.setItem('tannat_espera', '1'); } catch (e) {} }); return p; };
   const abrir = async (W, H, mobile, dpr = 1) => {
     const page = await browser.newPage(); await page.setViewport({ width: W, height: H, isMobile: mobile, hasTouch: mobile, deviceScaleFactor: dpr });
     await page.emulateMediaFeatures([{ name: 'prefers-reduced-motion', value: 'reduce' }]);
@@ -367,6 +371,23 @@ function servidor() {
       await page.close();
     }
     check('el logo de la portada se ve nítido y no tapa nada: a la izquierda del texto desde 1024 px (sin moverlo), arriba solo en pantallas altas y sin empujar el primer botón bajo la barra', malos.length === 0, malos.join(' | ')); }
+
+  // 29. espera de entrada: sin movimiento reducido se ve, el vino sube, se llena, se quita sola en menos de 4 s y marca la sesión;
+  //     al recargar ya no sale, un toque la cierra al instante, y no sale entrando a una sección (#estaciones) ni con movimiento reducido
+  { const esperaEn = async (url, reducir) => { const p = await paginaConEspera(); await p.setViewport({ width: 390, height: 844, isMobile: true, hasTouch: true });
+      if (reducir) await p.emulateMediaFeatures([{ name: 'prefers-reduced-motion', value: 'reduce' }]);
+      await p.goto(url, { waitUntil: 'domcontentloaded' }); return p; };
+    const page = await esperaEn(srv.url, false); const niveles = []; const t0 = Date.now(); let quitada = false;
+    while (Date.now() - t0 < 4500) { const s = await page.evaluate(() => { const e = document.getElementById('espera'); return e ? { n: parseFloat(e.style.getPropertyValue('--nivel')) || 0, logo: e.classList.contains('con-logo'), lleno: e.classList.contains('lleno') } : null; });
+      if (!s) { quitada = true; break; } niveles.push(s); await sleep(100); }
+    const t = Date.now() - t0, sube = niveles.some((s) => s.logo && s.n > 0.1 && s.n < 0.9), lleno = niveles.some((s) => s.lleno);
+    const sesion = await page.evaluate(() => sessionStorage.getItem('tannat_espera'));
+    await page.reload({ waitUntil: 'domcontentloaded' }); const recarga = await page.evaluate(() => !document.getElementById('espera')); await page.close();
+    const p2 = await esperaEn(srv.url, false); await sleep(300); await p2.touchscreen.tap(200, 400); await sleep(800); const toque = await p2.evaluate(() => !document.getElementById('espera')); await p2.close();
+    const p3 = await esperaEn(srv.url + '#estaciones', false); const conHash = await p3.evaluate(() => !document.getElementById('espera')); await p3.close();
+    const p4 = await esperaEn(srv.url, true); const reducido = await p4.evaluate(() => !document.getElementById('espera')); await p4.close();
+    check('espera de entrada: el vino sube y se llena, se va sola en menos de 4 s, un toque la cierra, no vuelve en la sesión ni sale con #sección o movimiento reducido',
+      quitada && t < 4000 && sube && lleno && sesion === '1' && recarga && toque && conHash && reducido, JSON.stringify({ quitada, t, sube, lleno, sesion, recarga, toque, conHash, reducido, muestras: niveles.length })); }
 
   await browser.close(); srv.cerrar();
   if (failures.length) { console.log('\n' + failures.length + ' prueba(s) fallaron:\n - ' + failures.join('\n - ')); process.exit(1); }
