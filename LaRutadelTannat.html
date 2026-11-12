@@ -268,7 +268,7 @@
   <!-- Tailwind CSS compilado (ver README: npm run build:css) -->
   <!-- Foto del inicio: 720 px para celulares (va recortada y bajo un velo oscuro, por eso "sizes" la pide a media pantalla: alcanza aun con pantallas de alta densidad), 1280 y 1920 para el resto. Debe decir lo mismo que la imagen del hero (más abajo). -->
   <link rel="preload" as="image" href="./LaRutadelTannat_files/hero-vinedo-uruguay-1280.webp" imagesrcset="./LaRutadelTannat_files/hero-vinedo-uruguay-720.webp 720w, ./LaRutadelTannat_files/hero-vinedo-uruguay-1280.webp 1280w, ./LaRutadelTannat_files/hero-vinedo-uruguay.webp 1920w" imagesizes="(max-width: 767px) 50vw, 100vw" fetchpriority="high">
-  <link rel="stylesheet" href="./LaRutadelTannat_files/tailwind.css?v=33">
+  <link rel="stylesheet" href="./LaRutadelTannat_files/tailwind.css?v=34">
 
   <!-- Tipografía editorial alojada en el sitio (sin pedidos a Google): Playfair Display (titulares) + Plus Jakarta Sans (cuerpo/UI).
        Fuentes variables, solo el subconjunto latin (cubre es/pt/en; otro alfabeto cae a la fuente del sistema). Licencia OFL.
@@ -378,14 +378,31 @@
     .vapor.en-vista i { animation-play-state: running; }
     @keyframes vapor { 0% { transform: translate(0, 0) scale(.6); opacity: 0; } 20% { opacity: 1; } 65% { opacity: .6; } 100% { transform: translate(8%, -115%) scale(1.3); opacity: 0; } }
     @media (prefers-reduced-motion: reduce) { .vapor { display: none; } }
-    /* Temporadas: la sección toma la luz de la estación elegida (fundido entre capas; por defecto, la de hoy) */
-    .temp-luz, .temp-luz i { position: absolute; inset: 0; pointer-events: none; }
-    .temp-luz i { opacity: 0; transition: opacity 1.2s var(--ease-out); }
-    .temp-luz i:nth-child(1) { background: radial-gradient(ellipse 80% 45% at 50% 0%, rgba(223,172,70,.42), transparent 75%), linear-gradient(180deg, rgba(223,172,70,.16), transparent 85%); }
-    .temp-luz i:nth-child(2) { background: radial-gradient(ellipse 80% 45% at 50% 0%, rgba(196,104,52,.34), transparent 75%), linear-gradient(180deg, rgba(150,60,40,.12), transparent 85%); }
-    .temp-luz i:nth-child(3) { background: radial-gradient(ellipse 80% 45% at 50% 0%, rgba(114,27,40,.24), transparent 75%), linear-gradient(180deg, rgba(200,110,50,.12), transparent 85%); }
-    .temp-luz i:nth-child(4) { background: radial-gradient(ellipse 80% 45% at 50% 0%, rgba(140,175,70,.36), transparent 75%), linear-gradient(180deg, rgba(200,190,90,.12), transparent 85%); }
-    #temporadas[data-luz="1"] .temp-luz i:nth-child(1), #temporadas[data-luz="2"] .temp-luz i:nth-child(2), #temporadas[data-luz="3"] .temp-luz i:nth-child(3), #temporadas[data-luz="4"] .temp-luz i:nth-child(4) { opacity: 1; }
+    /* Temporadas: franja-calendario del año (de diciembre a noviembre, así cada estación queda seguida). La arma dibujarCalendario() */
+    .cal { --verano: #C5A059; --otono: #B4683A; --invierno: #721B28; --primavera: #6F8C3A; max-width: 56rem; margin: 0 auto 3rem; }
+    .cal-cuerpo { --barra: 2.75rem; position: relative; padding-top: 2.4rem; }
+    .cal-meses, .cal-barra { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); }
+    .cal-meses span { text-align: center; font-size: .75rem; font-weight: 600; color: #6B5A55; padding-bottom: .4rem; }
+    .cal-barra { gap: 3px; }
+    .cal-seg { height: 2.75rem; border-radius: .75rem; background: var(--c); color: #fff; font-weight: 700; font-size: .8rem; letter-spacing: .02em; display: flex; align-items: center; justify-content: center; padding: 0 .25rem; overflow: hidden; white-space: nowrap; transition: transform .2s var(--ease-out), box-shadow .2s var(--ease-out), filter .2s; }
+    .cal-seg[data-s="1"] { color: #2B0A14; }
+    .cal-seg:hover, .cal-seg:focus-visible { transform: translateY(-2px); box-shadow: 0 8px 18px -8px var(--c); filter: saturate(1.15); }
+    .cal-seg.es-hoy { box-shadow: 0 0 0 3px #fff, 0 0 0 5px var(--c); }
+    .cal-hoy { position: absolute; top: 0; bottom: 0; width: 0; pointer-events: none; z-index: 1; }
+    .cal-hoy::after { content: ""; position: absolute; top: 1.85rem; bottom: calc(var(--barra) - 3px); left: -1px; width: 2px; background: #2B0A14; border-radius: 2px; }
+    .cal-hoy::before { content: ""; position: absolute; bottom: calc(var(--barra) - 6px); left: -5px; width: 10px; height: 10px; border-radius: 50%; background: #2B0A14; box-shadow: 0 0 0 2px #fff; z-index: 1; }
+    .cal-hoy b { position: absolute; top: 0; left: 0; transform: translateX(calc(var(--x) * -1)); white-space: nowrap; background: #2B0A14; color: #fff; font-size: .75rem; font-weight: 700; padding: .3rem .65rem; border-radius: 999px; }
+    .cal-ev { position: relative; height: 1.6rem; margin-top: .55rem; font-size: .75rem; font-weight: 600; color: #4A101D; }
+    .cal-ev > span { position: absolute; top: 0; white-space: nowrap; transform: translateX(calc(var(--x) * -1)); display: inline-flex; align-items: center; gap: .35rem; }
+    .cal-ev .cal-tramo { height: .35rem; border-radius: 999px; background: var(--verano); position: absolute; top: -.45rem; }
+    .cal-ev .cal-tannat { transform: translateX(-.275rem); }
+    .cal-ev i { width: .55rem; height: .55rem; border-radius: 50%; background: var(--invierno); flex-shrink: 0; }
+    #temporadas [id^="seasonCard"] { transition: box-shadow .35s var(--ease-out), transform .35s var(--ease-out); }
+    #temporadas [id^="seasonCard"].cal-foco { box-shadow: 0 0 0 3px var(--cal-c), 0 18px 40px -18px var(--cal-c); transform: translateY(-4px); }
+    #seasonCard1 { --cal-c: #C5A059; } #seasonCard2 { --cal-c: #B4683A; } #seasonCard3 { --cal-c: #721B28; } #seasonCard4 { --cal-c: #6F8C3A; }
+    #seasonCard2 [data-i18n="season.s2Time"] { color: #9A5228; } #seasonCard3 [data-i18n="season.s3Time"] { color: #721B28; } #seasonCard4 [data-i18n="season.s4Time"] { color: #56702A; }
+    @media (max-width: 639px) { .cal-cuerpo { --barra: 2.4rem; } .cal-seg { font-size: .75rem; letter-spacing: 0; padding: 0; height: 2.4rem; border-radius: .6rem; } .cal-meses span { font-size: .75rem; } }
+    @media (prefers-reduced-motion: reduce) { .cal-seg, #temporadas [id^="seasonCard"] { transition: none; } }
     .modal-card:focus { outline: none; } /* el foco entra a la tarjeta al abrir (showModal); no es un control */
     /* iOS agranda la página al enfocar un campo con letra menor a 16 px y no la devuelve: en pantallas táctiles el formulario de reserva va en 16 px (en escritorio queda en 14) */
     @media (pointer: coarse) { #bookingForm input, #bookingForm select, #bookingForm textarea { font-size: 16px; } }
@@ -1745,7 +1762,6 @@
 
     <!-- ==================== SECTION: CALENDARIO ENOTURÍSTICO ESTACIONAL (PUNTO 4) ==================== -->
     <section id="temporadas" class="relative py-20 lg:py-28 bg-crema text-basalt border-t border-tannat-100">
-      <div class="temp-luz" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
       <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         <div class="text-center max-w-3xl mx-auto mb-16">
@@ -1755,6 +1771,22 @@
           <p class="text-lg text-terroir font-light max-w-[40rem] mx-auto" data-i18n="seasons.subtitle">
             Cada estación del año transforma el paisaje de Salto y revela una faceta única de la uva, la vendimia y las cavas.
           </p>
+        </div>
+
+        <!-- Calendario del año: cada estación es un botón que resalta su tarjeta; «Hoy» cae en la fecha real del dispositivo -->
+        <div id="calAnio" class="cal" role="group" aria-label="Calendario del año" data-i18n-aria="seasons.calLabel">
+          <div class="cal-cuerpo">
+          <div class="cal-meses" aria-hidden="true"></div>
+          <div class="cal-barra">
+            <button type="button" class="cal-seg" data-s="1" style="--c: var(--verano); grid-column: span 4" aria-controls="seasonCard1"></button>
+            <button type="button" class="cal-seg" data-s="2" style="--c: var(--otono); grid-column: span 2" aria-controls="seasonCard2"></button>
+            <button type="button" class="cal-seg" data-s="3" style="--c: var(--invierno); grid-column: span 3" aria-controls="seasonCard3"></button>
+            <button type="button" class="cal-seg" data-s="4" style="--c: var(--primavera); grid-column: span 3" aria-controls="seasonCard4"></button>
+          </div>
+          <div class="cal-hoy" aria-hidden="true"><b></b></div>
+          </div>
+          <div class="cal-ev"><span class="cal-vendimia"></span><span class="cal-tramo" aria-hidden="true"></span></div>
+          <div class="cal-ev"><span class="cal-tannat"><i aria-hidden="true"></i><em class="not-italic"></em></span></div>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -4021,6 +4053,10 @@
         "seasons.subtitle": "Cada estación del año transforma el paisaje de Salto y revela una faceta única de la uva, la vendimia y las cavas.",
         "seasons.credits": "Fotografías cedidas para este proyecto por INAVI (cosecha de vendimia y picnic de primavera) y Bodegas del Uruguay (Semana de Harriague).",
         "season.s1Time": "Dic — Mar · Verano",
+        "seasons.calLabel": "Calendario del año: tocá una estación para ver su propuesta",
+        "seasons.today": "Hoy",
+        "seasons.harvest": "Vendimia",
+        "seasons.tannatDay": "Día del Tannat",
         "season.s1Title": "Temporada de Vendimia",
         "season.s1Desc": "Entre febrero y marzo, el momento cumbre del año: cosecha manual al amanecer, degustación de uvas directas del racimo, visitas crepusculares y pisada tradicional en lagares.",
         "season.s1Highlight": "Cosecha en vivo & pisada de uvas",
@@ -4720,6 +4756,10 @@
         "seasons.subtitle": "Cada estação do ano transforma a paisagem de Salto e revela uma faceta única da uva, da colheita e das cavas.",
         "seasons.credits": "Fotografias cedidas para este projeto por INAVI (colheita da vindima e piquenique de primavera) e Bodegas del Uruguay (Semana de Harriague).",
         "season.s1Time": "Dez — Mar · Verão",
+        "seasons.calLabel": "Calendário do ano: toque em uma estação para ver a proposta",
+        "seasons.today": "Hoje",
+        "seasons.harvest": "Vindima",
+        "seasons.tannatDay": "Dia do Tannat",
         "season.s1Title": "Temporada de Colheita",
         "season.s1Desc": "Entre fevereiro e março, o momento auge do ano: colheita manual ao amanhecer, degustação de uvas direto do cacho, visitas ao entardecer e pisa tradicional nos lagares.",
         "season.s1Highlight": "Colheita ao vivo & pisa de uvas",
@@ -5419,6 +5459,10 @@
         "seasons.subtitle": "Each season transforms Salto's landscape and reveals a unique facet of the grape, the harvest, and the cellars.",
         "seasons.credits": "Photos provided for this project by INAVI (grape harvest and spring picnic) and Bodegas del Uruguay (Semana de Harriague).",
         "season.s1Time": "Dec — Mar · Summer",
+        "seasons.calLabel": "Year calendar: tap a season to see what it offers",
+        "seasons.today": "Today",
+        "seasons.harvest": "Harvest",
+        "seasons.tannatDay": "Tannat Day",
         "season.s1Title": "Harvest Season",
         "season.s1Desc": "Between February and March, the peak moment of the year: hand-picked harvest at dawn, grape tastings straight from the vine, sunset visits, and traditional grape-treading.",
         "season.s1Highlight": "Live harvest & grape treading",
@@ -6064,20 +6108,39 @@
     }
     highlightCurrentSeason();
 
-    // Luz de temporada: al pasar el mouse (o el foco) por una tarjeta, la sección toma su luz; al salir vuelve a la de hoy.
-    // En pantallas táctiles manda la tarjeta que está en el medio de la pantalla (solo se observa, nunca se toca el scroll).
-    (function initLuzTemporada() {
-      const sec = document.getElementById('temporadas'); if (!sec) return;
-      const hoy = String([...sec.querySelectorAll('[id^="seasonCard"]')].findIndex((c) => c.classList.contains('outline')) + 1 || 1);
-      sec.dataset.luz = hoy;
-      const cards = [...sec.querySelectorAll('[id^="seasonCard"]')], n = (c) => c.id.slice(-1);
-      cards.forEach((c) => { c.addEventListener('mouseenter', () => { sec.dataset.luz = n(c); }); c.addEventListener('focusin', () => { sec.dataset.luz = n(c); }); });
-      cards[0].parentElement.addEventListener('mouseleave', () => { sec.dataset.luz = hoy; });
-      if (window.matchMedia('(hover: none)').matches && 'IntersectionObserver' in window) {
-        const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) sec.dataset.luz = n(e.target); }), { rootMargin: '-45% 0px -45% 0px' });
-        cards.forEach((c) => io.observe(c));
-      }
-    })();
+    // Calendario del año (de diciembre a noviembre): meses y fechas con Intl en el idioma de la página, «Hoy» en la fecha real,
+    // la vendimia (febrero y marzo) y el Día del Tannat (14 de abril). Tocar una estación resalta su tarjeta y la acerca a la vista.
+    const cal = document.getElementById('calAnio');
+    const calX = (mes, dia) => { const m = (mes + 1) % 12, dias = new Date(2025, mes + 1, 0).getDate(); return ((m + (dia - 1) / dias) / 12 * 100).toFixed(2) + '%'; }; // mes 0 = enero
+    function dibujarCalendario() {
+      if (!cal) return;
+      const lang = currentLang in { es: 1, pt: 1, en: 1 } ? currentLang : 'es', d = translations[lang], hoy = new Date(), angosto = innerWidth < 640;
+      const mes = (m, f) => { const t = new Intl.DateTimeFormat(lang, { month: f }).format(new Date(2025, m, 15)).replace('.', ''); return t.charAt(0).toUpperCase() + t.slice(1); };
+      cal.querySelector('.cal-meses').innerHTML = [11, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((m) => '<span>' + mes(m, angosto ? 'narrow' : 'short') + '</span>').join('');
+      cal.querySelectorAll('.cal-seg').forEach((b) => { const t = decodeHtmlEntities(d['season.s' + b.dataset.s + 'Time']); b.textContent = t.split('·').pop().trim(); b.setAttribute('aria-label', t); });
+      const pon = (el, x) => { el.style.left = x; el.style.setProperty('--x', x); };
+      const h = cal.querySelector('.cal-hoy'); pon(h, calX(hoy.getMonth(), hoy.getDate()));
+      h.querySelector('b').textContent = d['seasons.today'] + ' · ' + new Intl.DateTimeFormat(lang, { day: 'numeric', month: 'short' }).format(hoy);
+      const ahora = hoy.getMonth() === 11 || hoy.getMonth() <= 2 ? 1 : hoy.getMonth() <= 4 ? 2 : hoy.getMonth() <= 7 ? 3 : 4; // igual que highlightCurrentSeason
+      cal.querySelectorAll('.cal-seg').forEach((b) => b.classList.toggle('es-hoy', +b.dataset.s === ahora));
+      const v = cal.querySelector('.cal-vendimia'), tr = cal.querySelector('.cal-tramo'); v.textContent = d['seasons.harvest']; pon(v, calX(2, 1));
+      tr.style.left = calX(1, 1); tr.style.width = (2 / 12 * 100).toFixed(2) + '%';
+      const t = cal.querySelector('.cal-tannat'); t.style.left = calX(3, 14); t.querySelector('em').textContent = d['seasons.tannatDay'] + ' · ' + new Intl.DateTimeFormat(lang, { day: 'numeric', month: 'short' }).format(new Date(2025, 3, 14));
+    }
+    if (cal) {
+      dibujarCalendario();
+      let angosto = innerWidth < 640; addEventListener('resize', () => { if ((innerWidth < 640) !== angosto) { angosto = !angosto; dibujarCalendario(); } }, { passive: true });
+      const tarjeta = (b) => document.getElementById('seasonCard' + b.dataset.s), quieto = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+      cal.querySelectorAll('.cal-seg').forEach((b) => {
+        b.addEventListener('mouseenter', () => tarjeta(b).classList.add('cal-foco'));
+        b.addEventListener('mouseleave', () => { const c = tarjeta(b); if (!c._calT) c.classList.remove('cal-foco'); }); // tras un clic la página se desplaza y el mouse "sale": el resaltado lo apaga el temporizador
+        b.addEventListener('click', () => {
+          const c = tarjeta(b); document.querySelectorAll('#temporadas .cal-foco').forEach((x) => x !== c && x.classList.remove('cal-foco'));
+          c.classList.add('cal-foco'); c.scrollIntoView({ block: 'nearest', behavior: quieto() ? 'auto' : 'smooth' });
+          clearTimeout(c._calT); c._calT = setTimeout(() => { c._calT = 0; if (!c.matches(':hover') && !b.matches(':hover')) c.classList.remove('cal-foco'); }, 1800);
+        });
+      });
+    }
 
     // Efectos que solo corren mientras se ven (vapor de las termas): marca .en-vista y nada más
     if ('IntersectionObserver' in window) {
@@ -6555,6 +6618,7 @@
 
       // Refresh the Harriague countdown text in the new language
       updateHarriagueCountdown();
+      dibujarCalendario();
 
       // If the gallery lightbox is currently open, refresh its caption/description too
       if (activeLightboxCapKey) {
